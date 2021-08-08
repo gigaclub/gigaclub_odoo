@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <menuitem id="gc_menu_root" name="GigaClub" />
+        <menuitem
+      id="gc_menu_settings"
+      parent="gc_menu_root"
+      name="Settings"
+      sequence="100"
+      action="action_gigaclub_config"
+    />
+
+    </data>
+</odoo>

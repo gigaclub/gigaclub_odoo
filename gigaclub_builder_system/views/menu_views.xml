@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <menuitem
+      id="gc_builder_system_menu_root"
+      parent="gigaclub_base.gc_menu_root"
+      name="Builder System"
+    />
+        <menuitem
+      id="gc_menu_tasks"
+      parent="gc_builder_system_menu_root"
+      action="gc_builder_task_action"
+      name="Tasks"
+    />
+        <menuitem
+      id="gc_menu_world"
+      parent="gc_builder_system_menu_root"
+      action="gc_builder_world_action"
+      name="Worlds"
+    />
+        <menuitem
+      id="gc_menu_world_type"
+      parent="gc_builder_system_menu_root"
+      action="gc_builder_world_type_action"
+      name="World Types"
+    />
+
+    </data>
+</odoo>
