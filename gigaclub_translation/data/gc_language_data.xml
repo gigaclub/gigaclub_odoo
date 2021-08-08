@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="gc_language_german" model="gc.language">
+            <field name="name">Deutsch</field>
+            <field name="default" eval="True" />
+        </record>
+
+        <record id="gc_language_english" model="gc.language">
+            <field name="name">English</field>
+        </record>
+
+    </data>
+</odoo>

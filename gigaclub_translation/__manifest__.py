@@ -1,0 +1,21 @@
+{
+    "name": "GigaClub Translation",
+    "version": "14.0.1.0.0",
+    "summary": "GigaClub Translation Module",
+    "category": "Translation",
+    "author": "GigaClub.net",
+    "website": "https://GigaClub.net/",
+    "license": "GPL-3",
+    "depends": ["gigaclub_base"],
+    "data": [
+        "data/gc_language_data.xml",
+        "views/gc_language_views.xml",
+        "views/gc_translation_views.xml",
+        "views/gc_translation_entry_views.xml",
+        "views/gc_user_views.xml",
+        "views/menu_views.xml",
+        "security/ir.model.access.csv",
+    ],
+    "installable": True,
+    "auto_install": False,
+}

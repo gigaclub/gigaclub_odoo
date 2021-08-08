@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record
+      id="res_config_settings_view_form_inherit_gigaclub_base"
+      model="ir.ui.view"
+    >
+            <field
+        name="name"
+      >res.config.settings.view.form.inherit.gigaclub.base</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40" />
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div
+            id="gigaclub_base_settings"
+            class="app_settings_block"
+            data-string="GigaClub"
+            string="GigaClub"
+            data-key="gigaclub_base"
+            groups="gigaclub_base.group_gigaclub"
+          >
+                        <h2>GigaClub</h2>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_gigaclub_config" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+        name="context"
+      >{'module' : 'gigaclub_base', 'bin_size': False}</field>
+        </record>
+
+    </data>
+</odoo>
