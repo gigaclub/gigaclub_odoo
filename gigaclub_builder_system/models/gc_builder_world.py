@@ -210,6 +210,7 @@ class GCBuilderWorld(models.Model):
 
     def return_world(self, world_id):
         return {
+            "world_id": world_id.id,
             "name": world_id.name,
             "task_id": world_id.task_id.id,
             "world_type": world_id.world_type_id.name,
