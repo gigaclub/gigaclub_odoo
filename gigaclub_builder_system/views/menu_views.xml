@@ -8,12 +8,6 @@
       name="Builder System"
     />
         <menuitem
-      id="gc_menu_tasks"
-      parent="gc_builder_system_menu_root"
-      action="gc_builder_task_action"
-      name="Tasks"
-    />
-        <menuitem
       id="gc_menu_world"
       parent="gc_builder_system_menu_root"
       action="gc_builder_world_action"

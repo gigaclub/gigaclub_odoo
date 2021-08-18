@@ -6,10 +6,10 @@
     "author": "GigaClub.net",
     "website": "https://GigaClub.net/",
     "license": "GPL-3",
-    "depends": ["gigaclub_translation", "gigaclub_team"],
+    "depends": ["gigaclub_translation", "gigaclub_project"],
     "data": [
         "data/gc_builder_world_type_data.xml",
-        "views/gc_builder_task_view.xml",
+        "views/project_task.xml",
         "views/gc_team_view.xml",
         "views/gc_user_view.xml",
         "views/gc_builder_world_view.xml",
