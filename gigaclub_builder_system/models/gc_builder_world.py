@@ -29,7 +29,7 @@ class GCBuilderWorld(models.Model):
     user_manager_ids = fields.Many2many(
         comodel_name="gc.user", relation="builder_manager_user_builder_world_rel"
     )
-    task_id = fields.Many2one(comodel_name="gc.builder.task", required=True)
+    task_id = fields.Many2one(comodel_name="project.task", required=True)
 
     @api.constrains("user_ids", "user_manager_ids")
     def _check_user_and_managers(self):
@@ -46,7 +46,7 @@ class GCBuilderWorld(models.Model):
     @api.model
     def create_as_user(self, player_uuid, task_id, name, world_type):
         user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        task_id = self.env["gc.builder.task"].browse(task_id)
+        task_id = self.env["project.task"].browse(task_id)
         world_type_id = self.env["gc.builder.world.type"].search(
             [("name", "=ilike", world_type)]
         )
@@ -67,7 +67,7 @@ class GCBuilderWorld(models.Model):
             team_id = user_id.team_manager_id
         elif user_id.team_user_id:
             team_id = user_id.team_user_id
-        task_id = self.env["gc.builder.task"].browse(task_id)
+        task_id = self.env["project.task"].browse(task_id)
         world_type_id = self.env["gc.builder.world.type"].search(
             [("name", "=ilike", world_type)]
         )
@@ -119,7 +119,7 @@ class GCBuilderWorld(models.Model):
             or user_id not in world_id.team_manager_ids.mapped("manager_ids")
         ):
             return 2
-        team_id_to_add = self.env["gc.builder.team"].search(
+        team_id_to_add = self.env["project.task"].search(
             [("name", "=ilike", team_name)]
         )
         if not team_id_to_add:

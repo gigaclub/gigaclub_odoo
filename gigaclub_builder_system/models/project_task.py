@@ -1,12 +1,9 @@
 from odoo import api, fields, models
 
 
-class GCBuilderTask(models.Model):
-    _name = "gc.builder.task"
-    _description = "GigaClub Builder Task"
+class ProjectTask(models.Model):
+    _inherit = "project.task"
 
-    name = fields.Char(required=True)
-    description = fields.Text()
     build_width = fields.Integer(defualt=0)
     build_length = fields.Integer(default=0)
 
