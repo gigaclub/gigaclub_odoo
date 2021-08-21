@@ -43,6 +43,49 @@ class MainController(http.Controller):
                         for role in guild.roles:
                             await self.register_role(role)
 
+        async def on_member_join(self, member):
+            with api.Environment.manage():
+                with registry(self.env.cr.dbname).cursor() as new_cr:
+                    new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                    if not new_env["gc.user"].search_count(
+                        [("discord_uuid", "=", str(member.id))]
+                    ):
+                        new_env["gc.user"].create({"discord_uuid": str(member.id)})
+                        user = new_env["gc.user"].search(
+                            [("discord_uuid", "=", member.id)]
+                        )
+                        events = new_env["gc.discord.event"].search(
+                            [("event_type", "=", "guild_join")]
+                        )
+                        for event in events:
+                            actions = new_env["gc.discord.action"].search(
+                                [("start_event_id", "=", event.id)]
+                            )
+                            for action in actions:
+                                event_worker_ids = new_env["gc.discord.event.worker"]
+                                for event in action.event_ids:
+                                    event_worker_ids |= event.user_action and event
+                                worker_id = new_env["gc.discord.action.worker"].create(
+                                    {
+                                        "action_id": action.id,
+                                        "event_worker_ids": [
+                                            [6, 0, event_worker_ids.ids]
+                                        ],
+                                    }
+                                )
+                                worker_id.event_worker_ids[0].done = True
+                                worker_id.event_worker_ids[1].current = True
+                        event_workers = new_env["gc.discord.event.worker"].search(
+                            [
+                                ("current", "=", True),
+                                ("event_id.event_type", "=", "guild_join"),
+                                ("user_id", "=", user.id),
+                            ]
+                        )
+                        for event in event_workers:
+                            event.done = True
+                            event.current = False
+
         async def register_role(self, role):
             with api.Environment.manage():
                 with registry(self.env.cr.dbname).cursor() as new_cr:
@@ -314,12 +357,51 @@ class MainController(http.Controller):
         async def on_message(self, message):
             if message.author == self.user:
                 return
-
-            if message.content.startswith("$hello"):
-                await message.channel.send("Hello!")
+            with api.Environment.manage():
+                with registry(self.env.cr.dbname).cursor() as new_cr:
+                    new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                    if message.channel == discord.DMChannel:
+                        user = new_env["gc.user"].search(
+                            [("discord_uuid", "=", message.author.id)]
+                        )
+                        events = new_env["gc.discord.event"].search(
+                            [("event_type", "=", "get_private_message")]
+                        )
+                        for event in events:
+                            actions = new_env["gc.discord.action"].search(
+                                [("start_event_id", "=", event.id)]
+                            )
+                            for action in actions:
+                                event_worker_ids = new_env["gc.discord.event.worker"]
+                                for event in action.event_ids:
+                                    event_worker_ids |= event.user_action and event
+                                worker_id = new_env["gc.discord.action.worker"].create(
+                                    {
+                                        "action_id": action.id,
+                                        "event_worker_ids": [
+                                            [6, 0, event_worker_ids.ids]
+                                        ],
+                                    }
+                                )
+                                worker_id.event_worker_ids[0].done = True
+                                worker_id.event_worker_ids[1].current = True
+                        event_workers = new_env["gc.discord.event.worker"].search(
+                            [
+                                ("current", "=", True),
+                                ("event_id.event_type", "=", "get_private_message"),
+                                ("user_id", "=", user.id),
+                            ]
+                        )
+                        for event in event_workers:
+                            event.done = True
+                            event.current = False
 
         async def shutdown(self):
             await self.logout()
+
+        async def send_message(self, user_id, message):
+            user = self.get_user(user_id)
+            await self.send_message(user, message)
 
     async def bot_async_start(self, gc_discord_bot_token):
         await self.client.start(gc_discord_bot_token)
@@ -373,3 +455,12 @@ class MainController(http.Controller):
         self.start_discord_bot()
         asyncio.run(self.client.refresh_categories_and_channels())
         return "<script>window.close()</script>"
+
+    @http.route(
+        ["/discordbot/event/<int:event_id>"], type="http", method=["POST"], csrf=False
+    )
+    def discord_bot_event(self, event_id):
+        event = request.env["gc.discord.event.worker"].browse(event_id)
+        if event.event_id.event_type == "send_private_message":
+            user = event.gc_user_id.discord_uuid
+            event.gc_user_id = user
