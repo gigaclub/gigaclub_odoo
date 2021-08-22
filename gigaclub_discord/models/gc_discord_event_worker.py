@@ -1,3 +1,4 @@
+import requests
 from odoo import fields, models
 
 
@@ -10,14 +11,18 @@ class GCDiscordEventWorker(models.Model):
     current = fields.Boolean(inverse="_inverse_current")
     done = fields.Boolean()
 
-    gc_user_id = fields.Many2one(comodel_name="gc.user")
+    def start_next_event(self):
+        self.ensure_one()
+        self.current = False
+        self.done = True
+        self.search(
+            [
+                ("event_id", "=", self.event_id.next_event_id.id),
+                ("action_worker_id", "=", self.action_worker_id.id),
+            ]
+        ).current = True
 
     def _inverse_current(self):
-        for rec in self:
-            return {
-                "name": "event",
-                "res_model": "ir.actions.act_url",
-                "type": "ir.actions.act_url",
-                "target": "_blank",
-                "url": f"/discordbot/event/{rec.id}",
-            }
+        for rec in self.filtered(lambda x: x.event_id.server_action):
+            url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+            requests.post(f"{url}/discordbot/event/{rec.id}")

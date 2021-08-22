@@ -4,7 +4,7 @@ from odoo import api, fields, models
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
-    build_width = fields.Integer(defualt=0)
+    build_width = fields.Integer(default=0)
     build_length = fields.Integer(default=0)
 
     world_ids = fields.One2many(comodel_name="gc.builder.world", inverse_name="task_id")

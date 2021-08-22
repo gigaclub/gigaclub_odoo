@@ -40,7 +40,6 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 o_setting_box">
-                        <field name="gc_discord_reload" invisible="True" />
                         <field name="gc_discord_server_status" invisible="True" />
                         <button
               class="btn btn-primary"
@@ -61,7 +60,7 @@
               type="object"
               name="reload_discord_bot"
               string="Reload Bot"
-              attrs="{'invisible': ['|', ('gc_discord_bot_token', '=', False), ('gc_discord_reload', '=', True)]}"
+              attrs="{'invisible': [('gc_discord_bot_token', '=', False)]}"
             />
                     </div>
                 </xpath>

@@ -16,13 +16,24 @@ class GCDiscordEvent(models.Model):
             ("set_role", "Set Role"),
         ]
     )
+    next_event_id = fields.Many2one(
+        comodel_name="gc.discord.event", compute="_compute_next_event", store=True
+    )
     user_action = fields.Boolean(compute="_compute_action", store=True)
     server_action = fields.Boolean(compute="_compute_action", store=True)
     message_content = fields.Text()
-    role_id = fields.Many2one(comodel_name="gc.discord.role")
+    role_ids = fields.Many2many(comodel_name="gc.discord.role")
 
     @api.depends("event_type")
     def _compute_action(self):
         for rec in self:
             rec.user_action = rec.event_type in ["guild_join", "get_private_message"]
             rec.server_action = rec.event_type in ["send_private_message", "set_role"]
+
+    @api.depends("sequence")
+    def _compute_next_event(self):
+        for rec in self:
+            event_ids = rec.action_id.event_ids.sorted(lambda x: x.sequence)
+            for index, value in enumerate(event_ids):
+                if index < len(event_ids) - 1:
+                    value.next_event_id = event_ids[index + 1]

@@ -10,9 +10,11 @@
     "external_dependencies": {"python": ["discord"]},
     "data": [
         "views/gc_discord_action_views.xml",
+        "views/gc_discord_action_worker_views.xml",
         "views/gc_discord_category_views.xml",
         "views/gc_discord_channel_views.xml",
         "views/gc_discord_event_views.xml",
+        "views/gc_discord_event_worker_views.xml",
         "views/gc_discord_permission_profile_views.xml",
         "views/gc_discord_role_views.xml",
         "views/gc_user_views.xml",
