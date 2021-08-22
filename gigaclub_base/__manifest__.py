@@ -8,11 +8,11 @@
     "license": "GPL-3",
     "depends": ["base_setup"],
     "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
         "views/res_config_settings_views.xml",
         "views/menu_views.xml",
         "views/gc_user_views.xml",
-        "security/security.xml",
-        "security/ir.model.access.csv",
     ],
     "installable": True,
     "auto_install": False,

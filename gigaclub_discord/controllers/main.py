@@ -1,16 +1,21 @@
 import asyncio
+import logging
 import threading
 
 import discord
-from discord.ext import commands
 from odoo import _, api, http, registry
 from odoo.http import request
 
+_logger = logging.getLogger(__name__)
+
 
 class MainController(http.Controller):
-    class MyBot(commands.Bot):
-        def __init__(self, command_prefix, env):
-            commands.Bot.__init__(self, command_prefix=command_prefix)
+    class MyBot(discord.Client):
+        def __init__(self, env):
+            intents = discord.Intents.default()
+            intents.members = True
+            intents.guilds = True
+            discord.Client.__init__(self, intents=intents)
             self.env = env
 
         async def on_ready(self):
@@ -42,6 +47,44 @@ class MainController(http.Controller):
                                 await self.register_channel(channel)
                         for role in guild.roles:
                             await self.register_role(role)
+
+        async def on_member_join(self, member):
+            with api.Environment.manage():
+                with registry(self.env.cr.dbname).cursor() as new_cr:
+                    new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                    if not new_env["gc.user"].search_count(
+                        [("discord_uuid", "=", str(member.id))]
+                    ):
+                        new_env["gc.user"].create({"discord_uuid": str(member.id)})
+                        user = new_env["gc.user"].search(
+                            [("discord_uuid", "=", member.id)]
+                        )
+                        events = new_env["gc.discord.event"].search(
+                            [("event_type", "=", "guild_join")]
+                        )
+                        for event in events:
+                            start_actions = new_env["gc.discord.action"].search(
+                                [("start_event_id", "=", event.id)]
+                            )
+                            for action in start_actions:
+                                action_worker = new_env[
+                                    "gc.discord.action.worker"
+                                ].create_worker(action, user)
+                                current_event_worker = (
+                                    action_worker.current_event_worker_id
+                                )
+                                current_event_worker.start_next_event()
+                        current_event_worker = new_env[
+                            "gc.discord.event.worker"
+                        ].search(
+                            [
+                                ("event_id.event_type", "=", "guild_join"),
+                                ("action_worker_id.gc_user_id", "=", user.id),
+                                ("current", "=", True),
+                            ]
+                        )
+                        if current_event_worker:
+                            current_event_worker.start_next_event()
 
         async def register_role(self, role):
             with api.Environment.manage():
@@ -148,13 +191,18 @@ class MainController(http.Controller):
                             use_slash_commands=perm.use_slash_commands,
                             request_to_speak=perm.request_to_speak,
                         )
-                        await role.edit(
-                            name=role_id.name,
-                            hoist=role_id.hoist,
-                            mentionable=role_id.mentionable,
-                            position=role_id.position,
-                            permissions=permissions,
-                        )
+                        try:
+                            await role.edit(
+                                name=role_id.name,
+                                hoist=role_id.hoist,
+                                mentionable=role_id.mentionable,
+                                position=role_id.position
+                                if role_id.position > 0
+                                else None,
+                                permissions=permissions,
+                            )
+                        except Exception:
+                            _logger.warning("No Permissions")
 
         async def register_category(self, channel):
             with api.Environment.manage():
@@ -232,20 +280,18 @@ class MainController(http.Controller):
                     company_id = new_env.user.company_id or new_env[
                         "res.company"
                     ].browse(1)
-                    if company_id.gc_discord_reload:
-                        for guild in self.guilds:
-                            if guild.id == int(company_id.gc_discord_server_id):
-                                for role in guild.roles:
-                                    await self.register_role(role)
-                                for channel in guild.channels:
-                                    if isinstance(
-                                        channel, discord.channel.CategoryChannel
-                                    ):
-                                        await self.register_category(channel)
-                                    else:
-                                        await self.register_channel(channel)
-                                    await self.create_not_created_channels(guild)
-                                    await self.create_not_created_categories(guild)
+                    for guild in self.guilds:
+                        if guild.id == int(company_id.gc_discord_server_id):
+                            for role in guild.roles:
+                                await self.register_role(role)
+                            for channel in guild.channels:
+                                if isinstance(channel, discord.channel.CategoryChannel):
+                                    await self.register_category(channel)
+                                else:
+                                    await self.register_channel(channel)
+                                await self.create_not_created_channels(guild)
+                                await self.create_not_created_categories(guild)
+                            break
 
         async def create_not_created_channels(self, guild):
             with api.Environment.manage():
@@ -314,12 +360,49 @@ class MainController(http.Controller):
         async def on_message(self, message):
             if message.author == self.user:
                 return
-
             if message.content.startswith("$hello"):
-                await message.channel.send("Hello!")
+                await message.channel.send("Hello World!")
+            with api.Environment.manage():
+                with registry(self.env.cr.dbname).cursor() as new_cr:
+                    new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                    if type(message.channel) == discord.DMChannel:
+                        user = new_env["gc.user"].search(
+                            [("discord_uuid", "=", message.author.id)]
+                        )
+                        events = new_env["gc.discord.event"].search(
+                            [("event_type", "=", "get_private_message")]
+                        )
+                        for event in events:
+                            start_actions = new_env["gc.discord.action"].search(
+                                [("start_event_id", "=", event.id)]
+                            )
+                            for action in start_actions:
+                                action_worker = new_env[
+                                    "gc.discord.action.worker"
+                                ].create_worker(action, user)
+                                current_event_worker = (
+                                    action_worker.current_event_worker_id
+                                )
+                                current_event_worker.start_next_event()
+                        current_event_worker = new_env[
+                            "gc.discord.event.worker"
+                        ].search(
+                            [
+                                ("event_id.event_type", "=", "get_private_message"),
+                                ("action_worker_id.gc_user_id", "=", user.id),
+                                ("current", "=", True),
+                            ]
+                        )
+                        if current_event_worker:
+                            current_event_worker.start_next_event()
 
         async def shutdown(self):
             await self.logout()
+
+        async def send_message_request(self, user_id, message):
+            user = self.get_user(int(user_id))
+            if user:
+                await user.send(message)
 
     async def bot_async_start(self, gc_discord_bot_token):
         await self.client.start(gc_discord_bot_token)
@@ -335,11 +418,11 @@ class MainController(http.Controller):
             and company_id.gc_discord_server_status
             and company_id.gc_discord_server_status == "stopped"
         ):
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            self.client = self.MyBot(command_prefix="!", env=request.env)
-            loop.create_task(self.bot_async_start(company_id.gc_discord_bot_token))
-            bot_thread = threading.Thread(target=self.bot_loop_start, args=(loop,))
+            self.loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(self.loop)
+            self.client = self.MyBot(env=request.env)
+            self.loop.create_task(self.bot_async_start(company_id.gc_discord_bot_token))
+            bot_thread = threading.Thread(target=self.bot_loop_start, args=(self.loop,))
             bot_thread.start()
         else:
             raise Exception(
@@ -356,7 +439,7 @@ class MainController(http.Controller):
             and company_id.gc_discord_server_status == "started"
         ):
             try:
-                asyncio.run(self.client.logout())
+                asyncio.run(self.client.close())
                 del self.client
             except Exception:
                 pass
@@ -372,4 +455,29 @@ class MainController(http.Controller):
         self.stop_discord_bot()
         self.start_discord_bot()
         asyncio.run(self.client.refresh_categories_and_channels())
+        return "<script>window.close()</script>"
+
+    @http.route(
+        ["/discordbot/event/<int:event_id>"],
+        type="http",
+        method=["POST"],
+        csrf=False,
+        auth="public",
+    )
+    def discord_bot_event(self, event_id):
+        event = request.env["gc.discord.event.worker"].browse(event_id)
+        user_id = event.action_worker_id.gc_user_id.discord_uuid
+        if user_id:
+            if event.event_id.event_type == "send_private_message":
+                message_content = event.event_id.message_content
+                asyncio.run_coroutine_threadsafe(
+                    self.client.send_message_request(user_id, message_content),
+                    self.loop,
+                )
+            elif event.event_id.event_type == "set_role":
+                for role in event.event_id.role_ids:
+                    asyncio.run_coroutine_threadsafe(
+                        self.client.add_roles(user_id, role.role_id), self.loop
+                    )
+        event.start_next_event()
         return "<script>window.close()</script>"

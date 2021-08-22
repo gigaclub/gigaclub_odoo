@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="gc_discord_event_worker_tree_view">
+            <field name="name">gc.discord.event.worker.tree.view</field>
+            <field name="model">gc.discord.event.worker</field>
+            <field name="arch" type="xml">
+                <tree string="Event Workers">
+                    <field name="action_worker_id" />
+                    <field name="event_id" />
+                    <field name="current" />
+                    <field name="done" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="gc_discord_event_worker_form_view">
+            <field name="name">gc.discord.event.worker.form.view</field>
+            <field name="model">gc.discord.event.worker</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="action_worker_id" />
+                        <field name="event_id" />
+                        <field name="current" />
+                        <field name="done" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="gc_discord_event_worker_action">
+            <field name="name">Event Worker</field>
+            <field name="res_model">gc.discord.event.worker</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
