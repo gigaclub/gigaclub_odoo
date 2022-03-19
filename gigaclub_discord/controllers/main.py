@@ -3,6 +3,7 @@ import logging
 import threading
 
 import discord
+
 from odoo import _, api, http, registry
 from odoo.http import request
 

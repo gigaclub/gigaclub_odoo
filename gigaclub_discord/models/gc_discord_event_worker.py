@@ -1,4 +1,5 @@
 import requests
+
 from odoo import fields, models
 
 
