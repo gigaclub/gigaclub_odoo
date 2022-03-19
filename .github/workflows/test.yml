@@ -44,4 +44,4 @@ jobs:
         run: oca_run_tests
       - uses: codecov/codecov-action@v1
         with:
-          codecov_token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
