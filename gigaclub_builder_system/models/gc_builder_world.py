@@ -41,7 +41,7 @@ class GCBuilderWorld(models.Model):
     def _check_teams_and_team_managers(self):
         for rec in self:
             if set(rec.team_ids.ids) & set(rec.team_manager_ids.ids):
-                raise ValidationError(_("Managers should not be users too!"))
+                raise ValidationError(_("Manager teams should not be teams too!"))
 
     @api.model
     def create_as_user(self, player_uuid, task_id, name, world_type):
@@ -92,8 +92,8 @@ class GCBuilderWorld(models.Model):
             return 2
         if (
             user_id not in world_id.user_manager_ids
-            or user_id not in world_id.team_manager_ids.mapped("user_ids")
-            or user_id not in world_id.team_manager_ids.mapped("manager_ids")
+            and user_id not in world_id.team_manager_ids.mapped("user_ids")
+            and user_id not in world_id.team_manager_ids.mapped("manager_ids")
         ):
             return 1
         user_id_to_add = self.env["gc.user"].search(
