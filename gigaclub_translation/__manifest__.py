@@ -5,7 +5,7 @@
     "category": "Translation",
     "author": "GigaClub.net",
     "website": "https://GigaClub.net/",
-    "license": "GPL-3",
+    "license": "AGPL-3",
     "depends": ["gigaclub_base"],
     "data": [
         "data/gc_language_data.xml",

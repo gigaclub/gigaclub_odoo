@@ -5,7 +5,7 @@
     "category": "GigaClub",
     "author": "GigaClub.net",
     "website": "https://GigaClub.net/",
-    "license": "GPL-3",
+    "license": "AGPL-3",
     "depends": ["base"],
     "data": ["views/templates.xml"],
     "installable": True,
