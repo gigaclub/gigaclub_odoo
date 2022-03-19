@@ -22,10 +22,6 @@ class MainController(http.Controller):
             with api.Environment.manage():
                 with registry(self.env.cr.dbname).cursor() as new_cr:
                     new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                    company_id = new_env.user.company_id or new_env[
-                        "res.company"
-                    ].browse(1)
-                    company_id.gc_discord_server_status = "started"
                     for guild in self.guilds:
                         if not new_env["gc.user"].search_count(
                             [("discord_uuid", "=", str(guild.owner_id))]
@@ -424,6 +420,7 @@ class MainController(http.Controller):
             self.loop.create_task(self.bot_async_start(company_id.gc_discord_bot_token))
             bot_thread = threading.Thread(target=self.bot_loop_start, args=(self.loop,))
             bot_thread.start()
+            company_id.gc_discord_server_status = "started"
         else:
             raise Exception(
                 _("Bot is Started or Discord Bot Token or Discord Server ID not set!")
@@ -441,7 +438,8 @@ class MainController(http.Controller):
             try:
                 asyncio.run(self.client.close())
                 del self.client
-            except Exception:
+            except Exception as e:
+                _logger.error(_("Error occured on Discord Bot stop: %s" % e))
                 pass
             company_id.gc_discord_server_status = "stopped"
         else:
