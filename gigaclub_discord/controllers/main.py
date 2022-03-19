@@ -441,7 +441,6 @@ class MainController(http.Controller):
                 del self.client
             except Exception as e:
                 _logger.error(_("Error occured on Discord Bot stop: %s" % e))
-                pass
             company_id.gc_discord_server_status = "stopped"
         else:
             raise Exception(
