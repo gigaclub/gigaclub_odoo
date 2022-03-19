@@ -17,4 +17,4 @@ class GCUser(models.Model):
 
     @api.model
     def test(self):
-        return "test"
+        return "test123"
