@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class GCUser(models.Model):
@@ -14,7 +14,3 @@ class GCUser(models.Model):
     _sql_constraints = [
         ("mc_uuid_unique", "UNIQUE(mc_uuid)", "MC_UUID must be unique!")
     ]
-
-    @api.model
-    def test(self):
-        return "test1234"
