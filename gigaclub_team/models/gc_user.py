@@ -11,5 +11,5 @@ class GCUser(models.Model):
     @api.constrains("team_user_id", "team_manager_id")
     def _check_team_user_manager_id(self):
         for rec in self:
-            if rec.team_user_id and rec.team_manager_id:
+            if set(rec.team_user_id) & set(rec.team_manager_id):
                 raise ValidationError(_("managers should not be users"))
