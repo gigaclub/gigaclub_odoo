@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ProjectTask(models.Model):
@@ -9,21 +9,13 @@ class ProjectTask(models.Model):
 
     world_ids = fields.One2many(comodel_name="gc.builder.world", inverse_name="task_id")
 
-    def return_task(self, task_id):
-        return {
-            "id": task_id.id,
-            "name": task_id.name,
-            "description": task_id.description,
-            "build_width": task_id.build_width,
-            "build_length": task_id.build_length,
-            "world_ids": [{"id": w.id} for w in task_id.world_ids],
-        }
-
-    @api.model
-    def get_all_tasks(self):
-        return [self.return_task(x) for x in self.search([])]
-
-    @api.model
-    def get_task(self, t_id):
-        task_id = self.browse(t_id)
-        return self.return_task(task_id)
+    def return_task(self, task):
+        res = super().return_task(task)
+        res.update(
+            {
+                "build_width": task.build_width,
+                "build_length": task.build_length,
+                "world_ids": [{"id": w.id} for w in task.world_ids],
+            }
+        )
+        return res

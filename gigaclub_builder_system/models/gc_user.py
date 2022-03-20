@@ -16,5 +16,5 @@ class GCUser(models.Model):
     @api.constrains("world_ids", "world_manager_ids")
     def _check_team_user_manager_id(self):
         for rec in self:
-            if rec.world_ids and rec.world_manager_ids:
+            if set(rec.world_ids) & set(rec.world_manager_ids):
                 raise ValidationError(_("world managers should not be users"))
