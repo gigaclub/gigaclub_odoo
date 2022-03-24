@@ -21,9 +21,9 @@ class GCTeam(models.Model):
         for rec in self:
             if len(rec.manager_ids) == 0 and len(rec.user_ids) > 0:
                 user_id = rec.user_ids[0]
-                rec.user_ids[0] = None
+                rec.user_ids -= user_id
                 rec.manager_ids |= user_id
-            if len(rec.user_ids) == 0 and len(rec.manager_ids) == 0:
+            if not rec.user_ids and not rec.manager_ids:
                 rec.unlink()
 
     # Status Codes:
@@ -36,7 +36,7 @@ class GCTeam(models.Model):
         user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         if user_id.team_user_id or user_id.team_manager_id:
             return 3
-        if bool(self.search_count([("name", "=ilike", name)])):
+        if self.search_count([("name", "=ilike", name)]):
             return 2
         team_id = self.create(
             {"name": name, "description": description, "manager_ids": [(4, user_id.id)]}
