@@ -1,1 +1,1 @@
-from . import test_gc_team
+from . import test_gc_team, test_gc_user
