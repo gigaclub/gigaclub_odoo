@@ -21,9 +21,9 @@ class GCTeam(models.Model):
         for rec in self:
             if len(rec.manager_ids) == 0 and len(rec.user_ids) > 0:
                 user_id = rec.user_ids[0]
-                rec.user_ids[0] = None
+                rec.user_ids -= user_id
                 rec.manager_ids |= user_id
-            if len(rec.user_ids) == 0 and len(rec.manager_ids) == 0:
+            if not rec.user_ids and not rec.manager_ids:
                 rec.unlink()
 
     # Status Codes:
@@ -36,7 +36,7 @@ class GCTeam(models.Model):
         user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         if user_id.team_user_id or user_id.team_manager_id:
             return 3
-        if bool(self.search_count([("name", "=ilike", name)])):
+        if self.search_count([("name", "=ilike", name)]):
             return 2
         team_id = self.create(
             {"name": name, "description": description, "manager_ids": [(4, user_id.id)]}
@@ -148,7 +148,7 @@ class GCTeam(models.Model):
             return 2
         if user_id_to_promote.team_user_id != team_id:
             return 1
-        team_id.user_ids = [(3, user_id_to_promote.id)]
+        team_id.user_ids -= user_id_to_promote
         team_id.manager_ids |= user_id_to_promote
         return 0
 
@@ -173,7 +173,7 @@ class GCTeam(models.Model):
             return 2
         if user_id_to_demote.team_manager_id != team_id:
             return 1
-        team_id.manager_ids = [(3, user_id_to_demote.id)]
+        team_id.manager_ids -= user_id_to_demote
         team_id.user_ids |= user_id_to_demote
         return 0
 
@@ -187,13 +187,15 @@ class GCTeam(models.Model):
 
     @api.model
     def get_team_by_member(self, player_uuid):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = False
-        if user_id.team_user_id:
-            team_id = user_id.team_user_id
-        elif user_id.team_manager_id:
-            team_id = user_id.team_manager_id
-        return self.return_team(team_id)
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        team = False
+        if user.team_user_id:
+            team = user.team_user_id
+        elif user.team_manager_id:
+            team = user.team_manager_id
+        if team:
+            return self.return_team(team)
+        return False
 
     @api.model
     def get_all_teams(self):
@@ -201,8 +203,10 @@ class GCTeam(models.Model):
 
     @api.model
     def get_team(self, name):
-        team_id = self.search([("name", "=ilike", name)])
-        return self.return_team(team_id)
+        team = self.search([("name", "=ilike", name)])
+        if team:
+            return self.return_team(team)
+        return False
 
     # Status Codes:
     # 3: Team does not exist
@@ -238,7 +242,7 @@ class GCTeam(models.Model):
     @api.model
     def accept_request(self, player_uuid, team_name):
         user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = self.search([("name", "=", team_name)])
+        team_id = self.search([("name", "=ilike", team_name)])
         if not team_id:
             return 2
         request_id = self.env["gc.request"].search(
