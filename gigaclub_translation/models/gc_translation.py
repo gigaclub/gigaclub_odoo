@@ -7,6 +7,7 @@ class GCTranslation(models.Model):
     name = fields.Char(required=True)
     var_count = fields.Integer()
     translation_entry_ids = fields.Many2many(comodel_name="gc.translation.entry")
+    category = fields.Char()
 
     _sql_constraints = [("name_unique", "unique (name)", "name must be unique!")]
 
