@@ -224,7 +224,7 @@ class GCTeam(models.Model):
         user_id_to_invite = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_invite)]
         )
-        if user_id_to_invite in team_id.user_ids:
+        if user_id_to_invite in team_id.user_ids | team_id.manager_ids:
             return 1
         self.env["gc.request"].create(
             {

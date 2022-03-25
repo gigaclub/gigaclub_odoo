@@ -255,6 +255,10 @@ class TestGCTeam(SavepointCase):
         self.team.user_ids |= test2
         res = GCTeam.invite_member("test", "test2")
         self.assertEqual(res, 1, "res should be 1")
+        self.team.user_ids = False
+        self.team.manager_ids |= test2
+        res = GCTeam.invite_member("test", "test2")
+        self.assertEqual(res, 1, "res should be 1")
         self.user.team_manager_id = False
         self.user.team_user_id = self.team
         res = GCTeam.invite_member("test", "test2")

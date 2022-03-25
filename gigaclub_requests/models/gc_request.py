@@ -18,12 +18,9 @@ class GCRequest(models.Model):
 
     @api.constrains("receiver_id", "sender_id", "state")
     def _check_duplicate_request(self):
-        for record in self:
-            for compareRec in self.search([("id", "!=", record.id)]):
-                if (
-                    record.receiver_id == compareRec.receiver_id
-                    and record.sender_id == compareRec.sender_id
-                    and record.state == "waiting"
-                    and record.state == compareRec.state
-                ):
-                    raise ValidationError(_("waiting requests should be unique!"))
+        for rec in self:
+            if self.search([("id", "!=", rec.id), ("state", "=", "waiting")]).filtered(
+                lambda x: x.receiver_id == rec.receiver_id
+                and x.sender_id == rec.sender_id
+            ):
+                raise ValidationError(_("waiting requests should be unique!"))
