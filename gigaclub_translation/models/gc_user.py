@@ -11,9 +11,9 @@ class GCUser(models.Model):
 
     @api.model
     def set_language(self, player_uuid, language):
-        user_id = self.search([("mc_uuid", "=", player_uuid)])
-        language_id = self.env["gc.language"].search([("name", "=ilike", language)])
-        if len(user_id) > 0 and len(language_id) > 0:
-            user_id.language_id = language_id
+        user = self.search([("mc_uuid", "=", player_uuid)])
+        language = self.env["gc.language"].search([("name", "=ilike", language)])
+        if user and language:
+            user.language_id = language
             return True
         return False
