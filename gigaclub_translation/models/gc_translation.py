@@ -12,7 +12,9 @@ class GCTranslation(models.Model):
     _sql_constraints = [("name_unique", "unique (name)", "name must be unique!")]
 
     @api.model
-    def get_translation_by_player_uuid(self, name, player_uuid, values=False):
+    def get_translation_by_player_uuid(
+        self, name, player_uuid, values=False, category=False
+    ):
         if not values:
             values = []
         translation = self.search([("name", "=ilike", name)], limit=1)
@@ -23,6 +25,7 @@ class GCTranslation(models.Model):
                 {
                     "name": name,
                     "var_count": len(values),
+                    "category": category,
                 }
             )
         language = (
