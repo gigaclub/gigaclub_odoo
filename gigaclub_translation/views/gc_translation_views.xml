@@ -15,6 +15,23 @@
             </field>
         </record>
 
+        <record id="gc_translation_search_view" model="ir.ui.view">
+            <field name="name">gc.translation.search.view</field>
+            <field name="model">gc.translation</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand="0" string="Group By">
+                        <filter
+              name="group_category"
+              string="Category"
+              domain="[]"
+              context="{'group_by':'category'}"
+            />
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="gc_translation_form_view">
             <field name="name">gc.translation.from.view</field>
             <field name="model">gc.translation</field>

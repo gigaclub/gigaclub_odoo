@@ -32,3 +32,13 @@ class TestGCTranslation(SavepointCase):
         self.assertEqual(res, "Test Content")
         res = GCTranslation.get_translation_by_player_uuid("New Translation", "test")
         self.assertEqual(res, "New Translation")
+        res = GCTranslation.get_translation_by_player_uuid(
+            "New Translation with Category", "test", category="test_category"
+        )
+        self.assertEqual(res, "New Translation with Category")
+        self.assertEqual(
+            self.env["gc.translation"]
+            .search([("name", "=", "New Translation with Category")], limit=1)
+            .category,
+            "test_category",
+        )
