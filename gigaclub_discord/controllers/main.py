@@ -78,16 +78,18 @@ class MainController(http.Controller):
                                     action_worker.current_event_worker_id
                                 )
                                 current_event_worker.start_next_event()
-                        current_event_workers = new_env[
+                        current_event_worker = new_env[
                             "gc.discord.event.worker"
                         ].search(
                             [
                                 ("event_id.event_type", "=", "guild_join"),
                                 ("action_worker_id.gc_user_id", "=", user.id),
                                 ("current", "=", True),
-                            ]
+                                ("done", "=", False),
+                            ],
+                            limit=1,
                         )
-                        for current_event_worker in current_event_workers:
+                        if current_event_worker:
                             current_event_worker.start_next_event()
 
         async def register_role(self, role):
@@ -364,16 +366,18 @@ class MainController(http.Controller):
                                     action_worker.current_event_worker_id
                                 )
                                 current_event_worker.start_next_event()
-                        current_event_workers = new_env[
+                        current_event_worker = new_env[
                             "gc.discord.event.worker"
                         ].search(
                             [
                                 ("event_id.event_type", "=", "get_private_message"),
                                 ("action_worker_id.gc_user_id", "=", user.id),
                                 ("current", "=", True),
-                            ]
+                                ("done", "=", False),
+                            ],
+                            limit=1,
                         )
-                        for current_event_worker in current_event_workers:
+                        if current_event_worker:
                             current_event_worker.start_next_event()
 
         async def shutdown(self):
