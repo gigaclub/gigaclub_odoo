@@ -83,7 +83,7 @@ class MainController(http.Controller):
                         ].search(
                             [
                                 ("event_id.event_type", "=", "guild_join"),
-                                ("action_worker_id.gc_user_id", "=", user.id),
+                                ("action_worker_id.user_id", "=", user.id),
                                 ("current", "=", True),
                                 ("done", "=", False),
                             ],
@@ -371,7 +371,7 @@ class MainController(http.Controller):
                         ].search(
                             [
                                 ("event_id.event_type", "=", "get_private_message"),
-                                ("action_worker_id.gc_user_id", "=", user.id),
+                                ("action_worker_id.user_id", "=", user.id),
                                 ("current", "=", True),
                                 ("done", "=", False),
                             ],
