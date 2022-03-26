@@ -357,8 +357,6 @@ class MainController(http.Controller):
         async def on_message(self, message):
             if message.author == self.user:
                 return
-            if message.content.startswith("$hello"):
-                await message.channel.send("Hello World!")
             with api.Environment.manage():
                 with registry(self.env.cr.dbname).cursor() as new_cr:
                     new_env = api.Environment(new_cr, self.env.uid, self.env.context)
@@ -388,7 +386,8 @@ class MainController(http.Controller):
                                 ("event_id.event_type", "=", "get_private_message"),
                                 ("action_worker_id.gc_user_id", "=", user.id),
                                 ("current", "=", True),
-                            ]
+                            ],
+                            limit=1,
                         )
                         if current_event_worker:
                             current_event_worker.start_next_event()
@@ -456,14 +455,12 @@ class MainController(http.Controller):
         return "<script>window.close()</script>"
 
     @http.route(
-        ["/discordbot/event/<int:event_id>"],
+        ["/discordbot/event/<model('gc.discord.event.worker'):event>"],
         type="http",
         method=["POST"],
         csrf=False,
-        auth="public",
     )
-    def discord_bot_event(self, event_id):
-        event = request.env["gc.discord.event.worker"].browse(event_id)
+    def discord_bot_event(self, event):
         user_id = event.action_worker_id.gc_user_id.discord_uuid
         if user_id:
             if event.event_id.event_type == "send_private_message":

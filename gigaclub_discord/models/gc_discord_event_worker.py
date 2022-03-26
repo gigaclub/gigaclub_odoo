@@ -1,6 +1,7 @@
 import requests
 
-from odoo import fields, models
+from odoo import api, fields, http, models, tools
+from odoo.service import security
 
 
 class GCDiscordEventWorker(models.Model):
@@ -24,6 +25,19 @@ class GCDiscordEventWorker(models.Model):
         ).current = True
 
     def _inverse_current(self):
-        for rec in self.filtered(lambda x: x.event_id.server_action):
-            url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-            requests.post(f"{url}/discordbot/event/{rec.id}")
+        for rec in self.filtered(lambda x: x.event_id.server_action and x.current):
+            url = f"http://127.0.0.1:{tools.config['http_port']}"
+            session = http.root.session_store.new()
+            session.db = self.env.cr.dbname
+            uid = self.env.user.id
+            env = api.Environment(self.env.cr, self.env.user.id, {})
+            session.uid = uid
+            session.login = self.env.user.login
+            session.session_token = uid and security.compute_session_token(session, env)
+            session.context = dict(env["res.users"].context_get() or {})
+            session.context["uid"] = uid
+            session._fix_lang(session.context)
+            http.root.session_store.save(session)
+            opener = requests.Session()
+            opener.cookies["session_id"] = session.sid
+            opener.post(f"{url}/discordbot/event/{rec.id}")

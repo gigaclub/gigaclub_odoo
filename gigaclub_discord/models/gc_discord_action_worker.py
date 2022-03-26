@@ -19,9 +19,8 @@ class GCDiscordActionWorker(models.Model):
     @api.depends("event_worker_ids.current")
     def _compute_current_event(self):
         for rec in self:
-            rec.current_event_worker_id = self.event_worker_ids.filtered(
-                lambda x: x.current
-            )
+            event_workers = self.event_worker_ids.filtered(lambda x: x.current)
+            rec.current_event_worker_id = event_workers and event_workers[0]
 
     @api.model
     def create_worker(self, action_id, user_id):
