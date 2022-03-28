@@ -6,7 +6,10 @@
     "website": "https://GigaClub.net/",
     "license": "AGPL-3",
     "depends": ["gigaclub_discord", "portal"],
-    "data": ["views/portal_templates.xml"],
+    "data": [
+        "views/portal_templates.xml",
+        "views/res_config_settings_views.xml",
+    ],
     "demo": [],
     "installable": True,
     "auto_install": False,
