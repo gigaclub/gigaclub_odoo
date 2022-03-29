@@ -21,6 +21,8 @@
             t-field="user_id.partner_id"
             t-options='{"widget": "contact", "fields": ["email", "name"]}'
           />
+                    <div t-if="user_id.partner_id.gc_user_id.mc_uuid"><b
+            >Minecraft:</b> <span t-field="user_id.partner_id.gc_user_id" /></div>
                 </div>
             </xpath>
         </template>
