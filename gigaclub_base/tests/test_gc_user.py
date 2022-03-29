@@ -7,6 +7,12 @@ class TestGCUser(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.gc_user = cls.env["gc.user"].create(
+            {
+                "name": "test",
+                "mc_uuid": "12345",
+            }
+        )
 
     def test_gc_user_create(self):
         """Check if creating a new user works"""
@@ -30,3 +36,7 @@ class TestGCUser(SavepointCase):
                     "mc_uuid": "123",
                 }
             )
+
+    def test_name_get(self):
+        name = self.gc_user.name_get()
+        self.assertEqual(name[0][1], "(test) - 12345", "Name should be (test) - 123")

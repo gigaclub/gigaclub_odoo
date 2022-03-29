@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template
+      id="portal_layout_inherit_gigaclub_portal"
+      inherit_id="portal.portal_layout"
+    >
+            <xpath
+        expr="t/div[@id='wrap']/div/t/div/div/div[hasclass('o_portal_my_details')]"
+        position="replace"
+      >
+                <div class="o_portal_my_details">
+                    <h4>Details <a
+              role="button"
+              href="/my/account"
+              class="btn btn-sm btn-link"
+            ><i class="fa fa-pencil" /> Edit</a></h4>
+                    <hr class="mt-1 mb-0" />
+                    <div
+            t-field="user_id.partner_id"
+            t-options='{"widget": "contact", "fields": ["email", "name"]}'
+          />
+                    <div t-if="user_id.partner_id.gc_user_id.mc_uuid"><b
+            >Minecraft:</b> <span t-field="user_id.partner_id.gc_user_id" /></div>
+                </div>
+            </xpath>
+        </template>
+
+        <template
+      id="frontend_layout_inherit_gigaclub_portal"
+      inherit_id="web.frontend_layout"
+    >
+            <xpath expr="//div[@id='wrapwrap']/header/nav/div/a" position="attributes">
+                <attribute name="href">/my</attribute>
+            </xpath>
+        </template>
+
+        <template
+      id="portal_my_details_inherit_gigaclub_portal"
+      inherit_id="portal.portal_my_details"
+    >
+            <xpath expr="//t/form" position="replace">
+                <form action="/my/account/save" method="post">
+                    <input
+            type="hidden"
+            name="csrf_token"
+            t-att-value="request.csrf_token()"
+          />
+                    <div class="row o_portal_details">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div
+                    t-if="error_message"
+                    class="alert alert-danger"
+                    role="alert"
+                  >
+                                        <t t-foreach="error_message" t-as="err">
+                                            <t t-esc="err" />
+                                            <br />
+                                        </t>
+                                    </div>
+                                    <div
+                    t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''}"
+                  >
+                                        <label
+                      class="col-form-label"
+                      for="name"
+                    >Name</label>
+                                        <input
+                      type="text"
+                      name="name"
+                      t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}"
+                      t-att-value="name or partner.name"
+                    />
+                                    </div>
+                                    <div
+                    t-attf-class="form-group #{error.get('email') and 'o_has_error' or ''}"
+                  >
+                                        <label
+                      class="col-form-label"
+                      for="email"
+                    >Email</label>
+                                        <input
+                      type="email"
+                      name="email"
+                      t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}"
+                      t-att-value="email or partner.email"
+                    />
+                                    </div>
+                                    <div class="form-group">
+                                        <label
+                      class="col-form-label"
+                    >Minecraft Account</label>
+                                        <br />
+                                        <t
+                      t-if="request.env.user.partner_id.gc_user_id"
+                    >
+                                            <p><span
+                          t-field="request.env.user.partner_id.gc_user_id"
+                          style="margin-right: 10px;"
+                        /><a
+                          t-attf-href="/my/account/minecraft_remove"
+                          class="btn btn-danger btn-sm"
+                          role="button"
+                        >X</a></p>
+                                        </t>
+                                        <t t-else="">
+                                            <a
+                        t-attf-href="https://login.live.com/oauth20_authorize.srf?client_id={{request.env['ir.config_parameter'].sudo().get_param('gigaclub.azure_client_id')}}&amp;response_type=code&amp;redirect_uri={{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}}/my/account/minecraft_auth&amp;scope=XboxLive.signin%20offline_access&amp;state=NOT_NEEDED"
+                        class="btn btn-primary"
+                        role="button"
+                      >Add Account</a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <button
+                  type="submit"
+                  class="btn btn-primary float-right mb32 "
+                >
+                                    Confirm
+                                    <span class="fa fa-long-arrow-right" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>
