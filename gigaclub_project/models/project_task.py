@@ -21,4 +21,6 @@ class ProjectTask(models.Model):
     @api.model
     def get_task(self, t_id):
         task_id = self.browse(t_id)
-        return self.return_task(task_id)
+        if task_id:
+            return self.return_task(task_id)
+        return []
