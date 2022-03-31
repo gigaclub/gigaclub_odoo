@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ProjectTask(models.Model):
@@ -8,6 +8,23 @@ class ProjectTask(models.Model):
     build_length = fields.Integer(default=0)
 
     world_ids = fields.One2many(comodel_name="gc.builder.world", inverse_name="task_id")
+
+    gc_user_ids = fields.Many2many(compute="_compute_gc_user_ids", store=True)
+    gc_team_ids = fields.Many2many(compute="_compute_gc_team_ids", store=True)
+
+    @api.depends("world_ids.user_ids", "world_ids.user_manager_ids")
+    def _compute_gc_user_ids(self):
+        for task in self.filtered("world_ids"):
+            task.gc_user_ids = task.world_ids.mapped(
+                "user_ids"
+            ) | task.world_ids.mapped("user_manager_ids")
+
+    @api.depends("world_ids.team_ids", "world_ids.team_manager_ids")
+    def _compute_gc_team_ids(self):
+        for task in self.filtered("world_ids"):
+            task.gc_team_ids = task.world_ids.mapped(
+                "team_ids"
+            ) | task.world_ids.mapped("team_manager_ids")
 
     def return_task(self, task):
         res = super().return_task(task)
