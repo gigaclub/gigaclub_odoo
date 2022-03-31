@@ -206,7 +206,7 @@ class GCTeam(models.Model):
         team = self.search([("name", "=ilike", name)])
         if team:
             return self.return_team(team)
-        return False
+        return []
 
     # Status Codes:
     # 3: Team does not exist

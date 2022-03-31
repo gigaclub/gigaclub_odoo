@@ -16,7 +16,6 @@ class GCBuilderWorld(models.Model):
     world_type_id = fields.Many2one(
         comodel_name="gc.builder.world.type", default=_default_world_type_id
     )
-
     team_ids = fields.Many2many(
         comodel_name="gc.team", relation="team_builder_world_rel"
     )
@@ -227,4 +226,6 @@ class GCBuilderWorld(models.Model):
     @api.model
     def get_world(self, w_id):
         world_id = self.browse(w_id)
-        return self.return_world(world_id)
+        if world_id:
+            return self.return_world(world_id)
+        return []
