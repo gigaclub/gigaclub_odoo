@@ -46,11 +46,10 @@ class GCBuilderWorld(models.Model):
     def create_as_user(self, player_uuid, task_id, name, world_type):
         user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         task_id = self.env["project.task"].browse(task_id)
-        if world_type:
-            world_type_id = self.env["gc.builder.world.type"].search(
-                [("name", "=ilike", world_type)], limit=1
-            )
-        else:
+        world_type_id = self.env["gc.builder.world.type"].search(
+            [("name", "=ilike", world_type)], limit=1
+        )
+        if not world_type_id:
             world_type_id = self.env["gc.builder.world.type"].search(
                 [("default", "=", True)], limit=1
             )
@@ -72,11 +71,10 @@ class GCBuilderWorld(models.Model):
         elif user_id.team_user_id:
             team_id = user_id.team_user_id
         task_id = self.env["project.task"].browse(task_id)
-        if world_type:
-            world_type_id = self.env["gc.builder.world.type"].search(
-                [("name", "=ilike", world_type)], limit=1
-            )
-        else:
+        world_type_id = self.env["gc.builder.world.type"].search(
+            [("name", "=ilike", world_type)], limit=1
+        )
+        if not world_type_id:
             world_type_id = self.env["gc.builder.world.type"].search(
                 [("default", "=", True)], limit=1
             )
