@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.tools.mail import html2plaintext
 
 
 class ProjectTask(models.Model):
@@ -11,7 +12,7 @@ class ProjectTask(models.Model):
         return {
             "id": task.id,
             "name": task.name,
-            "description": task.description,
+            "description": html2plaintext(task.description),
         }
 
     @api.model
