@@ -16,12 +16,11 @@ class GCBuilderWorld(models.Model):
     world_type_id = fields.Many2one(
         comodel_name="gc.builder.world.type", default=_default_world_type_id
     )
-
     team_ids = fields.Many2many(
-        comodel_name="gc.team", relation="team_builder_world_rel"
+        comodel_name="gc.team", relation="builder_team_builder_world_rel"
     )
     team_manager_ids = fields.Many2many(
-        comodel_name="gc.team", relation="manager_team_builder_world_rel"
+        comodel_name="gc.team", relation="builder_manager_team_builder_world_rel"
     )
     user_ids = fields.Many2many(
         comodel_name="gc.user", relation="builder_user_builder_world_rel"
@@ -48,8 +47,12 @@ class GCBuilderWorld(models.Model):
         user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         task_id = self.env["project.task"].browse(task_id)
         world_type_id = self.env["gc.builder.world.type"].search(
-            [("name", "=ilike", world_type)]
+            [("name", "=ilike", world_type)], limit=1
         )
+        if not world_type_id:
+            world_type_id = self.env["gc.builder.world.type"].search(
+                [("default", "=", True)], limit=1
+            )
         return self.create(
             {
                 "name": name,
@@ -69,8 +72,12 @@ class GCBuilderWorld(models.Model):
             team_id = user_id.team_user_id
         task_id = self.env["project.task"].browse(task_id)
         world_type_id = self.env["gc.builder.world.type"].search(
-            [("name", "=ilike", world_type)]
+            [("name", "=ilike", world_type)], limit=1
         )
+        if not world_type_id:
+            world_type_id = self.env["gc.builder.world.type"].search(
+                [("default", "=", True)], limit=1
+            )
         return self.create(
             {
                 "name": name,
@@ -227,4 +234,6 @@ class GCBuilderWorld(models.Model):
     @api.model
     def get_world(self, w_id):
         world_id = self.browse(w_id)
-        return self.return_world(world_id)
+        if world_id:
+            return self.return_world(world_id)
+        return []
