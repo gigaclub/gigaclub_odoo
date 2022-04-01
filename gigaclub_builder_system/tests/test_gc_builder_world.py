@@ -81,6 +81,23 @@ class TestGCBuilderWorld(SavepointCase):
         self.assertEqual(gc_builder_world.task_id, self.project_task)
         self.assertEqual(gc_builder_world.user_manager_ids, self.gc_user)
 
+        res = GCBuilderWorld.create_as_user(
+            player_uuid="123",
+            task_id=self.project_task.id,
+            name="Test World",
+            world_type="",
+        )
+        self.assertTrue(isinstance(res, int))
+        gc_builder_world = GCBuilderWorld.browse(res)
+        self.assertTrue(gc_builder_world)
+        self.assertEqual(gc_builder_world.name, "Test World")
+        self.assertEqual(
+            gc_builder_world.world_type_id,
+            self.env["gc.builder.world.type"].search([("default", "=", True)], limit=1),
+        )
+        self.assertEqual(gc_builder_world.task_id, self.project_task)
+        self.assertEqual(gc_builder_world.user_manager_ids, self.gc_user)
+
     def test_create_as_team(self):
         GCBuilderWorld = self.env["gc.builder.world"]
         res = GCBuilderWorld.create_as_team(
@@ -96,6 +113,23 @@ class TestGCBuilderWorld(SavepointCase):
         self.assertEqual(
             gc_builder_world.world_type_id,
             self.env["gc.builder.world.type"].search([("name", "=", "normal")]),
+        )
+        self.assertEqual(gc_builder_world.task_id, self.project_task)
+        self.assertEqual(gc_builder_world.team_manager_ids, self.gc_team_manager)
+
+        res = GCBuilderWorld.create_as_team(
+            player_uuid="123",
+            task_id=self.project_task.id,
+            name="Test World",
+            world_type="",
+        )
+        self.assertTrue(isinstance(res, int))
+        gc_builder_world = GCBuilderWorld.browse(res)
+        self.assertTrue(gc_builder_world)
+        self.assertEqual(gc_builder_world.name, "Test World")
+        self.assertEqual(
+            gc_builder_world.world_type_id,
+            self.env["gc.builder.world.type"].search([("default", "=", True)], limit=1),
         )
         self.assertEqual(gc_builder_world.task_id, self.project_task)
         self.assertEqual(gc_builder_world.team_manager_ids, self.gc_team_manager)
