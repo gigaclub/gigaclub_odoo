@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="gc_permission_model_tree_view" model="ir.ui.view">
+            <field name="name">gc.permission.model.tree</field>
+            <field name="model">gc.permission.model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="model_id" />
+                    <field name="permission_model_entry_ids" widget="many2many_tags" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="gc_permission_model_form_view" model="ir.ui.view">
+            <field name="name">gc.permission.model.form</field>
+            <field name="model">gc.permission.model</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="name" />
+                    <field name="model_id" />
+                    <field name="permission_model_entry_ids" />
+                </form>
+            </field>
+        </record>
+
+        <record id="gc_permission_model_action" model="ir.actions.act_window">
+            <field name="name">Permission Model</field>
+            <field name="res_model">gc.permission.model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+      id="gc_menu_permission_model"
+      name="Permission Models"
+      parent="gc_menu_permission_system"
+      action="gc_permission_model_action"
+    />
+
+    </data>
+</odoo>

@@ -15,7 +15,7 @@
         </record>
 
         <record model="ir.ui.view" id="gc_user_form_view">
-            <field name="name">gc.user.from.view</field>
+            <field name="name">gc.user.form.view</field>
             <field name="model">gc.user</field>
             <field name="arch" type="xml">
                 <form>

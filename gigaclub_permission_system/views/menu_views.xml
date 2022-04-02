@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <menuitem
+      id="gc_menu_permission_system"
+      name="Permission System"
+      parent="gigaclub_base.gc_menu_root"
+    />
+
+    </data>
+</odoo>

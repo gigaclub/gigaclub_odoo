@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record
+      id="gc_user_tree_view_inherit_gigaclub_permission_system"
+      model="ir.ui.view"
+    >
+            <field name="name">gc.user.tree.inherit.gigaclub_permission_system</field>
+            <field name="model">gc.user</field>
+            <field name="inherit_id" ref="gigaclub_base.gc_user_tree_view" />
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="permission_group_ids" />
+                    <field name="permission_profile_ids" />
+                </field>
+            </field>
+        </record>
+
+        <record
+      id="gc_user_form_view_inherit_gigaclub_permission_system"
+      model="ir.ui.view"
+    >
+            <field name="name">gc.user.form.inherit.gigaclub_permission_system</field>
+            <field name="model">gc.user</field>
+            <field name="inherit_id" ref="gigaclub_base.gc_user_form_view" />
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="permission_group_ids" />
+                    <field name="permission_profile_ids" />
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

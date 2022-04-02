@@ -7,7 +7,14 @@
     "license": "AGPL-3",
     "depends": ["gigaclub_base"],
     "data": ["security/ir.model.access.csv"],
-    "demo": [],
+    "demo": [
+        "views/menu_views.xml",
+        "views/gc_permission_group_views.xml",
+        "views/gc_permission_model_entry_views.xml",
+        "views/gc_permission_model_views.xml",
+        "views/gc_permission_profile_views.xml",
+        "views/gc_user_views.xml",
+    ],
     "installable": True,
     "auto_install": False,
 }
