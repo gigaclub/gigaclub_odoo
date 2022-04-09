@@ -2,14 +2,6 @@
 <odoo>
     <data>
 
-        <reocird
-      id="gc_permission_model_entry_gc_team_administrator"
-      model="gc_permission_system.gc_permission_model_entry"
-    >
-            <field name="name">gigaclub_team.*</field>
-            <field name="permission_model_id" ref="gc_permission_model_gc_team" />
-        </reocird>
-
         <record
       id="gc_permission_model_entry_gc_team_edit_team"
       model="gc_permission_system.gc_permission_model_entry"

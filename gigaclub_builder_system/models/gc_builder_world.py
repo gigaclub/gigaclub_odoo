@@ -16,18 +16,14 @@ class GCBuilderWorld(models.Model):
     world_type_id = fields.Many2one(
         comodel_name="gc.builder.world.type", default=_default_world_type_id
     )
+
     team_ids = fields.Many2many(
         comodel_name="gc.team", relation="builder_team_builder_world_rel"
-    )
-    team_manager_ids = fields.Many2many(
-        comodel_name="gc.team", relation="builder_manager_team_builder_world_rel"
     )
     user_ids = fields.Many2many(
         comodel_name="gc.user", relation="builder_user_builder_world_rel"
     )
-    user_manager_ids = fields.Many2many(
-        comodel_name="gc.user", relation="builder_manager_user_builder_world_rel"
-    )
+
     task_id = fields.Many2one(comodel_name="project.task", required=True)
 
     @api.constrains("user_ids", "user_manager_ids")

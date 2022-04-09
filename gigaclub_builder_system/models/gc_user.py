@@ -8,10 +8,6 @@ class GCUser(models.Model):
     world_ids = fields.Many2many(
         comodel_name="gc.builder.world", relation="builder_user_builder_world_rel"
     )
-    world_manager_ids = fields.Many2many(
-        comodel_name="gc.builder.world",
-        relation="builder_manager_user_builder_world_rel",
-    )
 
     @api.constrains("world_ids", "world_manager_ids")
     def _check_team_user_manager_id(self):

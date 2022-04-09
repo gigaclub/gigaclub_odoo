@@ -3,31 +3,15 @@ from odoo import api, fields, models
 
 class GCTeam(models.Model):
     _name = "gc.team"
+    _inherit = "gc.permission.mixin"
     _description = "GigaClub Team"
 
     name = fields.Char(required=True)
     description = fields.Text()
 
-    user_ids = fields.One2many(
-        comodel_name="gc.user", inverse_name="team_user_id", inverse="_inverse_users"
-    )
-    manager_ids = fields.One2many(
-        comodel_name="gc.user", inverse_name="team_manager_id", inverse="_inverse_users"
-    )
-    permission_group_ids = fields.One2many(
-        comodel_name="gc.permission.group", inverse_name="team_id"
-    )
+    user_ids = fields.One2many(comodel_name="gc.user", inverse_name="team_id")
 
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]
-
-    def _inverse_users(self):
-        for rec in self:
-            if len(rec.manager_ids) == 0 and len(rec.user_ids) > 0:
-                user_id = rec.user_ids[0]
-                rec.user_ids -= user_id
-                rec.manager_ids |= user_id
-            if not rec.user_ids and not rec.manager_ids:
-                rec.unlink()
 
     # Status Codes:
     # 3: User already in team

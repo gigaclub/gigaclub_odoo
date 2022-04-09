@@ -9,7 +9,7 @@ class GCDiscordActionWorker(models.Model):
     event_worker_ids = fields.One2many(
         comodel_name="gc.discord.event.worker", inverse_name="action_worker_id"
     )
-    gc_user_id = fields.Many2one(comodel_name="gc.user")
+    user_id = fields.Many2one(comodel_name="gc.user")
     current_event_worker_id = fields.Many2one(
         comodel_name="gc.discord.event.worker",
         compute="_compute_current_event",
@@ -42,7 +42,7 @@ class GCDiscordActionWorker(models.Model):
             {
                 "action_id": action_id.id,
                 "event_worker_ids": [[6, 0, event_worker_ids.ids]],
-                "gc_user_id": user_id.id,
+                "user_id": user_id.id,
             }
         )
         return res

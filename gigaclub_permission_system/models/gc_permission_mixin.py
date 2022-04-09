@@ -1,46 +1,22 @@
-from odoo import api, models
+from odoo import fields, models
 
 
 class GCPermissionMixin(models.AbstractModel):
     _name = "gc.permission.mixin"
     _description = "GigaClub Permission Mixin"
 
-    @api.model
-    def create_permission_group(self):
-        pass
+    permission_group_ids = fields.Many2many(comodel_name="gc.permission.group")
+    permission_profile_ids = fields.Many2many(comodel_name="gc.permission.profile")
 
-    @api.model
-    def delete_permission_group(self):
-        pass
+    def get_permissions(self):
+        self.ensure_one()
+        permission_model_entries = self.permission_group_ids.mapped(
+            "permission_profile_ids.permission_model_ids.permission_model_entry_ids"
+        ) | self.permission_profile_ids.mapped(
+            "permission_model_ids.permission_model_entry_ids"
+        )
+        return permission_model_entries
 
-    @api.model
-    def add_user_to_permission_group(self):
-        pass
-
-    @api.model
-    def remove_user_from_permission_group(self):
-        pass
-
-    @api.model
-    def create_permission_profile_for_user(self):
-        pass
-
-    @api.model
-    def edit_permission_profile_of_user(self):
-        pass
-
-    @api.model
-    def delete_permission_profile_from_user(self):
-        pass
-
-    @api.model
-    def create_permission_profile_for_group(self):
-        pass
-
-    @api.model
-    def edit_permission_profile_of_group(self):
-        pass
-
-    @api.model
-    def delete_permission_profile_from_group(self):
-        pass
+    def has_permission(self, permission):
+        self.ensure_one()
+        return permission in self.get_permissions()

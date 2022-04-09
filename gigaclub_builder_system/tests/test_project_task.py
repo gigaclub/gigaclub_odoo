@@ -40,8 +40,8 @@ class TestProjectTask(SavepointCase):
 
     def test__compute_gc_user_ids(self):
         self.gc_builder_world.user_ids |= self.gc_user
-        self.assertTrue(self.gc_user in self.project_task.gc_user_ids)
+        self.assertTrue(self.gc_user in self.project_task.user_ids)
 
     def test__compute_gc_team_ids(self):
         self.gc_builder_world.team_ids |= self.gc_team
-        self.assertTrue(self.gc_team in self.project_task.gc_team_ids)
+        self.assertTrue(self.gc_team in self.project_task.team_ids)

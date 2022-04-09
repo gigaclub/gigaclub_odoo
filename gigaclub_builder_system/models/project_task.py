@@ -9,22 +9,22 @@ class ProjectTask(models.Model):
 
     world_ids = fields.One2many(comodel_name="gc.builder.world", inverse_name="task_id")
 
-    gc_user_ids = fields.Many2many(compute="_compute_gc_user_ids", store=True)
-    gc_team_ids = fields.Many2many(compute="_compute_gc_team_ids", store=True)
+    user_ids = fields.Many2many(compute="_compute_user_ids", store=True)
+    team_ids = fields.Many2many(compute="_compute_team_ids", store=True)
 
     @api.depends("world_ids.user_ids", "world_ids.user_manager_ids")
-    def _compute_gc_user_ids(self):
+    def _compute_user_ids(self):
         for task in self.filtered("world_ids"):
-            task.gc_user_ids = task.world_ids.mapped(
-                "user_ids"
-            ) | task.world_ids.mapped("user_manager_ids")
+            task.user_ids = task.world_ids.mapped("user_ids") | task.world_ids.mapped(
+                "user_manager_ids"
+            )
 
     @api.depends("world_ids.team_ids", "world_ids.team_manager_ids")
-    def _compute_gc_team_ids(self):
+    def _compute_team_ids(self):
         for task in self.filtered("world_ids"):
-            task.gc_team_ids = task.world_ids.mapped(
-                "team_ids"
-            ) | task.world_ids.mapped("team_manager_ids")
+            task.team_ids = task.world_ids.mapped("team_ids") | task.world_ids.mapped(
+                "team_manager_ids"
+            )
 
     def return_task(self, task):
         res = super().return_task(task)

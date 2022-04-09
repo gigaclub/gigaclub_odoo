@@ -8,10 +8,6 @@ class GCTeam(models.Model):
     world_ids = fields.Many2many(
         comodel_name="gc.builder.world", relation="builder_team_builder_world_rel"
     )
-    world_manager_ids = fields.Many2many(
-        comodel_name="gc.builder.world",
-        relation="builder_manager_team_builder_world_rel",
-    )
 
     def return_team(self, team):
         res = super().return_team(team)

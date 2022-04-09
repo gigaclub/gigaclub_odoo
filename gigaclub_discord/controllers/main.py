@@ -76,7 +76,7 @@ class MainController(http.Controller):
                         ].search(
                             [
                                 ("event_id.event_type", "=", "guild_join"),
-                                ("action_worker_id.gc_user_id", "=", user.id),
+                                ("action_worker_id.user_id", "=", user.id),
                                 ("current", "=", True),
                             ]
                         )
@@ -278,7 +278,7 @@ class MainController(http.Controller):
                         "res.company"
                     ].browse(1)
                     for guild in self.guilds:
-                        if guild.id == int(company_id.gc_discord_server_id):
+                        if guild.id == int(company_id.discord_server_id):
                             for role in guild.roles:
                                 await self.register_role(role)
                             for channel in guild.channels:
@@ -386,7 +386,7 @@ class MainController(http.Controller):
                         ].search(
                             [
                                 ("event_id.event_type", "=", "get_private_message"),
-                                ("action_worker_id.gc_user_id", "=", user.id),
+                                ("action_worker_id.user_id", "=", user.id),
                                 ("current", "=", True),
                             ]
                         )
@@ -401,8 +401,8 @@ class MainController(http.Controller):
             if user:
                 await user.send(message)
 
-    async def bot_async_start(self, gc_discord_bot_token):
-        await self.client.start(gc_discord_bot_token)
+    async def bot_async_start(self, discord_bot_token):
+        await self.client.start(discord_bot_token)
 
     def bot_loop_start(self, loop):
         loop.run_forever()
