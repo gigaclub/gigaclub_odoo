@@ -14,6 +14,9 @@ class GCTeam(models.Model):
     manager_ids = fields.One2many(
         comodel_name="gc.user", inverse_name="team_manager_id", inverse="_inverse_users"
     )
+    permission_group_ids = fields.One2many(
+        comodel_name="gc.permission.group", inverse_name="team_id"
+    )
 
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <reocird
+      id="gc_permission_model_entry_gc_team_administrator"
+      model="gc_permission_system.gc_permission_model_entry"
+    >
+            <field name="name">gigaclub_team.*</field>
+            <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+        </reocird>
+
+        <record
+      id="gc_permission_model_entry_gc_team_edit_team"
+      model="gc_permission_system.gc_permission_model_entry"
+    >
+            <field name="name">gigaclub_team.edit_team</field>
+            <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_team_add_member"
+      model="gc_permission_system.gc_permission_model_entry"
+    >
+            <field name="name">gigaclub_team.invite_member</field>
+            <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_team_kick_member"
+      model="gc_permission_system.gc_permission_model_entry"
+    >
+            <field name="name">gigaclub_team.kick_member</field>
+            <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+        </record>
+
+    </data>
+</odoo>
