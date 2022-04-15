@@ -9,9 +9,6 @@ class ProjectTask(models.Model):
 
     world_ids = fields.One2many(comodel_name="gc.builder.world", inverse_name="task_id")
 
-    user_ids = fields.Many2many(compute="_compute_user_ids", store=True)
-    team_ids = fields.Many2many(compute="_compute_team_ids", store=True)
-
     @api.depends("world_ids.user_ids", "world_ids.user_manager_ids")
     def _compute_user_ids(self):
         for task in self.filtered("world_ids"):

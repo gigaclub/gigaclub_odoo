@@ -17,14 +17,9 @@ class GCBuilderWorld(models.Model):
         comodel_name="gc.builder.world.type", default=_default_world_type_id
     )
 
-    team_ids = fields.Many2many(
-        comodel_name="gc.team", relation="builder_team_builder_world_rel"
-    )
-    user_ids = fields.Many2many(
-        comodel_name="gc.user", relation="builder_user_builder_world_rel"
-    )
+    task_id = fields.Many2one(comodel_name="project.task", required=True, index=True)
 
-    task_id = fields.Many2one(comodel_name="project.task", required=True)
+    permission_connector_ids = fields.Many2many(comodel_name="gc.permission.connector")
 
     @api.constrains("user_ids", "user_manager_ids")
     def _check_user_and_managers(self):
