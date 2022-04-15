@@ -1,9 +1,11 @@
 from odoo import fields, models
 
 
-class GCPermissionMixin(models.AbstractModel):
-    _name = "gc.permission.mixin"
-    _description = "GigaClub Permission Mixin"
+class GCPermissionConnector(models.Model):
+    _name = "gc.permission.connector"
+    _description = "GigaClub Permission Connector"
+
+    user_id = fields.Many2one(comodel_name="gc.user")
 
     permission_group_ids = fields.Many2many(comodel_name="gc.permission.group")
     permission_profile_ids = fields.Many2many(comodel_name="gc.permission.profile")

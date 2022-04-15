@@ -1,6 +1,7 @@
-from odoo import models
+from odoo import fields, models
 
 
 class GCUser(models.Model):
     _name = "gc.user"
-    _inherit = ["gc.user", "gc.permission.mixin"]
+
+    permission_connector_ids = fields.Many2many(comodel_name="gc.permission.connector")

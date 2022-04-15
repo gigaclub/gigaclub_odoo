@@ -11,8 +11,7 @@
             <field name="inherit_id" ref="gigaclub_base.gc_user_tree_view" />
             <field name="arch" type="xml">
                 <field name="state" position="after">
-                    <field name="permission_group_ids" />
-                    <field name="permission_profile_ids" />
+                    <field name="permission_connector_ids" />
                 </field>
             </field>
         </record>
@@ -26,8 +25,7 @@
             <field name="inherit_id" ref="gigaclub_base.gc_user_form_view" />
             <field name="arch" type="xml">
                 <field name="state" position="after">
-                    <field name="permission_group_ids" />
-                    <field name="permission_profile_ids" />
+                    <field name="permission_connector_ids" />
                 </field>
             </field>
         </record>
