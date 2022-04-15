@@ -18,8 +18,10 @@
             <field name="model">gc.permission.model.entry</field>
             <field name="arch" type="xml">
                 <form>
-                    <field name="name" />
-                    <field name="permission_model_id" />
+                    <group>
+                        <field name="name" />
+                        <field name="permission_model_id" />
+                    </group>
                 </form>
             </field>
         </record>
