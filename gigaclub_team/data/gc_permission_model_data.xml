@@ -3,6 +3,7 @@
     <data>
 
         <record id="gc_permission_model_gc_team" model="gc.permission.model">
+            <field name="name">gc_team</field>
             <field name="model_id" ref="model_gc_team" />
         </record>
 

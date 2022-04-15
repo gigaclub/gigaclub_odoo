@@ -24,7 +24,10 @@
             </field>
         </record>
 
-        <record id="gc_permission_profile_entry_template_action" model="ir.ui.view">
+        <record
+      id="gc_permission_profile_entry_template_action"
+      model="ir.actions.act_window"
+    >
             <field name="name">Permission Profile Entry Template</field>
             <field name="res_model">gc.permission.profile.entry.template</field>
             <field name="view_mode">tree,form</field>
@@ -36,7 +39,6 @@
       action="gc_permission_profile_entry_template_action"
       parent="gc_menu_permission_system"
     />
-
 
     </data>
 </odoo>

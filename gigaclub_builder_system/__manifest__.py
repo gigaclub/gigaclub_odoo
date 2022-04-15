@@ -10,7 +10,7 @@
     "data": [
         "data/gc_builder_world_type_data.xml",
         "views/project_task.xml",
-        "views/gc_team_view.xml",
+        "views/gc_team_views.xml",
         "views/gc_user_view.xml",
         "views/gc_builder_world_view.xml",
         "views/gc_builder_world_type_view.xml",
