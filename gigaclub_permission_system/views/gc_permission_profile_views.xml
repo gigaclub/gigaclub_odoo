@@ -7,7 +7,11 @@
             <field name="model">gc.permission.profile</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="permission_model_ids" widget="many2many_tags" />
+                    <field
+            name="permission_profile_entry_ids"
+            widget="many2many_tags"
+          />
+                    <field name="permission_profile_template_id" />
                 </tree>
             </field>
         </record>
@@ -17,7 +21,11 @@
             <field name="model">gc.permission.profile</field>
             <field name="arch" type="xml">
                 <form>
-                    <field name="permission_model_ids" />
+                    <field
+            name="permission_profile_entry_ids"
+            widget="many2many_tags"
+          />
+                    <field name="permission_profile_template_id" />
                 </form>
             </field>
         </record>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="gc_permission_connector_tree_view" model="ir.ui.view">
+            <field name="name">gc.permission.connector.tree</field>
+            <field name="model">gc.permission.connector</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="user_id" />
+                    <field name="permission_group_ids" />
+                    <field name="permission_profile_ids" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="gc_permission_connector_form_view" model="ir.ui.view">
+            <field name="name">gc.permission.connector.form</field>
+            <field name="model">gc.permission.connector</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="user_id" />
+                    <field name="permission_group_ids" />
+                    <field name="permission_profile_ids" />
+                </form>
+            </field>
+        </record>
+
+        <record id="gc_permission_connector_action" model="ir.actions.act_window">
+            <field name="name">Permission Connector</field>
+            <field name="res_model">gc.permission.connector</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+      id="gc_menu_permission_connector"
+      name="Permission Connectors"
+      parent="gc_menu_permission_system"
+      action="gc_permission_connector_action"
+    />
+
+    </data>
+</odoo>

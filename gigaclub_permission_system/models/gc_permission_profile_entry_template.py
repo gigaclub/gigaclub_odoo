@@ -8,6 +8,6 @@ class GCPermissionProfileEntryTemplate(models.Model):
     permission_model_entry_id = fields.Many2one(
         comodel_name="gc.permission.model.entry", required=True
     )
-    gc_permission_profile_template_id = fields.Many2one(
+    permission_profile_template_id = fields.Many2one(
         comodel_name="gc.permission.profile.template", required=True, index=True
     )

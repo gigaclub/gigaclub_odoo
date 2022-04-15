@@ -8,8 +8,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="permission_profile_id" />
-                    <field name="permission_model_entry_id" />
-                    <field name="allowed" />
+                    <field name="permission_profile_entry_template_id" />
                 </tree>
             </field>
         </record>
@@ -20,8 +19,7 @@
             <field name="arch" type="xml">
                 <form>
                     <field name="permission_profile_id" />
-                    <field name="permission_model_entry_id" />
-                    <field name="allowed" />
+                    <field name="permission_profile_entry_template_id" />
                 </form>
             </field>
         </record>

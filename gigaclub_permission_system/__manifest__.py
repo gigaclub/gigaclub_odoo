@@ -9,10 +9,13 @@
     "data": [
         "security/ir.model.access.csv",
         "views/menu_views.xml",
+        "views/gc_permission_connector_views.xml",
         "views/gc_permission_group_views.xml",
         "views/gc_permission_model_entry_views.xml",
         "views/gc_permission_model_views.xml",
+        "views/gc_permission_profile_entry_template_views.xml",
         "views/gc_permission_profile_entry_views.xml",
+        "views/gc_permission_profile_template_views.xml",
         "views/gc_permission_profile_views.xml",
         "views/gc_user_views.xml",
     ],
