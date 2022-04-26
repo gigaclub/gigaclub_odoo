@@ -9,6 +9,7 @@
     "depends": ["gigaclub_requests", "gigaclub_permission_system"],
     "data": [
         "data/gc_permission_model_data.xml",
+        "data/gc_permission_model_entry_data.xml",
         "views/gc_team_views.xml",
         "views/menu_views.xml",
         "security/ir.model.access.csv",
