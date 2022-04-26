@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record
+      id="gc_permission_profile_template_default"
+      model="gc.permission.profile.template"
+    >
+            <field
+        name="permission_model_ids"
+        eval="[(4, ref('gc_permission_model_gc_team'))]"
+      />
+        </record>
+
+    </data>
+</odoo>
