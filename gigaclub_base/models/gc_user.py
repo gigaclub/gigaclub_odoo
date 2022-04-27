@@ -6,7 +6,7 @@ class GCUser(models.Model):
     _description = "GigaClub User"
 
     name = fields.Char()
-    mc_uuid = fields.Char()
+    mc_uuid = fields.Char(index=True)
     state = fields.Selection(
         selection=[("online", "Online"), ("offline", "Offline")], default="offline"
     )

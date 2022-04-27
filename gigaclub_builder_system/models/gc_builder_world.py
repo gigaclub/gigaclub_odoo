@@ -19,7 +19,9 @@ class GCBuilderWorld(models.Model):
 
     task_id = fields.Many2one(comodel_name="project.task", required=True, index=True)
 
-    permission_connector_ids = fields.Many2many(comodel_name="gc.permission.connector")
+    permission_connector_ids = fields.One2many(
+        comodel_name="gc.permission.connector", inverse_name="world_id", index=True
+    )
 
     @api.constrains("user_ids", "user_manager_ids")
     def _check_user_and_managers(self):
