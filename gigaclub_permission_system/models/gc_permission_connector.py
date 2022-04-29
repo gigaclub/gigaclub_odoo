@@ -13,12 +13,17 @@ class GCPermissionConnector(models.Model):
     def get_permissions(self):
         self.ensure_one()
         permission_model_entries = self.permission_group_ids.mapped(
-            "permission_profile_ids.permission_model_ids.permission_model_entry_ids"
+            "permission_profile_ids.permission_profile_entry_template_ids.permission_model_entry_id"  # noqa: B950
         ) | self.permission_profile_ids.mapped(
-            "permission_model_ids.permission_model_entry_ids"
+            "permission_profile_entry_template_ids.permission_model_entry_id"
         )
         return permission_model_entries
 
     def has_permission(self, permission):
         self.ensure_one()
-        return permission in self.get_permissions()
+        return (
+            self.env["gc.permission.model.entry"].search(
+                [("name", "=ilike", permission)], limit=1
+            )
+            in self.get_permissions()
+        )

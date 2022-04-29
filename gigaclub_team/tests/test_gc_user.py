@@ -1,4 +1,3 @@
-from odoo.exceptions import ValidationError
 from odoo.tests import SavepointCase
 
 
@@ -18,12 +17,12 @@ class TestGCUser(SavepointCase):
             }
         )
 
-    def test__check_team_user_manager_id(self):
-        self.user.team_manager_id = self.team
-        with self.assertRaises(ValidationError):
-            self.user.team_user_id = self.team
-        self.user.team_manager_id = False
-
-        self.user.team_user_id = self.team
-        with self.assertRaises(ValidationError):
-            self.user.team_manager_id = self.team
+    # def test__check_team_user_manager_id(self):
+    #     self.user.team_manager_id = self.team
+    #     with self.assertRaises(ValidationError):
+    #         self.user.team_user_id = self.team
+    #     self.user.team_manager_id = False
+    #
+    #     self.user.team_user_id = self.team
+    #     with self.assertRaises(ValidationError):
+    #         self.user.team_manager_id = self.team

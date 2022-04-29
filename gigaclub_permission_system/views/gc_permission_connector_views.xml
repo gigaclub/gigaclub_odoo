@@ -7,7 +7,7 @@
             <field name="model">gc.permission.connector</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="user_ids" />
+                    <field name="user_id" />
                     <field name="permission_group_ids" />
                     <field name="permission_profile_ids" />
                 </tree>
@@ -20,7 +20,7 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="user_ids" />
+                        <field name="user_id" />
                         <field name="permission_group_ids" />
                         <field name="permission_profile_ids" />
                     </group>

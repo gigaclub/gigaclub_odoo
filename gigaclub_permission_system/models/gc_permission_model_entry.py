@@ -8,4 +8,4 @@ class GCPermissionModelEntry(models.Model):
     permission_model_id = fields.Many2one(
         comodel_name="gc.permission.model", required=True, index=True
     )
-    name = fields.Char(required=True)
+    name = fields.Char(required=True, index=True)

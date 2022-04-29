@@ -14,8 +14,8 @@ class GCTeam(models.Model):
 
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]
 
+    @api.model
     def _check_access_gigaclub_team(self, player_uuid, permission):
-        self.ensure_one()
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         team_connector = user.permission_connector_ids.filtered("team_id")[:1]
         if team_connector:
@@ -30,13 +30,36 @@ class GCTeam(models.Model):
     # 0: Team created successfully
     @api.model
     def create_team(self, player_uuid, name, description=False):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        if user_id.team_user_id or user_id.team_manager_id:
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        if user.permission_connector_ids.mapped("team_id"):
             return 3
         if self.search_count([("name", "=ilike", name)]):
             return 2
         team_id = self.create(
-            {"name": name, "description": description, "manager_ids": [(4, user_id.id)]}
+            {
+                "name": name,
+                "description": description,
+                "permission_connector_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "user_id": user.id,
+                            "permission_profile_ids": [
+                                (
+                                    0,
+                                    0,
+                                    {
+                                        "permission_profile_template_id": self.env.ref(
+                                            "gigaclub_team.gc_permission_profile_template_default"  # noqa: B950
+                                        ).id,
+                                    },
+                                )
+                            ],
+                        },
+                    )
+                ],
+            }
         )
         if not team_id:
             return 1
