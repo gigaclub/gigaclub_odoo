@@ -86,14 +86,10 @@ class GCTeam(models.Model):
     # 0: Success
     @api.model
     def leave_team(self, player_uuid):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        if not user_id.team_user_id and not user_id.team_manager_id:
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        if not user.permission_connector_ids.mapped("team_id"):
             return 1
-        if user_id.team_manager_id:
-            user_id.team_manager_id = False
-        elif user_id.team_user_id:
-            user_id.team_user_id = False
-        self.search([])._inverse_users()
+        user.permission_connector_ids.filtered("team_id").unlink()
         return 0
 
     # Status Codes:

@@ -114,71 +114,143 @@ class TestGCTeam(SavepointCase):
         res = GCTeam.edit_team("test2", "test3", "description")
         self.assertEqual(res, 1, "res should be 1")
 
-    # def test_leave_team(self):
-    #     GCTeam = self.env["gc.team"]
-    #     GCUser = self.env["gc.user"]
-    #     GCUser.create(
-    #         {
-    #             "name": "Test2",
-    #             "mc_uuid": "test2",
-    #         }
-    #     )
-    #     self.team.manager_ids |= self.user
-    #     res = GCTeam.leave_team("test")
-    #     self.assertEqual(res, 0, "res should be 0")
-    #     self.assertFalse(self.user.team_manager_id, "User should not be a manager")
-    #     res = GCTeam.leave_team("test2")
-    #     self.assertEqual(res, 1, "res should be 1")
-    #
-    # def test_add_member(self):
-    #     GCTeam = self.env["gc.team"]
-    #     GCUser = self.env["gc.user"]
-    #     self.team.manager_ids |= self.user
-    #     user_to_add = GCUser.create(
-    #         {
-    #             "name": "Test2",
-    #             "mc_uuid": "test2",
-    #         }
-    #     )
-    #     res = GCTeam.add_member("test", "test2")
-    #     self.assertEqual(res, 0, "res should be 0")
-    #     self.assertEqual(
-    #         self.team.user_ids, user_to_add, "Team should have user as member"
-    #     )
-    #     res = GCTeam.add_member("test", "test2")
-    #     self.assertEqual(res, 1, "res should be 1")
-    #     self.user.team_manager_id = False
-    #     self.user.team_user_id = self.team
-    #     res = GCTeam.add_member("test", "test2")
-    #     self.assertEqual(res, 2, "res should be 2")
-    #     self.user.team_user_id = False
-    #     res = GCTeam.add_member("test", "test2")
-    #     self.assertEqual(res, 3, "res should be 3")
-    #
-    # def test_kick_member(self):
-    #     GCTeam = self.env["gc.team"]
-    #     GCUser = self.env["gc.user"]
-    #     self.team.manager_ids |= self.user
-    #     user_to_kick = GCUser.create(
-    #         {
-    #             "name": "Test2",
-    #             "mc_uuid": "test2",
-    #         }
-    #     )
-    #     self.team.user_ids |= user_to_kick
-    #     res = GCTeam.kick_member("test", "test2")
-    #     self.assertEqual(res, 0, "res should be 0")
-    #     self.assertFalse(user_to_kick.team_user_id, "User should not be a member")
-    #     res = GCTeam.kick_member("test", "test2")
-    #     self.assertEqual(res, 1, "res should be 1")
-    #     self.user.team_manager_id = False
-    #     self.user.team_user_id = self.team
-    #     res = GCTeam.kick_member("test", "test2")
-    #     self.assertEqual(res, 2, "res should be 2")
-    #     self.user.team_user_id = False
-    #     res = GCTeam.kick_member("test", "test2")
-    #     self.assertEqual(res, 3, "res should be 3")
-    #
+    def test_leave_team(self):
+        GCTeam = self.env["gc.team"]
+        GCUser = self.env["gc.user"]
+        GCUser.create(
+            {
+                "name": "Test2",
+                "mc_uuid": "test2",
+            }
+        )
+        self.team.permission_connector_ids = [
+            (
+                0,
+                0,
+                {
+                    "user_id": self.user.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_template_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_profile_template_default"
+                                ).id,
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        res = GCTeam.leave_team("test")
+        self.assertEqual(res, 0, "res should be 0")
+        self.assertFalse(
+            self.team.permission_connector_ids,
+            "User should not have any permission connectors",
+        )
+        res = GCTeam.leave_team("test2")
+        self.assertEqual(res, 1, "res should be 1")
+
+    def test_kick_member(self):
+        GCTeam = self.env["gc.team"]
+        GCUser = self.env["gc.user"]
+        self.team.permission_connector_ids = [
+            (
+                0,
+                0,
+                {
+                    "user_id": self.user.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_entry_template_ids": [
+                                    (
+                                        0,
+                                        0,
+                                        {
+                                            "permission_model_entry_id": self.env.ref(
+                                                "gigaclub_team.gc_permission_model_entry_gc_team_kick_member"  # noqa: B950
+                                            ).id,
+                                        },
+                                    )
+                                ],
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        user_to_kick = GCUser.create(
+            {
+                "name": "Test2",
+                "mc_uuid": "test2",
+            }
+        )
+        self.team.permission_connector_ids = [
+            (
+                0,
+                0,
+                {
+                    "user_id": user_to_kick.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_template_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_profile_template_default"
+                                ).id,
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        res = GCTeam.kick_member("test", "test2")
+        self.assertEqual(res, 0, "res should be 0")
+        self.assertFalse(
+            user_to_kick.permission_connector_ids, "User should not be a member"
+        )
+        res = GCTeam.kick_member("test", "test2")
+        self.assertEqual(res, 1, "res should be 1")
+        self.user.permission_connector_ids = False
+        self.team.permission_connector_ids = [
+            (
+                0,
+                0,
+                {
+                    "user_id": self.user.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_entry_template_ids": [
+                                    (
+                                        0,
+                                        0,
+                                        {
+                                            "permission_model_entry_id": self.env.ref(
+                                                "gigaclub_team.gc_permission_model_entry_gc_team_kick_member"  # noqa: B950
+                                            ).id,
+                                        },
+                                    )
+                                ],
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        res = GCTeam.kick_member("test", "test3")
+        self.assertEqual(res, 2, "res should be 2")
+        self.user.permission_connector_ids = False
+        res = GCTeam.kick_member("test", "test2")
+        self.assertEqual(res, 3, "res should be 3")
+
     # def test_promote_member(self):
     #     GCTeam = self.env["gc.team"]
     #     GCUser = self.env["gc.user"]
