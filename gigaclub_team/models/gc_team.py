@@ -18,9 +18,8 @@ class GCTeam(models.Model):
     def _check_access_gigaclub_team(self, player_uuid, permission):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         team_connector = user.permission_connector_ids.filtered("team_id")[:1]
-        if team_connector:
-            if team_connector.has_permission(permission):
-                return team_connector.team_id
+        if team_connector and team_connector.has_permission(permission):
+            return team_connector.team_id
         return False
 
     # Status Codes:
@@ -128,11 +127,7 @@ class GCTeam(models.Model):
     @api.model
     def get_team_by_member(self, player_uuid):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team = False
-        if user.team_user_id:
-            team = user.team_user_id
-        elif user.team_manager_id:
-            team = user.team_manager_id
+        team = user.permission_connector_ids.mapped("team_id")[:1]
         if team:
             return self.return_team(team)
         return False
