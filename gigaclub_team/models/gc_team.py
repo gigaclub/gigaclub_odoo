@@ -130,12 +130,14 @@ class GCTeam(models.Model):
         return {
             "name": team.name,
             "description": team.description,
-            "user_ids": [{"mc_uuid": u.mc_uuid} for u in team.user_ids],
-            "manager_ids": [{"mc_uuid": m.mc_uuid} for m in team.manager_ids],
+            "user_ids": [
+                {"mc_uuid": u.mc_uuid}
+                for u in team.permission_connector_ids.mapped("user_id")
+            ],
         }
 
     @api.model
-    def get_team_by_member(self, player_uuid):
+    def get_teams_by_member(self, player_uuid):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         teams = user.permission_connector_ids.mapped("team_id")
         if teams:

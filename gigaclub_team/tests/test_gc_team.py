@@ -333,93 +333,42 @@ class TestGCTeam(SavepointCase):
         res = GCTeam.kick_member("test", "Test", "test2")
         self.assertEqual(res, 3, "res should be 3")
 
-    # def test_promote_member(self):
-    #     GCTeam = self.env["gc.team"]
-    #     GCUser = self.env["gc.user"]
-    #     self.team.manager_ids |= self.user
-    #     user_to_promote = GCUser.create(
-    #         {
-    #             "name": "Test2",
-    #             "mc_uuid": "test2",
-    #         }
-    #     )
-    #     self.team.user_ids |= user_to_promote
-    #     res = GCTeam.promote_member("test", "test2")
-    #     self.assertEqual(res, 0, "res should be 0")
-    #     self.assertEqual(
-    #         user_to_promote.team_manager_id, self.team, "User should be a manager"
-    #     )
-    #     team2 = GCTeam.create(
-    #         {
-    #             "name": "test2",
-    #             "description": "test",
-    #         }
-    #     )
-    #     user_to_promote.team_manager_id = False
-    #     user_to_promote.team_user_id = team2
-    #     res = GCTeam.promote_member("test", "test2")
-    #     self.assertEqual(res, 1, "res should be 1")
-    #     user_to_promote.team_user_id = False
-    #     res = GCTeam.promote_member("test", "test2")
-    #     self.assertEqual(res, 2, "res should be 2")
-    #     self.user.team_manager_id = False
-    #     self.user.team_user_id = self.team
-    #     res = GCTeam.promote_member("test", "test2")
-    #     self.assertEqual(res, 3, "res should be 3")
-    #     self.user.team_user_id = False
-    #     res = GCTeam.promote_member("test", "test2")
-    #     self.assertEqual(res, 4, "res should be 4")
-    #
-    # def test_demote_member(self):
-    #     GCTeam = self.env["gc.team"]
-    #     GCUser = self.env["gc.user"]
-    #     self.team.manager_ids |= self.user
-    #     user_to_demote = GCUser.create(
-    #         {
-    #             "name": "Test2",
-    #             "mc_uuid": "test2",
-    #         }
-    #     )
-    #     self.team.manager_ids |= user_to_demote
-    #     res = GCTeam.demote_member("test", "test2")
-    #     self.assertEqual(res, 0, "res should be 0")
-    #     self.assertFalse(user_to_demote.team_manager_id, "User should not be a manager")
-    #     self.assertTrue(user_to_demote.team_user_id, "User should be a member")
-    #     team2 = GCTeam.create(
-    #         {
-    #             "name": "test2",
-    #             "description": "test",
-    #         }
-    #     )
-    #     user_to_demote.team_user_id = False
-    #     user_to_demote.team_manager_id = team2
-    #     res = GCTeam.demote_member("test", "test2")
-    #     self.assertEqual(res, 1, "res should be 1")
-    #     user_to_demote.team_manager_id = False
-    #     user_to_demote.team_user_id = self.team
-    #     res = GCTeam.demote_member("test", "test2")
-    #     self.assertEqual(res, 2, "res should be 2")
-    #     self.user.team_manager_id = False
-    #     self.user.team_user_id = self.team
-    #     res = GCTeam.demote_member("test", "test2")
-    #     self.assertEqual(res, 3, "res should be 3")
-    #     self.user.team_user_id = False
-    #     res = GCTeam.demote_member("test", "test2")
-    #     self.assertEqual(res, 4, "res should be 4")
-    #
-    # def test_get_team_by_member(self):
-    #     GCTeam = self.env["gc.team"]
-    #     self.user.team_manager_id = self.team
-    #     res = GCTeam.get_team_by_member("test")
-    #     self.assertTrue(res, "res should be True")
-    #     self.user.team_manager_id = False
-    #     self.user.team_user_id = self.team
-    #     res = GCTeam.get_team_by_member("test")
-    #     self.assertTrue(res, "res should be True")
-    #     self.user.team_user_id = False
-    #     res = GCTeam.get_team_by_member("test")
-    #     self.assertFalse(res, "res should be False")
-    #
+    def test_get_teams_by_member(self):
+        GCTeam = self.env["gc.team"]
+        self.team.permission_connector_ids = [
+            (
+                0,
+                0,
+                {
+                    "user_id": self.user.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_entry_template_ids": [
+                                    (
+                                        0,
+                                        0,
+                                        {
+                                            "permission_model_entry_id": self.env.ref(
+                                                "gigaclub_team.gc_permission_model_entry_gc_team_kick_member"  # noqa: B950
+                                            ).id,
+                                        },
+                                    )
+                                ],
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        res = GCTeam.get_teams_by_member("test")
+        self.assertTrue(res, "res should be True")
+        self.team.permission_connector_ids = False
+        res = GCTeam.get_teams_by_member("test")
+        self.assertFalse(res, "res should be False")
+
     # def test_get_all_teams(self):
     #     GCTeam = self.env["gc.team"]
     #     res = GCTeam.get_all_teams()
