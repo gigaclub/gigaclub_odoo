@@ -369,48 +369,48 @@ class TestGCTeam(SavepointCase):
         res = GCTeam.get_teams_by_member("test")
         self.assertFalse(res, "res should be False")
 
-    # def test_get_all_teams(self):
-    #     GCTeam = self.env["gc.team"]
-    #     res = GCTeam.get_all_teams()
-    #     self.assertTrue(res, "res should be True")
-    #     self.team.unlink()
-    #     res = GCTeam.get_all_teams()
-    #     self.assertFalse(res, "res should be False")
-    #
-    # def test_get_team(self):
-    #     GCTeam = self.env["gc.team"]
-    #     res = GCTeam.get_team("test")
-    #     self.assertTrue(res, "res should be True")
-    #     res = GCTeam.get_team("test2")
-    #     self.assertFalse(res, "res should be False")
-    #
-    # def test_invite_member(self):
-    #     GCTeam = self.env["gc.team"]
-    #     GCUser = self.env["gc.user"]
-    #     test2 = GCUser.create(
-    #         {
-    #             "name": "Test2",
-    #             "mc_uuid": "test2",
-    #         }
-    #     )
-    #     self.team.manager_ids |= self.user
-    #     res = GCTeam.invite_member("test", "test2")
-    #     self.assertEqual(res, 0, "res should be 0")
-    #     self.team.user_ids |= test2
-    #     res = GCTeam.invite_member("test", "test2")
-    #     self.assertEqual(res, 1, "res should be 1")
-    #     self.team.user_ids = False
-    #     self.team.manager_ids |= test2
-    #     res = GCTeam.invite_member("test", "test2")
-    #     self.assertEqual(res, 1, "res should be 1")
-    #     self.user.team_manager_id = False
-    #     self.user.team_user_id = self.team
-    #     res = GCTeam.invite_member("test", "test2")
-    #     self.assertEqual(res, 2, "res should be 2")
-    #     self.user.team_user_id = False
-    #     res = GCTeam.invite_member("test", "test2")
-    #     self.assertEqual(res, 3, "res should be 3")
-    #
+    def test_get_all_teams(self):
+        GCTeam = self.env["gc.team"]
+        res = GCTeam.get_all_teams()
+        self.assertTrue(res, "res should be True")
+        self.team.unlink()
+        res = GCTeam.get_all_teams()
+        self.assertFalse(res, "res should be False")
+
+    def test_get_team(self):
+        GCTeam = self.env["gc.team"]
+        res = GCTeam.get_team("test")
+        self.assertTrue(res, "res should be True")
+        res = GCTeam.get_team("test2")
+        self.assertFalse(res, "res should be False")
+
+    def test_invite_member(self):
+        GCTeam = self.env["gc.team"]
+        GCUser = self.env["gc.user"]
+        test2 = GCUser.create(
+            {
+                "name": "Test2",
+                "mc_uuid": "test2",
+            }
+        )
+        self.team.manager_ids |= self.user
+        res = GCTeam.invite_member("test", "test2")
+        self.assertEqual(res, 0, "res should be 0")
+        self.team.user_ids |= test2
+        res = GCTeam.invite_member("test", "test2")
+        self.assertEqual(res, 1, "res should be 1")
+        self.team.user_ids = False
+        self.team.manager_ids |= test2
+        res = GCTeam.invite_member("test", "test2")
+        self.assertEqual(res, 1, "res should be 1")
+        self.user.team_manager_id = False
+        self.user.team_user_id = self.team
+        res = GCTeam.invite_member("test", "test2")
+        self.assertEqual(res, 2, "res should be 2")
+        self.user.team_user_id = False
+        res = GCTeam.invite_member("test", "test2")
+        self.assertEqual(res, 3, "res should be 3")
+
     # def test_accept_request(self):
     #     GCTeam = self.env["gc.team"]
     #     GCUser = self.env["gc.user"]

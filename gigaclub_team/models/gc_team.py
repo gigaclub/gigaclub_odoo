@@ -160,9 +160,8 @@ class GCTeam(models.Model):
         return []
 
     # Status Codes:
-    # 3: No valid team found for this user
-    # 2: User to invite not found
-    # 1: User is already member of a team
+    # 2: No valid team found for this user
+    # 1: User to invite not found
     # 0: Success
     @api.model
     def invite_member(self, player_uuid, team, player_uuid_to_invite):
@@ -170,13 +169,11 @@ class GCTeam(models.Model):
             player_uuid, team, "gigaclub_team.invite_member"
         )
         if not team:
-            return 3
+            return 2
         user_to_invite = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_invite)]
         )
         if not user_to_invite:
-            return 2
-        if user_to_invite.permission_connector_ids.filtered("team_id"):
             return 1
         self.env["gc.request"].create(
             {
@@ -197,7 +194,7 @@ class GCTeam(models.Model):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         if not user.has_permission("gigaclub_team.accept_request"):
             return 3
-        team = self.search([("name", "=ilike", team_name)])
+        team = self.search([("name", "=ilike", team_name)], limit=1)
         if not team:
             return 2
         request = self.env["gc.request"].search(
@@ -228,7 +225,7 @@ class GCTeam(models.Model):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         if not user.has_permission("gigaclub_team.deny_request"):
             return 3
-        team = self.search([("name", "=ilike", team_name)])
+        team = self.search([("name", "=ilike", team_name)], limit=1)
         if not team:
             return 2
         request = self.env["gc.request"].search(
