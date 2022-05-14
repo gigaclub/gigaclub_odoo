@@ -24,6 +24,25 @@ class TestGCTeam(SavepointCase):
             {
                 "name": "Test2",
                 "mc_uuid": "test2",
+                "permission_profile_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "permission_profile_entry_template_ids": [
+                                (
+                                    0,
+                                    0,
+                                    {
+                                        "permission_model_entry_id": self.env.ref(
+                                            "gigaclub_team.gc_permission_model_entry_gc_team_create_team"  # noqa: B950
+                                        ).id,
+                                    },
+                                )
+                            ],
+                        },
+                    )
+                ],
             }
         )
         res = GCTeam.create_team("test2", "Test2")
@@ -39,11 +58,36 @@ class TestGCTeam(SavepointCase):
             {
                 "name": "Test3",
                 "mc_uuid": "test3",
+                "permission_profile_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "permission_profile_entry_template_ids": [
+                                (
+                                    0,
+                                    0,
+                                    {
+                                        "permission_model_entry_id": self.env.ref(
+                                            "gigaclub_team.gc_permission_model_entry_gc_team_create_team"  # noqa: B950
+                                        ).id,
+                                    },
+                                )
+                            ],
+                        },
+                    )
+                ],
             }
         )
         res = GCTeam.create_team("test3", "Test2")
         self.assertEqual(res, 2, "res should be 2")
-        res = GCTeam.create_team("test2", "Test2")
+        GCUser.create(
+            {
+                "name": "Test4",
+                "mc_uuid": "test4",
+            }
+        )
+        res = GCTeam.create_team("test4", "Test2")
         self.assertEqual(res, 3, "res should be 3")
 
     def test_edit_team(self):
@@ -77,7 +121,7 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.edit_team("test", "test2", "description")
+        res = GCTeam.edit_team("test", "Test", "test2", "description")
         self.assertEqual(res, 0, "res should be 0")
         self.assertEqual(self.team.name, "test2", "Team name should be test2")
         self.assertEqual(
@@ -111,16 +155,54 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.edit_team("test2", "test3", "description")
+        res = GCTeam.edit_team("test2", "Test", "test3", "description")
         self.assertEqual(res, 1, "res should be 1")
 
     def test_leave_team(self):
         GCTeam = self.env["gc.team"]
         GCUser = self.env["gc.user"]
+        self.user.permission_profile_ids = [
+            (
+                0,
+                0,
+                {
+                    "permission_profile_entry_template_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_model_entry_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_model_entry_gc_team_leave_team"  # noqa: B950
+                                ).id,
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
         GCUser.create(
             {
                 "name": "Test2",
                 "mc_uuid": "test2",
+                "permission_profile_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "permission_profile_entry_template_ids": [
+                                (
+                                    0,
+                                    0,
+                                    {
+                                        "permission_model_entry_id": self.env.ref(
+                                            "gigaclub_team.gc_permission_model_entry_gc_team_leave_team"  # noqa: B950
+                                        ).id,
+                                    },
+                                )
+                            ],
+                        },
+                    )
+                ],
             }
         )
         self.team.permission_connector_ids = [
@@ -143,13 +225,13 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.leave_team("test")
+        res = GCTeam.leave_team("test", "Test")
         self.assertEqual(res, 0, "res should be 0")
         self.assertFalse(
             self.team.permission_connector_ids,
             "User should not have any permission connectors",
         )
-        res = GCTeam.leave_team("test2")
+        res = GCTeam.leave_team("test2", "Test")
         self.assertEqual(res, 1, "res should be 1")
 
     def test_kick_member(self):
@@ -209,12 +291,12 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.kick_member("test", "test2")
+        res = GCTeam.kick_member("test", "Test", "test2")
         self.assertEqual(res, 0, "res should be 0")
         self.assertFalse(
             user_to_kick.permission_connector_ids, "User should not be a member"
         )
-        res = GCTeam.kick_member("test", "test2")
+        res = GCTeam.kick_member("test", "Test", "test2")
         self.assertEqual(res, 1, "res should be 1")
         self.user.permission_connector_ids = False
         self.team.permission_connector_ids = [
@@ -245,10 +327,10 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.kick_member("test", "test3")
+        res = GCTeam.kick_member("test", "Test", "test3")
         self.assertEqual(res, 2, "res should be 2")
         self.user.permission_connector_ids = False
-        res = GCTeam.kick_member("test", "test2")
+        res = GCTeam.kick_member("test", "Test", "test2")
         self.assertEqual(res, 3, "res should be 3")
 
     # def test_promote_member(self):

@@ -17,8 +17,8 @@ class GCTeam(models.Model):
     @api.model
     def _check_access_gigaclub_team(self, player_uuid, team, permission):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_connector = user.permission_connector_ids.filtered(
-            lambda x: x.team_id.name.lower() == team.lower()
+        team_connector = user.permission_connector_ids.filtered_domain(
+            [("team_id.name", "=ilike", team)]
         )[:1]
         if team_connector and team_connector.has_permission(permission):
             return team_connector.team_id
@@ -98,9 +98,7 @@ class GCTeam(models.Model):
         )[:1]
         if not team_to_leave:
             return 1
-        user.permission_connector_ids.filtered(
-            lambda x: x.team_id == team_to_leave
-        ).unlink()
+        team_to_leave.unlink()
         return 0
 
     # Status Codes:
