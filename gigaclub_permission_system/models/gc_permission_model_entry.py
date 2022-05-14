@@ -9,3 +9,6 @@ class GCPermissionModelEntry(models.Model):
         comodel_name="gc.permission.model", required=True, index=True
     )
     name = fields.Char(required=True, index=True)
+    permission_type = fields.Selection(
+        selection=[("connector", "Connector"), ("user", "User")], required=True
+    )

@@ -8,6 +8,7 @@
     >
             <field name="name">gigaclub_team.create_team</field>
             <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+            <field name="permission_type">user</field>
         </record>
 
         <record
@@ -16,6 +17,7 @@
     >
             <field name="name">gigaclub_team.edit_team</field>
             <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+            <field name="permission_type">connector</field>
         </record>
 
         <record
@@ -24,6 +26,7 @@
     >
             <field name="name">gigaclub_team.leave_team</field>
             <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+            <field name="permission_type">user</field>
         </record>
 
         <record
@@ -32,6 +35,7 @@
     >
             <field name="name">gigaclub_team.invite_member</field>
             <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+            <field name="permission_type">connector</field>
         </record>
 
         <record
@@ -40,6 +44,7 @@
     >
             <field name="name">gigaclub_team.kick_member</field>
             <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+            <field name="permission_type">connector</field>
         </record>
 
         <record
@@ -48,6 +53,7 @@
     >
             <field name="name">gigaclub_team.accept_request</field>
             <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+            <field name="permission_type">user</field>
         </record>
 
         <record
@@ -56,6 +62,7 @@
     >
             <field name="name">gigaclub_team.deny_request</field>
             <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+            <field name="permission_type">user</field>
         </record>
 
     </data>
