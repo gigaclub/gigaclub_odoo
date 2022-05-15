@@ -23,27 +23,34 @@ class MainController(http.Controller):
             with api.Environment.manage():
                 with registry(self.env.cr.dbname).cursor() as new_cr:
                     new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                    company = new_env.user.company_id or new_env["res.company"].browse(
+                        1
+                    )
                     for guild in self.guilds:
-                        if not new_env["gc.user"].search_count(
-                            [("discord_uuid", "=", str(guild.owner_id))]
-                        ):
-                            new_env["gc.user"].create(
-                                {"discord_uuid": str(guild.owner_id)}
-                            )
-                        for member in guild.members:
+                        if guild.id == int(company.gc_discord_server_id):
                             if not new_env["gc.user"].search_count(
-                                [("discord_uuid", "=", str(member.id))]
+                                [("discord_uuid", "=", str(guild.owner_id))]
                             ):
                                 new_env["gc.user"].create(
-                                    {"discord_uuid": str(member.id)}
+                                    {"discord_uuid": str(guild.owner_id)}
                                 )
-                        for channel in guild.channels:
-                            if isinstance(channel, discord.channel.CategoryChannel):
-                                await self.register_category(channel)
-                            else:
-                                await self.register_channel(channel)
-                        for role in guild.roles:
-                            await self.register_role(role)
+                            for member in guild.members:
+                                if not new_env["gc.user"].search_count(
+                                    [("discord_uuid", "=", str(member.id))]
+                                ):
+                                    new_env["gc.user"].create(
+                                        {"discord_uuid": str(member.id)}
+                                    )
+                            for channel in guild.channels:
+                                if isinstance(channel, discord.channel.CategoryChannel):
+                                    await self.register_category(channel)
+                                else:
+                                    await self.register_channel(channel)
+                            for role in guild.roles:
+                                await self.register_role(role)
+                            await self.create_not_created_channels(guild)
+                            await self.create_not_created_categories(guild)
+                            break
 
         async def on_member_join(self, member):
             with api.Environment.manage():
@@ -78,7 +85,9 @@ class MainController(http.Controller):
                                 ("event_id.event_type", "=", "guild_join"),
                                 ("action_worker_id.gc_user_id", "=", user.id),
                                 ("current", "=", True),
-                            ]
+                                ("done", "=", False),
+                            ],
+                            limit=1,
                         )
                         if current_event_worker:
                             current_event_worker.start_next_event()
@@ -270,26 +279,6 @@ class MainController(http.Controller):
                             else:
                                 await channel.edit(category=None)
 
-        async def refresh_categories_and_channels(self):
-            with api.Environment.manage():
-                with registry(self.env.cr.dbname).cursor() as new_cr:
-                    new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                    company_id = new_env.user.company_id or new_env[
-                        "res.company"
-                    ].browse(1)
-                    for guild in self.guilds:
-                        if guild.id == int(company_id.gc_discord_server_id):
-                            for role in guild.roles:
-                                await self.register_role(role)
-                            for channel in guild.channels:
-                                if isinstance(channel, discord.channel.CategoryChannel):
-                                    await self.register_category(channel)
-                                else:
-                                    await self.register_channel(channel)
-                                await self.create_not_created_channels(guild)
-                                await self.create_not_created_categories(guild)
-                            break
-
         async def create_not_created_channels(self, guild):
             with api.Environment.manage():
                 with registry(self.env.cr.dbname).cursor() as new_cr:
@@ -312,7 +301,7 @@ class MainController(http.Controller):
                                     category.id
                                 )
                             elif channel_id.category_id:
-                                category = await guild.get_channel(
+                                category = guild.get_channel(
                                     int(channel_id.category_id.discord_channel_uuid)
                                 )
                             if channel_id.type == "text":
@@ -336,9 +325,7 @@ class MainController(http.Controller):
                                     category=category,
                                     type=discord.ChannelType.news,
                                 )
-                            new_env["gc.discord.channel"].write(
-                                {"discord_channel_uuid": str(channel.id)}
-                            )
+                            channel_id.discord_channel_uuid = str(channel.id)
 
         async def create_not_created_categories(self, guild):
             with api.Environment.manage():
@@ -357,8 +344,6 @@ class MainController(http.Controller):
         async def on_message(self, message):
             if message.author == self.user:
                 return
-            if message.content.startswith("$hello"):
-                await message.channel.send("Hello World!")
             with api.Environment.manage():
                 with registry(self.env.cr.dbname).cursor() as new_cr:
                     new_env = api.Environment(new_cr, self.env.uid, self.env.context)
@@ -388,7 +373,9 @@ class MainController(http.Controller):
                                 ("event_id.event_type", "=", "get_private_message"),
                                 ("action_worker_id.gc_user_id", "=", user.id),
                                 ("current", "=", True),
-                            ]
+                                ("done", "=", False),
+                            ],
+                            limit=1,
                         )
                         if current_event_worker:
                             current_event_worker.start_next_event()
@@ -452,18 +439,15 @@ class MainController(http.Controller):
     def reload_discord_bot(self):
         self.stop_discord_bot()
         self.start_discord_bot()
-        asyncio.run(self.client.refresh_categories_and_channels())
         return "<script>window.close()</script>"
 
     @http.route(
-        ["/discordbot/event/<int:event_id>"],
+        ["/discordbot/event/<model('gc.discord.event.worker'):event>"],
         type="http",
         method=["POST"],
         csrf=False,
-        auth="public",
     )
-    def discord_bot_event(self, event_id):
-        event = request.env["gc.discord.event.worker"].browse(event_id)
+    def discord_bot_event(self, event):
         user_id = event.action_worker_id.gc_user_id.discord_uuid
         if user_id:
             if event.event_id.event_type == "send_private_message":
