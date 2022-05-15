@@ -511,24 +511,70 @@ class TestGCTeam(SavepointCase):
         res = GCTeam.accept_request("test2", "test")
         self.assertEqual(res, 3, "res should be 3")
 
-    # def test_deny_request(self):
-    #     GCTeam = self.env["gc.team"]
-    #     GCUser = self.env["gc.user"]
-    #     test2 = GCUser.create(
-    #         {
-    #             "name": "Test2",
-    #             "mc_uuid": "test2",
-    #         }
-    #     )
-    #     self.team.manager_ids |= self.user
-    #     res = GCTeam.invite_member("test", "test2")
-    #     self.assertEqual(res, 0, "res should be 0")
-    #     res = GCTeam.deny_request("test2", "test")
-    #     self.assertEqual(res, 0, "res should be 0")
-    #     self.assertNotEqual(
-    #         test2.team_user_id, self.team, "test2 should be not a member"
-    #     )
-    #     res = GCTeam.deny_request("test2", "test")
-    #     self.assertEqual(res, 1, "res should be 1")
-    #     res = GCTeam.deny_request("test2", "testFALSE")
-    #     self.assertEqual(res, 2, "res should be 2")
+    def test_deny_request(self):
+        GCTeam = self.env["gc.team"]
+        GCUser = self.env["gc.user"]
+        test2 = GCUser.create(
+            {
+                "name": "Test2",
+                "mc_uuid": "test2",
+            }
+        )
+        self.team.permission_connector_ids = [
+            (
+                0,
+                0,
+                {
+                    "user_id": self.user.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_entry_template_ids": [
+                                    (
+                                        0,
+                                        0,
+                                        {
+                                            "permission_model_entry_id": self.env.ref(
+                                                "gigaclub_team.gc_permission_model_entry_gc_team_invite_member"  # noqa: B950
+                                            ).id,
+                                        },
+                                    )
+                                ],
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        res = GCTeam.invite_member("test", "Test", "test2")
+        self.assertEqual(res, 0, "res should be 0")
+        test2.permission_profile_ids = [
+            (
+                0,
+                0,
+                {
+                    "permission_profile_entry_template_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_model_entry_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_model_entry_gc_team_deny_request"  # noqa: B950
+                                ).id,
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        res = GCTeam.deny_request("test2", "test")
+        self.assertEqual(res, 0, "res should be 0")
+        res = GCTeam.deny_request("test2", "test")
+        self.assertEqual(res, 1, "res should be 1")
+        res = GCTeam.deny_request("test2", "testFALSE")
+        self.assertEqual(res, 2, "res should be 2")
+        test2.permission_profile_ids = False
+        res = GCTeam.deny_request("test2", "test")
+        self.assertEqual(res, 3, "res should be 3")
