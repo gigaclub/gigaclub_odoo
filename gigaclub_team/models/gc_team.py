@@ -10,7 +10,7 @@ class GCTeam(models.Model):
     description = fields.Text()
 
     permission_connector_ids = fields.One2many(
-        comodel_name="gc.permission.connector", inverse_name="team_id", index=True
+        comodel_name="gc.permission.connector", inverse_name="team_id"
     )
 
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]

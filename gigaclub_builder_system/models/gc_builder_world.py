@@ -1,5 +1,4 @@
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models
 
 
 class GCBuilderWorld(models.Model):
@@ -20,20 +19,20 @@ class GCBuilderWorld(models.Model):
     task_id = fields.Many2one(comodel_name="project.task", required=True, index=True)
 
     permission_connector_ids = fields.One2many(
-        comodel_name="gc.permission.connector", inverse_name="world_id", index=True
+        comodel_name="gc.permission.connector", inverse_name="world_id"
     )
 
-    @api.constrains("user_ids", "user_manager_ids")
-    def _check_user_and_managers(self):
-        for rec in self:
-            if set(rec.user_ids.ids) & set(rec.user_manager_ids.ids):
-                raise ValidationError(_("Managers should not be users too!"))
-
-    @api.constrains("team_ids", "team_manager_ids")
-    def _check_teams_and_team_managers(self):
-        for rec in self:
-            if set(rec.team_ids.ids) & set(rec.team_manager_ids.ids):
-                raise ValidationError(_("Manager teams should not be teams too!"))
+    @api.model
+    def _check_access_gigaclub_builder_system(self, player_uuid, world_id, permission):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        world_connector = user.permission_connector_ids.filtered_domain(
+            [
+                ("world_id", "=", world_id),
+            ]
+        )[:1]
+        if world_connector and world_connector.has_permission(permission):
+            return world_connector.world_id
+        return False
 
     @api.model
     def create_as_user(self, player_uuid, task_id, name, world_type):
