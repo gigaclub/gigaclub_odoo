@@ -153,14 +153,14 @@ class GCBuilderWorld(models.Model):
     # 0: Success
     @api.model
     def remove_team_from_world(self, player_uuid, team_name, world_id):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        world_id = self.browse(world_id)
-        if not world_id:
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        world = self.browse(world_id)
+        if not world:
             return 3
         if (
-            user_id not in world_id.user_manager_ids
-            and user_id not in world_id.team_manager_ids.mapped("user_ids")
-            and user_id not in world_id.team_manager_ids.mapped("manager_ids")
+            user not in world_id.user_manager_ids
+            and user not in world_id.team_manager_ids.mapped("user_ids")
+            and user not in world_id.team_manager_ids.mapped("manager_ids")
         ):
             return 2
         team_id_to_remove = self.env["gc.team"].search([("name", "=ilike", team_name)])
@@ -174,12 +174,12 @@ class GCBuilderWorld(models.Model):
     # 0: Success
     @api.model
     def save_world(self, world_id, world_data):
-        world_id = self.browse(world_id)
-        if not world_id:
+        world = self.browse(world_id)
+        if not world:
             return 1
-        world_id.world_attachment_id = self.env["ir.attachment"].create(
+        world.world_attachment_id = self.env["ir.attachment"].create(
             {
-                "name": world_id.name,
+                "name": world.name,
                 "datas": world_data,
             }
         )
@@ -190,32 +190,34 @@ class GCBuilderWorld(models.Model):
     # 0: Success
     @api.model
     def edit_world_type(self, world_id, world_type):
-        world_id = self.browse(world_id)
-        if not world_id:
+        world = self.browse(world_id)
+        if not world:
             return 1
-        world_type_id = self.env["gc.builder.world.type"].search(
-            [("name", "=ilike", world_type)]
+        world_type = self.env["gc.builder.world.type"].search(
+            [("name", "=ilike", world_type)], limit=1
         )
-        world_id.write({"world_type_id": world_type_id.id})
+        world.world_type_id = world_type
         return 0
 
     @api.model
     def get_world_data(self, world_id):
-        world_id = self.browse(world_id)
+        world = self.browse(world_id)
         # TODO: This is not the final version.
-        return world_id.world_attachment_id.datas
+        return world.world_attachment_id.datas
 
-    def return_world(self, world_id):
+    def return_world(self, world):
         return {
-            "world_id": world_id.id,
-            "name": world_id.name,
-            "task_id": world_id.task_id.id,
-            "world_type": world_id.world_type_id.name,
-            "team_manager_ids": [{"name": tm.name} for tm in world_id.team_manager_ids],
-            "team_ids": [{"name": t.name} for t in world_id.team_ids],
-            "user_ids": [{"mc_uuid": u.mc_uuid} for u in world_id.user_ids],
-            "user_manager_ids": [
-                {"mc_uuid": um.mc_uuid} for um in world_id.user_manager_ids
+            "world_id": world.id,
+            "name": world.name,
+            "task_id": world.task_id.id,
+            "world_type": world.world_type_id.name,
+            "team_ids": [
+                {"name": t.name}
+                for t in world.permission_connector_ids.mapped("team_id")
+            ],
+            "user_ids": [
+                {"mc_uuid": u.mc_uuid}
+                for u in world.permission_connector_ids.mapped("user_id")
             ],
         }
 
@@ -224,8 +226,8 @@ class GCBuilderWorld(models.Model):
         return [self.return_world(x) for x in self.search([])]
 
     @api.model
-    def get_world(self, w_id):
-        world_id = self.browse(w_id)
-        if world_id:
-            return self.return_world(world_id)
+    def get_world(self, world_id):
+        world = self.browse(world_id)
+        if world:
+            return self.return_world(world)
         return []
