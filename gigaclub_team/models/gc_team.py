@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class GCTeam(models.Model):
@@ -160,8 +161,10 @@ class GCTeam(models.Model):
         return []
 
     # Status Codes:
-    # 2: No valid team found for this user
-    # 1: User to invite not found
+    # 4: No valid team found for this user
+    # 3: User to invite not found
+    # 2: User is already member of team
+    # 1: Request already sent
     # 0: Success
     @api.model
     def invite_member(self, player_uuid, team, player_uuid_to_invite):
@@ -169,19 +172,26 @@ class GCTeam(models.Model):
             player_uuid, team, "gigaclub_team.invite_member"
         )
         if not team:
-            return 2
+            return 4
         user_to_invite = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_invite)]
         )
         if not user_to_invite:
+            return 3
+        if user_to_invite.permission_connector_ids.filtered(
+            lambda x: x.team_id == team
+        ):
+            return 2
+        try:
+            self.env["gc.request"].create(
+                {
+                    "sender_id": f"{team._name},{team.id}",
+                    "receiver_id": f"{user_to_invite._name},{user_to_invite.id}",
+                    "state": "waiting",
+                }
+            )
+        except ValidationError:
             return 1
-        self.env["gc.request"].create(
-            {
-                "sender_id": f"{team._name},{team.id}",
-                "receiver_id": f"{user_to_invite._name},{user_to_invite.id}",
-                "state": "waiting",
-            }
-        )
         return 0
 
     # Status Codes:

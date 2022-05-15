@@ -30,7 +30,7 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_team_add_member"
+      id="gc_permission_model_entry_gc_team_invite_member"
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_team.invite_member</field>

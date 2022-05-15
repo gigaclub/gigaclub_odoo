@@ -393,23 +393,55 @@ class TestGCTeam(SavepointCase):
                 "mc_uuid": "test2",
             }
         )
-        self.team.manager_ids |= self.user
-        res = GCTeam.invite_member("test", "test2")
+        self.team.permission_connector_ids = [
+            (
+                0,
+                0,
+                {
+                    "user_id": self.user.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_entry_template_ids": [
+                                    (
+                                        0,
+                                        0,
+                                        {
+                                            "permission_model_entry_id": self.env.ref(
+                                                "gigaclub_team.gc_permission_model_entry_gc_team_invite_member"  # noqa: B950
+                                            ).id,
+                                        },
+                                    )
+                                ],
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        res = GCTeam.invite_member("test", "Test", "test2")
         self.assertEqual(res, 0, "res should be 0")
-        self.team.user_ids |= test2
-        res = GCTeam.invite_member("test", "test2")
+        res = GCTeam.invite_member("test", "Test", "test2")
         self.assertEqual(res, 1, "res should be 1")
-        self.team.user_ids = False
-        self.team.manager_ids |= test2
-        res = GCTeam.invite_member("test", "test2")
-        self.assertEqual(res, 1, "res should be 1")
-        self.user.team_manager_id = False
-        self.user.team_user_id = self.team
-        res = GCTeam.invite_member("test", "test2")
+        self.env["gc.request"].search([]).unlink()
+        self.team.permission_connector_ids = [
+            (
+                0,
+                0,
+                {
+                    "user_id": test2.id,
+                },
+            )
+        ]
+        res = GCTeam.invite_member("test", "Test", "test2")
         self.assertEqual(res, 2, "res should be 2")
-        self.user.team_user_id = False
-        res = GCTeam.invite_member("test", "test2")
+        res = GCTeam.invite_member("test", "Test", "test2wrongwrong")
         self.assertEqual(res, 3, "res should be 3")
+        self.team.permission_connector_ids = False
+        res = GCTeam.invite_member("test", "Test", "test2")
+        self.assertEqual(res, 4, "res should be 4")
 
     # def test_accept_request(self):
     #     GCTeam = self.env["gc.team"]
