@@ -35,47 +35,47 @@ class GCBuilderWorld(models.Model):
         return False
 
     @api.model
-    def create_as_user(self, player_uuid, task_id, name, world_type):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        task_id = self.env["project.task"].browse(task_id)
-        world_type_id = self.env["gc.builder.world.type"].search(
-            [("name", "=ilike", world_type)], limit=1
+    def create_as_user(self, player_uuid, task_id, name, world_type_name):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        task = self.env["project.task"].browse(task_id)
+        world_type = self.env["gc.builder.world.type"].search(
+            [("name", "=ilike", world_type_name)], limit=1
         )
-        if not world_type_id:
-            world_type_id = self.env["gc.builder.world.type"].search(
+        if not world_type:
+            world_type = self.env["gc.builder.world.type"].search(
                 [("default", "=", True)], limit=1
             )
         return self.create(
             {
                 "name": name,
-                "task_id": task_id.id,
-                "world_type_id": world_type_id.id,
-                "user_manager_ids": [(4, user_id.id)],
+                "task_id": task.id,
+                "world_type_id": world_type.id,
+                "user_manager_ids": [(4, user.id)],
             }
         ).id
 
     @api.model
-    def create_as_team(self, player_uuid, task_id, name, world_type):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = False
-        if user_id.team_manager_id:
-            team_id = user_id.team_manager_id
-        elif user_id.team_user_id:
-            team_id = user_id.team_user_id
-        task_id = self.env["project.task"].browse(task_id)
-        world_type_id = self.env["gc.builder.world.type"].search(
-            [("name", "=ilike", world_type)], limit=1
+    def create_as_team(self, player_uuid, task_id, name, world_type_name):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        team = False
+        if user.team_manager_id:
+            team = user.team_manager_id
+        elif user.team_user_id:
+            team = user.team_user_id
+        task = self.env["project.task"].browse(task_id)
+        world_type = self.env["gc.builder.world.type"].search(
+            [("name", "=ilike", world_type_name)], limit=1
         )
-        if not world_type_id:
-            world_type_id = self.env["gc.builder.world.type"].search(
+        if not world_type:
+            world_type = self.env["gc.builder.world.type"].search(
                 [("default", "=", True)], limit=1
             )
         return self.create(
             {
                 "name": name,
-                "task_id": task_id.id,
-                "world_type_id": world_type_id.id,
-                "team_manager_ids": [(4, team_id.id)],
+                "task_id": task.id,
+                "world_type_id": world_type.id,
+                "team_manager_ids": [(4, team.id)],
             }
         ).id
 
@@ -85,20 +85,18 @@ class GCBuilderWorld(models.Model):
     # 0: Success
     @api.model
     def add_user_to_world(self, player_uuid, player_uuid_to_add, world_id):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        world_id = self.browse(world_id)
-        if not world_id:
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        world = self.browse(world_id)
+        if not world:
             return 2
         if (
-            user_id not in world_id.user_manager_ids
-            and user_id not in world_id.team_manager_ids.mapped("user_ids")
-            and user_id not in world_id.team_manager_ids.mapped("manager_ids")
+            user not in world.user_manager_ids
+            and user not in world.team_manager_ids.mapped("user_ids")
+            and user not in world.team_manager_ids.mapped("manager_ids")
         ):
             return 1
-        user_id_to_add = self.env["gc.user"].search(
-            [("mc_uuid", "=", player_uuid_to_add)]
-        )
-        world_id.user_ids |= user_id_to_add
+        user_to_add = self.env["gc.user"].search([("mc_uuid", "=", player_uuid_to_add)])
+        world.user_ids |= user_to_add
         return 0
 
     # Status Codes:
@@ -108,20 +106,20 @@ class GCBuilderWorld(models.Model):
     # 0: Success
     @api.model
     def add_team_to_world(self, player_uuid, team_name, world_id):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        world_id = self.browse(world_id)
-        if not world_id:
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        world = self.browse(world_id)
+        if not world:
             return 3
         if (
-            user_id not in world_id.user_manager_ids
-            and user_id not in world_id.team_manager_ids.mapped("user_ids")
-            and user_id not in world_id.team_manager_ids.mapped("manager_ids")
+            user not in world.user_manager_ids
+            and user not in world.team_manager_ids.mapped("user_ids")
+            and user not in world.team_manager_ids.mapped("manager_ids")
         ):
             return 2
-        team_id_to_add = self.env["gc.team"].search([("name", "=ilike", team_name)])
-        if not team_id_to_add:
+        team_to_add = self.env["gc.team"].search([("name", "=ilike", team_name)])
+        if not team_to_add:
             return 1
-        world_id.team_ids |= team_id_to_add
+        world.team_ids |= team_to_add
         return 0
 
     # Status Codes:
@@ -130,20 +128,20 @@ class GCBuilderWorld(models.Model):
     # 0: Success
     @api.model
     def remove_user_from_world(self, player_uuid, player_uuid_to_remove, world_id):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        world_id = self.browse(world_id)
-        if not world_id:
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        world = self.browse(world_id)
+        if not world:
             return 2
         if (
-            user_id not in world_id.user_manager_ids
-            and user_id not in world_id.team_manager_ids.mapped("user_ids")
-            and user_id not in world_id.team_manager_ids.mapped("manager_ids")
+            user not in world.user_manager_ids
+            and user not in world.team_manager_ids.mapped("user_ids")
+            and user not in world.team_manager_ids.mapped("manager_ids")
         ):
             return 1
-        user_id_to_remove = self.env["gc.user"].search(
+        user_to_remove = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_remove)]
         )
-        world_id.user_ids = [(3, user_id_to_remove.id)]
+        world.user_ids = [(3, user_to_remove.id)]
         return 0
 
     # Status Codes:
@@ -158,15 +156,15 @@ class GCBuilderWorld(models.Model):
         if not world:
             return 3
         if (
-            user not in world_id.user_manager_ids
-            and user not in world_id.team_manager_ids.mapped("user_ids")
-            and user not in world_id.team_manager_ids.mapped("manager_ids")
+            user not in world.user_manager_ids
+            and user not in world.team_manager_ids.mapped("user_ids")
+            and user not in world.team_manager_ids.mapped("manager_ids")
         ):
             return 2
-        team_id_to_remove = self.env["gc.team"].search([("name", "=ilike", team_name)])
-        if not team_id_to_remove:
+        team_to_remove = self.env["gc.team"].search([("name", "=ilike", team_name)])
+        if not team_to_remove:
             return 1
-        world_id.team_ids = [(3, team_id_to_remove.id)]
+        world.team_ids = [(3, team_to_remove.id)]
         return 0
 
     # Status Codes:
@@ -189,12 +187,12 @@ class GCBuilderWorld(models.Model):
     # 1: World does not exist
     # 0: Success
     @api.model
-    def edit_world_type(self, world_id, world_type):
+    def edit_world_type(self, world_id, world_type_name):
         world = self.browse(world_id)
         if not world:
             return 1
         world_type = self.env["gc.builder.world.type"].search(
-            [("name", "=ilike", world_type)], limit=1
+            [("name", "=ilike", world_type_name)], limit=1
         )
         world.world_type_id = world_type
         return 0
