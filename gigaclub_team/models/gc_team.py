@@ -13,6 +13,8 @@ class GCTeam(models.Model):
         comodel_name="gc.permission.connector", inverse_name="team_id"
     )
 
+    owner_id = fields.Many2one(comodel_name="gc.user", required=True)
+
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]
 
     @api.model
@@ -37,7 +39,7 @@ class GCTeam(models.Model):
             return 3
         if self.search_count([("name", "=ilike", name)]):
             return 2
-        team_id = self.create(
+        team = self.create(
             {
                 "name": name,
                 "description": description,
@@ -63,7 +65,7 @@ class GCTeam(models.Model):
                 ],
             }
         )
-        if not team_id:
+        if not team:
             return 1
         return 0
 
@@ -80,7 +82,7 @@ class GCTeam(models.Model):
         team.write(
             {
                 "name": new_name,
-                "description": new_description if new_description else team.description,
+                "description": new_description or team.description,
             }
         )
         return 0

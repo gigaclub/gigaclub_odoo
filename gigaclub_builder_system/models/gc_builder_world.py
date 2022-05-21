@@ -22,6 +22,8 @@ class GCBuilderWorld(models.Model):
         comodel_name="gc.permission.connector", inverse_name="world_id"
     )
 
+    owner_id = fields.Many2one(comodel_name="gc.user", required=True)
+
     @api.model
     def _check_access_gigaclub_builder_system(self, player_uuid, world_id, permission):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
