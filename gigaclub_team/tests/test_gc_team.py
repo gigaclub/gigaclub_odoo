@@ -147,7 +147,7 @@ class TestGCTeam(SavepointCase):
                             0,
                             {
                                 "permission_profile_template_id": self.env.ref(
-                                    "gigaclub_team.gc_permission_profile_template_default"
+                                    "gigaclub_team.gc_permission_profile_template_team_default"
                                 ).id,
                             },
                         )
@@ -217,7 +217,7 @@ class TestGCTeam(SavepointCase):
                             0,
                             {
                                 "permission_profile_template_id": self.env.ref(
-                                    "gigaclub_team.gc_permission_profile_template_default"
+                                    "gigaclub_team.gc_permission_profile_template_team_default"
                                 ).id,
                             },
                         )
@@ -283,7 +283,7 @@ class TestGCTeam(SavepointCase):
                             0,
                             {
                                 "permission_profile_template_id": self.env.ref(
-                                    "gigaclub_team.gc_permission_profile_template_default"
+                                    "gigaclub_team.gc_permission_profile_template_team_default"
                                 ).id,
                             },
                         )

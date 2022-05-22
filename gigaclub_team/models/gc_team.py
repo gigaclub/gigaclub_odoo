@@ -20,8 +20,13 @@ class GCTeam(models.Model):
     @api.model
     def _check_access_gigaclub_team(self, player_uuid, team, permission):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        team = self.search([("name", "=ilike", team)], limit=1)
+        if not team:
+            return False
+        if user == team.owner_id:
+            return team
         team_connector = user.permission_connector_ids.filtered_domain(
-            [("team_id.name", "=ilike", team)]
+            [("team_id", "=", team.id)]
         )[:1]
         if team_connector and team_connector.has_permission(permission):
             return team_connector.team_id
@@ -43,6 +48,7 @@ class GCTeam(models.Model):
             {
                 "name": name,
                 "description": description,
+                "owner_id": user.id,
                 "permission_connector_ids": [
                     (
                         0,
@@ -55,7 +61,7 @@ class GCTeam(models.Model):
                                     0,
                                     {
                                         "permission_profile_template_id": self.env.ref(
-                                            "gigaclub_team.gc_permission_profile_template_default"  # noqa: B950
+                                            "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
                                         ).id,
                                     },
                                 )

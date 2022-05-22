@@ -27,6 +27,11 @@ class GCBuilderWorld(models.Model):
     @api.model
     def _check_access_gigaclub_builder_system(self, player_uuid, world_id, permission):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        world = self.browse(world_id)
+        if not world:
+            return False
+        if user == world.owner_id:
+            return world
         world_connector = user.permission_connector_ids.filtered_domain(
             [
                 ("world_id", "=", world_id),
@@ -52,18 +57,36 @@ class GCBuilderWorld(models.Model):
                 "name": name,
                 "task_id": task.id,
                 "world_type_id": world_type.id,
-                "user_manager_ids": [(4, user.id)],
+                "owner_id": user.id,
+                "permission_connector_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "user_id": user.id,
+                            "permission_profile_ids": [
+                                (
+                                    0,
+                                    0,
+                                    {
+                                        "permission_profile_template_id": self.env.ref(
+                                            "gigaclub_builder_system.gc_permission_profile_template_builder_system_default"  # noqa: B950
+                                        ).id,
+                                    },
+                                )
+                            ],
+                        },
+                    )
+                ],
             }
         ).id
 
     @api.model
-    def create_as_team(self, player_uuid, task_id, name, world_type_name):
+    def create_as_team(self, player_uuid, team, task_id, name, world_type_name):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team = False
-        if user.team_manager_id:
-            team = user.team_manager_id
-        elif user.team_user_id:
-            team = user.team_user_id
+        team = self.env["gc.team"]._check_access_gigaclub_team(
+            player_uuid, team, "gigaclub_team.create_world_as_team"
+        )
         task = self.env["project.task"].browse(task_id)
         world_type = self.env["gc.builder.world.type"].search(
             [("name", "=ilike", world_type_name)], limit=1
@@ -77,6 +100,7 @@ class GCBuilderWorld(models.Model):
                 "name": name,
                 "task_id": task.id,
                 "world_type_id": world_type.id,
+                "owner_id": user.id,
                 "team_manager_ids": [(4, team.id)],
             }
         ).id
