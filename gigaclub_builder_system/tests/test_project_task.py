@@ -13,12 +13,6 @@ class TestProjectTask(SavepointCase):
                 "build_length": "10",
             }
         )
-        cls.gc_builder_world = cls.env["gc.builder.world"].create(
-            {
-                "name": "Test Builder World",
-                "task_id": cls.project_task.id,
-            }
-        )
         cls.gc_user = cls.env["gc.user"].create(
             {
                 "name": "Test User",
@@ -27,6 +21,14 @@ class TestProjectTask(SavepointCase):
         cls.gc_team = cls.env["gc.team"].create(
             {
                 "name": "Test Team",
+                "owner_id": cls.gc_user.id,
+            }
+        )
+        cls.gc_builder_world = cls.env["gc.builder.world"].create(
+            {
+                "name": "Test Builder World",
+                "task_id": cls.project_task.id,
+                "owner_id": cls.gc_user.id,
             }
         )
 
@@ -39,9 +41,23 @@ class TestProjectTask(SavepointCase):
         self.assertTrue("world_ids" in res)
 
     def test__compute_gc_user_ids(self):
-        self.gc_builder_world.user_ids |= self.gc_user
+        self.gc_builder_world.permission_connector_ids = self.env[
+            "gc.permission.connector"
+        ].create(
+            {
+                "user_id": self.gc_user.id,
+            }
+        )
+        self.project_task._compute_user_ids()
         self.assertTrue(self.gc_user in self.project_task.user_ids)
 
     def test__compute_gc_team_ids(self):
-        self.gc_builder_world.team_ids |= self.gc_team
+        self.gc_builder_world.permission_connector_ids = self.env[
+            "gc.permission.connector"
+        ].create(
+            {
+                "team_id": self.gc_team.id,
+            }
+        )
+        self.project_task._compute_team_ids()
         self.assertTrue(self.gc_team in self.project_task.team_ids)
