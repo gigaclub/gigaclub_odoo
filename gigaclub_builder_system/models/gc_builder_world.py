@@ -87,6 +87,8 @@ class GCBuilderWorld(models.Model):
         team = self.env["gc.team"]._check_access_gigaclub_team(
             player_uuid, team, "gigaclub_team.create_world_as_team"
         )
+        if not team:
+            return 1
         task = self.env["project.task"].browse(task_id)
         world_type = self.env["gc.builder.world.type"].search(
             [("name", "=ilike", world_type_name)], limit=1
