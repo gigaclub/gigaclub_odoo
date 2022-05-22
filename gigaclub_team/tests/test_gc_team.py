@@ -14,6 +14,7 @@ class TestGCTeam(SavepointCase):
         cls.team = cls.env["gc.team"].create(
             {
                 "name": "Test",
+                "owner_id": cls.user.id,
             }
         )
 
@@ -328,10 +329,10 @@ class TestGCTeam(SavepointCase):
             )
         ]
         res = GCTeam.kick_member("test", "Test", "test3")
-        self.assertEqual(res, 2, "res should be 2")
-        self.user.permission_connector_ids = False
-        res = GCTeam.kick_member("test", "Test", "test2")
         self.assertEqual(res, 3, "res should be 3")
+        self.user.permission_connector_ids = False
+        res = GCTeam.kick_member("test4", "Test", "test2")
+        self.assertEqual(res, 4, "res should be 4")
 
     def test_get_teams_by_member(self):
         GCTeam = self.env["gc.team"]
@@ -440,7 +441,7 @@ class TestGCTeam(SavepointCase):
         res = GCTeam.invite_member("test", "Test", "test2wrongwrong")
         self.assertEqual(res, 3, "res should be 3")
         self.team.permission_connector_ids = False
-        res = GCTeam.invite_member("test", "Test", "test2")
+        res = GCTeam.invite_member("test4", "Test", "test2")
         self.assertEqual(res, 4, "res should be 4")
 
     def test_accept_request(self):

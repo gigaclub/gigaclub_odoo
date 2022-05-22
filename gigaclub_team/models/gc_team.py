@@ -98,13 +98,13 @@ class GCTeam(models.Model):
     # 1: User has no team
     # 0: Success
     @api.model
-    def leave_team(self, player_uuid, team):
+    def leave_team(self, player_uuid, team_name):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team = self.search([("name", "=ilike", team)], limit=1)
+        team = self.search([("name", "=ilike", team_name)], limit=1)
         if not user.has_permission("gigaclub_team.leave_team"):
             return 2
         team_connector_to_leave = user.permission_connector_ids.filtered_domain(
-            [("team_id.name", "=ilike", team)]
+            [("team_id", "=", team.id)]
         )[:1]
         if not team_connector_to_leave:
             return 1
