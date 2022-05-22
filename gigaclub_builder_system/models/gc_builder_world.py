@@ -95,13 +95,55 @@ class GCBuilderWorld(models.Model):
             world_type = self.env["gc.builder.world.type"].search(
                 [("default", "=", True)], limit=1
             )
+        permission_connectors = [
+            (
+                0,
+                0,
+                {
+                    "team_id": team.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_template_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
+                                ).id,
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        for user in team.permission_connector_ids.mapped("user_id"):
+            permission_connectors.append(
+                (
+                    0,
+                    0,
+                    {
+                        "user_id": user.id,
+                        "bound_to_team": True,
+                        "permission_profile_ids": [
+                            (
+                                0,
+                                0,
+                                {
+                                    "permission_profile_template_id": self.env.ref(
+                                        "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
+                                    ).id,
+                                },
+                            )
+                        ],
+                    },
+                )
+            )
         return self.create(
             {
                 "name": name,
                 "task_id": task.id,
                 "world_type_id": world_type.id,
                 "owner_id": user.id,
-                "team_manager_ids": [(4, team.id)],
+                "permission_connector_ids": permission_connectors,
             }
         ).id
 

@@ -100,19 +100,27 @@ class GCTeam(models.Model):
     @api.model
     def leave_team(self, player_uuid, team):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        team = self.search([("name", "=ilike", team)], limit=1)
         if not user.has_permission("gigaclub_team.leave_team"):
             return 2
-        team_to_leave = user.permission_connector_ids.filtered_domain(
+        team_connector_to_leave = user.permission_connector_ids.filtered_domain(
             [("team_id.name", "=ilike", team)]
         )[:1]
-        if not team_to_leave:
+        if not team_connector_to_leave:
             return 1
-        team_to_leave.unlink()
+        team_connector_to_leave.unlink()
+        if user == team.owner_id:
+            new_owner = user.permission_connector_ids.mapped("user_id")[:1]
+            if new_owner:
+                team.owner_id = new_owner
+            else:
+                team.unlink()
         return 0
 
     # Status Codes:
-    # 3: No valid team found for this user
-    # 2: User to kick does not exist
+    # 4: No valid team found for this user
+    # 3: User to kick does not exist
+    # 2: Not allowed to kick owner
     # 1: User is not member of team
     # 0: Success
     @api.model
@@ -121,11 +129,13 @@ class GCTeam(models.Model):
             player_uuid, team, "gigaclub_team.kick_member"
         )
         if not team:
-            return 3
+            return 4
         user_to_kick = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_kick)]
         )
         if not user_to_kick:
+            return 3
+        if user_to_kick == team.owner_id:
             return 2
         user_to_kick_team_connector = user_to_kick.permission_connector_ids.filtered(
             lambda x: x.team_id == team
