@@ -202,18 +202,17 @@ class TestGCBuilderWorld(SavepointCase):
             world_id=self.gc_builder_world.id,
         )
         self.assertEqual(res, 0)
-        self.assertEqual(self.gc_builder_world.user_ids, self.gc_user | user_to_add)
-        self.gc_team_manager.user_ids -= self.gc_user
+        self.assertTrue(
+            user_to_add
+            in self.gc_builder_world.permission_connector_ids.mapped("user_id")
+        )
+        self.gc_builder_world.owner_id = user_to_add
         res = GCBuilderWorld.add_user_to_world(
             player_uuid="123",
             player_uuid_to_add="321",
             world_id=self.gc_builder_world.id,
         )
         self.assertEqual(res, 1)
-        res = GCBuilderWorld.add_user_to_world(
-            player_uuid="123", player_uuid_to_add="321", world_id=0
-        )
-        self.assertEqual(res, 2)
 
     #
     # def test_add_team_to_world(self):
