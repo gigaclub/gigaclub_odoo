@@ -341,27 +341,27 @@ class TestGCBuilderWorld(SavepointCase):
         )
         self.assertEqual(res, 1)
 
-    #
-    # def test_get_world_data(self):
-    #     GCBuilderWorld = self.env["gc.builder.world"]
-    #     res = GCBuilderWorld.save_world(
-    #         world_id=self.gc_builder_world.id,
-    #         world_data="YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==",
-    #     )
-    #     self.assertEqual(res, 0)
-    #     self.assertEqual(
-    #         self.gc_builder_world.world_attachment_id.datas,
-    #         b"YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==",
-    #     )
-    #     res = GCBuilderWorld.get_world_data(world_id=self.gc_builder_world.id)
-    #     self.assertEqual(res, b"YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==")
-    #
-    # def test_get_all_worlds(self):
-    #     GCBuilderWorld = self.env["gc.builder.world"]
-    #     res = GCBuilderWorld.get_all_worlds()
-    #     self.assertEqual(res, [GCBuilderWorld.return_world(self.gc_builder_world)])
-    #
-    # def test_get_world(self):
-    #     GCBuilderWorld = self.env["gc.builder.world"]
-    #     res = GCBuilderWorld.get_world(w_id=self.gc_builder_world.id)
-    #     self.assertEqual(res, GCBuilderWorld.return_world(self.gc_builder_world))
+    def test_get_world_data(self):
+        GCBuilderWorld = self.env["gc.builder.world"]
+        res = GCBuilderWorld.save_world(
+            player_uuid="456",
+            world_id=self.gc_builder_world.id,
+            world_data="YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==",
+        )
+        self.assertEqual(res, 0)
+        self.assertEqual(
+            self.gc_builder_world.world_attachment_id.datas,
+            b"YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==",
+        )
+        res = GCBuilderWorld.get_world_data(world_id=self.gc_builder_world.id)
+        self.assertEqual(res, b"YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==")
+
+    def test_get_all_worlds(self):
+        GCBuilderWorld = self.env["gc.builder.world"]
+        res = GCBuilderWorld.get_all_worlds()
+        self.assertEqual(res, [GCBuilderWorld.return_world(self.gc_builder_world)])
+
+    def test_get_world(self):
+        GCBuilderWorld = self.env["gc.builder.world"]
+        res = GCBuilderWorld.get_world(world_id=self.gc_builder_world.id)
+        self.assertEqual(res, GCBuilderWorld.return_world(self.gc_builder_world))
