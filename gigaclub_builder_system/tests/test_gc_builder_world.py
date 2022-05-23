@@ -306,22 +306,23 @@ class TestGCBuilderWorld(SavepointCase):
         )
         self.assertEqual(res, 2)
 
-    #
-    # def test_save_world(self):
-    #     GCBuilderWorld = self.env["gc.builder.world"]
-    #     res = GCBuilderWorld.save_world(
-    #         world_id=self.gc_builder_world.id,
-    #         world_data="YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==",
-    #     )
-    #     self.assertEqual(res, 0)
-    #     self.assertEqual(
-    #         self.gc_builder_world.world_attachment_id.datas,
-    #         b"YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==",
-    #     )
-    #     res = GCBuilderWorld.save_world(
-    #         world_id=0, world_data="YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA=="
-    #     )
-    #     self.assertEqual(res, 1)
+    def test_save_world(self):
+        GCBuilderWorld = self.env["gc.builder.world"]
+        res = GCBuilderWorld.save_world(
+            player_uuid="456",
+            world_id=self.gc_builder_world.id,
+            world_data="YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==",
+        )
+        self.assertEqual(res, 0)
+        self.assertEqual(
+            self.gc_builder_world.world_attachment_id.datas,
+            b"YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA==",
+        )
+        res = GCBuilderWorld.save_world(
+            player_uuid="123", world_id=0, world_data="YXNzYWRhc2Rkc2RzYXNhZHNhZGFzZA=="
+        )
+        self.assertEqual(res, 1)
+
     #
     # def test_edit_world_type(self):
     #     GCBuilderWorld = self.env["gc.builder.world"]

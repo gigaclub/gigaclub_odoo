@@ -292,8 +292,10 @@ class GCBuilderWorld(models.Model):
     # 1: World does not exist
     # 0: Success
     @api.model
-    def save_world(self, world_id, world_data):
-        world = self.browse(world_id)
+    def save_world(self, player_uuid, world_id, world_data):
+        world = self._check_access_gigaclub_builder_system(
+            player_uuid, world_id, "gigaclub_builder_system.save_world"
+        )
         if not world:
             return 1
         world.world_attachment_id = self.env["ir.attachment"].create(
