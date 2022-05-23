@@ -151,7 +151,7 @@ class GCBuilderWorld(models.Model):
 
     # Status Codes:
     # 2: World does not exist
-    # 1: User has no manager access to this world
+    # 1: User has no permission
     # 0: Success
     @api.model
     def add_user_to_world(self, player_uuid, player_uuid_to_add, world_id):
@@ -159,14 +159,25 @@ class GCBuilderWorld(models.Model):
         world = self.browse(world_id)
         if not world:
             return 2
-        if (
-            user not in world.user_manager_ids
-            and user not in world.team_manager_ids.mapped("user_ids")
-            and user not in world.team_manager_ids.mapped("manager_ids")
-        ):
+        if not user.has_permission("gigaclub_builder_system.add_user"):
             return 1
         user_to_add = self.env["gc.user"].search([("mc_uuid", "=", player_uuid_to_add)])
-        world.user_ids |= user_to_add
+        world.permission_connector_ids |= self.env["gc.permission.connector"].create(
+            {
+                "user_id": user_to_add.id,
+                "permission_profile_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "permission_profile_template_id": self.env.ref(
+                                "gigaclub_builder_system.gc_permission_profile_template_builder_system_default"  # noqa: B950
+                            ).id,
+                        },
+                    )
+                ],
+            }
+        )
         return 0
 
     # Status Codes:
