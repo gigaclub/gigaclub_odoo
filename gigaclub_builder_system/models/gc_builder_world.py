@@ -260,26 +260,32 @@ class GCBuilderWorld(models.Model):
         return 0
 
     # Status Codes:
-    # 3: World does not exist
-    # 2: User has no manager access to this world
+    # 2: World does not exist or user has no manager access to this world
     # 1: Team does not exist
     # 0: Success
     @api.model
     def remove_team_from_world(self, player_uuid, team_name, world_id):
-        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        world = self.browse(world_id)
+        world = self._check_access_gigaclub_builder_system(
+            player_uuid, world_id, "gigaclub_builder_system.remove_team"
+        )
         if not world:
-            return 3
-        if (
-            user not in world.user_manager_ids
-            and user not in world.team_manager_ids.mapped("user_ids")
-            and user not in world.team_manager_ids.mapped("manager_ids")
-        ):
             return 2
-        team_to_remove = self.env["gc.team"].search([("name", "=ilike", team_name)])
+        team_to_remove = self.env["gc.team"].search(
+            [("name", "=ilike", team_name)], limit=1
+        )
         if not team_to_remove:
             return 1
-        world.team_ids = [(3, team_to_remove.id)]
+        team_permission_connector = world.permission_connector_ids.filtered(
+            lambda r: r.team_id == team_to_remove
+        )
+        if team_permission_connector:
+            team_users = team_to_remove.permission_connector_ids.mapped("user_id")
+            user_permission_connectors = world.permission_connector_ids.filtered(
+                lambda r: r.user_id in team_users and r.bound_to_team
+            )
+            if user_permission_connectors:
+                user_permission_connectors.unlink()
+            team_permission_connector.unlink()
         return 0
 
     # Status Codes:

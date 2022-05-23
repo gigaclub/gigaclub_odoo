@@ -283,31 +283,29 @@ class TestGCBuilderWorld(SavepointCase):
         )
         self.assertEqual(res, 1)
 
-    #
-    # def test_remove_team_from_world(self):
-    #     GCBuilderWorld = self.env["gc.builder.world"]
-    #     res = GCBuilderWorld.remove_team_from_world(
-    #         player_uuid="456",
-    #         team_name="team",
-    #         world_id=self.gc_builder_world.id,
-    #     )
-    #     self.assertEqual(res, 0)
-    #     self.assertTrue(self.gc_team not in self.gc_builder_world.team_ids)
-    #     res = GCBuilderWorld.remove_team_from_world(
-    #         player_uuid="456",
-    #         team_name="bla",
-    #         world_id=self.gc_builder_world.id,
-    #     )
-    #     self.assertEqual(res, 1)
-    #     self.gc_team_manager.user_ids -= self.gc_user
-    #     res = GCBuilderWorld.remove_team_from_world(
-    #         player_uuid="123", team_name="team", world_id=self.gc_builder_world.id
-    #     )
-    #     self.assertEqual(res, 2)
-    #     res = GCBuilderWorld.remove_team_from_world(
-    #         player_uuid="123", team_name="team", world_id=0
-    #     )
-    #     self.assertEqual(res, 3)
+    def test_remove_team_from_world(self):
+        GCBuilderWorld = self.env["gc.builder.world"]
+        res = GCBuilderWorld.remove_team_from_world(
+            player_uuid="456",
+            team_name="team",
+            world_id=self.gc_builder_world.id,
+        )
+        self.assertEqual(res, 0)
+        self.assertTrue(
+            self.gc_team
+            not in self.gc_builder_world.permission_connector_ids.mapped("team_id")
+        )
+        res = GCBuilderWorld.remove_team_from_world(
+            player_uuid="456",
+            team_name="bla",
+            world_id=self.gc_builder_world.id,
+        )
+        self.assertEqual(res, 1)
+        res = GCBuilderWorld.remove_team_from_world(
+            player_uuid="123", team_name="team", world_id=self.gc_builder_world.id
+        )
+        self.assertEqual(res, 2)
+
     #
     # def test_save_world(self):
     #     GCBuilderWorld = self.env["gc.builder.world"]
