@@ -240,25 +240,23 @@ class GCBuilderWorld(models.Model):
         return 0
 
     # Status Codes:
-    # 2: World does not exist
-    # 1: User has no manager access to this world
+    # 1: World does not exist and user has no manager access to this world
     # 0: Success
     @api.model
     def remove_user_from_world(self, player_uuid, player_uuid_to_remove, world_id):
-        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        world = self.browse(world_id)
+        world = self._check_access_gigaclub_builder_system(
+            player_uuid, world_id, "gigaclub_builder_system.remove_user"
+        )
         if not world:
-            return 2
-        if (
-            user not in world.user_manager_ids
-            and user not in world.team_manager_ids.mapped("user_ids")
-            and user not in world.team_manager_ids.mapped("manager_ids")
-        ):
             return 1
         user_to_remove = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_remove)]
         )
-        world.user_ids = [(3, user_to_remove.id)]
+        permission_connector = world.permission_connector_ids.filtered(
+            lambda r: r.user_id == user_to_remove
+        )
+        if permission_connector:
+            permission_connector.unlink()
         return 0
 
     # Status Codes:

@@ -264,27 +264,25 @@ class TestGCBuilderWorld(SavepointCase):
         )
         self.assertEqual(res, 2)
 
-    #
-    # def test_remove_user_from_world(self):
-    #     GCBuilderWorld = self.env["gc.builder.world"]
-    #     res = GCBuilderWorld.remove_user_from_world(
-    #         player_uuid="456",
-    #         player_uuid_to_remove="123",
-    #         world_id=self.gc_builder_world.id,
-    #     )
-    #     self.assertEqual(res, 0)
-    #     self.assertTrue(self.gc_user not in self.gc_builder_world.user_ids)
-    #     self.gc_team_manager.user_ids -= self.gc_user
-    #     res = GCBuilderWorld.remove_user_from_world(
-    #         player_uuid="123",
-    #         player_uuid_to_remove="456",
-    #         world_id=self.gc_builder_world.id,
-    #     )
-    #     self.assertEqual(res, 1)
-    #     res = GCBuilderWorld.remove_user_from_world(
-    #         player_uuid="123", player_uuid_to_remove="456", world_id=0
-    #     )
-    #     self.assertEqual(res, 2)
+    def test_remove_user_from_world(self):
+        GCBuilderWorld = self.env["gc.builder.world"]
+        res = GCBuilderWorld.remove_user_from_world(
+            player_uuid="456",
+            player_uuid_to_remove="123",
+            world_id=self.gc_builder_world.id,
+        )
+        self.assertEqual(res, 0)
+        self.assertTrue(
+            self.gc_user
+            not in self.gc_builder_world.permission_connector_ids.mapped("user_id")
+        )
+        res = GCBuilderWorld.remove_user_from_world(
+            player_uuid="123",
+            player_uuid_to_remove="456",
+            world_id=self.gc_builder_world.id,
+        )
+        self.assertEqual(res, 1)
+
     #
     # def test_remove_team_from_world(self):
     #     GCBuilderWorld = self.env["gc.builder.world"]
