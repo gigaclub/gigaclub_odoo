@@ -179,26 +179,64 @@ class GCBuilderWorld(models.Model):
         return 0
 
     # Status Codes:
-    # 3: World does not exist
-    # 2: User has no manager access to this world
+    # 2: World does not exist or user has no access to this world
     # 1: Team does not exist
     # 0: Success
     @api.model
     def add_team_to_world(self, player_uuid, team_name, world_id):
-        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        world = self.browse(world_id)
+        world = self._check_access_gigaclub_builder_system(
+            player_uuid, world_id, "gigaclub_builder_system.add_team"
+        )
         if not world:
-            return 3
-        if (
-            user not in world.user_manager_ids
-            and user not in world.team_manager_ids.mapped("user_ids")
-            and user not in world.team_manager_ids.mapped("manager_ids")
-        ):
             return 2
-        team_to_add = self.env["gc.team"].search([("name", "=ilike", team_name)])
+        team_to_add = self.env["gc.team"].search(
+            [("name", "=ilike", team_name)], limit=1
+        )
         if not team_to_add:
             return 1
-        world.team_ids |= team_to_add
+        permission_connectors = [
+            (
+                0,
+                0,
+                {
+                    "team_id": team_to_add.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_template_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
+                                ).id,
+                            },
+                        )
+                    ],
+                },
+            )
+        ]
+        for user in team_to_add.permission_connector_ids.mapped("user_id"):
+            permission_connectors.append(
+                (
+                    0,
+                    0,
+                    {
+                        "user_id": user.id,
+                        "bound_to_team": True,
+                        "permission_profile_ids": [
+                            (
+                                0,
+                                0,
+                                {
+                                    "permission_profile_template_id": self.env.ref(
+                                        "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
+                                    ).id,
+                                },
+                            )
+                        ],
+                    },
+                )
+            )
+        world.permission_connector_ids = permission_connectors
         return 0
 
     # Status Codes:

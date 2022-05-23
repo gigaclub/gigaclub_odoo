@@ -214,38 +214,56 @@ class TestGCBuilderWorld(SavepointCase):
         )
         self.assertEqual(res, 1)
 
-    #
-    # def test_add_team_to_world(self):
-    #     team_to_add = self.env["gc.team"].create(
-    #         {
-    #             "name": "team_to_add",
-    #         }
-    #     )
-    #     GCBuilderWorld = self.env["gc.builder.world"]
-    #     res = GCBuilderWorld.add_team_to_world(
-    #         player_uuid="456",
-    #         team_name="team_to_add",
-    #         world_id=self.gc_builder_world.id,
-    #     )
-    #     self.assertEqual(res, 0)
-    #     self.assertTrue(team_to_add in self.gc_builder_world.team_ids)
-    #     res = GCBuilderWorld.add_team_to_world(
-    #         player_uuid="123",
-    #         team_name="bla",
-    #         world_id=self.gc_builder_world.id,
-    #     )
-    #     self.assertEqual(res, 1)
-    #     self.gc_team_manager.user_ids -= self.gc_user
-    #     res = GCBuilderWorld.add_team_to_world(
-    #         player_uuid="123",
-    #         team_name="team_to_add",
-    #         world_id=self.gc_builder_world.id,
-    #     )
-    #     self.assertEqual(res, 2)
-    #     res = GCBuilderWorld.add_team_to_world(
-    #         player_uuid="123", team_name="team_to_add", world_id=0
-    #     )
-    #     self.assertEqual(res, 3)
+    def test_add_team_to_world(self):
+        user_to_add = self.env["gc.user"].create(
+            {
+                "name": "user_to_add",
+                "mc_uuid": "321",
+            }
+        )
+        team_to_add = self.env["gc.team"].create(
+            {
+                "name": "team_to_add",
+                "owner_id": user_to_add.id,
+                "permission_connector_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "user_id": user_to_add.id,
+                        },
+                    ),
+                ],
+            }
+        )
+        GCBuilderWorld = self.env["gc.builder.world"]
+        res = GCBuilderWorld.add_team_to_world(
+            player_uuid="456",
+            team_name="team_to_add",
+            world_id=self.gc_builder_world.id,
+        )
+        self.assertEqual(res, 0)
+        self.assertTrue(
+            team_to_add
+            in self.gc_builder_world.permission_connector_ids.mapped("team_id")
+        )
+        self.assertTrue(
+            user_to_add
+            in self.gc_builder_world.permission_connector_ids.mapped("user_id")
+        )
+        res = GCBuilderWorld.add_team_to_world(
+            player_uuid="456",
+            team_name="bla",
+            world_id=self.gc_builder_world.id,
+        )
+        self.assertEqual(res, 1)
+        res = GCBuilderWorld.add_team_to_world(
+            player_uuid="123",
+            team_name="team_to_add",
+            world_id=self.gc_builder_world.id,
+        )
+        self.assertEqual(res, 2)
+
     #
     # def test_remove_user_from_world(self):
     #     GCBuilderWorld = self.env["gc.builder.world"]
