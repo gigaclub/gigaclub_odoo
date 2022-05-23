@@ -310,8 +310,10 @@ class GCBuilderWorld(models.Model):
     # 1: World does not exist
     # 0: Success
     @api.model
-    def edit_world_type(self, world_id, world_type_name):
-        world = self.browse(world_id)
+    def edit_world_type(self, player_uuid, world_id, world_type_name):
+        world = self._check_access_gigaclub_builder_system(
+            player_uuid, world_id, "gigaclub_builder_system.edit_world_type"
+        )
         if not world:
             return 1
         world_type = self.env["gc.builder.world.type"].search(

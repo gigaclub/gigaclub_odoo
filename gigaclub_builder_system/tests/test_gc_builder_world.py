@@ -323,20 +323,24 @@ class TestGCBuilderWorld(SavepointCase):
         )
         self.assertEqual(res, 1)
 
-    #
-    # def test_edit_world_type(self):
-    #     GCBuilderWorld = self.env["gc.builder.world"]
-    #     GCBuilderWorldType = self.env["gc.builder.world.type"]
-    #     res = GCBuilderWorld.edit_world_type(
-    #         world_id=self.gc_builder_world.id, world_type="nether"
-    #     )
-    #     self.assertEqual(res, 0)
-    #     self.assertEqual(
-    #         self.gc_builder_world.world_type_id,
-    #         GCBuilderWorldType.search([("name", "=", "nether")], limit=1),
-    #     )
-    #     res = GCBuilderWorld.edit_world_type(world_id=0, world_type="nether")
-    #     self.assertEqual(res, 1)
+    def test_edit_world_type(self):
+        GCBuilderWorld = self.env["gc.builder.world"]
+        GCBuilderWorldType = self.env["gc.builder.world.type"]
+        res = GCBuilderWorld.edit_world_type(
+            player_uuid="456",
+            world_id=self.gc_builder_world.id,
+            world_type_name="nether",
+        )
+        self.assertEqual(res, 0)
+        self.assertEqual(
+            self.gc_builder_world.world_type_id,
+            GCBuilderWorldType.search([("name", "=", "nether")], limit=1),
+        )
+        res = GCBuilderWorld.edit_world_type(
+            player_uuid="123", world_id=0, world_type_name="nether"
+        )
+        self.assertEqual(res, 1)
+
     #
     # def test_get_world_data(self):
     #     GCBuilderWorld = self.env["gc.builder.world"]
