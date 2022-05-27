@@ -55,7 +55,7 @@ class GCBuilderWorld(models.Model):
             return 1
         task = self.env["project.task"].browse(task_id)
         world_type = self.env["gc.builder.world.type"].search(
-            [("name", "=ilike", world_type_name)], limit=1
+            [("name", "=", world_type_name)], limit=1
         )
         if not world_type:
             world_type = self.env["gc.builder.world.type"].search(

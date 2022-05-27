@@ -88,16 +88,33 @@ class TestGCBuilderWorld(SavepointCase):
 
     def test_create_as_user(self):
         GCBuilderWorld = self.env["gc.builder.world"]
+        self.gc_user.permission_profile_ids = self.env["gc.permission.profile"].create(
+            {
+                "permission_profile_entry_template_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "permission_model_entry_id": self.env.ref(
+                                "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_create_world"  # noqa: B950
+                            ).id,
+                        },
+                    )
+                ],
+            },
+        )
         res = GCBuilderWorld.create_as_user(
             player_uuid="123",
             task_id=self.project_task.id,
-            name="Test World",
+            name="Test World2",
             world_type_name="normal",
         )
-        self.assertTrue(isinstance(res, int))
-        gc_builder_world = GCBuilderWorld.browse(res)
+        self.assertEqual(res, 0)
+        gc_builder_world = GCBuilderWorld.search(
+            [("name", "=", "Test World2")], limit=1
+        )
         self.assertTrue(gc_builder_world)
-        self.assertEqual(gc_builder_world.name, "Test World")
+        self.assertEqual(gc_builder_world.name, "Test World2")
         self.assertEqual(
             gc_builder_world.world_type_id,
             self.env["gc.builder.world.type"].search([("name", "=", "normal")]),
@@ -111,13 +128,15 @@ class TestGCBuilderWorld(SavepointCase):
         res = GCBuilderWorld.create_as_user(
             player_uuid="123",
             task_id=self.project_task.id,
-            name="Test World",
+            name="Test World3",
             world_type_name="",
         )
-        self.assertTrue(isinstance(res, int))
-        gc_builder_world = GCBuilderWorld.browse(res)
+        self.assertEqual(res, 0)
+        gc_builder_world = GCBuilderWorld.search(
+            [("name", "=", "Test World3")], limit=1
+        )
         self.assertTrue(gc_builder_world)
-        self.assertEqual(gc_builder_world.name, "Test World")
+        self.assertEqual(gc_builder_world.name, "Test World3")
         self.assertEqual(
             gc_builder_world.world_type_id,
             self.env["gc.builder.world.type"].search([("default", "=", True)], limit=1),
@@ -127,6 +146,15 @@ class TestGCBuilderWorld(SavepointCase):
         self.assertTrue(
             self.gc_user in gc_builder_world.permission_connector_ids.mapped("user_id")
         )
+
+        self.gc_user.permission_profile_ids = False
+        res = GCBuilderWorld.create_as_user(
+            player_uuid="123",
+            task_id=self.project_task.id,
+            name="Test World2",
+            world_type_name="",
+        )
+        self.assertEqual(res, 1)
 
     def test_create_as_team(self):
         GCBuilderWorld = self.env["gc.builder.world"]
