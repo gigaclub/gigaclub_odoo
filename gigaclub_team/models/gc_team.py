@@ -28,7 +28,9 @@ class GCTeam(models.Model):
         team_connector = user.permission_connector_ids.filtered_domain(
             [("team_id", "=", team.id)]
         )[:1]
-        if team_connector and team_connector.has_permission(permission):
+        if team_connector and team_connector.has_one_of_permissions(
+            [permission, "gigaclub_team.*", "*"]
+        ):
             return team_connector.team_id
         return False
 
@@ -40,7 +42,9 @@ class GCTeam(models.Model):
     @api.model
     def create_team(self, player_uuid, name, description=False):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        if not user.has_permission("gigaclub_team.create_team"):
+        if not user.has_one_of_permissions(
+            ["gigaclub_team.create_team", "gigaclub_team.*", "*"]
+        ):
             return 3
         if self.search_count([("name", "=ilike", name)]):
             return 2
@@ -101,7 +105,9 @@ class GCTeam(models.Model):
     def leave_team(self, player_uuid, team_name):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         team = self.search([("name", "=ilike", team_name)], limit=1)
-        if not user.has_permission("gigaclub_team.leave_team"):
+        if not user.has_one_of_permissions(
+            ["gigaclub_team.leave_team", "gigaclub_team.*", "*"]
+        ):
             return 2
         team_connector_to_leave = user.permission_connector_ids.filtered_domain(
             [("team_id", "=", team.id)]
@@ -220,7 +226,9 @@ class GCTeam(models.Model):
     @api.model
     def accept_request(self, player_uuid, team_name):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        if not user.has_permission("gigaclub_team.accept_request"):
+        if not user.has_one_of_permissions(
+            ["gigaclub_team.accept_request", "gigaclub_team.*", "*"]
+        ):
             return 3
         team = self.search([("name", "=ilike", team_name)], limit=1)
         if not team:
@@ -251,7 +259,9 @@ class GCTeam(models.Model):
     @api.model
     def deny_request(self, player_uuid, team_name):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        if not user.has_permission("gigaclub_team.deny_request"):
+        if not user.has_one_of_permissions(
+            ["gigaclub_team.deny_request", "gigaclub_team.*", "*"]
+        ):
             return 3
         team = self.search([("name", "=ilike", team_name)], limit=1)
         if not team:

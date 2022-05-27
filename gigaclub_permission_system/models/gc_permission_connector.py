@@ -30,3 +30,13 @@ class GCPermissionConnector(models.Model):
             )
             in self.get_permissions()
         )
+
+    def has_one_of_permissions(self, permissions):
+        self.ensure_one()
+        return any(
+            self.env["gc.permission.model.entry"].search(
+                [("name", "=ilike", permission)], limit=1
+            )
+            in self.get_permissions()
+            for permission in permissions
+        )

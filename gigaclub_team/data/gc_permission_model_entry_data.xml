@@ -65,5 +65,14 @@
             <field name="permission_type">user</field>
         </record>
 
+        <record
+      id="gc_permission_model_entry_gc_team_*"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_team.*</field>
+            <field name="permission_model_id" ref="gc_permission_model_gc_team" />
+            <field name="permission_type">user</field>
+        </record>
+
     </data>
 </odoo>

@@ -37,13 +37,22 @@ class GCBuilderWorld(models.Model):
                 ("world_id", "=", world_id),
             ]
         )[:1]
-        if world_connector and world_connector.has_permission(permission):
+        if world_connector and world_connector.has_one_of_permissions(
+            [permission, "gigaclub_builder_system.*", "*"]
+        ):
             return world_connector.world_id
         return False
 
+    # Status Codes:
+    # 1: No Permission
+    # 0: Success
     @api.model
     def create_as_user(self, player_uuid, task_id, name, world_type_name):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        if not user.has_one_of_permissions(
+            ["gigaclub_builder_system.create_world", "gigaclub_builder_system.*", "*"]
+        ):
+            return 1
         task = self.env["project.task"].browse(task_id)
         world_type = self.env["gc.builder.world.type"].search(
             [("name", "=ilike", world_type_name)], limit=1
@@ -52,7 +61,7 @@ class GCBuilderWorld(models.Model):
             world_type = self.env["gc.builder.world.type"].search(
                 [("default", "=", True)], limit=1
             )
-        return self.create(
+        self.create(
             {
                 "name": name,
                 "task_id": task.id,
@@ -79,7 +88,8 @@ class GCBuilderWorld(models.Model):
                     )
                 ],
             }
-        ).id
+        )
+        return 0
 
     @api.model
     def create_as_team(self, player_uuid, team, task_id, name, world_type_name):

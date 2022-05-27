@@ -3,7 +3,7 @@
     <data>
 
         <record
-      id="gc_permission_model_entry_gc_builder_world_create_world"
+      id="gc_permission_model_entry_gc_builder_system_create_world"
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_builder_system.create_world</field>
@@ -15,7 +15,7 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_builder_world_add_user"
+      id="gc_permission_model_entry_gc_builder_system_add_user"
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_builder_system.add_user</field>
@@ -27,7 +27,7 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_builder_world_add_team"
+      id="gc_permission_model_entry_gc_builder_system_add_team"
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_builder_system.add_team</field>
@@ -39,7 +39,7 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_builder_world_remove_user"
+      id="gc_permission_model_entry_gc_builder_system_remove_user"
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_builder_system.remove_user</field>
@@ -51,7 +51,7 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_builder_world_remove_team"
+      id="gc_permission_model_entry_gc_builder_system_remove_team"
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_builder_system.remove_team</field>
@@ -63,7 +63,7 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_builder_world_save_world"
+      id="gc_permission_model_entry_gc_builder_system_save_world"
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_builder_system.save_world</field>
@@ -75,7 +75,7 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_builder_world_edit_world_type"
+      id="gc_permission_model_entry_gc_builder_system_edit_world_type"
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_builder_system.edit_world_type</field>
@@ -84,6 +84,18 @@
         ref="gc_permission_model_gc_builder_world"
       />
             <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_*"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.*</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">user</field>
         </record>
 
         <record
