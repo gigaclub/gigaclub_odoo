@@ -19,7 +19,9 @@ class GCPermissionGroup(models.Model):
         comodel_name="gc.permission.profile", compute="_compute_permissions"
     )
 
-    @api.depends("child_group_ids.permission_profile_ids", "permission_profile_ids")
+    @api.depends(
+        "child_group_ids.computed_permission_profile_ids", "permission_profile_ids"
+    )
     def _compute_permissions(self):
         for rec in self:
             rec.computed_permission_profile_ids = (

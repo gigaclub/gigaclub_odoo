@@ -11,6 +11,9 @@
                     <field name="description" />
                     <field name="permission_profile_ids" widget="many2many_tags" />
                     <field name="global_group" />
+                    <field name="parent_group_id" />
+                    <field name="child_group_ids" widget="many2many_tags" />
+                    <field name="computed_permission_profile_ids" />
                 </tree>
             </field>
         </record>
@@ -25,6 +28,9 @@
                         <field name="description" />
                         <field name="permission_profile_ids" />
                         <field name="global_group" />
+                        <field name="parent_group_id" />
+                        <field name="child_group_ids" widget="many2many_tags" />
+                        <field name="computed_permission_profile_ids" />
                     </group>
                 </form>
             </field>
