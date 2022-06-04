@@ -10,6 +10,23 @@ class GCPermissionGroup(models.Model):
     permission_profile_ids = fields.Many2many(comodel_name="gc.permission.profile")
     global_group = fields.Boolean()
 
+    parent_group_id = fields.Many2one(comodel_name="gc.permission.group", index=True)
+    child_group_ids = fields.One2many(
+        comodel_name="gc.permission.group", inverse_name="parent_group_id"
+    )
+
+    computed_permission_profile_ids = fields.Many2many(
+        comodel_name="gc.permission.profile", compute="_compute_permissions"
+    )
+
+    @api.depends("child_group_ids.permission_profile_ids", "permission_profile_ids")
+    def _compute_permissions(self):
+        for rec in self:
+            rec.computed_permission_profile_ids = (
+                rec.child_group_ids.mapped("computed_permission_profile_ids")
+                | rec.permission_profile_ids
+            )
+
     @api.model
     def get_all_groups(self):
         return [
@@ -17,7 +34,7 @@ class GCPermissionGroup(models.Model):
                 "id": x.id,
                 "name": x.name,
                 "description": x.description,
-                "permissions": x.permission_profile_ids.mapped(
+                "permissions": x.computed_permission_profile_ids.mapped(
                     "permission_profile_entry_ids.permission_model_entry_id.name"
                 ),
             }
