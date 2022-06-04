@@ -13,6 +13,13 @@ class GCPermissionGroup(models.Model):
     @api.model
     def get_all_groups(self):
         return [
-            {"id": x.id, "name": x.name, "description": x.description}
+            {
+                "id": x.id,
+                "name": x.name,
+                "description": x.description,
+                "permissions": x.permission_profile_ids.mapped(
+                    "permission_profile_entry_ids.permission_model_entry_id.name"
+                ),
+            }
             for x in self.search([("global_group", "=", True)])
         ]
