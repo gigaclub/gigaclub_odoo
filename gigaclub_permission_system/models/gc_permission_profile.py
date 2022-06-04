@@ -12,3 +12,6 @@ class GCPermissionProfile(models.Model):
     permission_profile_template_id = fields.Many2one(
         comodel_name="gc.permission.profile.template", required=True
     )
+    permission_group_id = fields.Many2one(
+        comodel_name="gc.permission.group", index=True
+    )

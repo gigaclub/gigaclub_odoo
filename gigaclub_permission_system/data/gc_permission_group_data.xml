@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="gc_permission_group_gigaclub" model="gc.permission.group">
+            <field name="name">GigaClub</field>
+            <field name="global_group" eval="True" />
+        </record>
+
+    </data>
+</odoo>

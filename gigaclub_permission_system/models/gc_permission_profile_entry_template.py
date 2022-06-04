@@ -6,8 +6,8 @@ class GCPermissionProfileEntryTemplate(models.Model):
     _description = "GigaClub Permission Profile Entry Template"
 
     permission_model_entry_id = fields.Many2one(
-        comodel_name="gc.permission.model.entry", required=True
+        comodel_name="gc.permission.model.entry"
     )
     permission_profile_template_id = fields.Many2one(
-        comodel_name="gc.permission.profile.template", required=True, index=True
+        comodel_name="gc.permission.profile.template", index=True
     )

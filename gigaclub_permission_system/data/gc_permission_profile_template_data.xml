@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record
+      id="gc_permission_profile_template"
+      model="gc.permission.profile.template"
+    />
+
+    </data>
+</odoo>

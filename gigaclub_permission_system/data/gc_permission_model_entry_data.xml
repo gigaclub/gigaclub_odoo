@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="gc_permission_model_entry_*" model="gc.permission.model.entry">
+            <field name="name">*</field>
+            <field name="permission_type">user</field>
+        </record>
+
+    </data>
+</odoo>

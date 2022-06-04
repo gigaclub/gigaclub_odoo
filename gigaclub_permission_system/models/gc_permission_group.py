@@ -7,7 +7,9 @@ class GCPermissionGroup(models.Model):
 
     name = fields.Char()
     description = fields.Text()
-    permission_profile_ids = fields.Many2many(comodel_name="gc.permission.profile")
+    permission_profile_ids = fields.One2many(
+        comodel_name="gc.permission.profile", inverse_name="permission_group_id"
+    )
     global_group = fields.Boolean()
 
     parent_group_id = fields.Many2one(comodel_name="gc.permission.group", index=True)
