@@ -12,6 +12,8 @@
             <field name="arch" type="xml">
                 <field name="state" position="after">
                     <field name="permission_connector_ids" />
+                    <field name="permission_group_ids" />
+                    <field name="permission_profile_ids" />
                 </field>
             </field>
         </record>
@@ -26,6 +28,8 @@
             <field name="arch" type="xml">
                 <field name="state" position="after">
                     <field name="permission_connector_ids" />
+                    <field name="permission_group_ids" />
+                    <field name="permission_profile_ids" />
                 </field>
             </field>
         </record>
