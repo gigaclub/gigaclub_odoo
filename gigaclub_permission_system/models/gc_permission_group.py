@@ -33,6 +33,28 @@ class GCPermissionGroup(models.Model):
 
     @api.model
     def get_all_groups(self):
+        return self._get_groups(self.search([("global_group", "=", True)]))
+
+    @api.model
+    def set_groups(self, playerUUID, group_ids):
+        user = self.env["gc.user"].search([("mc_uuid", "=", playerUUID)], limit=1)
+        groups = self.browse(group_ids)
+        user.permission_group_ids |= groups
+        return 0
+
+    @api.model
+    def remove_groups(self, playerUUID, group_ids):
+        user = self.env["gc.user"].search([("mc_uuid", "=", playerUUID)], limit=1)
+        groups = self.browse(group_ids)
+        user.permission_group_ids -= groups
+        return 0
+
+    @api.model
+    def get_groups(self, playerUUID):
+        user = self.env["gc.user"].search([("mc_uuid", "=", playerUUID)], limit=1)
+        return self._get_groups(user.permission_group_ids)
+
+    def _get_groups(self, records):
         return [
             {
                 "id": x.id,
@@ -42,5 +64,5 @@ class GCPermissionGroup(models.Model):
                     "permission_profile_entry_ids.permission_model_entry_id.name"
                 ),
             }
-            for x in self.search([("global_group", "=", True)])
+            for x in records
         ]
