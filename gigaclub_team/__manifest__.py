@@ -8,8 +8,11 @@
     "license": "AGPL-3",
     "depends": ["gigaclub_requests", "gigaclub_permission_system"],
     "data": [
+        "data/gc_permission_group_data.xml",
         "data/gc_permission_model_data.xml",
         "data/gc_permission_model_entry_data.xml",
+        "data/gc_permission_profile_data.xml",
+        "data/gc_permission_profile_entry_data.xml",
         "data/gc_permission_profile_template_data.xml",
         "security/ir.model.access.csv",
         "views/gc_team_views.xml",
