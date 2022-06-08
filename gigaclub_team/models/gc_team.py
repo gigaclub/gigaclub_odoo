@@ -18,9 +18,9 @@ class GCTeam(models.Model):
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]
 
     @api.model
-    def _check_access_gigaclub_team(self, player_uuid, team, permission):
+    def _check_access_gigaclub_team(self, player_uuid, team_id, permission):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team = self.search([("name", "=ilike", team)], limit=1)
+        team = self.browse(team_id)
         if not team:
             return False
         if user == team.owner_id:
@@ -83,15 +83,15 @@ class GCTeam(models.Model):
     # 1: No valid team found for this user
     # 0: Success
     @api.model
-    def edit_team(self, player_uuid, team, new_name, new_description=False):
+    def edit_team(self, player_uuid, team_id, new_name=False, new_description=False):
         team = self._check_access_gigaclub_team(
-            player_uuid, team, "gigaclub_team.edit_team"
+            player_uuid, team_id, "gigaclub_team.edit_team"
         )
         if not team:
             return 1
         team.write(
             {
-                "name": new_name,
+                "name": new_name or team.name,
                 "description": new_description or team.description,
             }
         )
@@ -153,8 +153,10 @@ class GCTeam(models.Model):
 
     def return_team(self, team):
         return {
+            "id": team.id,
             "name": team.name,
-            "description": team.description,
+            "description": team.description or "",
+            "owner_id": team.owner_id.mc_uuid,
             "user_ids": [
                 {"mc_uuid": u.mc_uuid}
                 for u in team.permission_connector_ids.mapped("user_id")
