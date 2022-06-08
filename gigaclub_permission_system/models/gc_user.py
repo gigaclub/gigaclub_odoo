@@ -15,10 +15,10 @@ class GCUser(models.Model):
         self.ensure_one()
         permission_model_entries = (
             self.permission_group_ids.mapped(
-                "permission_profile_ids.permission_profile_entry_template_ids.permission_model_entry_id"  # noqa: B950
+                "computed_permission_profile_ids.permission_profile_entry_ids.permission_model_entry_id"  # noqa: B950
             )
             | self.permission_profile_ids.mapped(
-                "permission_profile_entry_template_ids.permission_model_entry_id"
+                "permission_profile_entry_ids.permission_model_entry_id"
             )
         ).filtered(lambda x: x.permission_type == "user")
         return permission_model_entries
