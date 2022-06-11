@@ -200,7 +200,7 @@ class GCBuilderWorld(models.Model):
         if not world:
             return 2
         team_to_add = self.env["gc.team"].browse(team_id)
-        if not team_to_add:
+        if not team_to_add.exists():
             return 1
         permission_connectors = [
             (
@@ -272,16 +272,14 @@ class GCBuilderWorld(models.Model):
     # 1: Team does not exist
     # 0: Success
     @api.model
-    def remove_team_from_world(self, player_uuid, team_name, world_id):
+    def remove_team_from_world(self, player_uuid, team_id, world_id):
         world = self._check_access_gigaclub_builder_system(
             player_uuid, world_id, "gigaclub_builder_system.remove_team"
         )
         if not world:
             return 2
-        team_to_remove = self.env["gc.team"].search(
-            [("name", "=ilike", team_name)], limit=1
-        )
-        if not team_to_remove:
+        team_to_remove = self.env["gc.team"].browse(team_id)
+        if not team_to_remove.exists():
             return 1
         team_permission_connector = world.permission_connector_ids.filtered(
             lambda r: r.team_id == team_to_remove

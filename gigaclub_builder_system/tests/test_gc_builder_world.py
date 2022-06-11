@@ -90,7 +90,7 @@ class TestGCBuilderWorld(SavepointCase):
         GCBuilderWorld = self.env["gc.builder.world"]
         self.gc_user.permission_profile_ids = self.env["gc.permission.profile"].create(
             {
-                "permission_profile_entry_template_ids": [
+                "permission_profile_entry_ids": [
                     (
                         0,
                         0,
@@ -160,7 +160,7 @@ class TestGCBuilderWorld(SavepointCase):
         GCBuilderWorld = self.env["gc.builder.world"]
         res = GCBuilderWorld.create_as_team(
             player_uuid="123",
-            team="team",
+            team_id=self.gc_team.id,
             task_id=self.project_task.id,
             name="Test World",
             world_type_name="normal",
@@ -189,7 +189,7 @@ class TestGCBuilderWorld(SavepointCase):
 
         res = GCBuilderWorld.create_as_team(
             player_uuid="123",
-            team="team",
+            team_id=self.gc_team.id,
             task_id=self.project_task.id,
             name="Test World",
             world_type_name="",
@@ -267,7 +267,7 @@ class TestGCBuilderWorld(SavepointCase):
         GCBuilderWorld = self.env["gc.builder.world"]
         res = GCBuilderWorld.add_team_to_world(
             player_uuid="456",
-            team_name="team_to_add",
+            team_id=team_to_add.id,
             world_id=self.gc_builder_world.id,
         )
         self.assertEqual(res, 0)
@@ -281,13 +281,13 @@ class TestGCBuilderWorld(SavepointCase):
         )
         res = GCBuilderWorld.add_team_to_world(
             player_uuid="456",
-            team_name="bla",
+            team_id=999,
             world_id=self.gc_builder_world.id,
         )
         self.assertEqual(res, 1)
         res = GCBuilderWorld.add_team_to_world(
             player_uuid="123",
-            team_name="team_to_add",
+            team_id=team_to_add.id,
             world_id=self.gc_builder_world.id,
         )
         self.assertEqual(res, 2)
@@ -315,7 +315,7 @@ class TestGCBuilderWorld(SavepointCase):
         GCBuilderWorld = self.env["gc.builder.world"]
         res = GCBuilderWorld.remove_team_from_world(
             player_uuid="456",
-            team_name="team",
+            team_id=self.gc_team.id,
             world_id=self.gc_builder_world.id,
         )
         self.assertEqual(res, 0)
@@ -325,12 +325,14 @@ class TestGCBuilderWorld(SavepointCase):
         )
         res = GCBuilderWorld.remove_team_from_world(
             player_uuid="456",
-            team_name="bla",
+            team_id=9999,
             world_id=self.gc_builder_world.id,
         )
         self.assertEqual(res, 1)
         res = GCBuilderWorld.remove_team_from_world(
-            player_uuid="123", team_name="team", world_id=self.gc_builder_world.id
+            player_uuid="123",
+            team_id=self.gc_team.id,
+            world_id=self.gc_builder_world.id,
         )
         self.assertEqual(res, 2)
 
