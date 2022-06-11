@@ -180,8 +180,8 @@ class GCTeam(models.Model):
         return [self.return_team(x) for x in teams]
 
     @api.model
-    def get_team(self, name):
-        team = self.search([("name", "=ilike", name)])
+    def get_team(self, team_id):
+        team = self.browse(team_id)
         if team:
             return self.return_team(team)
         return []
@@ -193,9 +193,9 @@ class GCTeam(models.Model):
     # 1: Request already sent
     # 0: Success
     @api.model
-    def invite_member(self, player_uuid, team, player_uuid_to_invite):
+    def invite_member(self, player_uuid, team_id, player_uuid_to_invite):
         team = self._check_access_gigaclub_team(
-            player_uuid, team, "gigaclub_team.invite_member"
+            player_uuid, team_id, "gigaclub_team.invite_member"
         )
         if not team:
             return 4
@@ -226,13 +226,13 @@ class GCTeam(models.Model):
     # 1: Request does not exist
     # 0: Success
     @api.model
-    def accept_request(self, player_uuid, team_name):
+    def accept_request(self, player_uuid, team_id):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         if not user.has_one_of_permissions(
             ["gigaclub_team.accept_request", "gigaclub_team.*", "*"]
         ):
             return 3
-        team = self.search([("name", "=ilike", team_name)], limit=1)
+        team = self.browse(team_id)
         if not team:
             return 2
         request = self.env["gc.request"].search(
@@ -246,9 +246,20 @@ class GCTeam(models.Model):
         if not request:
             return 1
         request.state = "accepted"
-        team.permission_connector_ids.create(
+        team.permission_connector_ids |= self.env["gc.permission.connector"].create(
             {
                 "user_id": user.id,
+                "permission_profile_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "permission_profile_template_id": self.env.ref(
+                                "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
+                            ).id,
+                        },
+                    )
+                ],
             }
         )
         return 0
@@ -259,13 +270,13 @@ class GCTeam(models.Model):
     # 1: Request does not exist
     # 0: Success
     @api.model
-    def deny_request(self, player_uuid, team_name):
+    def deny_request(self, player_uuid, team_id):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         if not user.has_one_of_permissions(
             ["gigaclub_team.deny_request", "gigaclub_team.*", "*"]
         ):
             return 3
-        team = self.search([("name", "=ilike", team_name)], limit=1)
+        team = self.browse(team_id)
         if not team:
             return 2
         request = self.env["gc.request"].search(
