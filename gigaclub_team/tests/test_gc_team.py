@@ -30,7 +30,7 @@ class TestGCTeam(SavepointCase):
                         0,
                         0,
                         {
-                            "permission_profile_entry_template_ids": [
+                            "permission_profile_entry_ids": [
                                 (
                                     0,
                                     0,
@@ -64,7 +64,7 @@ class TestGCTeam(SavepointCase):
                         0,
                         0,
                         {
-                            "permission_profile_entry_template_ids": [
+                            "permission_profile_entry_ids": [
                                 (
                                     0,
                                     0,
@@ -105,7 +105,7 @@ class TestGCTeam(SavepointCase):
                             0,
                             0,
                             {
-                                "permission_profile_entry_template_ids": [
+                                "permission_profile_entry_ids": [
                                     (
                                         0,
                                         0,
@@ -167,7 +167,7 @@ class TestGCTeam(SavepointCase):
                 0,
                 0,
                 {
-                    "permission_profile_entry_template_ids": [
+                    "permission_profile_entry_ids": [
                         (
                             0,
                             0,
@@ -190,7 +190,7 @@ class TestGCTeam(SavepointCase):
                         0,
                         0,
                         {
-                            "permission_profile_entry_template_ids": [
+                            "permission_profile_entry_ids": [
                                 (
                                     0,
                                     0,
@@ -311,7 +311,7 @@ class TestGCTeam(SavepointCase):
                             0,
                             0,
                             {
-                                "permission_profile_entry_template_ids": [
+                                "permission_profile_entry_ids": [
                                     (
                                         0,
                                         0,
@@ -347,7 +347,7 @@ class TestGCTeam(SavepointCase):
                             0,
                             0,
                             {
-                                "permission_profile_entry_template_ids": [
+                                "permission_profile_entry_ids": [
                                     (
                                         0,
                                         0,
@@ -374,15 +374,15 @@ class TestGCTeam(SavepointCase):
         GCTeam = self.env["gc.team"]
         res = GCTeam.get_all_teams()
         self.assertTrue(res, "res should be True")
-        self.team.unlink()
+        self.env["gc.team"].search([]).unlink()
         res = GCTeam.get_all_teams()
         self.assertFalse(res, "res should be False")
 
     def test_get_team(self):
         GCTeam = self.env["gc.team"]
-        res = GCTeam.get_team("test")
+        res = GCTeam.get_team(self.team.id)
         self.assertTrue(res, "res should be True")
-        res = GCTeam.get_team("test2")
+        res = GCTeam.get_team(999)
         self.assertFalse(res, "res should be False")
 
     def test_invite_member(self):
@@ -405,7 +405,7 @@ class TestGCTeam(SavepointCase):
                             0,
                             0,
                             {
-                                "permission_profile_entry_template_ids": [
+                                "permission_profile_entry_ids": [
                                     (
                                         0,
                                         0,
@@ -451,6 +451,15 @@ class TestGCTeam(SavepointCase):
             {
                 "name": "Test2",
                 "mc_uuid": "test2",
+                "permission_group_ids": [
+                    (
+                        6,
+                        0,
+                        self.env.ref(
+                            "gigaclub_permission_system.gc_permission_group_gigaclub"
+                        ).ids,
+                    )
+                ],
             }
         )
         self.team.permission_connector_ids = [
@@ -464,7 +473,7 @@ class TestGCTeam(SavepointCase):
                             0,
                             0,
                             {
-                                "permission_profile_entry_template_ids": [
+                                "permission_profile_entry_ids": [
                                     (
                                         0,
                                         0,
@@ -488,7 +497,7 @@ class TestGCTeam(SavepointCase):
                 0,
                 0,
                 {
-                    "permission_profile_entry_template_ids": [
+                    "permission_profile_entry_ids": [
                         (
                             0,
                             0,
@@ -509,6 +518,7 @@ class TestGCTeam(SavepointCase):
         res = GCTeam.accept_request("test2", 999)
         self.assertEqual(res, 2, "res should be 2")
         test2.permission_profile_ids = False
+        test2.permission_group_ids = False
         res = GCTeam.accept_request("test2", self.team.id)
         self.assertEqual(res, 3, "res should be 3")
 
@@ -556,7 +566,7 @@ class TestGCTeam(SavepointCase):
                 0,
                 0,
                 {
-                    "permission_profile_entry_template_ids": [
+                    "permission_profile_entry_ids": [
                         (
                             0,
                             0,

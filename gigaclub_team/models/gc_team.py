@@ -21,7 +21,7 @@ class GCTeam(models.Model):
     def _check_access_gigaclub_team(self, player_uuid, team_id, permission):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         team = self.browse(team_id)
-        if not team:
+        if not team.exists():
             return False
         if user == team.owner_id:
             return team
@@ -182,7 +182,7 @@ class GCTeam(models.Model):
     @api.model
     def get_team(self, team_id):
         team = self.browse(team_id)
-        if team:
+        if team.exists():
             return self.return_team(team)
         return []
 
@@ -233,7 +233,7 @@ class GCTeam(models.Model):
         ):
             return 3
         team = self.browse(team_id)
-        if not team:
+        if not team.exists():
             return 2
         request = self.env["gc.request"].search(
             [
@@ -277,7 +277,7 @@ class GCTeam(models.Model):
         ):
             return 3
         team = self.browse(team_id)
-        if not team:
+        if not team.exists():
             return 2
         request = self.env["gc.request"].search(
             [
