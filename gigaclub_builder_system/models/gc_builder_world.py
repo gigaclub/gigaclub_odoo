@@ -92,10 +92,10 @@ class GCBuilderWorld(models.Model):
         return 0
 
     @api.model
-    def create_as_team(self, player_uuid, team, task_id, name, world_type_name):
+    def create_as_team(self, player_uuid, team_id, task_id, name, world_type_name):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         team = self.env["gc.team"]._check_access_gigaclub_team(
-            player_uuid, team, "gigaclub_team.create_world_as_team"
+            player_uuid, team_id, "gigaclub_team.create_world_as_team"
         )
         if not team:
             return 1
@@ -193,15 +193,13 @@ class GCBuilderWorld(models.Model):
     # 1: Team does not exist
     # 0: Success
     @api.model
-    def add_team_to_world(self, player_uuid, team_name, world_id):
+    def add_team_to_world(self, player_uuid, team_id, world_id):
         world = self._check_access_gigaclub_builder_system(
             player_uuid, world_id, "gigaclub_builder_system.add_team"
         )
         if not world:
             return 2
-        team_to_add = self.env["gc.team"].search(
-            [("name", "=ilike", team_name)], limit=1
-        )
+        team_to_add = self.env["gc.team"].browse(team_id)
         if not team_to_add:
             return 1
         permission_connectors = [

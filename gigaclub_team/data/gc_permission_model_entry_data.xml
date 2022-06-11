@@ -15,7 +15,7 @@
       id="gc_permission_model_entry_gc_team_edit_team"
       model="gc.permission.model.entry"
     >
-            <field name="name">gigaclub_team.edit_team</field>
+        <field name="name">gigaclub_team.edit_team</field>
             <field name="permission_model_id" ref="gc_permission_model_gc_team" />
             <field name="permission_type">connector</field>
         </record>

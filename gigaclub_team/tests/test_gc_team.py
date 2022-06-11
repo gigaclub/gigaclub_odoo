@@ -122,7 +122,7 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.edit_team("test", "Test", "test2", "description")
+        res = GCTeam.edit_team("test", self.team.id, "test2", "description")
         self.assertEqual(res, 0, "res should be 0")
         self.assertEqual(self.team.name, "test2", "Team name should be test2")
         self.assertEqual(
@@ -156,7 +156,7 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.edit_team("test2", "Test", "test3", "description")
+        res = GCTeam.edit_team("test2", self.team.id, "test3", "description")
         self.assertEqual(res, 1, "res should be 1")
 
     def test_leave_team(self):
@@ -226,13 +226,13 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.leave_team("test", "Test")
+        res = GCTeam.leave_team("test", self.team.id)
         self.assertEqual(res, 0, "res should be 0")
         self.assertFalse(
             self.team.permission_connector_ids,
             "User should not have any permission connectors",
         )
-        res = GCTeam.leave_team("test2", "Test")
+        res = GCTeam.leave_team("test2", self.team.id)
         self.assertEqual(res, 1, "res should be 1")
 
     def test_kick_member(self):
@@ -292,12 +292,12 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.kick_member("test", "Test", "test2")
+        res = GCTeam.kick_member("test", self.team.id, "test2")
         self.assertEqual(res, 0, "res should be 0")
         self.assertFalse(
             user_to_kick.permission_connector_ids, "User should not be a member"
         )
-        res = GCTeam.kick_member("test", "Test", "test2")
+        res = GCTeam.kick_member("test", self.team.id, "test2")
         self.assertEqual(res, 1, "res should be 1")
         self.user.permission_connector_ids = False
         self.team.permission_connector_ids = [
@@ -328,10 +328,10 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.kick_member("test", "Test", "test3")
+        res = GCTeam.kick_member("test", self.team.id, "test3")
         self.assertEqual(res, 3, "res should be 3")
         self.user.permission_connector_ids = False
-        res = GCTeam.kick_member("test4", "Test", "test2")
+        res = GCTeam.kick_member("test4", self.team.id, "test2")
         self.assertEqual(res, 4, "res should be 4")
 
     def test_get_teams_by_member(self):
@@ -422,9 +422,9 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.invite_member("test", "Test", "test2")
+        res = GCTeam.invite_member("test", self.team.id, "test2")
         self.assertEqual(res, 0, "res should be 0")
-        res = GCTeam.invite_member("test", "Test", "test2")
+        res = GCTeam.invite_member("test", self.team.id, "test2")
         self.assertEqual(res, 1, "res should be 1")
         self.env["gc.request"].search([]).unlink()
         self.team.permission_connector_ids = [
@@ -436,12 +436,12 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.invite_member("test", "Test", "test2")
+        res = GCTeam.invite_member("test", self.team.id, "test2")
         self.assertEqual(res, 2, "res should be 2")
-        res = GCTeam.invite_member("test", "Test", "test2wrongwrong")
+        res = GCTeam.invite_member("test", self.team.id, "test2wrongwrong")
         self.assertEqual(res, 3, "res should be 3")
         self.team.permission_connector_ids = False
-        res = GCTeam.invite_member("test4", "Test", "test2")
+        res = GCTeam.invite_member("test4", self.team.id, "test2")
         self.assertEqual(res, 4, "res should be 4")
 
     def test_accept_request(self):
@@ -481,7 +481,7 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.invite_member("test", "Test", "test2")
+        res = GCTeam.invite_member("test", self.team.id, "test2")
         self.assertEqual(res, 0, "res should be 0")
         test2.permission_profile_ids = [
             (
@@ -502,14 +502,14 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.accept_request("test2", "test")
+        res = GCTeam.accept_request("test2", self.team.id)
         self.assertEqual(res, 0, "res should be 0")
-        res = GCTeam.accept_request("test2", "test")
+        res = GCTeam.accept_request("test2", self.team.id)
         self.assertEqual(res, 1, "res should be 1")
-        res = GCTeam.accept_request("test2", "testFALSE")
+        res = GCTeam.accept_request("test2", 999)
         self.assertEqual(res, 2, "res should be 2")
         test2.permission_profile_ids = False
-        res = GCTeam.accept_request("test2", "test")
+        res = GCTeam.accept_request("test2", self.team.id)
         self.assertEqual(res, 3, "res should be 3")
 
     def test_deny_request(self):
@@ -549,7 +549,7 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.invite_member("test", "Test", "test2")
+        res = GCTeam.invite_member("test", self.team.id, "test2")
         self.assertEqual(res, 0, "res should be 0")
         test2.permission_profile_ids = [
             (
@@ -570,12 +570,12 @@ class TestGCTeam(SavepointCase):
                 },
             )
         ]
-        res = GCTeam.deny_request("test2", "test")
+        res = GCTeam.deny_request("test2", self.team.id)
         self.assertEqual(res, 0, "res should be 0")
-        res = GCTeam.deny_request("test2", "test")
+        res = GCTeam.deny_request("test2", self.team.id)
         self.assertEqual(res, 1, "res should be 1")
-        res = GCTeam.deny_request("test2", "testFALSE")
+        res = GCTeam.deny_request("test2", 999)
         self.assertEqual(res, 2, "res should be 2")
         test2.permission_profile_ids = False
-        res = GCTeam.deny_request("test2", "test")
+        res = GCTeam.deny_request("test2", self.team.id)
         self.assertEqual(res, 3, "res should be 3")
