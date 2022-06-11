@@ -21,46 +21,46 @@
                     <div class="col-12 col-lg-6 o_setting_box">
                         <div class="o_setting_left_pane" />
                         <div class="o_setting_right_pane">
-                            <label for="gc_discord_bot_token" />
-                            <field name="gc_discord_bot_token" password="True" />
+                            <label for="discord_bot_token" />
+                            <field name="discord_bot_token" password="True" />
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 o_setting_box">
                         <div class="o_setting_left_pane" />
                         <div class="o_setting_right_pane">
-                            <label for="gc_discord_server_id" />
-                            <field name="gc_discord_server_id" />
+                            <label for="discord_server_id" />
+                            <field name="discord_server_id" />
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 o_setting_box">
                         <div class="o_setting_left_pane" />
                         <div class="o_setting_right_pane">
-                            <label for="gc_discord_system_channel_id" />
-                            <field name="gc_discord_system_channel_id" />
+                            <label for="discord_system_channel_id" />
+                            <field name="discord_system_channel_id" />
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 o_setting_box">
-                        <field name="gc_discord_server_status" invisible="True" />
+                        <field name="discord_server_status" invisible="True" />
                         <button
               class="btn btn-primary"
               type="object"
               name="start_discord_bot"
               string="Start Bot"
-              attrs="{'invisible': ['|', ('gc_discord_bot_token', '=', False), ('gc_discord_server_status', '=', 'started')]}"
+              attrs="{'invisible': ['|', ('discord_bot_token', '=', False), ('discord_server_status', '=', 'started')]}"
             />
                         <button
               class="btn btn-primary"
               type="object"
               name="stop_discord_bot"
               string="Stop Bot"
-              attrs="{'invisible': ['|', ('gc_discord_bot_token', '=', False), ('gc_discord_server_status', '=', 'stopped')]}"
+              attrs="{'invisible': ['|', ('discord_bot_token', '=', False), ('discord_server_status', '=', 'stopped')]}"
             />
                         <button
               class="btn btn-primary"
               type="object"
               name="reload_discord_bot"
               string="Reload Bot"
-              attrs="{'invisible': [('gc_discord_bot_token', '=', False)]}"
+              attrs="{'invisible': [('discord_bot_token', '=', False)]}"
             />
                     </div>
                 </xpath>

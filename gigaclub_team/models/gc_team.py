@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class GCTeam(models.Model):
@@ -8,276 +9,285 @@ class GCTeam(models.Model):
     name = fields.Char(required=True)
     description = fields.Text()
 
-    user_ids = fields.One2many(
-        comodel_name="gc.user", inverse_name="team_user_id", inverse="_inverse_users"
+    permission_connector_ids = fields.One2many(
+        comodel_name="gc.permission.connector", inverse_name="team_id"
     )
-    manager_ids = fields.One2many(
-        comodel_name="gc.user", inverse_name="team_manager_id", inverse="_inverse_users"
-    )
+
+    owner_id = fields.Many2one(comodel_name="gc.user", required=True)
 
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]
 
-    def _inverse_users(self):
-        for rec in self:
-            if len(rec.manager_ids) == 0 and len(rec.user_ids) > 0:
-                user_id = rec.user_ids[0]
-                rec.user_ids -= user_id
-                rec.manager_ids |= user_id
-            if not rec.user_ids and not rec.manager_ids:
-                rec.unlink()
+    @api.model
+    def _check_access_gigaclub_team(self, player_uuid, team_id, permission):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        team = self.browse(team_id)
+        if not team.exists():
+            return False
+        if user == team.owner_id:
+            return team
+        team_connector = user.permission_connector_ids.filtered_domain(
+            [("team_id", "=", team.id)]
+        )[:1]
+        if team_connector and team_connector.has_one_of_permissions(
+            [permission, "gigaclub_team.*", "*"]
+        ):
+            return team_connector.team_id
+        return False
 
     # Status Codes:
-    # 3: User already in team
+    # 3: User has no access to create a team
     # 2: Team with name already exists
     # 1: Team could not be created
     # 0: Team created successfully
     @api.model
     def create_team(self, player_uuid, name, description=False):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        if user_id.team_user_id or user_id.team_manager_id:
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        if not user.has_one_of_permissions(
+            ["gigaclub_team.create_team", "gigaclub_team.*", "*"]
+        ):
             return 3
         if self.search_count([("name", "=ilike", name)]):
             return 2
-        team_id = self.create(
-            {"name": name, "description": description, "manager_ids": [(4, user_id.id)]}
+        team = self.create(
+            {
+                "name": name,
+                "description": description,
+                "owner_id": user.id,
+                "permission_connector_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "user_id": user.id,
+                            "permission_profile_ids": [
+                                (
+                                    0,
+                                    0,
+                                    {
+                                        "permission_profile_template_id": self.env.ref(
+                                            "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
+                                        ).id,
+                                    },
+                                )
+                            ],
+                        },
+                    )
+                ],
+            }
         )
-        if not team_id:
+        if not team:
             return 1
         return 0
 
     # Status Codes:
-    # 3: User has no team
-    # 2: Team does not exist
-    # 1: User is not manager of this team
+    # 1: No valid team found for this user
     # 0: Success
     @api.model
-    def edit_team(self, player_uuid, name, new_name, new_description=False):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        if not user_id.team_user_id and not user_id.team_manager_id:
-            return 3
-        team_id = self.search([("name", "=ilike", name)])
-        if not team_id:
-            return 2
-        if user_id not in team_id.manager_ids:
+    def edit_team(self, player_uuid, team_id, new_name=False, new_description=False):
+        team = self._check_access_gigaclub_team(
+            player_uuid, team_id, "gigaclub_team.edit_team"
+        )
+        if not team:
             return 1
-        team_id.write(
+        team.write(
             {
-                "name": new_name,
-                "description": new_description
-                if new_description
-                else team_id.description,
+                "name": new_name or team.name,
+                "description": new_description or team.description,
             }
         )
         return 0
 
     # Status Codes:
+    # 2: User has no permission to leave teams
     # 1: User has no team
     # 0: Success
     @api.model
-    def leave_team(self, player_uuid):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        if not user_id.team_user_id and not user_id.team_manager_id:
+    def leave_team(self, player_uuid, team_id):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        team = self.browse(team_id)
+        if not user.has_one_of_permissions(
+            ["gigaclub_team.leave_team", "gigaclub_team.*", "*"]
+        ):
+            return 2
+        team_connector_to_leave = user.permission_connector_ids.filtered_domain(
+            [("team_id", "=", team.id)]
+        )[:1]
+        if not team_connector_to_leave:
             return 1
-        if user_id.team_manager_id:
-            user_id.team_manager_id = False
-        elif user_id.team_user_id:
-            user_id.team_user_id = False
-        self.search([])._inverse_users()
+        team_connector_to_leave.unlink()
+        if user == team.owner_id:
+            new_owner = team.permission_connector_ids.mapped("user_id")[:1]
+            if new_owner:
+                team.owner_id = new_owner
+            else:
+                team.unlink()
         return 0
 
     # Status Codes:
-    # 3: Team does not exist
-    # 2: User is not manager
-    # 1: User is not user of this team
+    # 4: No valid team found for this user
+    # 3: User to kick does not exist
+    # 2: Not allowed to kick owner
+    # 1: User is not member of team
     # 0: Success
     @api.model
-    def add_member(self, player_uuid, player_uuid_to_add):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = user_id.team_user_id or user_id.team_manager_id
-        if not team_id:
-            return 3
-        if user_id not in team_id.manager_ids:
-            return 2
-        user_id_to_add = self.env["gc.user"].search(
-            [("mc_uuid", "=", player_uuid_to_add)]
+    def kick_member(self, player_uuid, team_id, player_uuid_to_kick):
+        team = self._check_access_gigaclub_team(
+            player_uuid, team_id, "gigaclub_team.kick_member"
         )
-        if user_id_to_add in team_id.user_ids:
-            return 1
-        team_id.user_ids |= user_id_to_add
-        return 0
-
-    # Status Codes:
-    # 3: Team does not exist
-    # 2: User is not manager
-    # 1: User is not user of this team
-    # 0: Success
-    @api.model
-    def kick_member(self, player_uuid, player_uuid_to_kick):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = user_id.team_user_id or user_id.team_manager_id
-        if not team_id:
-            return 3
-        if user_id not in team_id.manager_ids:
-            return 2
-        user_id_to_kick = self.env["gc.user"].search(
+        if not team:
+            return 4
+        user_to_kick = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_kick)]
         )
-        if user_id_to_kick not in team_id.user_ids:
-            return 1
-        team_id.user_ids = [(3, user_id_to_kick.id)]
-        return 0
-
-    # Status Codes:
-    # 4: Team does not exist
-    # 3: User is not manager
-    # 2: User to kick is not in a team
-    # 1: User to kick is not in this team
-    # 0: Success
-    @api.model
-    def promote_member(self, player_uuid, player_uuid_to_promote):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = user_id.team_user_id or user_id.team_manager_id
-        if not team_id:
-            return 4
-        if user_id not in team_id.manager_ids:
+        if not user_to_kick:
             return 3
-        user_id_to_promote = self.env["gc.user"].search(
-            [("mc_uuid", "=", player_uuid_to_promote)]
-        )
-        if not user_id_to_promote.team_user_id:
+        if user_to_kick == team.owner_id:
             return 2
-        if user_id_to_promote.team_user_id != team_id:
+        user_to_kick_team_connector = user_to_kick.permission_connector_ids.filtered(
+            lambda x: x.team_id == team
+        )[:1]
+        if not user_to_kick_team_connector:
             return 1
-        team_id.user_ids -= user_id_to_promote
-        team_id.manager_ids |= user_id_to_promote
-        return 0
-
-    # Status Codes:
-    # 4: Team does not exist
-    # 3: User is not manager
-    # 2: User to kick is not a team
-    # 1: User to kick is not in this team
-    # 0: Success
-    @api.model
-    def demote_member(self, player_uuid, player_uuid_to_demote):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = user_id.team_user_id or user_id.team_manager_id
-        if not team_id:
-            return 4
-        if user_id not in team_id.manager_ids:
-            return 3
-        user_id_to_demote = self.env["gc.user"].search(
-            [("mc_uuid", "=", player_uuid_to_demote)]
-        )
-        if not user_id_to_demote.team_manager_id:
-            return 2
-        if user_id_to_demote.team_manager_id != team_id:
-            return 1
-        team_id.manager_ids -= user_id_to_demote
-        team_id.user_ids |= user_id_to_demote
+        user_to_kick_team_connector.unlink()
         return 0
 
     def return_team(self, team):
         return {
+            "id": team.id,
             "name": team.name,
-            "description": team.description,
-            "user_ids": [{"mc_uuid": u.mc_uuid} for u in team.user_ids],
-            "manager_ids": [{"mc_uuid": m.mc_uuid} for m in team.manager_ids],
+            "description": team.description or "",
+            "owner_id": team.owner_id.mc_uuid,
+            "user_ids": [
+                {"mc_uuid": u.mc_uuid}
+                for u in team.permission_connector_ids.mapped("user_id")
+            ],
         }
 
     @api.model
-    def get_team_by_member(self, player_uuid):
+    def get_teams_by_member(self, player_uuid):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team = False
-        if user.team_user_id:
-            team = user.team_user_id
-        elif user.team_manager_id:
-            team = user.team_manager_id
-        if team:
-            return self.return_team(team)
-        return False
+        teams = user.permission_connector_ids.mapped("team_id")
+        if teams:
+            return self.get_teams(teams)
+        return self.env["gc.team"]
 
     @api.model
     def get_all_teams(self):
         return [self.return_team(x) for x in self.search([])]
 
     @api.model
-    def get_team(self, name):
-        team = self.search([("name", "=ilike", name)])
-        if team:
+    def get_teams(self, teams):
+        return [self.return_team(x) for x in teams]
+
+    @api.model
+    def get_team(self, team_id):
+        team = self.browse(team_id)
+        if team.exists():
             return self.return_team(team)
         return []
 
     # Status Codes:
-    # 3: Team does not exist
-    # 2: User is not manager
-    # 1: User is already member of this team
+    # 4: No valid team found for this user
+    # 3: User to invite not found
+    # 2: User is already member of team
+    # 1: Request already sent
     # 0: Success
     @api.model
-    def invite_member(self, player_uuid, player_uuid_to_invite):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = user_id.team_user_id or user_id.team_manager_id
-        if not team_id:
-            return 3
-        if user_id not in team_id.manager_ids:
-            return 2
-        user_id_to_invite = self.env["gc.user"].search(
+    def invite_member(self, player_uuid, team_id, player_uuid_to_invite):
+        team = self._check_access_gigaclub_team(
+            player_uuid, team_id, "gigaclub_team.invite_member"
+        )
+        if not team:
+            return 4
+        user_to_invite = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_invite)]
         )
-        if user_id_to_invite in team_id.user_ids | team_id.manager_ids:
+        if not user_to_invite:
+            return 3
+        if user_to_invite.permission_connector_ids.filtered(
+            lambda x: x.team_id == team
+        ):
+            return 2
+        try:
+            self.env["gc.request"].create(
+                {
+                    "sender_id": f"{team._name},{team.id}",
+                    "receiver_id": f"{user_to_invite._name},{user_to_invite.id}",
+                    "state": "waiting",
+                }
+            )
+        except ValidationError:
             return 1
-        self.env["gc.request"].create(
+        return 0
+
+    # Status Codes:
+    # 3: User has no permission to accept requests
+    # 2: Team does not exist
+    # 1: Request does not exist
+    # 0: Success
+    @api.model
+    def accept_request(self, player_uuid, team_id):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        if not user.has_one_of_permissions(
+            ["gigaclub_team.accept_request", "gigaclub_team.*", "*"]
+        ):
+            return 3
+        team = self.browse(team_id)
+        if not team.exists():
+            return 2
+        request = self.env["gc.request"].search(
+            [
+                ("sender_id", "=", f"{team._name},{team.id}"),
+                ("receiver_id", "=", f"{user._name},{user.id}"),
+                ("state", "=", "waiting"),
+            ],
+            limit=1,
+        )
+        if not request:
+            return 1
+        request.state = "accepted"
+        team.permission_connector_ids |= self.env["gc.permission.connector"].create(
             {
-                "sender_id": f"{team_id._name},{team_id.id}",
-                "receiver_id": f"{user_id_to_invite._name},{user_id_to_invite.id}",
-                "state": "waiting",
+                "user_id": user.id,
+                "permission_profile_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "permission_profile_template_id": self.env.ref(
+                                "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
+                            ).id,
+                        },
+                    )
+                ],
             }
         )
         return 0
 
     # Status Codes:
+    # 3: User has no permission to reject requests
     # 2: Team does not exist
     # 1: Request does not exist
     # 0: Success
     @api.model
-    def accept_request(self, player_uuid, team_name):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = self.search([("name", "=ilike", team_name)])
-        if not team_id:
+    def deny_request(self, player_uuid, team_id):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        if not user.has_one_of_permissions(
+            ["gigaclub_team.deny_request", "gigaclub_team.*", "*"]
+        ):
+            return 3
+        team = self.browse(team_id)
+        if not team.exists():
             return 2
-        request_id = self.env["gc.request"].search(
+        request = self.env["gc.request"].search(
             [
-                ("sender_id", "=", f"{team_id._name},{team_id.id}"),
-                ("receiver_id", "=", f"{user_id._name},{user_id.id}"),
+                ("sender_id", "=", f"{team._name},{team.id}"),
+                ("receiver_id", "=", f"{user._name},{user.id}"),
                 ("state", "=", "waiting"),
             ],
             limit=1,
         )
-        if not request_id:
+        if not request:
             return 1
-        request_id.state = "accepted"
-        team_id.user_ids |= user_id
-        return 0
-
-    # Status Codes:
-    # 2: Team does not exist
-    # 1: Request does not exist
-    # 0: Success
-    @api.model
-    def deny_request(self, player_uuid, team_name):
-        user_id = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        team_id = self.search([("name", "=ilike", team_name)])
-        if not team_id:
-            return 2
-        request_id = self.env["gc.request"].search(
-            [
-                ("sender_id", "=", f"{team_id._name},{team_id.id}"),
-                ("receiver_id", "=", f"{user_id._name},{user_id.id}"),
-                ("state", "=", "waiting"),
-            ],
-            limit=1,
-        )
-        if not request_id:
-            return 1
-        request_id.state = "denied"
+        request.state = "denied"
         return 0

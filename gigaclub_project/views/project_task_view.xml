@@ -15,8 +15,8 @@
                 </xpath>
                 <button name="action_assign_to_me" position="replace" />
                 <field name="user_id" position="replace">
-                    <field name="gc_user_ids" widget="many2many_tags" />
-                    <field name="gc_team_ids" widget="many2many_tags" />
+                    <field name="user_ids" widget="many2many_tags" />
+                    <field name="team_ids" widget="many2many_tags" />
                 </field>
                 <field name="partner_id" position="replace" />
             </field>
@@ -29,14 +29,14 @@
             <field name="priority">99</field>
             <field name="arch" type="xml">
                 <field name="user_id" position="replace">
-                    <field name="gc_user_ids" />
+                    <field name="user_ids" />
                 </field>
                 <field name="partner_id" position="replace">
-                    <field name="gc_team_ids" />
+                    <field name="team_ids" />
                 </field>
                 <xpath expr="//t[@t-if='record.partner_id.value']" position="replace">
-                    <field name="gc_user_ids" widget="many2many_tags" />
-                    <field name="gc_team_ids" widget="many2many_tags" />
+                    <field name="user_ids" widget="many2many_tags" />
+                    <field name="team_ids" widget="many2many_tags" />
                 </xpath>
                 <xpath
           expr="//t[@t-else='record.email_from.raw_value']"

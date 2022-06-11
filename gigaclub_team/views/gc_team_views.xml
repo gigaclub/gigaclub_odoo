@@ -9,8 +9,8 @@
                 <tree string="Teams">
                     <field name="name" />
                     <field name="description" />
-                    <field name="manager_ids" />
-                    <field name="user_ids" />
+                    <field name="owner_id" />
+                    <field name="permission_connector_ids" />
                 </tree>
             </field>
         </record>
@@ -23,8 +23,8 @@
                     <group>
                         <field name="name" />
                         <field name="description" />
-                        <field name="manager_ids" />
-                        <field name="user_ids" />
+                        <field name="owner_id" />
+                        <field name="permission_connector_ids" />
                     </group>
                 </form>
             </field>

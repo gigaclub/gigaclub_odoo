@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_create_world"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.create_world</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">user</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_add_user"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.add_user</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_add_team"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.add_team</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_remove_user"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.remove_user</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_remove_team"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.remove_team</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_save_world"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.save_world</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_edit_world_type"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.edit_world_type</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_*"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.*</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">user</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_team_create_world_as_team"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_team.create_world_as_team</field>
+            <field
+        name="permission_model_id"
+        ref="gigaclub_team.gc_permission_model_gc_team"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+    </data>
+</odoo>

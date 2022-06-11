@@ -13,9 +13,10 @@ class GCBuilderWorldType(models.Model):
 
     @api.constrains("default")
     def _check_default(self):
-        for rec in self:
-            if rec.default and self.search_count([("default", "=", True)]) > 1:
-                raise ValidationError(_("default must be unique!"))
+        for _rec in self.filtered(
+            lambda x: x.default and x.search_count([("default", "=", True)]) > 1
+        ):
+            raise ValidationError(_("default must be unique!"))
 
     @api.model
     def get_all_world_types(self):

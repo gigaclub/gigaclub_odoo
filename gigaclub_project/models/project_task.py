@@ -1,17 +1,18 @@
 from odoo import api, fields, models
+from odoo.tools.mail import html2plaintext
 
 
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
-    gc_user_ids = fields.Many2many(comodel_name="gc.user")
-    gc_team_ids = fields.Many2many(comodel_name="gc.team")
+    user_ids = fields.Many2many(comodel_name="gc.user")
+    team_ids = fields.Many2many(comodel_name="gc.team")
 
     def return_task(self, task):
         return {
             "id": task.id,
             "name": task.name,
-            "description": task.description,
+            "description": html2plaintext(task.description),
         }
 
     @api.model
