@@ -130,9 +130,9 @@ class GCTeam(models.Model):
     # 1: User is not member of team
     # 0: Success
     @api.model
-    def kick_member(self, player_uuid, team, player_uuid_to_kick):
+    def kick_member(self, player_uuid, team_id, player_uuid_to_kick):
         team = self._check_access_gigaclub_team(
-            player_uuid, team, "gigaclub_team.kick_member"
+            player_uuid, team_id, "gigaclub_team.kick_member"
         )
         if not team:
             return 4
