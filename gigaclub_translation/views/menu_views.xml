@@ -14,12 +14,6 @@
       name="Translations"
     />
         <menuitem
-      id="gc_menu_language"
-      parent="gc_translation_menu_root"
-      action="gc_language_action"
-      name="Languages"
-    />
-        <menuitem
       id="gc_menu_translation_entry"
       parent="gc_translation_menu_root"
       action="gc_translation_entry_action"

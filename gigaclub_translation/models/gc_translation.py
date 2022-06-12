@@ -3,6 +3,7 @@ from odoo import api, fields, models
 
 class GCTranslation(models.Model):
     _name = "gc.translation"
+    _description = "GigaClub Translation"
 
     name = fields.Char(required=True)
     var_count = fields.Integer()
@@ -28,12 +29,10 @@ class GCTranslation(models.Model):
                     "category": category,
                 }
             )
-        language = (
-            self.env["gc.user"].search([("mc_uuid", "=", player_uuid)]).language_id
-        )
+        language = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)]).lang
         entry = (
             self.env["gc.translation.entry"]
-            .search([("language_id", "=", language.id)])
+            .search([("lang", "=", language)])
             .filtered(lambda x: translation in x.translation_ids)
         )
         if entry:

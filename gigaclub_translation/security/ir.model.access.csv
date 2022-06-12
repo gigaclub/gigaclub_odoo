@@ -1,4 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_gc_language_gigaclub,access_gc_language_gigaclub,model_gc_language,gigaclub_base.group_gigaclub,1,1,1,1
 access_gc_translation_gigaclub,access_gc_translation_gigaclub,model_gc_translation,gigaclub_base.group_gigaclub,1,1,1,1
 access_gc_translation_entry_gigaclub,access_gc_translation_entry_gigaclub,model_gc_translation_entry,gigaclub_base.group_gigaclub,1,1,1,1

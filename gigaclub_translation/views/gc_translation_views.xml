@@ -21,6 +21,7 @@
             <field name="arch" type="xml">
                 <search>
                     <group expand="0" string="Group By">
+                        <field name="category" invisible="1" />
                         <filter
               name="group_category"
               string="Category"
