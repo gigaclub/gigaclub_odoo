@@ -6,7 +6,7 @@
     "author": "GigaClub.net",
     "website": "https://GigaClub.net/",
     "license": "AGPL-3",
-    "depends": ["gigaclub_base"],
+    "depends": ["gigaclub_base", "minecraft_tellraw_field"],
     "data": [
         "data/res_lang_data.xml",
         "security/ir.model.access.csv",
