@@ -345,7 +345,7 @@ class GCBuilderWorld(models.Model):
                 for t in world.permission_connector_ids.mapped("team_id")
             ],
             "user_ids": [
-                {"mc_uuid": u.mc_uuid}
+                {"name": u.name, "mc_uuid": u.mc_uuid}
                 for u in world.permission_connector_ids.mapped("user_id")
             ],
         }
