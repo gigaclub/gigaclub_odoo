@@ -334,6 +334,7 @@ class GCBuilderWorld(models.Model):
         # TODO: This is not the final version.
         return world.world_attachment_id.datas
 
+    @api.model
     def return_world(self, world):
         return {
             "world_id": world.id,
