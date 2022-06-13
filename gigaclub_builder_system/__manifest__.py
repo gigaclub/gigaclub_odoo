@@ -16,6 +16,7 @@
         "views/project_task_views.xml",
         "views/gc_builder_world_views.xml",
         "views/gc_builder_world_type_views.xml",
+        "views/gc_permission_connector_views.xml",
         "views/menu_views.xml",
     ],
     "installable": True,

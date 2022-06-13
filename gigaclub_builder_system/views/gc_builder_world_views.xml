@@ -10,6 +10,8 @@
                     <field name="name" />
                     <field name="world_type_id" />
                     <field name="task_id" />
+                    <field name="permission_connector_ids" />
+                    <field name="owner_id" />
                 </tree>
             </field>
         </record>
@@ -23,6 +25,9 @@
                         <field name="name" />
                         <field name="world_type_id" />
                         <field name="task_id" />
+                        <field name="world_attachment_id" />
+                        <field name="permission_connector_ids" />
+                        <field name="owner_id" />
                     </group>
                 </form>
             </field>

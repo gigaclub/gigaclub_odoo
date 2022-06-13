@@ -334,6 +334,7 @@ class GCBuilderWorld(models.Model):
         # TODO: This is not the final version.
         return world.world_attachment_id.datas
 
+    @api.model
     def return_world(self, world):
         return {
             "world_id": world.id,
@@ -345,7 +346,7 @@ class GCBuilderWorld(models.Model):
                 for t in world.permission_connector_ids.mapped("team_id")
             ],
             "user_ids": [
-                {"mc_uuid": u.mc_uuid}
+                {"name": u.name, "mc_uuid": u.mc_uuid}
                 for u in world.permission_connector_ids.mapped("user_id")
             ],
         }
