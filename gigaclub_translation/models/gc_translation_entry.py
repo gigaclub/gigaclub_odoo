@@ -9,7 +9,7 @@ class GCTranslationEntry(models.Model):
     def _get_languages(self):
         return self.env["res.lang"].get_installed()
 
-    content = fields.Serialized(required=True)
+    content = fields.Serialized()
     translation_ids = fields.Many2many(comodel_name="gc.translation")
     lang = fields.Selection(selection=_get_languages, required=True)
 
