@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <tree string="Translations">
                     <field name="name" />
-                    <field name="var_count" />
+                    <field name="values" />
                     <field name="translation_entry_ids" />
                     <field name="category" />
                 </tree>

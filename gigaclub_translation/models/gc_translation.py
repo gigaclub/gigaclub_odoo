@@ -6,7 +6,7 @@ class GCTranslation(models.Model):
     _description = "GigaClub Translation"
 
     name = fields.Char(required=True)
-    var_count = fields.Integer()
+    values = fields.Serialized()
     translation_entry_ids = fields.Many2many(comodel_name="gc.translation.entry")
     category = fields.Char()
 
@@ -17,15 +17,15 @@ class GCTranslation(models.Model):
         self, name, player_uuid, values=False, category=False
     ):
         if not values:
-            values = []
+            values = {}
         translation = self.search([("name", "=ilike", name)], limit=1)
         if translation:
-            translation.var_count = len(values)
+            translation.values = values
         else:
             translation = self.create(
                 {
                     "name": name,
-                    "var_count": len(values),
+                    "values": values,
                     "category": category,
                 }
             )
