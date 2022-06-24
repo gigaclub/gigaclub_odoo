@@ -16,7 +16,3 @@ class ResLang(models.Model):
         if default_translation_entry_value is None:
             IrDefault.set("gc.translation.entry", "lang", lang_code)
         return res
-
-    @api.model
-    def get_langs(self):
-        return self.search([]).mapped("code")
