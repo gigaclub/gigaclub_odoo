@@ -6,7 +6,7 @@ class GCTranslation(models.Model):
     _description = "GigaClub Translation"
 
     name = fields.Char(required=True)
-    values = fields.Serialized()
+    values = fields.Text()
     translation_entry_ids = fields.Many2many(comodel_name="gc.translation.entry")
     category = fields.Char()
 

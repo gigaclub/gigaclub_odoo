@@ -40,7 +40,7 @@
                 <form>
                     <group>
                         <field name="name" />
-                        <field name="var_count" readonly="1" />
+                        <field name="values" readonly="1" />
                         <field name="translation_entry_ids" />
                         <field name="category" />
                     </group>
