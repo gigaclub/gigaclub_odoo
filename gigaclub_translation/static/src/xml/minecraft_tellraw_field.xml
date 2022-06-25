@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates
+  id="gigaclub_translate_minecraft_tellraw_field_templates"
+  xml:space="preserve"
+>
+
+    <t
+    t-name="MinecraftTellrawDropdownInheritGigaClubTranslation"
+    t-inherit="minecraft_tellraw_field.MinecraftTellrawDropdown"
+    t-inherit-mode="extension"
+  >
+        <xpath expr="//div[@id='add-text-dropdown']/button[last()]" position="after">
+            <hr />
+            <div class="dropdown-item" name="widget">List Widgets:</div>
+            <hr />
+        </xpath>
+    </t>
+
+</templates>
