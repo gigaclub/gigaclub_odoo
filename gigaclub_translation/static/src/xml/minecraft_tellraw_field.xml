@@ -13,6 +13,14 @@
             <hr />
             <div class="dropdown-item" name="widget">List Widgets:</div>
             <hr />
+            <t t-foreach="state.widgets.list" t-as="listitem">
+                <button
+          class="dropdown-item"
+          t-att-name="listitem"
+          t-esc="listitem"
+          t-on-click="openList"
+        />
+            </t>
         </xpath>
     </t>
 

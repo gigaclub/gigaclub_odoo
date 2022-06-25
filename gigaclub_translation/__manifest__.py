@@ -10,6 +10,7 @@
     "data": [
         "data/res_lang_data.xml",
         "security/ir.model.access.csv",
+        "views/assets.xml",
         "views/gc_translation_views.xml",
         "views/gc_translation_entry_views.xml",
         "views/gc_user_views.xml",
