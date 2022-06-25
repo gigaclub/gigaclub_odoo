@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <tree string="Translations">
                     <field name="content" widget="minecraft_tellraw_field" />
+                    <field name="widgets" />
                     <field name="lang" />
                     <field name="translation_ids" />
                 </tree>
@@ -21,6 +22,7 @@
                 <form>
                     <group>
                         <field name="content" widget="minecraft_tellraw_field" />
+                        <field name="widgets" />
                         <field name="lang" />
                         <field name="translation_ids" />
                     </group>
