@@ -4,6 +4,17 @@
   xml:space="preserve"
 >
 
+    <t t-name="MinecraftTellrawListWidgetDialog" owl="1">
+        <Dialog
+      contentClass="'o_MinecraftTellrawListWidgetDialog'"
+      title="'List Widget'"
+      size="'large'"
+      t-ref="listWidgetDialog"
+    >
+            <p>TEST</p>
+        </Dialog>
+    </t>
+
     <t
     t-name="MinecraftTellrawDropdownInheritGigaClubTranslation"
     t-inherit="minecraft_tellraw_field.MinecraftTellrawDropdown"
@@ -22,6 +33,21 @@
         />
             </t>
         </xpath>
+    </t>
+
+    <t t-name="FieldMinecraftTellrawInheritGigaClubTranslation" owl="1">
+        <t t-call="MinecraftTellrawDropdown" />
+        <t t-if="state.minecraftTellrawTextDialog">
+            <MinecraftTellrawDialog
+        editValue="state.editValue"
+        t-on-dialog-closed="onDialogClosed"
+      />
+        </t>
+        <t t-if="state.minecraftTellrawListWidgetDialog">
+            <MinecraftTellrawListWidgetDialog
+        t-on-dialog-closed="onListWidgetDialogClosed"
+      />
+        </t>
     </t>
 
 </templates>
