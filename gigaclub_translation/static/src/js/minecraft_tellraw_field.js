@@ -13,6 +13,18 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       super(...args);
       this.state = useState({
         values: ["", {text: "placeholder", listitem: true}],
+        text: "test",
+        widgets: {params: [], list: []},
+      });
+      this.mode = "edit";
+      this.state.widgets = this.__owl__.parent.state.widgets;
+    }
+    patched() {
+      this._reInitDropdown();
+    }
+    _reInitDropdown() {
+      $(document).ready(function () {
+        $(".dropdown-toggle").dropdown();
       });
     }
   }
@@ -30,8 +42,6 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       this.state = useState(
         Object.assign({}, this.state, {widgets: {params: [], list: []}})
       );
-    }
-    willStart() {
       this.state.widgets = this.__owl__.parent.state.widgets;
     }
   }

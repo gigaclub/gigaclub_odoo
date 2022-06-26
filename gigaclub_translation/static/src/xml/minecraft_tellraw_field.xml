@@ -11,7 +11,7 @@
       size="'large'"
       t-ref="listWidgetDialog"
     >
-            <p>TEST</p>
+            <t t-call="MinecraftTellrawDropdown" />
         </Dialog>
     </t>
 
