@@ -4,9 +4,12 @@ from odoo import api, fields, models
 class GCUser(models.Model):
     _inherit = "gc.user"
 
+    # grepper odoo get installed languages
     @api.model
     def _get_languages(self):
         return self.env["res.lang"].get_installed()
+
+    # end grepper
 
     lang = fields.Selection(selection=_get_languages, required=True)
 
