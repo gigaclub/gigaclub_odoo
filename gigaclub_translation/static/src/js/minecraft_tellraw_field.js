@@ -23,9 +23,11 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       this._reInitDropdown();
     }
     _reInitDropdown() {
+      // Grepper jquery init dropdown
       $(document).ready(function () {
         $(".dropdown-toggle").dropdown();
       });
+      // End grepper
     }
   }
 
