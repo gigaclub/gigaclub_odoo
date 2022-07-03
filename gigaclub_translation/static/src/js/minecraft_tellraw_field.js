@@ -23,11 +23,11 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       this._reInitDropdown();
     }
     _reInitDropdown() {
-      //grepper jquery init dropdown
+      // Grepper jquery init dropdown
       $(document).ready(function () {
         $(".dropdown-toggle").dropdown();
       });
-      //end grepper
+      // End grepper
     }
   }
 
@@ -57,6 +57,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
           minecraftTellrawListWidgetDialog: false,
         })
       );
+      this.showWidgets = true;
     }
     willStart() {
       this.state.widgets = this.props.record.data.widgets;
