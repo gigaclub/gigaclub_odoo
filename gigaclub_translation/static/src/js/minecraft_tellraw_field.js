@@ -17,7 +17,9 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
         widgets: {params: [], list: []},
       });
       this.mode = "edit";
+      // Grepper owl get parent state
       this.state.widgets = this.__owl__.parent.state.widgets;
+      // End grepper
     }
     patched() {
       this._reInitDropdown();
