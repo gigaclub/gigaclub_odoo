@@ -15,6 +15,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
         values: ["", {text: "placeholder", listitem: true}],
         text: "test",
         widgets: {params: [], list: []},
+        minecraftTellrawTextDialog: false,
       });
       this.mode = "edit";
       // Grepper owl get parent state
@@ -23,6 +24,25 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     }
     patched() {
       this._reInitDropdown();
+    }
+    openText() {
+      this.state.minecraftTellrawTextDialog = true;
+    }
+    onClickSave() {
+      if (this.state.hoverEvent === "show_text") {
+        this.state.value.hoverEvent = {
+          action: this.state.hoverEvent,
+          value: this.state.values,
+        };
+      }
+      if (!this.__owl__.parent.state.fromEdit) {
+        this.__owl__.parent.state.values.push(this.state.value);
+      }
+      this.__owl__.parent.state.fromEdit = false;
+      this.__owl__.parent.state.minecraftTellrawTextDialog = false;
+    }
+    onClickCancel() {
+      this.__owl__.parent.state.minecraftTellrawTextDialog = false;
     }
     _reInitDropdown() {
       // Grepper jquery init dropdown
@@ -36,6 +56,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
   Object.assign(MinecraftTellrawListWidgetDialog, {
     components: {
       Dialog: OwlDialog,
+      MinecraftTellrawDialog: minecraftTellrawDialog,
     },
     template: "MinecraftTellrawListWidgetDialog",
   });

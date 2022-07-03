@@ -13,6 +13,12 @@
     >
             <t t-call="MinecraftTellrawDropdown" />
         </Dialog>
+        <t t-if="state.minecraftTellrawTextDialog">
+            <MinecraftTellrawDialog
+        editValue="state.editValue"
+        t-on-dialog-closed="onDialogClosed"
+      />
+        </t>
     </t>
 
     <!--grepper odoo extend template-->
