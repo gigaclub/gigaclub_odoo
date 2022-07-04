@@ -13,7 +13,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       super(...args);
       this.state = useState({
         values: ["", {text: "placeholder", listitem: true}],
-        text: "test",
+        text: "",
         widgets: {params: [], list: []},
         minecraftTellrawTextDialog: false,
         editValue: {},
@@ -26,6 +26,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     patched() {
       this._reInitDropdown();
       this._reInitSortable();
+      this._generatePreviewText();
     }
     openText() {
       this.state.minecraftTellrawTextDialog = true;
@@ -39,6 +40,42 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     }
     onClickCancel() {
       this.__owl__.parent.state.minecraftTellrawTextDialog = false;
+    }
+    _generatePreviewText() {
+      const value = this.state.value;
+      if (value) {
+        if (value.hasOwnProperty("text")) {
+          const valueSpan = $("<span />");
+          valueSpan.text(value.text);
+          if (value.hasOwnProperty("color")) {
+            valueSpan.css("color", value.color);
+          }
+          if (value.hasOwnProperty("bold")) {
+            valueSpan.css("font-weight", value.bold ? "bold" : "normal");
+          }
+          if (value.hasOwnProperty("italic")) {
+            valueSpan.css("font-style", value.italic ? "italic" : "normal");
+          }
+          if (value.hasOwnProperty("underlined")) {
+            valueSpan.css("text-decoration", value.underlined ? "underline" : "none");
+          }
+          if (value.hasOwnProperty("strikethrough")) {
+            valueSpan.css(
+              "text-decoration",
+              value.strikethrough ? "line-through" : valueSpan.css("text-decoration")
+            );
+          }
+          if (
+            value.hasOwnProperty("underlined") &&
+            value.hasOwnProperty("strikethrough") &&
+            value.underlined &&
+            value.strikethrough
+          ) {
+            valueSpan.css("text-decoration", "underline line-through");
+          }
+          this.state.previewText = valueSpan[0].outerHTML;
+        }
+      }
     }
     _reInitDropdown() {
       // Grepper jquery init dropdown
