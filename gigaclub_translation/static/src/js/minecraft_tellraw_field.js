@@ -16,6 +16,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
         text: "test",
         widgets: {params: [], list: []},
         minecraftTellrawTextDialog: false,
+        editValue: {},
       });
       this.mode = "edit";
       // Grepper owl get parent state
@@ -24,17 +25,12 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     }
     patched() {
       this._reInitDropdown();
+      this._reInitSortable();
     }
     openText() {
       this.state.minecraftTellrawTextDialog = true;
     }
     onClickSave() {
-      if (this.state.hoverEvent === "show_text") {
-        this.state.value.hoverEvent = {
-          action: this.state.hoverEvent,
-          value: this.state.values,
-        };
-      }
       if (!this.__owl__.parent.state.fromEdit) {
         this.__owl__.parent.state.values.push(this.state.value);
       }
@@ -50,6 +46,31 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
         $(".dropdown-toggle").dropdown();
       });
       // End grepper
+    }
+    _reInitSortable() {
+      $("table tbody").sortable({
+        handle: "span.o_row_handle",
+        cancel: "",
+        start: (e, ui) => {
+          $(this).attr("data-previndex", ui.item.index());
+        },
+        update: (e, ui) => {
+          const oldIndex = $(this).attr("data-previndex");
+          const newIndex = ui.item.index();
+          $(this).removeAttr("data-previndex");
+          this._updateIndex(oldIndex + 1, newIndex + 1);
+        },
+      });
+    }
+    _updateIndex(oldIndex, newIndex) {
+      const values = this.state.values;
+      const value = values[oldIndex];
+      values.splice(oldIndex, 1);
+      values.splice(newIndex, 0, value);
+      this.state.values = values;
+      // Close dialog because the index changed and the old index is no longer valid
+      // should be solved by a better solution
+      this.onClickSave();
     }
   }
 

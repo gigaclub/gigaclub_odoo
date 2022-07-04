@@ -12,6 +12,16 @@
       t-ref="listWidgetDialog"
     >
             <t t-call="MinecraftTellrawDropdown" />
+            <t t-set-slot="buttons">
+                <button
+          class="o-reject btn btn-primary"
+          t-on-click="onClickSave"
+        >Save</button>
+                <button
+          class="o-cancel btn btn-secondary"
+          t-on-click="onClickCancel"
+        >Cancel</button>
+            </t>
         </Dialog>
         <t t-if="state.minecraftTellrawTextDialog">
             <MinecraftTellrawDialog
