@@ -33,13 +33,13 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     }
     onClickSave() {
       if (!this.__owl__.parent.state.fromEdit) {
-        this.__owl__.parent.state.values.push(this.state.value);
+        Array.prototype.push.apply(this.__owl__.parent.state.values, this.state.values);
       }
       this.__owl__.parent.state.fromEdit = false;
-      this.__owl__.parent.state.minecraftTellrawTextDialog = false;
+      this.__owl__.parent.state.minecraftTellrawListWidgetDialog = false;
     }
     onClickCancel() {
-      this.__owl__.parent.state.minecraftTellrawTextDialog = false;
+      this.__owl__.parent.state.minecraftTellrawListWidgetDialog = false;
     }
     _generatePreviewText() {
       const value = this.state.value;
