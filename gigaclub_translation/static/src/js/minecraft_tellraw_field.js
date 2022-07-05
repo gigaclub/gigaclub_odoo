@@ -12,7 +12,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     constructor(...args) {
       super(...args);
       this.state = useState({
-        values: ["", {text: "placeholder", listitem: true}],
+        values: ["", {text: this.props.widget, listitem: true}],
         text: "",
         widgets: {params: [], list: []},
         minecraftTellrawTextDialog: false,
