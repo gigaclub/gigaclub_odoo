@@ -59,7 +59,11 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     onClickEditText(index) {
       this.state.fromEdit = true;
       this.state.editValue = this.state.values[index];
+      this.state.index = index;
       this.state.minecraftTellrawTextDialog = true;
+    }
+    onDialogClosed() {
+      this.state.minecraftTellrawTextDialog = false;
     }
     _reInitDropdown() {
       // Grepper jquery init dropdown
@@ -69,7 +73,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       // End grepper
     }
     _reInitSortable() {
-      $("table tbody").sortable({
+      $("table tbody.dropdown-values").sortable({
         handle: "span.o_row_handle",
         cancel: "",
         start: (e, ui) => {
@@ -99,14 +103,6 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     }
   }
 
-  Object.assign(MinecraftTellrawListWidgetDialog, {
-    components: {
-      Dialog: OwlDialog,
-      MinecraftTellrawDialog: minecraftTellrawDialog,
-    },
-    template: "MinecraftTellrawListWidgetDialog",
-  });
-
   class MinecraftTellrawDialog extends minecraftTellrawDialog {
     constructor(...args) {
       super(...args);
@@ -116,6 +112,14 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       this.state.widgets = this.__owl__.parent.state.widgets;
     }
   }
+
+  Object.assign(MinecraftTellrawListWidgetDialog, {
+    components: {
+      Dialog: OwlDialog,
+      MinecraftTellrawDialog: MinecraftTellrawDialog,
+    },
+    template: "MinecraftTellrawListWidgetDialog",
+  });
 
   class MinecraftTellrawField extends minecraftTellrawField {
     constructor(...args) {
