@@ -110,9 +110,13 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     constructor(...args) {
       super(...args);
       this.state = useState(
-        Object.assign({}, this.state, {widgets: {params: [], list: []}})
+        Object.assign({}, this.state, {
+          widgets: {params: [], list: []},
+          params: "",
+        })
       );
       this.state.widgets = this.__owl__.parent.state.widgets;
+      this.state.params = this.__owl__.parent.state.params;
     }
   }
 
@@ -132,12 +136,14 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
           widgets: {params: [], list: []},
           minecraftTellrawListWidgetDialog: false,
           widget: "",
+          params: "",
         })
       );
       this.showWidgets = true;
     }
     willStart() {
       this.state.widgets = this.props.record.data.widgets;
+      this._prepareParams();
     }
     openList(event) {
       this.state.widget = event.target.name;
@@ -153,6 +159,14 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
         this.state.minecraftTellrawListWidgetDialog = true;
       } else {
         this.state.minecraftTellrawTextDialog = true;
+      }
+    }
+    _prepareParams() {
+      const params = this.state.widgets.params;
+      if (params) {
+        this.state.params = `Parameters: ${params
+          .map((p) => "${" + p + "}")
+          .join(", ")}`;
       }
     }
   }
