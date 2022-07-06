@@ -18,6 +18,9 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
         minecraftTellrawTextDialog: false,
         editValue: {},
         widget: "",
+        fromEdit: false,
+        index: 0,
+        previewText: "",
       });
       this.mode = "edit";
       // Grepper owl get parent state
@@ -25,6 +28,11 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       // End grepper
       this.state.widget = this.props.widget;
       this.state.text = this.state.widget;
+    }
+    mounted() {
+      if (Object.keys(this.props.editValue).length) {
+        this._setEditValue(this.props.editValue);
+      }
     }
     patched() {
       this._reInitDropdown();
@@ -48,6 +56,11 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     onClickCancel() {
       this.__owl__.parent.state.minecraftTellrawListWidgetDialog = false;
     }
+    onClickEditText(index) {
+      this.state.fromEdit = true;
+      this.state.editValue = this.state.values[index];
+      this.state.minecraftTellrawTextDialog = true;
+    }
     _reInitDropdown() {
       // Grepper jquery init dropdown
       $(document).ready(function () {
@@ -69,6 +82,10 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
           this._updateIndex(oldIndex + 1, newIndex + 1);
         },
       });
+    }
+    _setEditValue(value) {
+      this.state.values = value.values;
+      this.__owl__.parent.state.editValue = {};
     }
     _updateIndex(oldIndex, newIndex) {
       const values = this.state.values;
@@ -121,6 +138,15 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
     }
     onListWidgetDialogClosed() {
       this.state.minecraftTellrawListWidgetDialog = false;
+    }
+    onClickEditText(index) {
+      this.state.fromEdit = true;
+      this.state.editValue = this.state.values[index];
+      if (this.state.editValue.type && this.state.editValue.type === "list") {
+        this.state.minecraftTellrawListWidgetDialog = true;
+      } else {
+        this.state.minecraftTellrawTextDialog = true;
+      }
     }
   }
 

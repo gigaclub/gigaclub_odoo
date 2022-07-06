@@ -66,6 +66,7 @@
         <t t-if="state.minecraftTellrawListWidgetDialog">
             <MinecraftTellrawListWidgetDialog
         widget="state.widget"
+        editValue="state.editValue"
         t-on-dialog-closed="onListWidgetDialogClosed"
       />
         </t>
