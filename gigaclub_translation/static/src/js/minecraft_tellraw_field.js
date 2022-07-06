@@ -62,6 +62,9 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
       this.state.index = index;
       this.state.minecraftTellrawTextDialog = true;
     }
+    onClickRemoveText(index) {
+      this.state.values.splice(index, 1);
+    }
     onDialogClosed() {
       this.state.minecraftTellrawTextDialog = false;
     }
