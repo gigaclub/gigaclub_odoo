@@ -9,7 +9,7 @@ class GCTranslation(models.Model):
     values = fields.Text()
     translation_entry_ids = fields.Many2many(comodel_name="gc.translation.entry")
     category = fields.Char()
-    
+
     # grepper odoo unique sql constraint
     _sql_constraints = [("name_unique", "unique (name)", "name must be unique!")]
     # end grepper
