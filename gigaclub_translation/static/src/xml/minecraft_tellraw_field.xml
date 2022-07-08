@@ -12,28 +12,48 @@
       t-ref="listWidgetDialog"
     >
             <t t-call="MinecraftTellrawDropdown" />
+            <t t-set-slot="buttons">
+                <button
+          class="o-reject btn btn-primary"
+          t-on-click="onClickSave"
+        >Save</button>
+                <button
+          class="o-cancel btn btn-secondary"
+          t-on-click="onClickCancel"
+        >Cancel</button>
+            </t>
         </Dialog>
+        <t t-if="state.minecraftTellrawTextDialog">
+            <MinecraftTellrawDialog
+        editValue="state.editValue"
+        t-on-dialog-closed="onDialogClosed"
+      />
+        </t>
     </t>
 
+    <!--grepper odoo extend template-->
     <t
     t-name="MinecraftTellrawDropdownInheritGigaClubTranslation"
     t-inherit="minecraft_tellraw_field.MinecraftTellrawDropdown"
     t-inherit-mode="extension"
   >
         <xpath expr="//div[@id='add-text-dropdown']/button[last()]" position="after">
-            <hr />
-            <div class="dropdown-item" name="widget">List Widgets:</div>
-            <hr />
-            <t t-foreach="state.widgets.list" t-as="listitem">
-                <button
-          class="dropdown-item"
-          t-att-name="listitem"
-          t-esc="listitem"
-          t-on-click="openList"
-        />
+            <t t-if="showWidgets">
+                <hr />
+                <div class="dropdown-item" name="widget">List Widgets:</div>
+                <hr />
+                <t t-foreach="state.widgets.list" t-as="listitem">
+                    <button
+            class="dropdown-item"
+            t-att-name="listitem"
+            t-esc="listitem"
+            t-on-click="openList"
+          />
+                </t>
             </t>
         </xpath>
     </t>
+    <!--end grepper-->
 
     <t t-name="FieldMinecraftTellrawInheritGigaClubTranslation" owl="1">
         <t t-call="MinecraftTellrawDropdown" />
@@ -45,6 +65,8 @@
         </t>
         <t t-if="state.minecraftTellrawListWidgetDialog">
             <MinecraftTellrawListWidgetDialog
+        widget="state.widget"
+        editValue="state.editValue"
         t-on-dialog-closed="onListWidgetDialogClosed"
       />
         </t>
