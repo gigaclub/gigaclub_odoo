@@ -1,3 +1,2 @@
 # generated from manifests external_dependencies
 discord
-git+https://github.com/gigaclub/minecraft_odoo@14.0#egg=odoo14-addon-minecraft_tellraw_field

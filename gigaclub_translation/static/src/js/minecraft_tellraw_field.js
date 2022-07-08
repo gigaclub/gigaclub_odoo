@@ -1,7 +1,7 @@
 odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
   "use strict";
 
-  const minecraftTellrawFieldModule = require("minecraft_tellraw_field.minecraft_tellraw_field");
+  const minecraftTellrawFieldModule = require("base_field_minecraft_tellraw.minecraft_tellraw_field");
   const OwlDialog = require("web.OwlDialog");
   const minecraftTellrawField = minecraftTellrawFieldModule.MinecraftTellrawField;
   const minecraftTellrawDialog = minecraftTellrawFieldModule.MinecraftTellrawDialog;
