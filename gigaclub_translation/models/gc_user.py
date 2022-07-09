@@ -4,16 +4,29 @@ from odoo import api, fields, models
 class GCUser(models.Model):
     _inherit = "gc.user"
 
-    language_id = fields.Many2one(
-        comodel_name="gc.language",
-        default=lambda x: x.env["gc.language"].search([("default", "=", True)]),
-    )
+    # grepper odoo get installed languages
+    @api.model
+    def _get_languages(self):
+        return self.env["res.lang"].get_installed()
+
+    # end grepper
+
+    lang = fields.Selection(selection=_get_languages, required=True)
 
     @api.model
-    def set_language(self, player_uuid, language):
+    def set_language(self, player_uuid, lang_code):
         user = self.search([("mc_uuid", "=", player_uuid)])
-        language = self.env["gc.language"].search([("name", "=ilike", language)])
-        if user and language:
-            user.language_id = language
-            return True
+        if user and lang_code:
+            try:
+                user.lang = lang_code
+                return True
+            except Exception:
+                pass
+        return False
+
+    @api.model
+    def get_language(self, player_uuid):
+        user = self.search([("mc_uuid", "=", player_uuid)])
+        if user:
+            return user.lang
         return False

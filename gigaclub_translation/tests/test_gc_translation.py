@@ -5,12 +5,11 @@ class TestGCTranslation(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.language = cls.env.ref("gigaclub_translation.gc_language_english")
         cls.user = cls.env["gc.user"].create(
             {
                 "name": "Test User",
                 "mc_uuid": "test",
-                "language_id": cls.language.id,
+                "lang": "en_US",
             }
         )
         cls.translation = cls.env["gc.translation"].create(
@@ -21,7 +20,7 @@ class TestGCTranslation(SavepointCase):
         cls.translation_entry = cls.env["gc.translation.entry"].create(
             {
                 "translation_ids": [[6, 0, [cls.translation.id]]],
-                "language_id": cls.language.id,
+                "lang": "en_US",
                 "content": "Test Content",
             }
         )

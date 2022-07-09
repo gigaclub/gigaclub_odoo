@@ -1,3 +1,4 @@
+# grepper odoo test savepointcase
 from odoo.tests import SavepointCase
 
 
@@ -14,15 +15,18 @@ class TestGCUser(SavepointCase):
 
     def test_set_language(self):
         GCUser = self.env["gc.user"]
-        res = GCUser.set_language(self.user.mc_uuid, "english")
+        res = GCUser.set_language(self.user.mc_uuid, "en_US")
         self.assertEqual(res, True)
         self.assertEqual(
-            self.user.language_id,
-            self.env["gc.language"].search([("name", "=", "English")]),
+            self.user.lang,
+            "en_US",
         )
         res = GCUser.set_language(self.user.mc_uuid, "bla")
         self.assertEqual(res, False)
         self.assertEqual(
-            self.user.language_id,
-            self.env["gc.language"].search([("name", "=", "English")]),
+            self.user.lang,
+            "en_US",
         )
+
+
+# end grepper
