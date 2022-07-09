@@ -34,7 +34,7 @@
     <!--grepper odoo extend template-->
     <t
     t-name="MinecraftTellrawDropdownInheritGigaClubTranslation"
-    t-inherit="minecraft_tellraw_field.MinecraftTellrawDropdown"
+    t-inherit="minecraft_field_tellraw.MinecraftTellrawDropdown"
     t-inherit-mode="extension"
   >
         <xpath expr="//div[@id='add-text-dropdown']/button[last()]" position="after">
