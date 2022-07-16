@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record
+      id="wizard_create_team_form_view_inherit_gigaclub_github"
+      model="ir.ui.view"
+    >
+            <field name="name">wizard.create.team.form.inherit.gigaclub_github</field>
+            <field name="model">wizard.create.team</field>
+            <field
+        name="inherit_id"
+        ref="github_connector.view_wizard_create_team_form"
+      />
+            <field name="arch" type="xml">
+                <field name="wizard_partner_ids" position="replace">
+                    <field name="wizard_user_ids" colspan="4" widget="many2many_tags" />
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>
