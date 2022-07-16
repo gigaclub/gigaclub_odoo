@@ -10,14 +10,14 @@
       id="github_connector.action_github_team_partner_from_partner"
       model="ir.actions.act_window"
     >
-            <field name="res_model">gc.team.user</field>
+            <field name="res_model">github.team.user</field>
         </record>
 
         <record
       id="github_connector.action_github_team_partner_from_team"
       model="ir.actions.act_window"
     >
-            <field name="res_model">gc.team.user</field>
+            <field name="res_model">github.team.user</field>
         </record>
 
     </data>
