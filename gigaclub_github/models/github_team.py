@@ -30,3 +30,20 @@ class GitHubTeam(models.Model):
         action["context"].pop("group_by", None)
         action["context"]["search_default_user_id"] = self.id
         return action
+
+    # Action Section
+    def button_sync_member(self):
+        user_obj = self.env["gc.user"]
+        gh_team = self.find_related_github_object()
+        for team in self:
+            user_data = []
+            # Fetching the role after getting each user requires more API calls for
+            # each user, so we fetch the users in 2 steps, one for each role
+            for gh_user in gh_team.get_members(role="member"):
+                user = user_obj.get_from_id_or_create(gh_data=gh_user)
+                user_data.append({"user_id": user.id, "role": "member"})
+            for gh_user in gh_team.get_members(role="maintainer"):
+                user = user_obj.get_from_id_or_create(gh_data=gh_user)
+                user_data.append({"user_id": user.id, "role": "maintainer"})
+            team.user_ids = [(2, x.id, False) for x in team.user_ids]
+            team.user_ids = [(0, False, x) for x in user_data]
