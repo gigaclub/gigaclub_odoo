@@ -19,11 +19,14 @@
             <field name="model">gc.user</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="name" />
-                        <field name="mc_uuid" />
-                        <field name="state" />
-                    </group>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" />
+                        <group>
+                            <field name="name" />
+                            <field name="mc_uuid" />
+                            <field name="state" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
