@@ -25,7 +25,7 @@
             name="action_github_organization"
             class="oe_stat_button"
             icon="fa-institution"
-            attrs="{'invisible': ['|', ('github_name', '=', False)]}"
+            attrs="{'invisible': [('github_name', '=', False)]}"
           >
                         <field
               name="organization_qty"
@@ -38,7 +38,7 @@
             name="action_github_team_partner_from_partner"
             class="oe_stat_button"
             icon="fa-users"
-            attrs="{'invisible': ['|', ('github_name', '=', False)]}"
+            attrs="{'invisible': [('github_name', '=', False)]}"
           >
                         <field
               name="github_team_qty"
