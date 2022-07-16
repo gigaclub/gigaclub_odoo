@@ -7,7 +7,7 @@ class GCUser(models.Model):
     _inherit = ["gc.user", "abstract.github.model"]
     # end grepper
 
-    _github_login_field = "github_name"
+    _github_login_field = "name"
     _need_individual_call = True
 
     github_team_user_ids = fields.One2many(
@@ -40,6 +40,12 @@ class GCUser(models.Model):
             "Two different partners cannot have the same Github Login",
         )
     ]
+
+    @api.depends("github_name")
+    def _compute_name(self):
+        super()._compute_name()
+        for rec in self.filtered(lambda x: not x.name):
+            rec.name = rec.github_name
 
     @api.depends("organization_ids", "organization_ids.member_ids")
     def _compute_organization_qty(self):
