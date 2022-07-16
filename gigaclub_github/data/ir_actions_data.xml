@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="github_connector.action_res_partner" model="ir.actions.act_window">
+            <field name="res_model">gc.user</field>
+        </record>
+
+        <record
+      id="github_connector.action_github_team_partner_from_partner"
+      model="ir.actions.act_window"
+    >
+            <field name="res_model">gc.team.user</field>
+        </record>
+
+        <record
+      id="github_connector.action_github_team_partner_from_team"
+      model="ir.actions.act_window"
+    >
+            <field name="res_model">gc.team.user</field>
+        </record>
+
+    </data>
+</odoo>

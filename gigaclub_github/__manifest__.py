@@ -6,7 +6,9 @@
     "website": "https://GigaClub.net/",
     "license": "AGPL-3",
     "depends": ["github_connector", "gigaclub_team"],
-    "data": [],
+    "data": [
+        "data/ir_action_data.xml",
+    ],
     "demo": [],
     "installable": True,
     "auto_install": False,

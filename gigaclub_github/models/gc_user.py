@@ -1,11 +1,13 @@
 from odoo import api, fields, models
 
 
+# grepper odoo inherit multiple models
 class GCUser(models.Model):
     _name = "gc.user"
     _inherit = ["gc.user", "abstract.github.model"]
+    # end grepper
 
-    _github_login_field = "name"
+    _github_login_field = "github_name"
     _need_individual_call = True
 
     github_team_user_ids = fields.One2many(
