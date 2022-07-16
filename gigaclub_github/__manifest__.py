@@ -8,6 +8,7 @@
     "depends": ["github_connector", "gigaclub_team"],
     "data": [
         "data/ir_action_data.xml",
+        "wizards/wizard_create_team_views.xml",
     ],
     "demo": [],
     "installable": True,
