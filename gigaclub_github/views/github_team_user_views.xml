@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="github_team_user_search_view" model="ir.ui.view">
+            <field name="name">github.team.user.search</field>
+            <field name="model">github.team.user</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="team_id" />
+                    <field name="user_id" />
+                    <field name="role" />
+                </search>
+            </field>
+        </record>
+
+        <record id="github_team_user_tree_view" model="ir.ui.view">
+            <field name="name">github.team.user.tree</field>
+            <field name="model">github.team.user</field>
+            <field name="arch" type="xml">
+                <tree decoration-warning="role == 'member'">
+                    <field
+            name="team_id"
+            attrs="{'invisible': [('context_search_default_team_id', '!=', 0)]}"
+          />
+                    <field
+            name="user_id"
+            attrs="{'invisible': [('context_search_default_user_id', '!=', 0)]}"
+          />
+                    <field name="role" />
+                    <field name="context_search_default_team_id" invisible="1" />
+                    <field name="context_search_default_user_id" invisible="1" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="github_team_user_form_view" model="ir.ui.view">
+            <field name="name">github.team.user.form</field>
+            <field name="model">github.team.user</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" />
+                        <div class="oe_title">
+                            <h1>
+                                <field name="user_id" />
+                            </h1>
+                            <h2>
+                                <field name="team_id" />
+                            </h2>
+                        </div>
+                        <field name="role" />
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="github_team_user_from_team_kanban_view" model="ir.ui.view">
+            <field name="name">github.team.user.from.team.kanban</field>
+            <field name="model">github.team.user</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="user_id" />
+                    <field name="role" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img
+                    alt="Avatar"
+                    t-att-src="kanban_image('gc.user', 'image_128', record.user_id.raw_value)"
+                  />
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h3>
+                                        <field name="user_id" />
+                                    </h3>
+                                    <t t-if="record.role.raw_value == 'member'">
+                                        <span class="badge">
+                                            <i class="fa fa-fw fa-user" />
+                                            <t t-esc="record.role.value" />
+                                        </span>
+                                    </t>
+                                    <t t-if="record.role.raw_value == 'maintainer'">
+                                        <span class="badge">
+                                            <i class="fa fa-fw fa-cog" />
+                                            <t t-esc="record.role.value" />
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="github_team_user_from_user_kanban" model="ir.ui.view">
+            <field name="name">github.team.user.from.user.kanban</field>
+            <field name="model">github.team.user</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="team_id" />
+                    <field name="role" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_res_user_kanban oe_kanban_global_click">
+                                <div class="oe_module_desc">
+                                    <h3>
+                                        <field name="team_id" />
+                                    </h3>
+                                    <t t-if="record.role.raw_value == 'member'">
+                                        <span class="badge">
+                                            <i class="fa fa-fw fa-user" />
+                                            <t t-esc="record.role.value" />
+                                        </span>
+                                    </t>
+                                    <t t-if="record.role.raw_value == 'maintainer'">
+                                        <span class="badge">
+                                            <i class="fa fa-fw fa-cog" />
+                                            <t t-esc="record.role.value" />
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    </data>
+</odoo>
