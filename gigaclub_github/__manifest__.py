@@ -8,6 +8,9 @@
     "depends": ["github_connector", "gigaclub_team"],
     "data": [
         "data/ir_action_data.xml",
+        "views/gc_user_views.xml",
+        "views/github_team_user_views.xml",
+        "views/github_team_views.xml",
         "wizards/wizard_create_team_views.xml",
     ],
     "demo": [],
