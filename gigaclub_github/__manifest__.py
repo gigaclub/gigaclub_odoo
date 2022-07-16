@@ -7,7 +7,7 @@
     "license": "AGPL-3",
     "depends": ["github_connector", "gigaclub_team"],
     "data": [
-        "data/ir_action_data.xml",
+        "data/ir_actions_data.xml",
         "views/gc_user_views.xml",
         "views/github_team_user_views.xml",
         "views/github_team_views.xml",

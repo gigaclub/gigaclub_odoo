@@ -5,10 +5,7 @@
         <record id="github_team_search_view_inherit_gigaclub_github" model="ir.ui.view">
             <field name="name">github.team.search.inherit.gigaclub_github</field>
             <field name="model">github.team</field>
-            <field
-        name="inherit_id"
-        ref="github_connector.view_github_team_search_form"
-      />
+            <field name="inherit_id" ref="github_connector.view_github_team_search" />
             <field name="arch" type="xml">
                 <field name="partner_ids" position="replace">
                     <field name="user_ids" />
@@ -19,10 +16,7 @@
         <record id="github_team_tree_view_inherit_gigaclub_github" model="ir.ui.view">
             <field name="name">github.team.tree.inherit.gigaclub_github</field>
             <field name="model">github.team</field>
-            <field
-        name="inherit_id"
-        ref="github_connector.view_github_team_tree_form"
-      />
+            <field name="inherit_id" ref="github_connector.view_github_team_tree" />
             <field name="arch" type="xml">
                 <tree position="attributes">
                     <attribute name="decoration-muted">user_qty == 0</attribute>
