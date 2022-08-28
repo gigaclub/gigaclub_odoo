@@ -7,7 +7,7 @@ from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
-try:
+try:  # noqa: C901
     import discord
 
     class MainController(http.Controller):
