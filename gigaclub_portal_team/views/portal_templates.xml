@@ -15,5 +15,31 @@
             </xpath>
         </template>
 
+        <template id="portal_my_teams">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True" />
+
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Teams</t>
+                </t>
+                <t t-if="not teams">
+                    <div class="alert alert-warning mt8" role="alert">
+                        There are no teams.
+                    </div>
+                </t>
+                <t t-if="teams" t-call="portal.portal_table">
+                    <tbody>
+                        <tr t-foreach="teams" t-as="team">
+                            <td>
+                                <a
+                  t-attf-href="/my/team/#{team.id}?{{ keep_query() }}"
+                ><span t-field="team.name" /></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </t>
+            </t>
+        </template>
+
     </data>
 </odoo>
