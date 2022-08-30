@@ -28,6 +28,11 @@
                     </div>
                 </t>
                 <t t-if="teams" t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Name</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr t-foreach="teams" t-as="team">
                             <td>

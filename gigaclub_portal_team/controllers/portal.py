@@ -81,3 +81,14 @@ class GigaClubPortalTeam(GigaClubPortal):
             }
         )
         return request.render("gigaclub_portal_team.portal_my_teams", values)
+
+    @route(
+        "/my/team/<int:team_id>/<any('view', 'edit', 'create', 'delete'):mode>",
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_team(self, team_id, mode):
+        self._prepare_portal_layout_values()
+        request.env["gc.team"]
+        request.env.user.partner_id.gc_user_id
