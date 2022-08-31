@@ -3,6 +3,29 @@
     <data>
 
         <template
+      id="portal_breadcrumbs_inherit_gigaclub_portal_team"
+      inherit_id="portal.portal_breadcrumbs"
+      priority="40"
+    >
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li
+          t-if="page_name == 'team' or team"
+          class="col-lg-2"
+          t-attf-class="breadcrumb-item #{'active ' if not project else ''}"
+        >
+                    <a t-if="team" t-attf-href="/my/teams?{{ keep_query() }}">Teams</a>
+                    <t t-else="">Teams</t>
+                </li>
+                <li
+          t-if="team"
+          class="breadcrumb-item active text-truncate col-8 col-lg-10"
+        >
+                    <t t-esc="team.name" />
+                </li>
+            </xpath>
+        </template>
+
+        <template
       id="portal_my_home_inherit_gigaclub_portal_team"
       inherit_id="gigaclub_portal.portal_my_home_inherit_gigaclub_portal"
     >
