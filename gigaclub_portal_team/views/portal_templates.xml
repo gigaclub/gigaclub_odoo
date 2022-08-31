@@ -54,6 +54,8 @@
                     <thead>
                         <tr>
                             <th class="text-left">Name</th>
+                            <th>Owner</th>
+                            <th>User Count</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,6 +64,14 @@
                                 <a
                   t-attf-href="/my/team/#{team.id}/view?{{ keep_query() }}"
                 ><span t-field="team.name" /></a>
+                            </td>
+                            <td>
+                                <span t-field="team.owner_id" />
+                            </td>
+                            <td>
+                                <span
+                  t-esc="len(team.permission_connector_ids.mapped('user_id'))"
+                />
                             </td>
                         </tr>
                     </tbody>
@@ -98,6 +108,22 @@
                                 <div class="row">
                                     <div class="col">
                                         <span t-field="team.owner_id" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <t
+                t-set="users"
+                t-value="team.permission_connector_ids.mapped('user_id')"
+              />
+                            <div t-if="users" class="col-12 mb-2 mb-md-0">
+                                <h6><strong>Users</strong></h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <t t-foreach="users" t-as="user">
+                                            <p t-field="user.display_name" />
+                                        </t>
                                     </div>
                                 </div>
                             </div>
