@@ -1,4 +1,5 @@
 from odoo import _
+from odoo.exceptions import AccessError, MissingError
 from odoo.http import request, route
 
 from odoo.addons.gigaclub_portal.controllers.portal import GigaClubPortal
@@ -67,6 +68,7 @@ class GigaClubPortalTeam(GigaClubPortal):
         teams = Teams.search(
             domain, order=order, limit=self._items_per_page, offset=pager["offset"]
         )
+        request.session["my_teams_history"] = teams.ids[:100]
 
         values.update(
             {
@@ -83,12 +85,25 @@ class GigaClubPortalTeam(GigaClubPortal):
         return request.render("gigaclub_portal_team.portal_my_teams", values)
 
     @route(
-        "/my/team/<int:team_id>/<any('view', 'edit', 'create', 'delete'):mode>",
+        "/my/team/<int:team_id>/view",
         type="http",
         auth="user",
         website=True,
     )
-    def portal_my_team(self, team_id, mode):
-        self._prepare_portal_layout_values()
-        request.env["gc.team"]
-        request.env.user.partner_id.gc_user_id
+    def portal_my_team_view(self, team_id, **kw):
+        try:
+            team_sudo = self._document_check_access("gc.team", team_id)
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+
+        values = self._team_get_page_view_values(team_sudo, **kw)
+        return request.render("gigaclub_portal_team.portal_my_team_view", values)
+
+    def _team_get_page_view_values(self, team, access_token=None, **kwargs):
+        values = {
+            "page_name": "team",
+            "team": team,
+        }
+        return self._get_page_view_values(
+            team, access_token, values, "my_teams_history", False, **kwargs
+        )

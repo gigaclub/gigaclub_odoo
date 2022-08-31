@@ -37,11 +37,23 @@
                         <tr t-foreach="teams" t-as="team">
                             <td>
                                 <a
-                  t-attf-href="/my/team/#{team.id}?{{ keep_query() }}"
+                  t-attf-href="/my/team/#{team.id}/view?{{ keep_query() }}"
                 ><span t-field="team.name" /></a>
                             </td>
                         </tr>
                     </tbody>
+                </t>
+            </t>
+        </template>
+
+        <template id="portal_my_team_view">
+            <t t-call="portal.portal_layout">
+                <t t-call="portal.portal_record_layout">
+                    <t t-set="card_header">
+                        <h5 class="mb-0">
+                            <span t-field="team.name" class="text-truncate" />
+                        </h5>
+                    </t>
                 </t>
             </t>
         </template>
