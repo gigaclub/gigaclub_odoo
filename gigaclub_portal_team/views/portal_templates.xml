@@ -127,7 +127,7 @@
                                     <div class="form-group">
                                         <label
                       for="input-description"
-                    >Desscription</label>
+                    >Description</label>
                                         <input
                       type="text"
                       class="form-control"
@@ -147,6 +147,27 @@
                       readonly="1"
                     />
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Users</label>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Group Count</th>
+                                                <th scope="col">Permission Count</th>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button
+                    class="btn btn-sm btn-primary"
+                    type="button"
+                  >Add User</button>
                                 </div>
                             </div>
                         </t>
