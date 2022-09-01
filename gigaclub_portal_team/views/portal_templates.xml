@@ -17,7 +17,13 @@
                     <t t-else="">Teams</t>
                 </li>
                 <li
-          t-if="team"
+          t-if="team and isinstance(team, dict)"
+          class="breadcrumb-item active text-truncate col-8 col-lg-10"
+        >
+                    Create
+                </li>
+                <li
+          t-elif="team"
           class="breadcrumb-item active text-truncate col-8 col-lg-10"
         >
                     <t t-esc="team.name" />
@@ -75,6 +81,53 @@
                             </td>
                         </tr>
                     </tbody>
+                </t>
+            </t>
+        </template>
+
+        <template id="portal_my_team_form">
+            <t t-call="portal.portal_layout">
+                <t t-call="portal.portal_record_layout">
+                    <form>
+                        <t t-set="card_header">
+                            <div class="form-group">
+                                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Name"
+                  t-att-value="team.get('name', '')"
+                />
+                            </div>
+                        </t>
+                        <t t-set="card_body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                    <div class="form-group">
+                                        <label
+                      for="input-description"
+                    >Desscription</label>
+                                        <input
+                      type="text"
+                      class="form-control"
+                      id="input-description"
+                      t-att-value="team.get('description', '')"
+                    />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                    <div class="form-group">
+                                        <label for="input-owner">Owner</label>
+                                        <input
+                      type="text"
+                      class="form-control readonly"
+                      id="input-owner"
+                      t-att-value="team.get('owner', '')"
+                    />
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </form>
                 </t>
             </t>
         </template>
