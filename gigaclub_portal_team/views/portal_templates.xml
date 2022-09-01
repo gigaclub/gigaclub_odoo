@@ -51,6 +51,14 @@
                 <t t-call="portal.portal_searchbar">
                     <t t-set="title">Teams</t>
                 </t>
+
+                <a
+          class="btn btn-primary"
+          t-attf-href="/my/team/create?{{ keep_query() }}"
+          role="button"
+          style="margin-bottom: 0.5rem;"
+        >Create</a>
+
                 <t t-if="not teams">
                     <div class="alert alert-warning mt8" role="alert">
                         There are no teams.
@@ -87,6 +95,20 @@
 
         <template id="portal_my_team_form">
             <t t-call="portal.portal_layout">
+
+                <a
+          class="btn btn-primary"
+          t-attf-href="/my/teams?{{ keep_query() }}"
+          role="button"
+          style="margin: 0.5rem 0;"
+        >Save</a>
+                <a
+          class="btn btn-secondary"
+          t-attf-href="/my/teams?{{ keep_query() }}"
+          role="button"
+          style="margin: 0.5rem 0;"
+        >Discard</a>
+
                 <t t-call="portal.portal_record_layout">
                     <form>
                         <t t-set="card_header">
@@ -122,6 +144,7 @@
                       class="form-control readonly"
                       id="input-owner"
                       t-att-value="team.get('owner', '')"
+                      readonly="1"
                     />
                                     </div>
                                 </div>
@@ -134,6 +157,14 @@
 
         <template id="portal_my_team_view">
             <t t-call="portal.portal_layout">
+
+                <a
+          class="btn btn-primary"
+          t-attf-href="/my/team/{{ team.id }}/edit?{{ keep_query() }}"
+          role="button"
+          style="margin: 0.5rem 0;"
+        >Edit</a>
+
                 <t t-call="portal.portal_record_layout">
                     <t t-set="card_header">
                         <h5 class="mb-0">
