@@ -167,13 +167,37 @@
                                     <button
                     class="btn btn-sm btn-primary"
                     type="button"
+                    data-toggle="modal"
+                    data-target=".user-modal-lg"
                   >Add User</button>
+                                    <t
+                    t-call="gigaclub_portal_team.portal_my_team_form_user_modal"
+                  />
                                 </div>
                             </div>
                         </t>
                     </form>
                 </t>
             </t>
+        </template>
+
+        <template id="portal_my_team_form_user_modal">
+            <div
+        class="modal fade user-modal-lg"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form>
+                            <div class="form-group">
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </template>
 
         <template id="portal_my_team_view">
