@@ -116,7 +116,11 @@ class GigaClubPortalTeam(GigaClubPortal):
     def _team_get_page_create_values(self, **kwargs):
         values = {
             "page_name": "team",
-            "team": {"owner": request.env.user.partner_id.gc_user_id.display_name},
+            "team": {
+                "owner": request.env.user.partner_id.gc_user_id.display_name,
+                "users": [],
+                "permission_groups": [],
+            },
         }
         return self._get_page_view_values(
             request.env["gc.team"], None, values, "my_teams_history", False, **kwargs

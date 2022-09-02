@@ -154,12 +154,23 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Group Count</th>
-                                                <th scope="col">Permission Count</th>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Group Count</th>
+                                                    <th
+                            scope="col"
+                          >Permission Count</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-
+                                                <tr
+                          t-foreach="team.get('users', [])"
+                          t-as="user"
+                        >
+                                                    <td t-esc="user.display_name" />
+                                                    <td t-esc="user.group_count" />
+                                                    <td t-esc="user.permission_count" />
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -180,11 +191,23 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Permission Count</th>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th
+                            scope="col"
+                          >Permission Count</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-
+                                                <tr
+                          t-foreach="team.get('groups', [])"
+                          t-as="group"
+                        >
+                                                    <td t-esc="group.display_name" />
+                                                    <td
+                            t-esc="group.permission_count"
+                          />
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
