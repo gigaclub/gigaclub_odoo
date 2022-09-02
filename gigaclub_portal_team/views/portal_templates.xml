@@ -95,7 +95,6 @@
 
         <template id="portal_my_team_form">
             <t t-call="portal.portal_layout">
-
                 <a
           class="btn btn-primary"
           t-attf-href="/my/teams?{{ keep_query() }}"
@@ -108,7 +107,6 @@
           role="button"
           style="margin: 0.5rem 0;"
         >Discard</a>
-
                 <t t-call="portal.portal_record_layout">
                     <form>
                         <t t-set="card_header">
@@ -256,11 +254,59 @@
       >
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form>
-                            <div class="form-group">
-
-                            </div>
-                        </form>
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create Permission Group</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col">
+                                        <dib class="form-group">
+                                            <label for="input-name">Name</label>
+                                            <input
+                        type="text"
+                        class="form-control"
+                        id="input-name"
+                      />
+                                        </dib>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label
+                        for="textarea-description"
+                      >Description</label>
+                                            <textarea
+                        class="form-control"
+                        id="textarea-description"
+                      />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Permissions</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Parent Group</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Child Groups</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -268,14 +314,12 @@
 
         <template id="portal_my_team_view">
             <t t-call="portal.portal_layout">
-
                 <a
           class="btn btn-primary"
           t-attf-href="/my/team/{{ team.id }}/edit?{{ keep_query() }}"
           role="button"
           style="margin: 0.5rem 0;"
         >Edit</a>
-
                 <t t-call="portal.portal_record_layout">
                     <t t-set="card_header">
                         <h5 class="mb-0">
