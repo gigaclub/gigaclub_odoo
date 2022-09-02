@@ -7,6 +7,7 @@
     "license": "AGPL-3",
     "depends": ["gigaclub_project", "portal"],
     "data": [
+        "views/assets.xml",
         "views/portal_templates.xml",
     ],
     "demo": [],

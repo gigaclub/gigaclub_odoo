@@ -128,8 +128,7 @@
                                         <label
                       for="input-description"
                     >Description</label>
-                                        <input
-                      type="text"
+                                        <textarea
                       class="form-control"
                       id="input-description"
                       t-att-value="team.get('description', '')"
@@ -175,6 +174,31 @@
                   />
                                 </div>
                             </div>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col">
+                                    <label>Permission Groups</label>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Permission Count</th>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button
+                    class="btn btn-sm btn-primary"
+                    type="button"
+                    data-toggle="modal"
+                    data-target=".group-modal-lg"
+                  >Add Group</button>
+                                    <t
+                    t-call="gigaclub_portal_team.portal_my_team_form_permission_group_modal"
+                  />
+                                </div>
+                            </div>
                         </t>
                     </form>
                 </t>
@@ -184,6 +208,25 @@
         <template id="portal_my_team_form_user_modal">
             <div
         class="modal fade user-modal-lg"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form>
+                            <div class="form-group">
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="portal_my_team_form_permission_group_modal">
+            <div
+        class="modal fade group-modal-lg"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"

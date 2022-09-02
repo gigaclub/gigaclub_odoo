@@ -12,6 +12,7 @@ class GCTeam(models.Model):
     permission_connector_ids = fields.One2many(
         comodel_name="gc.permission.connector", inverse_name="team_id"
     )
+    possible_permission_group_ids = fields.Many2many(comodel_name="gc.permission.group")
 
     owner_id = fields.Many2one(comodel_name="gc.user", required=True)
 
