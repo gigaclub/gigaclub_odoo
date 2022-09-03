@@ -235,11 +235,60 @@
       >
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form>
-                            <div class="form-group">
-
-                            </div>
-                        </form>
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add User</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="select-user">User</label>
+                                            <br />
+                                            <select
+                        id="select-user"
+                        class="selectpicker"
+                        data-live-search="true"
+                      >
+                                              <option
+                          data-tokens="ketchup mustard"
+                        >Hot Dog, Fries and a Soda</option>
+                                              <option
+                          data-tokens="mustard"
+                        >Burger, Shake and a Smile</option>
+                                              <option
+                          data-tokens="frosting"
+                        >Sugar, Spice and all things nice</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="select-groups">Groups</label>
+                                            <br />
+                                            <select
+                        id="select-groups"
+                        class="selectpicker"
+                        multiple="multiple"
+                      >
+                                              <option>Mustard</option>
+                                              <option>Ketchup</option>
+                                              <option>Relish</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Permissions</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -261,14 +310,14 @@
                             <form>
                                 <div class="row">
                                     <div class="col">
-                                        <dib class="form-group">
+                                        <div class="form-group">
                                             <label for="input-name">Name</label>
                                             <input
                         type="text"
                         class="form-control"
                         id="input-name"
                       />
-                                        </dib>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 10px;">
