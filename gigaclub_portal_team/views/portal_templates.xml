@@ -281,62 +281,9 @@
                                     </div>
                                 </div>
                                 <label>Permissions</label>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-check">
-                                            <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="input-editteam"
-                      />
-                                            <label
-                        class="form-check-label"
-                        for="input-editteam"
-                      >Edit Team</label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-check">
-                                            <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="input-inviteuser"
-                      />
-                                            <label
-                        class="form-check-label"
-                        for="input-inviteuser"
-                      >Invite User</label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-check">
-                                            <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="input-kickuser"
-                      />
-                                            <label
-                        class="form-check-label"
-                        for="input-kickuser"
-                      >Kick User</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-check">
-                                            <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="input-createworldasteam"
-                      />
-                                            <label
-                        class="form-check-label"
-                        for="input-createworldasteam"
-                      >Create World as Team</label>
-                                        </div>
-                                    </div>
-                                </div>
+                                <t
+                  t-call="gigaclub_portal_team.portal_my_team_form_permissions"
+                />
                             </div>
                             <div class="modal-footer">
                                 <button
@@ -364,11 +311,11 @@
       >
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Create Permission Group</h5>
-                        </div>
-                        <div class="modal-body">
-                            <form>
+                        <form>
+                            <div class="modal-header">
+                                <h5 class="modal-title">Create Permission Group</h5>
+                            </div>
+                            <div class="modal-body">
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -398,25 +345,127 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label>Permissions</label>
+                                            <t
+                        t-call="gigaclub_portal_team.portal_my_team_form_permissions"
+                      />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label>Parent Group</label>
+                                            <label
+                        for="select-parentgroup"
+                      >Parent Group</label>
+                                            <br />
+                                            <select
+                        id="select-parentgroup"
+                        class="selectpicker"
+                      >
+                                              <option
+                          data-tokens="ketchup mustard"
+                        >Hot Dog, Fries and a Soda</option>
+                                              <option
+                          data-tokens="mustard"
+                        >Burger, Shake and a Smile</option>
+                                              <option
+                          data-tokens="frosting"
+                        >Sugar, Spice and all things nice</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label>Child Groups</label>
+                                            <label
+                        for="select-childgroups"
+                      >Child Groups</label>
+                                            <br />
+                                            <select
+                        id="select-childgroups"
+                        class="selectpicker"
+                        multiple="multiple"
+                      >
+                                                <option>Mustard</option>
+                                                <option>Ketchup</option>
+                                                <option>Relish</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >Discard</button>
+                                <button
+                  type="button"
+                  class="btn btn-primary"
+                >Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="portal_my_team_form_permissions">
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              id="input-editteam"
+            />
+                        <label
+              class="form-check-label"
+              for="input-editteam"
+            >Edit Team</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              id="input-inviteuser"
+            />
+                        <label
+              class="form-check-label"
+              for="input-inviteuser"
+            >Invite User</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              id="input-kickuser"
+            />
+                        <label
+              class="form-check-label"
+              for="input-kickuser"
+            >Kick User</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              id="input-createworldasteam"
+            />
+                        <label
+              class="form-check-label"
+              for="input-createworldasteam"
+            >Create World as Team</label>
                     </div>
                 </div>
             </div>
