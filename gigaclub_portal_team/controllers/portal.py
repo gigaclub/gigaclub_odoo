@@ -109,8 +109,8 @@ class GigaClubPortalTeam(GigaClubPortal):
         GCTeam = request.env["gc.team"]
         owner_id = request.env.user.partner_id.gc_user_id.id
         values = {
-            "name": kw.get("name", ""),
-            "description": kw.get("description", ""),
+            "name": kw.get("name", False),
+            "description": kw.get("description", False),
             "owner_id": owner_id,
         }
         team = GCTeam.create(values)
