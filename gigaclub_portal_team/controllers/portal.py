@@ -104,6 +104,18 @@ class GigaClubPortalTeam(GigaClubPortal):
         values = self._team_get_page_create_values(**kw)
         return request.render("gigaclub_portal_team.portal_my_team_form", values)
 
+    @route("/my/team/create/save", type="http", auth="user", website=True)
+    def portal_my_team_create_save(self, **kw):
+        GCTeam = request.env["gc.team"]
+        owner_id = request.env.user.partner_id.gc_user_id.id
+        values = {
+            "name": kw.get("name", ""),
+            "description": kw.get("description", ""),
+            "owner_id": owner_id,
+        }
+        team = GCTeam.create(values)
+        return request.redirect("/my/team/{}/view".format(team.id))
+
     def _team_get_page_view_values(self, team, access_token=None, **kwargs):
         values = {
             "page_name": "team",

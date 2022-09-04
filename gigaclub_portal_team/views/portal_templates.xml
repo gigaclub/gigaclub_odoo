@@ -95,24 +95,31 @@
 
         <template id="portal_my_team_form">
             <t t-call="portal.portal_layout">
-                <a
-          class="btn btn-primary"
-          t-attf-href="/my/teams?{{ keep_query() }}"
-          role="button"
-          style="margin: 0.5rem 0;"
-        >Save</a>
-                <a
-          class="btn btn-secondary"
-          t-attf-href="/my/teams?{{ keep_query() }}"
-          role="button"
-          style="margin: 0.5rem 0;"
-        >Discard</a>
-                <t t-call="portal.portal_record_layout">
-                    <form>
+                <form method="post" action="/my/team/create/save">
+                    <input
+            type="hidden"
+            name="csrf_token"
+            t-att-value="request.csrf_token()"
+          />
+                    <input
+            type="submit"
+            class="btn btn-primary"
+            role="button"
+            style="margin: 0.5rem 0;"
+            value="Save"
+          />
+                    <a
+            class="btn btn-secondary"
+            t-attf-href="/my/teams?{{ keep_query() }}"
+            role="button"
+            style="margin: 0.5rem 0;"
+          >Discard</a>
+                    <t t-call="portal.portal_record_layout">
                         <t t-set="card_header">
                             <div class="form-group">
                                 <input
                   type="text"
+                  name="name"
                   class="form-control"
                   placeholder="Enter Name"
                   t-att-value="team.get('name', '')"
@@ -128,6 +135,7 @@
                     >Description</label>
                                         <textarea
                       class="form-control"
+                      name="description"
                       id="input-description"
                       t-att-value="team.get('description', '')"
                     />
@@ -221,8 +229,8 @@
                                 </div>
                             </div>
                         </t>
-                    </form>
-                </t>
+                    </t>
+                </form>
             </t>
         </template>
 
