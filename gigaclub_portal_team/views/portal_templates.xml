@@ -95,7 +95,13 @@
 
         <template id="portal_my_team_form">
             <t t-call="portal.portal_layout">
-                <form method="post" action="/my/team/create/save">
+                <div class="col-lg-12">
+                  <div t-if="error_message" class="alert alert-danger" role="alert">
+                      <t t-foreach="error_message" t-as="err"><t t-esc="err" /><br
+              /></t>
+                  </div>
+                </div>
+                <form method="post">
                     <input
             type="hidden"
             name="csrf_token"
@@ -123,6 +129,7 @@
                   class="form-control"
                   placeholder="Enter Name"
                   t-att-value="team.get('name', '')"
+                  required="required"
                 />
                             </div>
                         </t>

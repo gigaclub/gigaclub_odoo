@@ -7,6 +7,8 @@ from odoo.addons.portal.controllers.portal import pager as portal_pager
 
 
 class GigaClubPortalTeam(GigaClubPortal):
+    _MANDATORY_TEAM_FIELDS = ["name"]
+
     def _prepare_home_portal_values(self, counters):
         values = super()._prepare_home_portal_values(counters)
         if "team_count" in counters:
@@ -102,19 +104,43 @@ class GigaClubPortalTeam(GigaClubPortal):
     @route("/my/team/create", type="http", auth="user", website=True)
     def portal_my_team_create(self, **kw):
         values = self._team_get_page_create_values(**kw)
+        values.update(
+            {
+                "error": {},
+                "error_message": [],
+            }
+        )
+        if kw and request.httprequest.method == "POST":
+            error, error_message = self.team_form_validate(kw)
+            values.update({"error": error, "error_message": error_message})
+            owner_id = request.env.user.partner_id.gc_user_id.id
+            create_vals = {
+                "name": kw.get("name", False),
+                "description": kw.get("description", False),
+                "owner_id": owner_id,
+            }
+            values.update(create_vals)
+            if not error and not error_message:
+                team = request.env["gc.team"].create(create_vals)
+                return request.redirect("/my/team/{}/view".format(team.id))
         return request.render("gigaclub_portal_team.portal_my_team_form", values)
 
-    @route("/my/team/create/save", type="http", auth="user", website=True)
-    def portal_my_team_create_save(self, **kw):
-        GCTeam = request.env["gc.team"]
-        owner_id = request.env.user.partner_id.gc_user_id.id
-        values = {
-            "name": kw.get("name", False),
-            "description": kw.get("description", False),
-            "owner_id": owner_id,
-        }
-        team = GCTeam.create(values)
-        return request.redirect("/my/team/{}/view".format(team.id))
+    def team_form_validate(self, values):
+        error = dict()
+        error_message = []
+
+        for field_name in self._MANDATORY_TEAM_FIELDS:
+            if not values.get(field_name):
+                error[field_name] = "missing"
+
+        if values.get("name"):
+            if request.env["gc.team"].search([("name", "=ilike", values.get("name"))]):
+                error_message.append(_("Team name already exists!"))
+
+        if [err for err in error.values() if err == "missing"]:
+            error_message.append(_("Some required fields are empty."))
+
+        return error, error_message
 
     def _team_get_page_view_values(self, team, access_token=None, **kwargs):
         values = {
