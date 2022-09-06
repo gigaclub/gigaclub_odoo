@@ -17,16 +17,24 @@
                     <t t-else="">Teams</t>
                 </li>
                 <li
-          t-if="team and isinstance(team, dict)"
-          class="breadcrumb-item active text-truncate col-8 col-lg-10"
+          t-if="mode == 'create' and team and isinstance(team, dict)"
+          class="breadcrumb-item active"
         >
                     Create
                 </li>
+                <li t-elif="team" class="breadcrumb-item active">
+                    <t t-if="isinstance(team, dict)">
+                        <t t-esc="team.get('name', '')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="team.name" />
+                    </t>
+                </li>
                 <li
-          t-elif="team"
-          class="breadcrumb-item active text-truncate col-8 col-lg-10"
+          t-if="mode == 'edit' and team and isinstance(team, dict)"
+          class="breadcrumb-item active"
         >
-                    <t t-esc="team.name" />
+                    Edit
                 </li>
             </xpath>
         </template>
