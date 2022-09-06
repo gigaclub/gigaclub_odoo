@@ -118,14 +118,20 @@ class GigaClubPortalTeam(GigaClubPortal):
         if kw and request.httprequest.method == "POST":
             error, error_message = self.team_form_validate(kw)
             values.update({"error": error, "error_message": error_message})
-            owner_id = request.env.user.partner_id.gc_user_id.id
-            create_vals = {
-                "name": kw.get("name", False),
-                "description": kw.get("description", False),
-                "owner_id": owner_id,
-            }
-            values.update({"team": create_vals})
+            values["team"].update(
+                {
+                    "name": kw.get("name", False),
+                    "description": kw.get("description", False),
+                }
+            )
             if not error and not error_message:
+                owner_id = request.env.user.partner_id.gc_user_id.id
+                create_vals = {
+                    "name": kw.get("name", False),
+                    "description": kw.get("description", False),
+                    "owner_id": owner_id,
+                }
+                values.update({"team": create_vals})
                 team = request.env["gc.team"].create(create_vals)
                 return request.redirect("/my/team/{}/view".format(team.id))
         return request.render("gigaclub_portal_team.portal_my_team_form", values)

@@ -189,6 +189,7 @@
                                         </table>
                                     </div>
                                     <button
+                    t-if="mode == 'edit'"
                     class="btn btn-sm btn-primary"
                     type="button"
                     data-toggle="modal"
@@ -226,6 +227,7 @@
                                         </table>
                                     </div>
                                     <button
+                    t-if="mode == 'edit'"
                     class="btn btn-sm btn-primary"
                     type="button"
                     data-toggle="modal"
