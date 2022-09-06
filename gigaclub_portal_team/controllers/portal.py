@@ -108,8 +108,28 @@ class GigaClubPortalTeam(GigaClubPortal):
         except (AccessError, MissingError):
             return request.redirect("/my")
 
-        values = self._team_get_page_view_values(team_sudo, **kw)
-        return request.render("gigaclub_portal_team.portal_my_team_view", values)
+        values = self._team_get_page_edit_values(team_sudo, **kw)
+        values.update({"error": {}, "error_message": [], "mode": "edit"})
+        if kw and request.httprequest.method == "POST":
+            error, error_message = self.team_form_validate(kw)
+            values.update({"error": error, "error_message": error_message})
+            values["team"].update(
+                {
+                    "name": kw.get("name", False),
+                    "description": kw.get("description", False),
+                }
+            )
+            if not error and not error_message:
+                owner_id = request.env.user.partner_id.gc_user_id.id
+                create_vals = {
+                    "name": kw.get("name", False),
+                    "description": kw.get("description", False),
+                    "owner_id": owner_id,
+                }
+                values.update({"team": create_vals})
+                team_sudo.write(create_vals)
+                return request.redirect("/my/team/{}/view".format(team_sudo.id))
+        return request.render("gigaclub_portal_team.portal_my_team_form", values)
 
     @route("/my/team/create", type="http", auth="user", website=True)
     def portal_my_team_create(self, **kw):
@@ -170,6 +190,29 @@ class GigaClubPortalTeam(GigaClubPortal):
                 "owner": request.env.user.partner_id.gc_user_id.display_name,
                 "users": [],
                 "permission_groups": [],
+            },
+        }
+        return self._get_page_view_values(
+            request.env["gc.team"], None, values, "my_teams_history", False, **kwargs
+        )
+
+    def _team_get_page_edit_values(self, team, **kwargs):
+        values = {
+            "page_name": "team",
+            "team": {
+                "owner": team.owner_id.display_name,
+                "name": team.name,
+                "description": team.description,
+                "users": [
+                    {"name": user.name}
+                    for user in team.permission_connector_ids.mapped("user_id")
+                ],
+                "groups": [
+                    {
+                        "name": group.name,
+                    }
+                    for group in team.possible_permission_group_ids
+                ],
             },
         }
         return self._get_page_view_values(
