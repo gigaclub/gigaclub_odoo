@@ -95,12 +95,6 @@
 
         <template id="portal_my_team_form">
             <t t-call="portal.portal_layout">
-                <div class="col-lg-12">
-                  <div t-if="error_message" class="alert alert-danger" role="alert">
-                      <t t-foreach="error_message" t-as="err"><t t-esc="err" /><br
-              /></t>
-                  </div>
-                </div>
                 <form method="post">
                     <input
             type="hidden"
@@ -120,13 +114,20 @@
             role="button"
             style="margin: 0.5rem 0;"
           >Discard</a>
+                    <div t-if="error_message" class="alert alert-danger" role="alert">
+                        <t t-foreach="error_message" t-as="err">
+                            <t t-esc="err" /><br />
+                        </t>
+                    </div>
                     <t t-call="portal.portal_record_layout">
                         <t t-set="card_header">
-                            <div class="form-group">
+                            <div
+                t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''}"
+              >
                                 <input
                   type="text"
                   name="name"
-                  class="form-control"
+                  t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}"
                   placeholder="Enter Name"
                   t-att-value="team.get('name', '')"
                   required="required"

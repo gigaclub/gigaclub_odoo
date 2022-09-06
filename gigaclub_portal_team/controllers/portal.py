@@ -119,7 +119,7 @@ class GigaClubPortalTeam(GigaClubPortal):
                 "description": kw.get("description", False),
                 "owner_id": owner_id,
             }
-            values.update(create_vals)
+            values.update({"team": create_vals})
             if not error and not error_message:
                 team = request.env["gc.team"].create(create_vals)
                 return request.redirect("/my/team/{}/view".format(team.id))
@@ -135,6 +135,7 @@ class GigaClubPortalTeam(GigaClubPortal):
 
         if values.get("name"):
             if request.env["gc.team"].search([("name", "=ilike", values.get("name"))]):
+                error["name"] = "already exists"
                 error_message.append(_("Team name already exists!"))
 
         if [err for err in error.values() if err == "missing"]:
