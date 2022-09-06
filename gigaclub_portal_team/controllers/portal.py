@@ -101,15 +101,20 @@ class GigaClubPortalTeam(GigaClubPortal):
         values = self._team_get_page_view_values(team_sudo, **kw)
         return request.render("gigaclub_portal_team.portal_my_team_view", values)
 
+    @route("/my/team/<int:team_id>/edit", type="http", auth="user", website=True)
+    def portal_my_team_edit(self, team_id, **kw):
+        try:
+            team_sudo = self._document_check_access("gc.team", team_id)
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+
+        values = self._team_get_page_view_values(team_sudo, **kw)
+        return request.render("gigaclub_portal_team.portal_my_team_view", values)
+
     @route("/my/team/create", type="http", auth="user", website=True)
     def portal_my_team_create(self, **kw):
         values = self._team_get_page_create_values(**kw)
-        values.update(
-            {
-                "error": {},
-                "error_message": [],
-            }
-        )
+        values.update({"error": {}, "error_message": [], "mode": "create"})
         if kw and request.httprequest.method == "POST":
             error, error_message = self.team_form_validate(kw)
             values.update({"error": error, "error_message": error_message})
