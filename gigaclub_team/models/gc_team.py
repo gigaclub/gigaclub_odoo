@@ -19,6 +19,12 @@ class GCTeam(models.Model):
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]
 
     @api.model
+    def create(self, vals):
+        res = super().create(vals)
+
+        return res
+
+    @api.model
     def _check_access_gigaclub_team(self, player_uuid, team_id, permission):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         team = self.browse(team_id)
