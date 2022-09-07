@@ -197,22 +197,27 @@ class GigaClubPortalTeam(GigaClubPortal):
         )
 
     def _team_get_page_edit_values(self, team, **kwargs):
+        team_users = team.permission_connector_ids.mapped("user_id")
         values = {
             "page_name": "team",
             "team": {
                 "owner": team.owner_id.display_name,
                 "name": team.name,
                 "description": team.description,
-                "users": [
-                    {"name": user.name}
-                    for user in team.permission_connector_ids.mapped("user_id")
-                ],
+                "users": [{"id": user.id, "name": user.name} for user in team_users],
                 "groups": [
                     {
+                        "id": group.id,
                         "name": group.name,
                     }
                     for group in team.possible_permission_group_ids
                 ],
+            },
+            "users": {
+                user.id: user.display_name
+                for user in request.env["gc.user"]
+                .search([])
+                .filtered(lambda x: x not in team_users)
             },
         }
         return self._get_page_view_values(

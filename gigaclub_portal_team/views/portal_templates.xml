@@ -284,15 +284,13 @@
                         class="selectpicker"
                         data-live-search="true"
                       >
-                                              <option
-                          data-tokens="ketchup mustard"
-                        >Hot Dog, Fries and a Soda</option>
-                                              <option
-                          data-tokens="mustard"
-                        >Burger, Shake and a Smile</option>
-                                              <option
-                          data-tokens="frosting"
-                        >Sugar, Spice and all things nice</option>
+                                                <option data-tokens="" />
+                                                <option
+                          t-foreach="users"
+                          t-as="user_id"
+                          t-att-data-tokens="user_id"
+                          t-esc="users.get(user_id, '')"
+                        />
                                             </select>
                                         </div>
                                     </div>
@@ -307,9 +305,12 @@
                         class="selectpicker"
                         multiple="multiple"
                       >
-                                              <option>Mustard</option>
-                                              <option>Ketchup</option>
-                                              <option>Relish</option>
+                                                <option
+                          t-foreach="team.get('groups', [])"
+                          t-as="group"
+                          t-att-data-tokens="group.get('id', '')"
+                          t-esc="group.get('name', '')"
+                        />
                                             </select>
                                         </div>
                                     </div>
@@ -404,15 +405,13 @@
                         id="select-parentgroup"
                         class="selectpicker"
                       >
-                                              <option
-                          data-tokens="ketchup mustard"
-                        >Hot Dog, Fries and a Soda</option>
-                                              <option
-                          data-tokens="mustard"
-                        >Burger, Shake and a Smile</option>
-                                              <option
-                          data-tokens="frosting"
-                        >Sugar, Spice and all things nice</option>
+                                                <option data-tokens="" />
+                                                <option
+                          t-foreach="team.get('groups', [])"
+                          t-as="group"
+                          t-att-data-tokens="group.get('id', '')"
+                          t-esc="group.get('name', '')"
+                        />
                                             </select>
                                         </div>
                                     </div>
@@ -429,9 +428,12 @@
                         class="selectpicker"
                         multiple="multiple"
                       >
-                                                <option>Mustard</option>
-                                                <option>Ketchup</option>
-                                                <option>Relish</option>
+                                                <option
+                          t-foreach="team.get('groups', [])"
+                          t-as="group"
+                          t-att-data-tokens="group.get('id', '')"
+                          t-esc="group.get('name', '')"
+                        />
                                             </select>
                                         </div>
                                     </div>
