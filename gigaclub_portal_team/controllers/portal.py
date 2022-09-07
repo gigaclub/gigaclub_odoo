@@ -209,6 +209,16 @@ class GigaClubPortalTeam(GigaClubPortal):
                     {
                         "id": group.id,
                         "name": group.name,
+                        "permission_count": len(
+                            group.permission_profile_ids.mapped(
+                                "permission_profile_entry_ids"
+                            )
+                        )
+                        + len(
+                            group.permission_profile_ids.mapped(
+                                "permission_profile_entry_template_ids"
+                            )
+                        ),
                     }
                     for group in team.possible_permission_group_ids
                 ],
