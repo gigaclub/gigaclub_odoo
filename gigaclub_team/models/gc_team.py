@@ -20,9 +20,43 @@ class GCTeam(models.Model):
 
     @api.model
     def create(self, vals):
-        res = super().create(vals)
-
-        return res
+        records = super().create(vals)
+        for rec in records:
+            user_group = self.env["gc.permission.group"].create(
+                {
+                    "name": "User",
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_template_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_profile_template_team_user"
+                                ).id
+                            },
+                        )
+                    ],
+                }
+            )
+            manager_group = self.env["gc.permission.group"].create(
+                {
+                    "name": "Manager",
+                    "parent_group_id": user_group.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_template_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_profile_template_team_manager"
+                                ).id
+                            },
+                        )
+                    ],
+                }
+            )
+            rec.possible_permission_group_ids = user_group | manager_group
+        return records
 
     @api.model
     def _check_access_gigaclub_team(self, player_uuid, team_id, permission):
