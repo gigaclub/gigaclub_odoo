@@ -205,7 +205,9 @@
                   >Add User</button>
                                     <t
                     t-call="gigaclub_portal_team.portal_my_team_form_user_modal"
-                  />
+                  >
+                                        <t t-set="type" t-value="'user'" />
+                                    </t>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 10px;">
@@ -243,7 +245,9 @@
                   >Add Group</button>
                                     <t
                     t-call="gigaclub_portal_team.portal_my_team_form_permission_group_modal"
-                  />
+                  >
+                                        <t t-set="type" t-value="'group'" />
+                                    </t>
                                 </div>
                             </div>
                         </t>
@@ -463,11 +467,11 @@
                         <input
               type="checkbox"
               class="form-check-input"
-              id="input-editteam"
+              t-attf-id="input-#{type}-editteam"
             />
                         <label
               class="form-check-label"
-              for="input-editteam"
+              t-attf-for="input-#{type}-editteam"
             >Edit Team</label>
                     </div>
                 </div>
@@ -476,11 +480,11 @@
                         <input
               type="checkbox"
               class="form-check-input"
-              id="input-inviteuser"
+              t-attf-id="input-#{type}-inviteuser"
             />
                         <label
               class="form-check-label"
-              for="input-inviteuser"
+              t-attf-for="input-#{type}-inviteuser"
             >Invite User</label>
                     </div>
                 </div>
@@ -489,11 +493,11 @@
                         <input
               type="checkbox"
               class="form-check-input"
-              id="input-kickuser"
+              t-attf-id="input-#{type}-kickuser"
             />
                         <label
               class="form-check-label"
-              for="input-kickuser"
+              t-attf-for="input-#{type}-kickuser"
             >Kick User</label>
                     </div>
                 </div>
@@ -504,11 +508,11 @@
                         <input
               type="checkbox"
               class="form-check-input"
-              id="input-createworldasteam"
+              t-attf-id="input-#{type}-createworldasteam"
             />
                         <label
               class="form-check-label"
-              for="input-createworldasteam"
+              t-attf-for="input-#{type}-createworldasteam"
             >Create World as Team</label>
                     </div>
                 </div>

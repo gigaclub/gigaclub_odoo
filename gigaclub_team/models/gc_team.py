@@ -94,26 +94,6 @@ class GCTeam(models.Model):
                 "name": name,
                 "description": description,
                 "owner_id": user.id,
-                "permission_connector_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "user_id": user.id,
-                            "permission_profile_ids": [
-                                (
-                                    0,
-                                    0,
-                                    {
-                                        "permission_profile_template_id": self.env.ref(
-                                            "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
-                                        ).id,
-                                    },
-                                )
-                            ],
-                        },
-                    )
-                ],
             }
         )
         if not team:
@@ -290,17 +270,6 @@ class GCTeam(models.Model):
         team.permission_connector_ids |= self.env["gc.permission.connector"].create(
             {
                 "user_id": user.id,
-                "permission_profile_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "permission_profile_template_id": self.env.ref(
-                                "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
-                            ).id,
-                        },
-                    )
-                ],
             }
         )
         return 0
