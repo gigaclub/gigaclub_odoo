@@ -223,12 +223,12 @@ class GigaClubPortalTeam(GigaClubPortal):
                     for group in team.possible_permission_group_ids
                 ],
             },
-            "users": {
-                user.id: user.display_name
+            "users": [
+                {"id": user.id, "name": user.display_name}
                 for user in request.env["gc.user"]
                 .search([])
                 .filtered(lambda x: x not in team_users)
-            },
+            ],
         }
         return self._get_page_view_values(
             request.env["gc.team"], None, values, "my_teams_history", False, **kwargs

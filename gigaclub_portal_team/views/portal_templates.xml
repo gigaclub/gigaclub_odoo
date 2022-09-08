@@ -292,9 +292,9 @@
                                                 <option data-tokens="" />
                                                 <option
                           t-foreach="users"
-                          t-as="user_id"
-                          t-att-data-tokens="user_id"
-                          t-esc="users.get(user_id, '')"
+                          t-as="user"
+                          t-att-value="user.get('id', '')"
+                          t-esc="user.get('name', '')"
                         />
                                             </select>
                                         </div>
@@ -314,7 +314,7 @@
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-att-data-tokens="group.get('id', '')"
+                          t-att-value="group.get('id', '')"
                           t-esc="group.get('name', '')"
                         />
                                             </select>
@@ -419,7 +419,7 @@
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-att-data-tokens="group.get('id', '')"
+                          t-att-value="group.get('id', '')"
                           t-esc="group.get('name', '')"
                         />
                                             </select>
@@ -442,7 +442,7 @@
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-att-data-tokens="group.get('id', '')"
+                          t-att-value="group.get('id', '')"
                           t-esc="group.get('name', '')"
                         />
                                             </select>
