@@ -264,7 +264,12 @@
         aria-hidden="true"
       >
                 <div class="modal-dialog modal-lg">
-                    <form>
+                    <form method="post">
+                        <input
+              type="hidden"
+              name="csrf_token"
+              t-att-value="request.csrf_token()"
+            />
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Add User</h5>
@@ -331,7 +336,8 @@
                   data-dismiss="modal"
                 >Discard</button>
                                 <button
-                  type="button"
+                  type="submit"
+                  role="button"
                   class="btn btn-primary"
                 >Save</button>
                             </div>
@@ -350,7 +356,12 @@
       >
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form>
+                        <form method="post">
+                            <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+              />
                             <div class="modal-header">
                                 <h5 class="modal-title">Create Permission Group</h5>
                                 <button
@@ -450,7 +461,8 @@
                   data-dismiss="modal"
                 >Discard</button>
                                 <button
-                  type="button"
+                  type="submit"
+                  role="button"
                   class="btn btn-primary"
                 >Save</button>
                             </div>
