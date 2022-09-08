@@ -293,8 +293,8 @@
                                                 <option
                           t-foreach="users"
                           t-as="user"
-                          t-att-value="user.get('id', '')"
-                          t-esc="user.get('name', '')"
+                          t-esc="user.get('id', '')"
+                          t-att-data-content="user.get('name', '')"
                         />
                                             </select>
                                         </div>
@@ -307,15 +307,15 @@
                                             <br />
                                             <select
                         id="select-groups"
-                        name="group"
+                        name="groups"
                         class="selectpicker"
                         multiple="multiple"
                       >
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-att-value="group.get('id', '')"
-                          t-esc="group.get('name', '')"
+                          t-esc="group.get('id', '')"
+                          t-att-data-content="group.get('name', '')"
                         />
                                             </select>
                                         </div>
@@ -419,8 +419,8 @@
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-att-value="group.get('id', '')"
-                          t-esc="group.get('name', '')"
+                          t-esc="group.get('id', '')"
+                          t-att-data-content="group.get('name', '')"
                         />
                                             </select>
                                         </div>
@@ -442,8 +442,8 @@
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-att-value="group.get('id', '')"
-                          t-esc="group.get('name', '')"
+                          t-esc="group.get('id', '')"
+                          t-att-data-content="group.get('name', '')"
                         />
                                             </select>
                                         </div>
