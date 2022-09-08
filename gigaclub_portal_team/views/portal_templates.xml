@@ -265,11 +265,6 @@
       >
                 <div class="modal-dialog modal-lg">
                     <form method="post">
-                        <input
-              type="hidden"
-              name="csrf_token"
-              t-att-value="request.csrf_token()"
-            />
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Add User</h5>
@@ -290,6 +285,7 @@
                                             <br />
                                             <select
                         id="select-user"
+                        name="user"
                         class="selectpicker"
                         data-live-search="true"
                       >
@@ -311,6 +307,7 @@
                                             <br />
                                             <select
                         id="select-groups"
+                        name="group"
                         class="selectpicker"
                         multiple="multiple"
                       >
@@ -357,11 +354,6 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form method="post">
-                            <input
-                type="hidden"
-                name="csrf_token"
-                t-att-value="request.csrf_token()"
-              />
                             <div class="modal-header">
                                 <h5 class="modal-title">Create Permission Group</h5>
                                 <button
@@ -380,6 +372,7 @@
                                             <label for="input-name">Name</label>
                                             <input
                         type="text"
+                        name="group-name"
                         class="form-control"
                         id="input-name"
                       />
@@ -394,6 +387,7 @@
                       >Description</label>
                                             <textarea
                         class="form-control"
+                        name="group-description"
                         id="textarea-description"
                       />
                                         </div>
@@ -418,6 +412,7 @@
                                             <br />
                                             <select
                         id="select-parentgroup"
+                        name="parentgroup"
                         class="selectpicker"
                       >
                                                 <option data-tokens="" />
@@ -440,6 +435,7 @@
                                             <br />
                                             <select
                         id="select-childgroups"
+                        name="childgroup"
                         class="selectpicker"
                         multiple="multiple"
                       >
@@ -479,6 +475,7 @@
                         <input
               type="checkbox"
               class="form-check-input"
+              name="editteam"
               t-attf-id="input-#{type}-editteam"
             />
                         <label
@@ -492,6 +489,7 @@
                         <input
               type="checkbox"
               class="form-check-input"
+              name="inviteuser"
               t-attf-id="input-#{type}-inviteuser"
             />
                         <label
@@ -509,6 +507,7 @@
             />
                         <label
               class="form-check-label"
+              name="kickuser"
               t-attf-for="input-#{type}-kickuser"
             >Kick User</label>
                     </div>
@@ -524,6 +523,7 @@
             />
                         <label
               class="form-check-label"
+              name="createworldasteam"
               t-attf-for="input-#{type}-createworldasteam"
             >Create World as Team</label>
                     </div>
