@@ -108,29 +108,32 @@ class GigaClubPortalTeam(GigaClubPortal):
         except (AccessError, MissingError):
             return request.redirect("/my")
 
-        request.httprequest.form
-
         values = self._team_get_page_edit_values(team_sudo, **kw)
         values.update({"error": {}, "error_message": [], "mode": "edit"})
         if kw and request.httprequest.method == "POST":
-            error, error_message = self.team_form_validate(kw)
-            values.update({"error": error, "error_message": error_message})
-            values["team"].update(
-                {
-                    "name": kw.get("name", False),
-                    "description": kw.get("description", False),
-                }
-            )
-            if not error and not error_message:
-                owner_id = request.env.user.partner_id.gc_user_id.id
-                create_vals = {
-                    "name": kw.get("name", False),
-                    "description": kw.get("description", False),
-                    "owner_id": owner_id,
-                }
-                values.update({"team": create_vals})
-                team_sudo.write(create_vals)
-                return request.redirect("/my/team/{}/view".format(team_sudo.id))
+            form = request.httprequest.form
+            if form.get("user", False):
+                pass
+            else:
+                error, error_message = self.team_form_validate(kw)
+                values.update({"error": error, "error_message": error_message})
+                values["team"].update(
+                    {
+                        "name": kw.get("name", False),
+                        "description": kw.get("description", False),
+                    }
+                )
+                if not error and not error_message:
+                    owner_id = request.env.user.partner_id.gc_user_id.id
+                    write_vals = {
+                        "name": kw.get("name", False),
+                        "description": kw.get("description", False),
+                        "owner_id": owner_id,
+                    }
+                    values.update({"team": write_vals})
+                    print(write_vals)
+                    team_sudo.write(write_vals)
+                    return request.redirect("/my/team/{}/view".format(team_sudo.id))
         return request.render("gigaclub_portal_team.portal_my_team_form", values)
 
     @route("/my/team/create", type="http", auth="user", website=True)
@@ -219,7 +222,7 @@ class GigaClubPortalTeam(GigaClubPortal):
                             user.permission_connector_ids.filtered(
                                 lambda x: x.team_id == team
                             ).mapped(
-                                "permission_profile_ids.permission_profile_entry_ids"
+                                "permission_profile_ids.permission_profile_entry_ids.permission_model_entry_id"
                             )
                         ),
                     }
@@ -247,7 +250,7 @@ class GigaClubPortalTeam(GigaClubPortal):
                 {"id": user.id, "name": user.display_name}
                 for user in request.env["gc.user"]
                 .search([])
-                .filtered(lambda x: x not in team_users)
+                .filtered(lambda x: x not in team_users and x != team.owner_id)
             ],
         }
         return self._get_page_view_values(
