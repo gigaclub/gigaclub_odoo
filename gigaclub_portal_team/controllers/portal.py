@@ -108,6 +108,8 @@ class GigaClubPortalTeam(GigaClubPortal):
         except (AccessError, MissingError):
             return request.redirect("/my")
 
+        request.httprequest.form
+
         values = self._team_get_page_edit_values(team_sudo, **kw)
         values.update({"error": {}, "error_message": [], "mode": "edit"})
         if kw and request.httprequest.method == "POST":
