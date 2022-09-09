@@ -189,9 +189,13 @@
                           t-foreach="team.get('users', [])"
                           t-as="user"
                         >
-                                                    <td t-esc="user.display_name" />
-                                                    <td t-esc="user.group_count" />
-                                                    <td t-esc="user.permission_count" />
+                                                    <td t-esc="user.get('name', '')" />
+                                                    <td
+                            t-esc="user.get('group_count', 0)"
+                          />
+                                                    <td
+                            t-esc="user.get('permission_count', 0)"
+                          />
                                                 </tr>
                                             </tbody>
                                         </table>

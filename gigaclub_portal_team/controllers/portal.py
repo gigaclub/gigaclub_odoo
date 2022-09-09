@@ -206,7 +206,25 @@ class GigaClubPortalTeam(GigaClubPortal):
                 "owner": team.owner_id.display_name,
                 "name": team.name,
                 "description": team.description,
-                "users": [{"id": user.id, "name": user.name} for user in team_users],
+                "users": [
+                    {
+                        "id": user.id,
+                        "name": user.display_name,
+                        "group_count": len(
+                            user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            ).mapped("permission_group_ids")
+                        ),
+                        "permission_count": len(
+                            user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            ).mapped(
+                                "permission_profile_ids.permission_profile_entry_ids"
+                            )
+                        ),
+                    }
+                    for user in team_users
+                ],
                 "groups": [
                     {
                         "id": group.id,
