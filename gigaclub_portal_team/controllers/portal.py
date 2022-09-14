@@ -32,7 +32,7 @@ class GigaClubPortalTeam(GigaClubPortal):
         auth="user",
         website=True,
     )
-    def portal_my_projects(
+    def portal_my_teams(
         self, page=1, date_begin=None, date_end=None, sortby=None, **kw
     ):
         values = self._prepare_portal_layout_values()
@@ -115,23 +115,24 @@ class GigaClubPortalTeam(GigaClubPortal):
             if form.get("user", False):
                 pass
             else:
-                error, error_message = self.team_form_validate(kw)
+                if kw.get("name", "") == team_sudo.name:
+                    del kw["name"]
+                error, error_message = self.team_form_validate(kw, team_sudo)
                 values.update({"error": error, "error_message": error_message})
                 values["team"].update(
                     {
-                        "name": kw.get("name", False),
-                        "description": kw.get("description", False),
+                        "name": kw.get("name", team_sudo.name),
+                        "description": kw.get("description", team_sudo.description),
                     }
                 )
                 if not error and not error_message:
                     owner_id = request.env.user.partner_id.gc_user_id.id
                     write_vals = {
-                        "name": kw.get("name", False),
-                        "description": kw.get("description", False),
+                        "name": kw.get("name", team_sudo.name),
+                        "description": kw.get("description", team_sudo.description),
                         "owner_id": owner_id,
                     }
                     values.update({"team": write_vals})
-                    print(write_vals)
                     team_sudo.write(write_vals)
                     return request.redirect("/my/team/{}/view".format(team_sudo.id))
         return request.render("gigaclub_portal_team.portal_my_team_form", values)
@@ -161,13 +162,13 @@ class GigaClubPortalTeam(GigaClubPortal):
                 return request.redirect("/my/team/{}/view".format(team.id))
         return request.render("gigaclub_portal_team.portal_my_team_form", values)
 
-    def team_form_validate(self, values):
+    def team_form_validate(self, values, team):
         error = dict()
         error_message = []
-
-        for field_name in self._MANDATORY_TEAM_FIELDS:
-            if not values.get(field_name):
-                error[field_name] = "missing"
+        if not team:
+            for field_name in self._MANDATORY_TEAM_FIELDS:
+                if not values.get(field_name):
+                    error[field_name] = "missing"
 
         if values.get("name"):
             if request.env["gc.team"].search([("name", "=ilike", values.get("name"))]):
@@ -222,7 +223,8 @@ class GigaClubPortalTeam(GigaClubPortal):
                             user.permission_connector_ids.filtered(
                                 lambda x: x.team_id == team
                             ).mapped(
-                                "permission_profile_ids.permission_profile_entry_ids.permission_model_entry_id"
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
                             )
                         ),
                     }
