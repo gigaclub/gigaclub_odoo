@@ -207,11 +207,6 @@
                     data-toggle="modal"
                     data-target=".user-modal-lg"
                   >Add User</button>
-                                    <t
-                    t-call="gigaclub_portal_team.portal_my_team_form_user_modal"
-                  >
-                                        <t t-set="type" t-value="'user'" />
-                                    </t>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 10px;">
@@ -247,16 +242,19 @@
                     data-toggle="modal"
                     data-target=".group-modal-lg"
                   >Add Group</button>
-                                    <t
-                    t-call="gigaclub_portal_team.portal_my_team_form_permission_group_modal"
-                  >
-                                        <t t-set="type" t-value="'group'" />
-                                    </t>
                                 </div>
                             </div>
                         </t>
                     </t>
                 </form>
+                <t t-call="gigaclub_portal_team.portal_my_team_form_user_modal">
+                    <t t-set="type" t-value="'user'" />
+                </t>
+                <t
+          t-call="gigaclub_portal_team.portal_my_team_form_permission_group_modal"
+        >
+                    <t t-set="type" t-value="'group'" />
+                </t>
             </t>
         </template>
 
@@ -270,6 +268,11 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form method="post">
+                            <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+              />
                             <div class="modal-header">
                                 <h5 class="modal-title">Add User</h5>
                                 <button
@@ -358,6 +361,11 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form method="post">
+                            <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+              />
                             <div class="modal-header">
                                 <h5 class="modal-title">Create Permission Group</h5>
                                 <button

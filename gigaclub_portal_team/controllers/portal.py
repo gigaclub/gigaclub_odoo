@@ -1,5 +1,6 @@
 from odoo import _
 from odoo.exceptions import AccessError, MissingError
+from odoo.fields import first
 from odoo.http import request, route
 
 from odoo.addons.gigaclub_portal.controllers.portal import GigaClubPortal
@@ -113,15 +114,32 @@ class GigaClubPortalTeam(GigaClubPortal):
         if kw and request.httprequest.method == "POST":
             form = request.httprequest.form
             if form.get("user", False):
+                return_redirect = request.redirect(
+                    "/my/team/{}/edit".format(team_sudo.id)
+                )
                 form_values = {
-                    "user": form.get("user", False),
+                    "user": form.get("user", ""),
                     "groups": form.getlist("groups"),
                     "edit_team": form.get("editteam", False),
                     "invite_user": form.get("inviteuser", False),
                     "kick_user": form.get("kickuser", False),
                     "create_world_as_team": form.get("createworldasteam", False),
                 }
-                print(form_values)
+                if not form_values.get("user", "").isnumeric():
+                    return return_redirect
+                user = request.env["gc.user"].browse(int(form_values.get("user", "")))
+                if not user:
+                    return return_redirect
+                self._team_user_set_groups(team_sudo, user, form.getlist("groups"))
+                self._team_user_set_permissions(
+                    team_sudo,
+                    user,
+                    form_values.get("edit_team", False),
+                    form_values.get("invite_user", False),
+                    form_values.get("kick_user", False),
+                    form_values.get("create_world_as_team", False),
+                )
+                return return_redirect
             elif form.get("group-name", False):
                 form_values = {
                     "name": form.get("group-name", False),
@@ -133,7 +151,6 @@ class GigaClubPortalTeam(GigaClubPortal):
                     "parent_group": form.get("parentgroup", False),
                     "child_groups": form.getlist("childgroups"),
                 }
-                print(form_values)
             else:
                 form_values = {
                     "name": form.get("name", ""),
@@ -212,6 +229,69 @@ class GigaClubPortalTeam(GigaClubPortal):
             error_message.append(_("Some required fields are empty."))
 
         return error, error_message
+
+    def _team_user_set_groups(self, team, user, groups):
+        existing_permission_connector = first(
+            team.permission_connector_ids.filtered(lambda x: x.user_id == user)
+        )
+        if not existing_permission_connector:
+            existing_permission_connector = request.env[
+                "gc.permission.connector"
+            ].create({"team_id": team.id, "user_id": user.id})
+        group_ids = []
+        for group in groups:
+            if group.isnumeric():
+                group_ids.append(int(group))
+        existing_permission_connector.permission_group_ids = [(6, 0, group_ids)]
+
+    def _team_user_set_permissions(
+        self, team, user, edit_team, invite_user, kick_user, create_world_as_team
+    ):
+        existing_permission_connector = first(
+            team.permission_connector_ids.filtered(lambda x: x.user_id == user)
+        )
+        if not existing_permission_connector:
+            existing_permission_connector = request.env[
+                "gc.permission.connector"
+            ].create({"team_id": team.id, "user_id": user.id})
+        permissions = request.env["gc.permission.model.entry"]
+        existing_permissions = existing_permission_connector.permission_group_ids.mapped(
+            "permission_profile_ids.permission_profile_entry_template_ids.permission_model_entry_id"  # noqa: B950
+        )
+        edit_team_permission = request.env.ref(
+            "gigaclub_team.gc_permission_model_entry_gc_team_edit_team"
+        )
+        if edit_team and edit_team_permission not in existing_permissions:
+            permissions |= edit_team_permission
+        invite_user_permission = request.env.ref(
+            "gigaclub_team.gc_permission_model_entry_gc_team_invite_member"
+        )
+        if invite_user and invite_user_permission not in existing_permissions:
+            permissions |= invite_user_permission
+        kick_user_permission = request.env.ref(
+            "gigaclub_team.gc_permission_model_entry_gc_team_kick_member"
+        )
+        if kick_user and kick_user_permission not in existing_permissions:
+            permissions |= kick_user_permission
+        create_world_as_team_permission = request.env.ref(
+            "gigaclub_builder_system.gc_permission_model_entry_gc_team_create_world_as_team"
+        )
+        if (
+            create_world_as_team
+            and create_world_as_team_permission not in existing_permissions
+        ):
+            permissions |= create_world_as_team_permission
+        new_permission_profile = request.env["gc.permission.profile"].create(
+            {
+                "permission_profile_entry_ids": [
+                    (0, 0, {"permission_model_entry_id": permission.id})
+                    for permission in permissions
+                ]
+            }
+        )
+        existing_permission_connector.permission_profile_ids = [
+            (6, 0, new_permission_profile.ids)
+        ]
 
     def _team_get_page_view_values(self, team, access_token=None, **kwargs):
         values = {
