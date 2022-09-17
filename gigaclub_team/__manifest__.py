@@ -13,6 +13,7 @@
         "data/gc_permission_model_entry_data.xml",
         "data/gc_permission_profile_data.xml",
         "data/gc_permission_profile_entry_data.xml",
+        "data/gc_permission_profile_entry_template_data.xml",
         "data/gc_permission_profile_template_data.xml",
         "security/ir.model.access.csv",
         "views/gc_permission_connector_views.xml",

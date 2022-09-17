@@ -12,10 +12,51 @@ class GCTeam(models.Model):
     permission_connector_ids = fields.One2many(
         comodel_name="gc.permission.connector", inverse_name="team_id"
     )
+    possible_permission_group_ids = fields.Many2many(comodel_name="gc.permission.group")
 
     owner_id = fields.Many2one(comodel_name="gc.user", required=True)
 
     _sql_constraints = [("name_unique", "UNIQUE(name)", "name must be unique!")]
+
+    @api.model
+    def create(self, vals):
+        records = super().create(vals)
+        for rec in records:
+            user_group = self.env["gc.permission.group"].create(
+                {
+                    "name": "User",
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_template_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_profile_template_team_user"
+                                ).id
+                            },
+                        )
+                    ],
+                }
+            )
+            manager_group = self.env["gc.permission.group"].create(
+                {
+                    "name": "Manager",
+                    "parent_group_id": user_group.id,
+                    "permission_profile_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "permission_profile_template_id": self.env.ref(
+                                    "gigaclub_team.gc_permission_profile_template_team_manager"
+                                ).id
+                            },
+                        )
+                    ],
+                }
+            )
+            rec.possible_permission_group_ids = user_group | manager_group
+        return records
 
     @api.model
     def _check_access_gigaclub_team(self, player_uuid, team_id, permission):
@@ -53,26 +94,6 @@ class GCTeam(models.Model):
                 "name": name,
                 "description": description,
                 "owner_id": user.id,
-                "permission_connector_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "user_id": user.id,
-                            "permission_profile_ids": [
-                                (
-                                    0,
-                                    0,
-                                    {
-                                        "permission_profile_template_id": self.env.ref(
-                                            "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
-                                        ).id,
-                                    },
-                                )
-                            ],
-                        },
-                    )
-                ],
             }
         )
         if not team:
@@ -249,17 +270,6 @@ class GCTeam(models.Model):
         team.permission_connector_ids |= self.env["gc.permission.connector"].create(
             {
                 "user_id": user.id,
-                "permission_profile_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "permission_profile_template_id": self.env.ref(
-                                "gigaclub_team.gc_permission_profile_template_team_default"  # noqa: B950
-                            ).id,
-                        },
-                    )
-                ],
             }
         )
         return 0

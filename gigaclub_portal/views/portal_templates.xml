@@ -150,7 +150,9 @@
       id="portal_my_home_inherit_gigaclub_portal"
       inherit_id="project.portal_my_home"
     >
-            <xpath expr="//div[hasclass('o_portal_docs')]" position="replace" />
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="replace">
+                <div class="o_portal_docs list-group" />
+            </xpath>
         </template>
         <!-- end grepper -->
 

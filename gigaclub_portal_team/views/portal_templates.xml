@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template
+      id="portal_breadcrumbs_inherit_gigaclub_portal_team"
+      inherit_id="portal.portal_breadcrumbs"
+      priority="40"
+    >
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li
+          t-if="page_name == 'team' or team"
+          class="col-lg-2"
+          t-attf-class="breadcrumb-item #{'active ' if not project else ''}"
+        >
+                    <a t-if="team" t-attf-href="/my/teams?{{ keep_query() }}">Teams</a>
+                    <t t-else="">Teams</t>
+                </li>
+                <li
+          t-if="mode == 'create' and team and isinstance(team, dict)"
+          class="breadcrumb-item active"
+        >
+                    Create
+                </li>
+                <li t-elif="team" class="breadcrumb-item active">
+                    <t t-if="isinstance(team, dict)">
+                        <t t-esc="team.get('name', '')" />
+                    </t>
+                    <t t-else="">
+                        <t t-esc="team.name" />
+                    </t>
+                </li>
+                <li
+          t-if="mode == 'edit' and team and isinstance(team, dict)"
+          class="breadcrumb-item active"
+        >
+                    Edit
+                </li>
+            </xpath>
+        </template>
+
+        <template
+      id="portal_my_home_inherit_gigaclub_portal_team"
+      inherit_id="gigaclub_portal.portal_my_home_inherit_gigaclub_portal"
+    >
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Teams</t>
+                    <t t-set="url" t-value="'/my/teams'" />
+                    <t t-set="placeholder_count" t-value="'team_count'" />
+                </t>
+            </xpath>
+        </template>
+
+        <template id="portal_my_teams">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True" />
+
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Teams</t>
+                </t>
+
+                <a
+          class="btn btn-primary"
+          t-attf-href="/my/team/create?{{ keep_query() }}"
+          role="button"
+          style="margin-bottom: 0.5rem;"
+        >Create</a>
+
+                <t t-if="not teams">
+                    <div class="alert alert-warning mt8" role="alert">
+                        There are no teams.
+                    </div>
+                </t>
+                <t t-if="teams" t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Name</th>
+                            <th>Owner</th>
+                            <th>User Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="teams" t-as="team">
+                            <td>
+                                <a
+                  t-attf-href="/my/team/#{team.id}/view?{{ keep_query() }}"
+                ><span t-field="team.name" /></a>
+                            </td>
+                            <td>
+                                <span t-field="team.owner_id" />
+                            </td>
+                            <td>
+                                <span
+                  t-esc="len(team.permission_connector_ids.mapped('user_id'))"
+                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </t>
+            </t>
+        </template>
+
+        <template id="portal_my_team_form">
+            <t t-call="portal.portal_layout">
+                <form method="post">
+                    <input
+            type="hidden"
+            name="csrf_token"
+            t-att-value="request.csrf_token()"
+          />
+                    <input
+            type="submit"
+            class="btn btn-primary"
+            role="button"
+            style="margin: 0.5rem 0;"
+            value="Save"
+          />
+                    <a
+            class="btn btn-secondary"
+            t-attf-href="/my/teams?{{ keep_query() }}"
+            role="button"
+            style="margin: 0.5rem 0;"
+          >Discard</a>
+                    <div t-if="error_message" class="alert alert-danger" role="alert">
+                        <t t-foreach="error_message" t-as="err">
+                            <t t-esc="err" /><br />
+                        </t>
+                    </div>
+                    <t t-call="portal.portal_record_layout">
+                        <t t-set="card_header">
+                            <div
+                t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''}"
+              >
+                                <input
+                  type="text"
+                  name="name"
+                  t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}"
+                  placeholder="Enter Name"
+                  t-att-value="team.get('name', '')"
+                  required="required"
+                />
+                            </div>
+                        </t>
+                        <t t-set="card_body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                    <div class="form-group">
+                                        <label
+                      for="input-description"
+                    >Description</label>
+                                        <textarea
+                      class="form-control"
+                      name="description"
+                      id="input-description"
+                      t-esc="team.get('description', '')"
+                    />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                    <div class="form-group">
+                                        <label for="input-owner">Owner</label>
+                                        <input
+                      type="text"
+                      class="form-control readonly"
+                      id="input-owner"
+                      t-att-value="team.get('owner', '')"
+                      readonly="1"
+                    />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Users</label>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Group Count</th>
+                                                    <th
+                            scope="col"
+                          >Permission Count</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                          t-foreach="team.get('users', [])"
+                          t-as="user"
+                        >
+                                                    <td t-esc="user.get('name', '')" />
+                                                    <td
+                            t-esc="user.get('group_count', 0)"
+                          />
+                                                    <td
+                            t-esc="user.get('permission_count', 0)"
+                          />
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button
+                    t-if="mode == 'edit'"
+                    class="btn btn-sm btn-primary"
+                    type="button"
+                    data-toggle="modal"
+                    data-target=".user-modal-lg"
+                  >Add User</button>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col">
+                                    <label>Permission Groups</label>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th
+                            scope="col"
+                          >Permission Count</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                          t-foreach="team.get('groups', [])"
+                          t-as="group"
+                        >
+                                                    <td t-esc="group.get('name', '')" />
+                                                    <td
+                            t-esc="group.get('permission_count', 0)"
+                          />
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button
+                    t-if="mode == 'edit'"
+                    class="btn btn-sm btn-primary"
+                    type="button"
+                    data-toggle="modal"
+                    data-target=".group-modal-lg"
+                  >Add Group</button>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </form>
+                <t t-call="gigaclub_portal_team.portal_my_team_form_user_modal">
+                    <t t-set="type" t-value="'user'" />
+                </t>
+                <t
+          t-call="gigaclub_portal_team.portal_my_team_form_permission_group_modal"
+        >
+                    <t t-set="type" t-value="'group'" />
+                </t>
+            </t>
+        </template>
+
+        <template id="portal_my_team_form_user_modal">
+            <div
+        class="modal fade user-modal-lg"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post">
+                            <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+              />
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add User</h5>
+                                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                                    <span>&amp;times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="select-user">User</label>
+                                            <br />
+                                            <select
+                        id="select-user"
+                        name="user"
+                        class="selectpicker"
+                        data-live-search="true"
+                      >
+                                                <option data-tokens="" />
+                                                <option
+                          t-foreach="users"
+                          t-as="user"
+                          t-esc="user.get('id', '')"
+                          t-att-data-content="user.get('name', '')"
+                        />
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="select-groups">Groups</label>
+                                            <br />
+                                            <select
+                        id="select-groups"
+                        name="groups"
+                        class="selectpicker"
+                        multiple="multiple"
+                      >
+                                                <option
+                          t-foreach="team.get('groups', [])"
+                          t-as="group"
+                          t-esc="group.get('id', '')"
+                          t-att-data-content="group.get('name', '')"
+                        />
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label>Permissions</label>
+                                <t
+                  t-call="gigaclub_portal_team.portal_my_team_form_permissions"
+                />
+                            </div>
+                            <div class="modal-footer">
+                                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >Discard</button>
+                                <button
+                  type="submit"
+                  role="button"
+                  class="btn btn-primary"
+                >Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="portal_my_team_form_permission_group_modal">
+            <div
+        class="modal fade group-modal-lg"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post">
+                            <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+              />
+                            <div class="modal-header">
+                                <h5 class="modal-title">Create Permission Group</h5>
+                                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                                    <span>&amp;times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="input-name">Name</label>
+                                            <input
+                        type="text"
+                        name="group-name"
+                        class="form-control"
+                        id="input-name"
+                      />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label
+                        for="textarea-description"
+                      >Description</label>
+                                            <textarea
+                        class="form-control"
+                        name="group-description"
+                        id="textarea-description"
+                      />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Permissions</label>
+                                            <t
+                        t-call="gigaclub_portal_team.portal_my_team_form_permissions"
+                      />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label
+                        for="select-parentgroup"
+                      >Parent Group</label>
+                                            <br />
+                                            <select
+                        id="select-parentgroup"
+                        name="parentgroup"
+                        class="selectpicker"
+                      >
+                                                <option data-tokens="" />
+                                                <option
+                          t-foreach="team.get('groups', [])"
+                          t-as="group"
+                          t-esc="group.get('id', '')"
+                          t-att-data-content="group.get('name', '')"
+                        />
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label
+                        for="select-childgroups"
+                      >Child Groups</label>
+                                            <br />
+                                            <select
+                        id="select-childgroups"
+                        name="childgroups"
+                        class="selectpicker"
+                        multiple="multiple"
+                      >
+                                                <option
+                          t-foreach="team.get('groups', [])"
+                          t-as="group"
+                          t-esc="group.get('id', '')"
+                          t-att-data-content="group.get('name', '')"
+                        />
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >Discard</button>
+                                <button
+                  type="submit"
+                  role="button"
+                  class="btn btn-primary"
+                >Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="portal_my_team_form_permissions">
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              name="editteam"
+              t-attf-id="input-#{type}-editteam"
+            />
+                        <label
+              class="form-check-label"
+              t-attf-for="input-#{type}-editteam"
+            >Edit Team</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              name="inviteuser"
+              t-attf-id="input-#{type}-inviteuser"
+            />
+                        <label
+              class="form-check-label"
+              t-attf-for="input-#{type}-inviteuser"
+            >Invite User</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              name="kickuser"
+              t-attf-id="input-#{type}-kickuser"
+            />
+                        <label
+              class="form-check-label"
+              t-attf-for="input-#{type}-kickuser"
+            >Kick User</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              name="createworldasteam"
+              t-attf-id="input-#{type}-createworldasteam"
+            />
+                        <label
+              class="form-check-label"
+              t-attf-for="input-#{type}-createworldasteam"
+            >Create World as Team</label>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="portal_my_team_view">
+            <t t-call="portal.portal_layout">
+                <a
+          class="btn btn-primary"
+          t-attf-href="/my/team/{{ team.id }}/edit?{{ keep_query() }}"
+          role="button"
+          style="margin: 0.5rem 0;"
+        >Edit</a>
+                <t t-call="portal.portal_record_layout">
+                    <t t-set="card_header">
+                        <h5 class="mb-0">
+                            <span t-field="team.name" class="text-truncate" />
+                        </h5>
+                    </t>
+                    <t t-set="card_body">
+                        <div class="row">
+                            <div
+                t-if="team.description"
+                class="col-12 col-md-6 mb-2 mb-md-0"
+              >
+                                <h6><strong>Description</strong></h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <span t-field="team.description" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                t-if="team.owner_id"
+                class="col-12 col-md-6 mb-2 mb-md-0"
+              >
+                                <h6><strong>Owner</strong></h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <span t-field="team.owner_id" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <t
+                t-set="users"
+                t-value="team.permission_connector_ids.mapped('user_id')"
+              />
+                            <div t-if="users" class="col-12 mb-2 mb-md-0">
+                                <h6><strong>Users</strong></h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <t t-foreach="users" t-as="user">
+                                            <p t-field="user.display_name" />
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
