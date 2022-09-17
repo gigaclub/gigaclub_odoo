@@ -24,7 +24,10 @@ class GCTranslationEntry(models.Model):
             values = rec.translation_ids.mapped("values")
             widgets = {"params": [], "list": []}
             for value in values:
-                value = safe_eval(value)
+                try:
+                    value = safe_eval(value)
+                except Exception:
+                    value = {}
                 if "params" in value and value["params"]:
                     widgets["params"].extend(list(value["params"].keys()))
                 if "list" in value and value["list"]:
