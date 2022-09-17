@@ -113,7 +113,27 @@ class GigaClubPortalTeam(GigaClubPortal):
         if kw and request.httprequest.method == "POST":
             form = request.httprequest.form
             if form.get("user", False):
-                print(kw)
+                form_values = {
+                    "user": form.get("user", False),
+                    "groups": form.getlist("groups"),
+                    "edit_team": form.get("editteam", False),
+                    "invite_user": form.get("inviteuser", False),
+                    "kick_user": form.get("kickuser", False),
+                    "create_world_as_team": form.get("createworldasteam", False),
+                }
+                print(form_values)
+            elif form.get("group-name", False):
+                form_values = {
+                    "name": form.get("group-name", False),
+                    "description": form.get("group-description", False),
+                    "edit_team": form.get("editteam", False),
+                    "invite_user": form.get("inviteuser", False),
+                    "kick_user": form.get("kickuser", False),
+                    "create_world_as_team": form.get("createworldasteam", False),
+                    "parent_group": form.get("parentgroup", False),
+                    "child_groups": form.getlist("childgroups"),
+                }
+                print(form_values)
             else:
                 form_values = {
                     "name": form.get("name", ""),

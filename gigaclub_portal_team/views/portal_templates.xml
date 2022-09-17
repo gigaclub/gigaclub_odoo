@@ -268,8 +268,8 @@
         aria-hidden="true"
       >
                 <div class="modal-dialog modal-lg">
-                    <form method="post">
-                        <div class="modal-content">
+                    <div class="modal-content">
+                        <form method="post">
                             <div class="modal-header">
                                 <h5 class="modal-title">Add User</h5>
                                 <button
@@ -342,8 +342,8 @@
                   class="btn btn-primary"
                 >Save</button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </template>
@@ -439,7 +439,7 @@
                                             <br />
                                             <select
                         id="select-childgroups"
-                        name="childgroup"
+                        name="childgroups"
                         class="selectpicker"
                         multiple="multiple"
                       >
