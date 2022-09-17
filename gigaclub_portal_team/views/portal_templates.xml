@@ -153,7 +153,7 @@
                       class="form-control"
                       name="description"
                       id="input-description"
-                      t-att-value="team.get('description', '')"
+                      t-esc="team.get('description', '')"
                     />
                                     </div>
                                 </div>
@@ -507,11 +507,11 @@
                         <input
               type="checkbox"
               class="form-check-input"
+              name="kickuser"
               t-attf-id="input-#{type}-kickuser"
             />
                         <label
               class="form-check-label"
-              name="kickuser"
               t-attf-for="input-#{type}-kickuser"
             >Kick User</label>
                     </div>
@@ -523,11 +523,11 @@
                         <input
               type="checkbox"
               class="form-check-input"
+              name="createworldasteam"
               t-attf-id="input-#{type}-createworldasteam"
             />
                         <label
               class="form-check-label"
-              name="createworldasteam"
               t-attf-for="input-#{type}-createworldasteam"
             >Create World as Team</label>
                     </div>
