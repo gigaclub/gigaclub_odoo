@@ -10,6 +10,8 @@
                     <field name="prefix" />
                     <field name="name" />
                     <field name="suffix" />
+                    <field name="display" />
+                    <field name="color" />
                     <field name="description" />
                     <field name="permission_profile_ids" widget="many2many_tags" />
                     <field name="global_group" />
@@ -29,6 +31,8 @@
                         <field name="prefix" />
                         <field name="name" />
                         <field name="suffix" />
+                        <field name="display" />
+                        <field name="color" />
                         <field name="description" />
                         <field name="permission_profile_ids" />
                         <field name="global_group" />

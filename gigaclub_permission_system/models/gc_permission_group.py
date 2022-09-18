@@ -8,6 +8,8 @@ class GCPermissionGroup(models.Model):
     prefix = fields.Char()
     name = fields.Char()
     suffix = fields.Char()
+    display = fields.Char()
+    color = fields.Char()
     description = fields.Text()
     permission_profile_ids = fields.One2many(
         comodel_name="gc.permission.profile", inverse_name="permission_group_id"
@@ -63,6 +65,8 @@ class GCPermissionGroup(models.Model):
                 "prefix": x.prefix or "",
                 "name": x.name or "",
                 "suffix": x.suffix or "",
+                "display": x.display or "",
+                "color": x.color or "",
                 "description": x.description or "",
                 "permissions": x.computed_permission_profile_ids.mapped(
                     "permission_profile_entry_ids.permission_model_entry_id.name"
