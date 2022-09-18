@@ -60,10 +60,10 @@ class GCPermissionGroup(models.Model):
         return [
             {
                 "id": x.id,
-                "prefix": x.prefix,
-                "name": x.name,
-                "suffix": x.suffix,
-                "description": x.description,
+                "prefix": x.prefix or "",
+                "name": x.name or "",
+                "suffix": x.suffix or "",
+                "description": x.description or "",
                 "permissions": x.computed_permission_profile_ids.mapped(
                     "permission_profile_entry_ids.permission_model_entry_id.name"
                 ),

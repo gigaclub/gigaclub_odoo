@@ -348,6 +348,30 @@ class GigaClubPortalTeam(GigaClubPortal):
                                 "permission_profile_entry_ids.permission_model_entry_id"
                             )
                         ),
+                        "edit_team": bool(user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            ).mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_edit_team"))),
+                        "invite_user": bool(user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            ).mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_invite_member"))),
+                        "kick_user": bool(user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            ).mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_kick_member"))),
+                        "create_world_as_team": bool(user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            ).mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(lambda x: x == request.env.ref("gigaclub_builder_system.gc_permission_model_entry_gc_team_create_world_as_team"))),
                     }
                     for user in team_users
                 ],
