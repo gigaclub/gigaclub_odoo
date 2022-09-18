@@ -189,7 +189,11 @@
                           t-foreach="team.get('users', [])"
                           t-as="user"
                         >
-                                                    <td t-esc="user.get('name', '')" />
+                                                    <td><a
+                              href="#"
+                              data-toggle="modal"
+                              data-target=".user-modal-lg"
+                            ><t t-esc="user.get('name', '')" /></a></td>
                                                     <td
                             t-esc="user.get('group_count', 0)"
                           />
@@ -227,7 +231,11 @@
                           t-foreach="team.get('groups', [])"
                           t-as="group"
                         >
-                                                    <td t-esc="group.get('name', '')" />
+                                                    <td><a
+                              href="#"
+                              data-toggle="modal"
+                              data-target=".user-modal-lg"
+                            ><t t-esc="group.get('name', '')" /></a></td>
                                                     <td
                             t-esc="group.get('permission_count', 0)"
                           />
