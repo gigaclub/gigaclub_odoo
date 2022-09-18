@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="github_team_search_view_inherit_gigaclub_github" model="ir.ui.view">
+            <field name="name">github.team.search.inherit.gigaclub_github</field>
+            <field name="model">github.team</field>
+            <field name="inherit_id" ref="github_connector.view_github_team_search" />
+            <field name="arch" type="xml">
+                <field name="partner_ids" position="replace">
+                    <field name="user_ids" />
+                </field>
+            </field>
+        </record>
+
+        <record id="github_team_tree_view_inherit_gigaclub_github" model="ir.ui.view">
+            <field name="name">github.team.tree.inherit.gigaclub_github</field>
+            <field name="model">github.team</field>
+            <field name="inherit_id" ref="github_connector.view_github_team_tree" />
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="decoration-muted">user_qty == 0</attribute>
+                </tree>
+                <field name="partner_qty" postion="replace">
+                    <field name="user_qty" />
+                </field>
+            </field>
+        </record>
+
+        <record id="github_team_form_view_inherit_gigaclub_github" model="ir.ui.view">
+            <field name="name">github.team.form.inherit.gigaclub_github</field>
+            <field name="model">github.team</field>
+            <field name="inherit_id" ref="github_connector.view_github_team_form" />
+            <field name="arch" type="xml">
+                <button name="action_github_team_partner_from_team" position="replace">
+                    <button
+            type="object"
+            name="action_github_team_user_from_team"
+            class="oe_stat_button"
+            icon="fa-user"
+            attrs="{'invisible': [('user_qty', '=', False)]}"
+          >
+                        <field name="user_qty" string="Members" widget="statinfo" />
+                    </button>
+                </button>
+            </field>
+        </record>
+
+    </data>
+</odoo>

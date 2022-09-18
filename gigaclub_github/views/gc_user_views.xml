@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="gc_user_tree_view_inherit_gigaclub_github" model="ir.ui.view">
+            <field name="name">gc.user.tree.view.inherit.gigaclub_github</field>
+            <field name="model">gc.user</field>
+            <field name="inherit_id" ref="gigaclub_base.gc_user_tree_view" />
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="github_name" />
+                    <field name="github_team_qty" />
+                </field>
+            </field>
+        </record>
+
+        <record id="gc_user_form_view_inherit_gigaclub_github" model="ir.ui.view">
+            <field name="name">gc.user.form.view.inherit.gigaclub_github</field>
+            <field name="model">gc.user</field>
+            <field name="inherit_id" ref="gigaclub_base.gc_user_form_view" />
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button
+            type="object"
+            name="action_github_organization"
+            class="oe_stat_button"
+            icon="fa-institution"
+            attrs="{'invisible': [('github_name', '=', False)]}"
+          >
+                        <field
+              name="organization_qty"
+              string="Organizations"
+              widget="statinfo"
+            />
+                    </button>
+                    <button
+            type="object"
+            name="action_github_team_partner_from_partner"
+            class="oe_stat_button"
+            icon="fa-users"
+            attrs="{'invisible': [('github_name', '=', False)]}"
+          >
+                        <field
+              name="github_team_qty"
+              string="Teams"
+              widget="statinfo"
+            />
+                    </button>
+                </div>
+                <field name="state" position="after">
+                    <field name="github_url" widget="url" colspan="4" />
+                    <field name="github_id_external" />
+                    <field name="github_name" />
+                    <field name="github_create_date" />
+                    <field name="github_write_date" />
+                    <field name="github_last_sync_date" />
+                    <button
+            name="button_update_from_github_light"
+            type="object"
+            string="Light Sync"
+            class="btn btn-default"
+            icon="fa-angle-right"
+            groups="github_connector.group_github_connector_manager"
+          />
+                    <button
+            name="button_update_from_github_full"
+            type="object"
+            string="Full Sync"
+            class="btn btn-default"
+            icon="fa-angle-double-right"
+            groups="github_connector.group_github_connector_manager"
+          />
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>
