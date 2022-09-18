@@ -151,7 +151,7 @@ class GigaClubPortalTeam(GigaClubPortal):
                     "parent_group": form.get("parentgroup", False),
                     "child_groups": form.getlist("childgroups"),
                 }
-            else:
+            elif form.get("name", False):
                 form_values = {
                     "name": form.get("name", ""),
                     "description": form.get("description", ""),
