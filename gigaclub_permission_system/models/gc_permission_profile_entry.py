@@ -8,6 +8,9 @@ class GCPermissionProfileEntry(models.Model):
     }
     _description = "GigaClub Permission Profile Entry"
 
+    permission_model_entry_id = fields.Many2one(
+        comodel_name="gc.permission.model.entry"
+    )
     permission_profile_id = fields.Many2one(
         comodel_name="gc.permission.profile", required=True, index=True
     )

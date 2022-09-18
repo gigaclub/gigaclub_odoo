@@ -332,6 +332,14 @@ class GigaClubPortalTeam(GigaClubPortal):
                                 lambda x: x.team_id == team
                             ).mapped("permission_group_ids")
                         ),
+                        "groups": [
+                            {
+                                "id": group.id,
+                                "name": group.name,
+                            } for group in user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            ).mapped("permission_group_ids")
+                        ],
                         "permission_count": len(
                             user.permission_connector_ids.filtered(
                                 lambda x: x.team_id == team
