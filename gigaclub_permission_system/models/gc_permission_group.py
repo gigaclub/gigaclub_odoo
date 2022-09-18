@@ -5,7 +5,9 @@ class GCPermissionGroup(models.Model):
     _name = "gc.permission.group"
     _description = "GigaClub Permission Group"
 
+    prefix = fields.Char()
     name = fields.Char()
+    suffix = fields.Char()
     description = fields.Text()
     permission_profile_ids = fields.One2many(
         comodel_name="gc.permission.profile", inverse_name="permission_group_id"
@@ -58,7 +60,9 @@ class GCPermissionGroup(models.Model):
         return [
             {
                 "id": x.id,
+                "prefix": x.prefix,
                 "name": x.name,
+                "suffix": x.suffix,
                 "description": x.description,
                 "permissions": x.computed_permission_profile_ids.mapped(
                     "permission_profile_entry_ids.permission_model_entry_id.name"

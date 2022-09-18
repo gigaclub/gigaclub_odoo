@@ -7,7 +7,9 @@
             <field name="model">gc.permission.group</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="prefix" />
                     <field name="name" />
+                    <field name="suffix" />
                     <field name="description" />
                     <field name="permission_profile_ids" widget="many2many_tags" />
                     <field name="global_group" />
@@ -24,7 +26,9 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
+                        <field name="prefix" />
                         <field name="name" />
+                        <field name="suffix" />
                         <field name="description" />
                         <field name="permission_profile_ids" />
                         <field name="global_group" />
