@@ -234,7 +234,7 @@
                                                     <td><a
                               href="#"
                               data-toggle="modal"
-                              data-target=".user-modal-lg"
+                              data-target=".group-modal-lg"
                             ><t t-esc="group.get('name', '')" /></a></td>
                                                     <td
                             t-esc="group.get('permission_count', 0)"

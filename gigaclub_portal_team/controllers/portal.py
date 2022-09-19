@@ -379,6 +379,7 @@ class GigaClubPortalTeam(GigaClubPortal):
                     {
                         "id": group.id,
                         "name": group.name,
+                        "description": group.description,
                         "permission_count": len(
                             group.permission_profile_ids.mapped(
                                 "permission_profile_entry_ids"
@@ -389,6 +390,32 @@ class GigaClubPortalTeam(GigaClubPortal):
                                 "permission_profile_entry_template_ids"
                             )
                         ),
+                        "edit_team": bool(group.mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_edit_team"))),
+                        "invite_user": bool(group.mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_invite_member"))),
+                        "kick_user": bool(group.mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_kick_member"))),
+                        "create_world_as_team": bool(group.mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(lambda x: x == request.env.ref("gigaclub_builder_system.gc_permission_model_entry_gc_team_create_world_as_team"))),
+                        "parent_group": {
+                            "id": group.parent_group_id.id,
+                            "name": group.parent_group_id.name
+                        },
+                        "child_groups": [
+                            {
+                                "id": child_group.id,
+                                "name": child_group.name
+                            } for child_group in group.child_group_ids
+                        ]
                     }
                     for group in team.possible_permission_group_ids
                 ],
