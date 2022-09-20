@@ -24,3 +24,9 @@ class GCPermissionProfileEntry(models.Model):
         for rec in res.filtered(lambda x: not x.permission_model_entry_id):
             rec.permission_model_entry_id = rec.permission_profile_entry_template_id.permission_model_entry_id
         return res
+
+    def name_get(self):
+        result = []
+        for rec in self:
+            result.append((rec.id, rec.permission_model_entry_id.name))
+        return result

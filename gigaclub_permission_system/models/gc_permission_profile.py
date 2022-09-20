@@ -26,3 +26,9 @@ class GCPermissionProfile(models.Model):
                 }
             ) for template in rec.permission_profile_template_id.permission_profile_entry_template_ids]
         return res
+
+    def name_get(self):
+        result = []
+        for rec in self:
+            result.append((rec.id, ", ".join(rec.permission_profile_entry_ids.mapped("permission_model_entry_id.name"))))
+        return result
