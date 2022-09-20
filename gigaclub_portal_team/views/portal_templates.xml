@@ -185,6 +185,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <p t-esc="team.get('users', [])" />
                                                 <tr
                           t-foreach="team.get('users', [])"
                           t-as="user"
@@ -227,6 +228,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <p t-esc="team.get('groups', [])" />
                                                 <tr
                           t-foreach="team.get('groups', [])"
                           t-as="group"
