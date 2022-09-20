@@ -9,13 +9,13 @@ class GCPermissionProfileEntry(models.Model):
     _description = "GigaClub Permission Profile Entry"
 
     permission_model_entry_id = fields.Many2one(
-        comodel_name="gc.permission.model.entry"
+        comodel_name="gc.permission.model.entry", ondelete="cascade"
     )
     permission_profile_id = fields.Many2one(
-        comodel_name="gc.permission.profile", required=True, index=True
+        comodel_name="gc.permission.profile", required=True, index=True, ondelete="cascade"
     )
     permission_profile_entry_template_id = fields.Many2one(
-        comodel_name="gc.permission.profile.entry.template", required=True
+        comodel_name="gc.permission.profile.entry.template", required=True, ondelete="cascade"
     )
 
     @api.model

@@ -6,7 +6,7 @@ class GCPermissionModel(models.Model):
     _description = "GigaClub Permission Model"
 
     name = fields.Char(related="model_id.name", readonly=True)
-    model_id = fields.Many2one(comodel_name="ir.model")
+    model_id = fields.Many2one(comodel_name="ir.model", ondelete="cascade")
     permission_model_entry_ids = fields.One2many(
         comodel_name="gc.permission.model.entry", inverse_name="permission_model_id"
     )

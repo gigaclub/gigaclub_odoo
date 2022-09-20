@@ -4,7 +4,7 @@ from odoo import api, fields, models
 class GCPermissionConnector(models.Model):
     _inherit = "gc.permission.connector"
 
-    world_id = fields.Many2one(comodel_name="gc.builder.world", index=True)
+    world_id = fields.Many2one(comodel_name="gc.builder.world", index=True, ondelete="cascade")
 
     @api.model
     def get_team_worlds(self, team_id):
