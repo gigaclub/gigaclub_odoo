@@ -19,7 +19,7 @@ class GCPermissionProfile(models.Model):
     @api.model
     def create(self, vals):
         res = super().create(vals)
-        for rec in res.filtered(lambda x: not x.permission_profile_entry_ids):
+        for rec in res:
             rec.permission_profile_entry_ids = [(
                 0, 0, {
                     "permission_profile_entry_template_id": template.id

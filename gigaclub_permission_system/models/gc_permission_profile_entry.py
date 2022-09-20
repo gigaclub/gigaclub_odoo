@@ -21,8 +21,8 @@ class GCPermissionProfileEntry(models.Model):
     @api.model
     def create(self, vals):
         res = super().create(vals)
-        for rec in res.filtered(lambda x: not x.permission_model_entry_id):
-            rec.permission_model_entry_id = rec.permission_profile_entry_template_id.permission_model_entry_id
+        for rec in res:
+            rec.permission_model_entry_id |= rec.permission_profile_entry_template_id.permission_model_entry_id
         return res
 
     def name_get(self):
