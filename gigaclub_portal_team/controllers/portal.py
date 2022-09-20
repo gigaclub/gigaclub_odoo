@@ -384,11 +384,6 @@ class GigaClubPortalTeam(GigaClubPortal):
                             group.permission_profile_ids.mapped(
                                 "permission_profile_entry_ids"
                             )
-                        )
-                        + len(
-                            group.permission_profile_ids.mapped(
-                                "permission_profile_entry_template_ids"
-                            )
                         ),
                         "edit_team": bool(group.mapped(
                                 "permission_profile_ids."
