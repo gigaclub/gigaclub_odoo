@@ -239,7 +239,7 @@
                               href="#"
                               class="group-link"
                               data-toggle="modal"
-                              data-target=".group-modal-lg"^
+                              data-target=".group-modal-lg"
                               t-att-data-dict="group"
                             ><t t-esc="group.get('name', '')" /></a></td>
                                                     <td
