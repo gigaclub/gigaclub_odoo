@@ -4,7 +4,7 @@
 
         <template
       id="_assets_bootstrap_inherit_gigaclub_portal"
-      inherit_id="portal._assets_bootstrap"
+      inherit_id="web._assets_bootstrap"
       priority="20"
     >
             <xpath expr="." position="inside">
