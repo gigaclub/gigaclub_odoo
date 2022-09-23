@@ -2,17 +2,22 @@
 <odoo>
     <data>
 
-        <template
-      id="_assets_frontend_minimal_js_inherit_gigaclub_portal"
-      inherit_id="web._assets_frontend_minimal_js"
-      priority="20"
-    >
+        <template id="assets_frontend_inherit_gigaclub_portal" inherit_id="web.assets_frontend">
             <xpath expr="." position="inside">
                 <link
               rel="stylesheet"
               type="text/css"
               href="/gigaclub_portal/static/libs/css/bootstrap-select.css"
             />
+            </xpath>
+        </template>
+
+        <template
+      id="_assets_frontend_minimal_js_inherit_gigaclub_portal"
+      inherit_id="web._assets_frontend_minimal_js"
+      priority="20"
+    >
+            <xpath expr="." position="inside">
                 <script
           type="text/javascript"
           src="/gigaclub_portal/static/libs/js/bootstrap-select.js"
