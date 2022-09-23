@@ -3,8 +3,8 @@
     <data>
 
         <template
-      id="_assets_bootstrap_inherit_gigaclub_portal"
-      inherit_id="web._assets_bootstrap"
+      id="_assets_common_minimal_js_inherit_gigaclub_portal"
+      inherit_id="web._assets_common_minimal_js"
       priority="20"
     >
             <xpath expr="." position="inside">
