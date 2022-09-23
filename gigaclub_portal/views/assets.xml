@@ -4,7 +4,7 @@
 
         <template
       id="assets_frontend"
-      inherit_id="portal.assets_frontend"
+      inherit_id="portal.assets_frontend_minimal_js"
       priority="20"
     >
             <xpath expr="." position="inside">
