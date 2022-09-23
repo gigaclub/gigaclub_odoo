@@ -238,10 +238,7 @@ class GigaClubPortalTeam(GigaClubPortal):
             existing_permission_connector = request.env[
                 "gc.permission.connector"
             ].create({"team_id": team.id, "user_id": user.id})
-        group_ids = []
-        for group in groups:
-            if group.isnumeric():
-                group_ids.append(int(group))
+        group_ids = [int(i) for i in list(filter(lambda x: x.isnumeric(), groups))]
         existing_permission_connector.permission_group_ids = [(6, 0, group_ids)]
 
     def _team_user_set_permissions(

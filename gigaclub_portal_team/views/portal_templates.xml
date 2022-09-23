@@ -192,8 +192,10 @@
                         >
                                                     <td><a
                               href="#"
+                              class="user-link"
                               data-toggle="modal"
                               data-target=".user-modal-lg"
+                              t-att-data-dict="user"
                             ><t t-esc="user.get('name', '')" /></a></td>
                                                     <td
                             t-esc="user.get('group_count', 0)"
@@ -235,8 +237,10 @@
                         >
                                                     <td><a
                               href="#"
+                              class="group-link"
                               data-toggle="modal"
-                              data-target=".group-modal-lg"
+                              data-target=".group-modal-lg"^
+                              t-att-data-dict="group"
                             ><t t-esc="group.get('name', '')" /></a></td>
                                                     <td
                             t-esc="group.get('permission_count', 0)"
