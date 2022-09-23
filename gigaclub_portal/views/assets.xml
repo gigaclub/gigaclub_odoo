@@ -3,7 +3,7 @@
     <data>
 
         <template id="assets_frontend_inherit_gigaclub_portal" inherit_id="web.assets_frontend" priority="20">
-            <xpath expr="link[first()]" position="before">
+            <xpath expr="//link[first()]" position="before">
                 <link
               rel="stylesheet"
               type="text/css"
@@ -17,7 +17,7 @@
       inherit_id="web._assets_frontend_minimal_js"
       priority="20"
     >
-            <xpath expr="script[first()]" position="before">
+            <xpath expr="//script[first()]" position="before">
                 <script
           type="text/javascript"
           src="/gigaclub_portal/static/libs/js/bootstrap-select.js"
