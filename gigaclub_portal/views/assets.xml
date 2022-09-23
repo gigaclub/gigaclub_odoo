@@ -2,7 +2,7 @@
 <odoo>
     <data>
 
-        <template id="assets_frontend_inherit_gigaclub_portal" inherit_id="web.assets_frontend">
+        <template id="assets_frontend_inherit_gigaclub_portal" inherit_id="web.assets_frontend" priority="20">
             <xpath expr="." position="inside">
                 <link
               rel="stylesheet"
