@@ -4,7 +4,7 @@
     "summary": "GigaClub Requests Module",
     "category": "GigaClub",
     "author": "GigaClub.net",
-    "website": "https://GigaClub.net/",
+    "website": "https://GigaClub.net",
     "license": "AGPL-3",
     "depends": ["gigaclub_base"],
     "data": [

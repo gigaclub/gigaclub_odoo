@@ -4,7 +4,7 @@
     "summary": "GigaClub Translation Module",
     "category": "Translation",
     "author": "GigaClub.net",
-    "website": "https://GigaClub.net/",
+    "website": "https://GigaClub.net",
     "license": "AGPL-3",
     "depends": ["gigaclub_base", "minecraft_field_tellraw"],
     "data": [
@@ -21,7 +21,7 @@
     "assets": {
         "web.assets_backend": {
             "gigaclub_translation/static/src/js/minecraft_tellraw_field.js",
-            "gigaclub_translation/static/src/js/field_registry.js"
+            "gigaclub_translation/static/src/js/field_registry.js",
         }
     },
     "installable": True,

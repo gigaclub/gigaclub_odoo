@@ -333,7 +333,8 @@ class GigaClubPortalTeam(GigaClubPortal):
                             {
                                 "id": group.id,
                                 "name": group.name,
-                            } for group in user.permission_connector_ids.filtered(
+                            }
+                            for group in user.permission_connector_ids.filtered(
                                 lambda x: x.team_id == team
                             ).mapped("permission_group_ids")
                         ],
@@ -345,30 +346,66 @@ class GigaClubPortalTeam(GigaClubPortal):
                                 "permission_profile_entry_ids.permission_model_entry_id"
                             )
                         ),
-                        "edit_team": bool(user.permission_connector_ids.filtered(
+                        "edit_team": bool(
+                            user.permission_connector_ids.filtered(
                                 lambda x: x.team_id == team
-                            ).mapped(
+                            )
+                            .mapped(
                                 "permission_profile_ids."
                                 "permission_profile_entry_ids.permission_model_entry_id"
-                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_edit_team"))),
-                        "invite_user": bool(user.permission_connector_ids.filtered(
+                            )
+                            .filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_team.gc_permission_model_entry_gc_team_edit_team"
+                                )
+                            )
+                        ),
+                        "invite_user": bool(
+                            user.permission_connector_ids.filtered(
                                 lambda x: x.team_id == team
-                            ).mapped(
+                            )
+                            .mapped(
                                 "permission_profile_ids."
                                 "permission_profile_entry_ids.permission_model_entry_id"
-                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_invite_member"))),
-                        "kick_user": bool(user.permission_connector_ids.filtered(
+                            )
+                            .filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_team.gc_permission_model_entry_gc_team_invite_member"  # noqa: B950
+                                )
+                            )
+                        ),
+                        "kick_user": bool(
+                            user.permission_connector_ids.filtered(
                                 lambda x: x.team_id == team
-                            ).mapped(
+                            )
+                            .mapped(
                                 "permission_profile_ids."
                                 "permission_profile_entry_ids.permission_model_entry_id"
-                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_kick_member"))),
-                        "create_world_as_team": bool(user.permission_connector_ids.filtered(
+                            )
+                            .filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_team.gc_permission_model_entry_gc_team_kick_member"  # noqa: B950
+                                )
+                            )
+                        ),
+                        "create_world_as_team": bool(
+                            user.permission_connector_ids.filtered(
                                 lambda x: x.team_id == team
-                            ).mapped(
+                            )
+                            .mapped(
                                 "permission_profile_ids."
                                 "permission_profile_entry_ids.permission_model_entry_id"
-                            ).filtered(lambda x: x == request.env.ref("gigaclub_builder_system.gc_permission_model_entry_gc_team_create_world_as_team"))),
+                            )
+                            .filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_team_create_world_as_team"  # noqa: B950
+                                )
+                            )
+                        ),
                     }
                     for user in team_users
                 ],
@@ -382,32 +419,58 @@ class GigaClubPortalTeam(GigaClubPortal):
                                 "permission_profile_entry_ids"
                             )
                         ),
-                        "edit_team": bool(group.mapped(
+                        "edit_team": bool(
+                            group.mapped(
                                 "permission_profile_ids."
                                 "permission_profile_entry_ids.permission_model_entry_id"
-                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_edit_team"))),
-                        "invite_user": bool(group.mapped(
+                            ).filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_team.gc_permission_model_entry_gc_team_edit_team"
+                                )
+                            )
+                        ),
+                        "invite_user": bool(
+                            group.mapped(
                                 "permission_profile_ids."
                                 "permission_profile_entry_ids.permission_model_entry_id"
-                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_invite_member"))),
-                        "kick_user": bool(group.mapped(
+                            ).filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_team.gc_permission_model_entry_gc_team_invite_member"  # noqa: B950
+                                )
+                            )
+                        ),
+                        "kick_user": bool(
+                            group.mapped(
                                 "permission_profile_ids."
                                 "permission_profile_entry_ids.permission_model_entry_id"
-                            ).filtered(lambda x: x == request.env.ref("gigaclub_team.gc_permission_model_entry_gc_team_kick_member"))),
-                        "create_world_as_team": bool(group.mapped(
+                            ).filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_team.gc_permission_model_entry_gc_team_kick_member"  # noqa: B950
+                                )
+                            )
+                        ),
+                        "create_world_as_team": bool(
+                            group.mapped(
                                 "permission_profile_ids."
                                 "permission_profile_entry_ids.permission_model_entry_id"
-                            ).filtered(lambda x: x == request.env.ref("gigaclub_builder_system.gc_permission_model_entry_gc_team_create_world_as_team"))),
+                            ).filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_team_create_world_as_team"  # noqa: B950
+                                )
+                            )
+                        ),
                         "parent_group": {
                             "id": group.parent_group_id.id,
-                            "name": group.parent_group_id.name
+                            "name": group.parent_group_id.name,
                         },
                         "child_groups": [
-                            {
-                                "id": child_group.id,
-                                "name": child_group.name
-                            } for child_group in group.child_group_ids
-                        ]
+                            {"id": child_group.id, "name": child_group.name}
+                            for child_group in group.child_group_ids
+                        ],
                     }
                     for group in team.possible_permission_group_ids
                 ],

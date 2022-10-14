@@ -14,5 +14,14 @@ class GCPermissionProfileTemplate(models.Model):
     def name_get(self):
         result = []
         for rec in self:
-            result.append((rec.id, ", ".join(rec.permission_profile_entry_template_ids.mapped("permission_model_entry_id.name"))))
+            result.append(
+                (
+                    rec.id,
+                    ", ".join(
+                        rec.permission_profile_entry_template_ids.mapped(
+                            "permission_model_entry_id.name"
+                        )
+                    ),
+                )
+            )
         return result

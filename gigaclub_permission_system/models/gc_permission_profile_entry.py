@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class GCPermissionProfileEntry(models.Model):
@@ -12,17 +12,24 @@ class GCPermissionProfileEntry(models.Model):
         comodel_name="gc.permission.model.entry", ondelete="cascade"
     )
     permission_profile_id = fields.Many2one(
-        comodel_name="gc.permission.profile", required=True, index=True, ondelete="cascade"
+        comodel_name="gc.permission.profile",
+        required=True,
+        index=True,
+        ondelete="cascade",
     )
     permission_profile_entry_template_id = fields.Many2one(
-        comodel_name="gc.permission.profile.entry.template", required=True, ondelete="cascade"
+        comodel_name="gc.permission.profile.entry.template",
+        required=True,
+        ondelete="cascade",
     )
 
     @api.model
     def create(self, vals):
         res = super().create(vals)
         for rec in res:
-            rec.permission_model_entry_id |= rec.permission_profile_entry_template_id.permission_model_entry_id
+            rec.permission_model_entry_id |= (
+                rec.permission_profile_entry_template_id.permission_model_entry_id
+            )
         return res
 
     def name_get(self):

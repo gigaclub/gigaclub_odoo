@@ -4,7 +4,7 @@
     "summary": "GigaClub Discord Bot Module",
     "category": "GigaClub",
     "author": "GigaClub.net",
-    "website": "https://GigaClub.net/",
+    "website": "https://GigaClub.net",
     "license": "AGPL-3",
     "depends": ["gigaclub_builder_system"],
     "external_dependencies": {"python": ["discord"]},

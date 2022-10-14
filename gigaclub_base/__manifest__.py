@@ -4,7 +4,7 @@
     "summary": "GigaClub Base Module",
     "category": "GigaClub",
     "author": "GigaClub.net",
-    "website": "https://GigaClub.net/",
+    "website": "https://GigaClub.net",
     "license": "AGPL-3",
     "depends": ["base_setup"],
     "data": [
