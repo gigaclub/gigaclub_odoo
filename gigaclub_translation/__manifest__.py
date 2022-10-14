@@ -20,8 +20,8 @@
     ],
     "assets": {
         "web.assets_backend": {
-            "/gigaclub_translation/static/src/js/minecraft_tellraw_field.js",
-            "/gigaclub_translation/static/src/js/field_registry.js"
+            "gigaclub_translation/static/src/js/minecraft_tellraw_field.js",
+            "gigaclub_translation/static/src/js/field_registry.js"
         }
     },
     "installable": True,

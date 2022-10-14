@@ -18,7 +18,7 @@ class GCPermissionGroup(models.Model):
     )
 
     computed_permission_profile_ids = fields.Many2many(
-        comodel_name="gc.permission.profile", compute="_compute_permissions"
+        comodel_name="gc.permission.profile", compute="_compute_permissions", recursive=True
     )
 
     @api.depends(

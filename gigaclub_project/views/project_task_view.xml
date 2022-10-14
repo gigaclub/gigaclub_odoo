@@ -84,7 +84,6 @@
             <field name="arch" type="xml">
                 <filter name="my_tasks" position="replace" />
                 <filter name="unassigned" position="replace" />
-                <xpath expr="group/filter[@name='user']" position="replace" />
             </field>
         </record>
 

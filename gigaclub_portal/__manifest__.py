@@ -11,7 +11,7 @@
     ],
     "demo": [],
     "assets": {
-        "web.assets_common": [
+        "web.assets_frontend": [
             "/gigaclub_portal/static/libs/js/bootstrap-select.js",
             "/gigaclub_portal/static/libs/css/bootstrap-select.css"
         ]
