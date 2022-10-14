@@ -1,6 +1,6 @@
 {
     "name": "GigaClub Portal Team",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "GigaClub",
     "author": "GigaClub.net",
     "website": "https://GigaClub.net/",
