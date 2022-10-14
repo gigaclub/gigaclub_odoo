@@ -8,17 +8,33 @@
             <field name="inherit_id" ref="project.view_task_form2" />
             <field name="priority">99</field>
             <field name="arch" type="xml">
-                <xpath expr="//button[@name='action_subtask']" position="attributes">
-                    <attribute
-            name="context"
-          >{'default_parent_id': id, 'default_project_id': subtask_project_id}</attribute>
-                </xpath>
                 <button name="action_assign_to_me" position="replace" />
-                <field name="user_id" position="replace">
+                <xpath expr="//group//field[@name='user_ids']" position="replace">
                     <field name="user_ids" widget="many2many_tags" />
                     <field name="team_ids" widget="many2many_tags" />
-                </field>
+                </xpath>
                 <field name="partner_id" position="replace" />
+                <xpath
+          expr="//notebook//field[@name='user_ids']"
+          position="replace"
+                >
+                    <field name="user_ids" widget="many2many_tags" />
+                    <field name="team_ids" widget="many2many_tags" />
+                </xpath>
+                <xpath
+          expr="//notebook//page[@name='task_dependencies']//field[@name='user_ids']"
+          position="replace"
+                >
+                    <field name="user_ids" widget="many2many_tags" />
+                    <field name="team_ids" widget="many2many_tags" />
+                </xpath>
+                <field name="child_ids" position="attributes">
+                    <attribute name="context">{'default_project_id': project_id if not parent_id or not display_project_id else display_project_id, 'default_user_ids': user_ids, 'default_parent_id': id,
+                                    'default_milestone_id': allow_milestones and milestone_id, 'search_default_display_project_id': project_id }</attribute>
+                </field>
+                <field name="analytic_account_id" position="attributes">
+                    <attribute name="context">{}</attribute>
+                </field>
             </field>
         </record>
 
@@ -28,9 +44,6 @@
             <field name="inherit_id" ref="project.view_task_kanban" />
             <field name="priority">99</field>
             <field name="arch" type="xml">
-                <field name="user_id" position="replace">
-                    <field name="user_ids" />
-                </field>
                 <field name="partner_id" position="replace">
                     <field name="team_ids" />
                 </field>
@@ -43,8 +56,8 @@
           position="replace"
         />
                 <field
-          name="user_id"
-          widget="many2one_avatar_user"
+          name="user_ids"
+          widget="many2many_avatar_user"
           position="replace"
         />
             </field>
@@ -56,18 +69,10 @@
             <field name="inherit_id" ref="project.view_task_tree2" />
             <field name="priority">99</field>
             <field name="arch" type="xml">
-                <field name="user_id" position="replace" />
                 <field name="partner_id" position="replace" />
-            </field>
-        </record>
-
-        <record id="view_task_calendar_inherit_gigaclub_project" model="ir.ui.view">
-            <field name="name">project.task.calendar.inherit.gigaclub_project</field>
-            <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_calendar" />
-            <field name="priority">99</field>
-            <field name="arch" type="xml">
-                <field name="user_id" position="replace" />
+                <field name="user_ids" position="replace">
+                    <field name="user_ids" />
+                </field>
             </field>
         </record>
 
@@ -79,7 +84,6 @@
             <field name="arch" type="xml">
                 <filter name="my_tasks" position="replace" />
                 <filter name="unassigned" position="replace" />
-                <xpath expr="group/filter[@name='user']" position="replace" />
             </field>
         </record>
 

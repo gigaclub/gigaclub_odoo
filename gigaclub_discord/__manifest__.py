@@ -1,6 +1,6 @@
 {
     "name": "GigaClub Discord",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "summary": "GigaClub Discord Bot Module",
     "category": "GigaClub",
     "author": "GigaClub.net",

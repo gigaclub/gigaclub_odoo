@@ -29,11 +29,9 @@
             <field name="priority">99</field>
             <field name="arch" type="xml">
                 <field name="partner_id" position="replace" />
-                <field name="partner_phone" position="replace" />
-                <field name="partner_email" position="replace" />
-                <field name="analytic_account_id" position="attributes">
+                <xpath expr="//notebook//field[@name='analytic_account_id']" position="attributes">
                     <attribute name="context">{}</attribute>
-                </field>
+                </xpath>
             </field>
         </record>
 

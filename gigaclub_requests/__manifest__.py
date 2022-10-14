@@ -1,6 +1,6 @@
 {
     "name": "GigaClub Requests",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "summary": "GigaClub Requests Module",
     "category": "GigaClub",
     "author": "GigaClub.net",
