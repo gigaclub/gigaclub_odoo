@@ -5,8 +5,7 @@ odoo.define("gigaclub_translation.minecraft_tellraw_field", function (require) {
   const OwlDialog = require("web.OwlDialog");
   const minecraftTellrawField = minecraftTellrawFieldModule.MinecraftTellrawField;
   const minecraftTellrawDialog = minecraftTellrawFieldModule.MinecraftTellrawDialog;
-  const {Component} = owl;
-  const {useState} = owl.hooks;
+  const {Component, useState} = owl;
 
   class MinecraftTellrawListWidgetDialog extends Component {
     constructor(...args) {

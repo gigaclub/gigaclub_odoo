@@ -10,4 +10,5 @@
     "data": ["views/project_project_view.xml", "views/project_task_view.xml"],
     "installable": True,
     "auto_install": False,
+    "pre_init_hook": "pre_init_hook",
 }
