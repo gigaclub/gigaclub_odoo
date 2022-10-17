@@ -12,12 +12,12 @@ class ProjectTask(models.Model):
     @api.depends("world_ids.permission_connector_ids.user_id")
     def _compute_user_ids(self):
         for task in self.filtered("world_ids.permission_connector_ids.user_id"):
-            task.user_ids = task.world_ids.mapped("permission_connector_ids.user_id")
+            task.gc_user_ids = task.world_ids.mapped("permission_connector_ids.user_id")
 
     @api.depends("world_ids.permission_connector_ids.team_id")
     def _compute_team_ids(self):
         for task in self.filtered("world_ids.permission_connector_ids.team_id"):
-            task.team_ids = task.world_ids.mapped("permission_connector_ids.team_id")
+            task.gc_team_ids = task.world_ids.mapped("permission_connector_ids.team_id")
 
     def return_task(self, task):
         res = super().return_task(task)

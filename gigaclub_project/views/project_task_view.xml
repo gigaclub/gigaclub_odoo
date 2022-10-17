@@ -10,20 +10,20 @@
             <field name="arch" type="xml">
                 <button name="action_assign_to_me" position="replace" />
                 <xpath expr="//group//field[@name='user_ids']" position="replace">
-                    <field name="user_ids" widget="many2many_tags" />
-                    <field name="team_ids" widget="many2many_tags" />
+                    <field name="gc_user_ids" widget="many2many_tags" />
+                    <field name="gc_team_ids" widget="many2many_tags" />
                 </xpath>
                 <field name="partner_id" position="replace" />
                 <xpath expr="//notebook//field[@name='user_ids']" position="replace">
-                    <field name="user_ids" widget="many2many_tags" />
-                    <field name="team_ids" widget="many2many_tags" />
+                    <field name="gc_user_ids" widget="many2many_tags" />
+                    <field name="gc_team_ids" widget="many2many_tags" />
                 </xpath>
                 <xpath
           expr="//notebook//page[@name='task_dependencies']//field[@name='user_ids']"
           position="replace"
         >
-                    <field name="user_ids" widget="many2many_tags" />
-                    <field name="team_ids" widget="many2many_tags" />
+                    <field name="gc_user_ids" widget="many2many_tags" />
+                    <field name="gc_team_ids" widget="many2many_tags" />
                 </xpath>
                 <field name="child_ids" position="attributes">
                     <attribute
@@ -44,11 +44,11 @@
             <field name="priority">99</field>
             <field name="arch" type="xml">
                 <field name="partner_id" position="replace">
-                    <field name="team_ids" />
+                    <field name="gc_team_ids" />
                 </field>
                 <xpath expr="//t[@t-if='record.partner_id.value']" position="replace">
-                    <field name="user_ids" widget="many2many_tags" />
-                    <field name="team_ids" widget="many2many_tags" />
+                    <field name="gc_user_ids" widget="many2many_tags" />
+                    <field name="gc_team_ids" widget="many2many_tags" />
                 </xpath>
                 <xpath
           expr="//t[@t-else='record.email_from.raw_value']"
@@ -56,9 +56,11 @@
         />
                 <field
           name="user_ids"
-          widget="many2many_avatar_user"
           position="replace"
-        />
+        >
+                    <field name="gc_user_ids" />
+                    <field name="gc_team_ids" />
+                </field>
             </field>
         </record>
 
@@ -70,19 +72,35 @@
             <field name="arch" type="xml">
                 <field name="partner_id" position="replace" />
                 <field name="user_ids" position="replace">
-                    <field name="user_ids" />
+                    <field name="gc_user_ids" />
+                    <field name="gc_team_ids" />
                 </field>
             </field>
         </record>
 
-        <record id="view_task_search_inherit_gigaclub_project" model="ir.ui.view">
-            <field name="name">project.task.search.inherit.gigaclub_project</field>
+        <record id="view_task_calendar_inherit_gigaclub_project" model="ir.ui.view">
+            <field name="name">project.task.calendar.inherit.gigaclub_project</field>
             <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_search_form" />
+            <field name="inherit_id" ref="project.view_task_calendar" />
             <field name="priority">99</field>
             <field name="arch" type="xml">
-                <filter name="my_tasks" position="replace" />
-                <filter name="unassigned" position="replace" />
+                <field name="user_ids" position="replace">
+                    <field name="gc_user_ids" />
+                    <field name="gc_team_ids" />
+                </field>
+            </field>
+        </record>
+
+        <record id="project_task_view_activity_inherit_gigaclub_project" model="ir.ui.view">
+            <field name="name">project.task.activity.inherit.gigaclub_project</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.project_task_view_activity" />
+            <field name="priority">99</field>
+            <field name="arch" type="xml">
+                <xpath expr="//templates//field[@name='user_ids']" position="replace">
+                    <field name="gc_user_ids" />
+                    <field name="gc_team_ids" />
+                </xpath>
             </field>
         </record>
 
