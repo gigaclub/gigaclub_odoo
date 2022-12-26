@@ -7,7 +7,7 @@
     "website": "https://GigaClub.net",
     "license": "AGPL-3",
     "depends": ["gigaclub_builder_system"],
-    "external_dependencies": {"python": ["discord"]},
+    "external_dependencies": {"python": ["discord.py"]},
     "data": [
         "views/gc_discord_action_views.xml",
         "views/gc_discord_action_worker_views.xml",

@@ -15,15 +15,12 @@
         "views/gc_user_views.xml",
         "views/menu_views.xml",
     ],
-    "qweb": [
-        "static/src/xml/minecraft_tellraw_field.xml",
-    ],
-    "assets": {
-        "web.assets_backend": {
-            "gigaclub_translation/static/src/js/minecraft_tellraw_field.js",
-            "gigaclub_translation/static/src/js/field_registry.js",
-        }
-    },
+    # "assets": {
+    #     "web.assets_backend": {
+    #         "gigaclub_translation/static/src/js/minecraft_tellraw_field.js",
+    #         "gigaclub_translation/static/src/xml/minecraft_tellraw_field.xml",
+    #     }
+    # },
     "installable": True,
     "auto_install": False,
 }

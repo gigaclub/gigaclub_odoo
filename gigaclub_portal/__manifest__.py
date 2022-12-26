@@ -10,12 +10,6 @@
         "views/portal_templates.xml",
     ],
     "demo": [],
-    "assets": {
-        "web.assets_frontend": [
-            "/gigaclub_portal/static/libs/js/bootstrap-select.js",
-            "/gigaclub_portal/static/libs/css/bootstrap-select.css",
-        ]
-    },
     "installable": True,
     "auto_install": False,
 }

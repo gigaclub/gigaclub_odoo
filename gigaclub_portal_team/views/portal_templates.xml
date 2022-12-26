@@ -42,8 +42,9 @@
         <template
       id="portal_my_home_inherit_gigaclub_portal_team"
       inherit_id="gigaclub_portal.portal_my_home_inherit_gigaclub_portal"
+      customize_show="True"
     >
-            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <xpath expr="//div[hasclass('o_gigaclub_portal_docs')]" position="inside">
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="title">Teams</t>
                     <t t-set="url" t-value="'/my/teams'" />
@@ -193,9 +194,9 @@
                                                     <td><a
                               href="#"
                               class="user-link"
-                              data-toggle="modal"
-                              data-target=".user-modal-lg"
                               t-att-data-dict="user"
+                              data-bs-toggle="modal"
+                              data-bs-target=".user-modal-lg"
                             ><t t-esc="user.get('name', '')" /></a></td>
                                                     <td
                             t-esc="user.get('group_count', 0)"
@@ -211,8 +212,8 @@
                     t-if="mode == 'edit'"
                     class="btn btn-sm btn-primary"
                     type="button"
-                    data-toggle="modal"
-                    data-target=".user-modal-lg"
+                    data-bs-toggle="modal"
+                    data-bs-target=".user-modal-lg"
                   >Add User</button>
                                 </div>
                             </div>
@@ -238,9 +239,9 @@
                                                     <td><a
                               href="#"
                               class="group-link"
-                              data-toggle="modal"
-                              data-target=".group-modal-lg"
                               t-att-data-dict="group"
+                              data-bs-toggle="modal"
+                              data-bs-target=".group-modal-lg"
                             ><t t-esc="group.get('name', '')" /></a></td>
                                                     <td
                             t-esc="group.get('permission_count', 0)"
@@ -253,8 +254,8 @@
                     t-if="mode == 'edit'"
                     class="btn btn-sm btn-primary"
                     type="button"
-                    data-toggle="modal"
-                    data-target=".group-modal-lg"
+                    data-bs-toggle="modal"
+                    data-bs-target=".group-modal-lg"
                   >Add Group</button>
                                 </div>
                             </div>
@@ -292,7 +293,7 @@
                                 <button
                   type="button"
                   class="close"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                   aria-label="Close"
                 >
                                     <span>&amp;times;</span>
@@ -302,13 +303,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="select-user">User</label>
-                                            <br />
+                                            <label for="select-user">
+                                                User
+                                            </label>
                                             <select
                         id="select-user"
                         name="user"
-                        class="selectpicker"
-                        data-live-search="true"
+                        class="js-select-user-single js-states form-control"
                       >
                                                 <option data-tokens="" />
                                                 <option
@@ -324,12 +325,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="select-groups">Groups</label>
-                                            <br />
+                                            <label for="select-groups">
+                                                Groups
+                                            </label>
                                             <select
                         id="select-groups"
                         name="groups"
-                        class="selectpicker"
+                        class="js-select-groups-multiple js-states form-control"
                         multiple="multiple"
                       >
                                                 <option
@@ -351,7 +353,7 @@
                                 <button
                   type="button"
                   class="btn btn-secondary"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                 >Discard</button>
                                 <button
                   type="submit"
@@ -385,7 +387,7 @@
                                 <button
                   type="button"
                   class="close"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                   aria-label="Close"
                 >
                                     <span>&amp;times;</span>
@@ -480,7 +482,7 @@
                                 <button
                   type="button"
                   class="btn btn-secondary"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                 >Discard</button>
                                 <button
                   type="submit"

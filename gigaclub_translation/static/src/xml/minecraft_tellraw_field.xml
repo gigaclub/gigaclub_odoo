@@ -42,7 +42,7 @@
                 <hr />
                 <div class="dropdown-item" name="widget">List Widgets:</div>
                 <hr />
-                <t t-foreach="state.widgets.list" t-as="listitem">
+                <t t-foreach="state.widgets.list" t-key="listitem">
                     <button
             class="dropdown-item"
             t-att-name="listitem"
