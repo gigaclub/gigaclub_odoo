@@ -10,7 +10,9 @@ class GCTranslationEntry(models.Model):
     def _get_languages(self):
         return self.env["res.lang"].get_installed()
 
-    content = fields.Serialized()
+    minecraft_tellraw_line_ids = fields.One2many(
+        comodel_name="minecraft.tellraw.line", inverse_name="translation_entry_id"
+    )
     widgets = fields.Serialized(compute="_compute_widgets", store=True)
     translation_ids = fields.Many2many(comodel_name="gc.translation")
     lang = fields.Selection(selection=_get_languages, required=True)

@@ -7,8 +7,6 @@
             <field name="model">gc.translation.entry</field>
             <field name="arch" type="xml">
                 <tree string="Translations">
-                    <field name="content" widget="minecraft_tellraw_field" />
-                    <field name="widgets" />
                     <field name="lang" />
                     <field name="translation_ids" />
                 </tree>
@@ -21,7 +19,7 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="content" widget="minecraft_tellraw_field" />
+                        <field name="minecraft_tellraw_line_ids" />
                         <field name="widgets" />
                         <field name="lang" />
                         <field name="translation_ids" />
