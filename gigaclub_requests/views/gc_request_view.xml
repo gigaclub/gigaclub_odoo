@@ -19,11 +19,13 @@
             <field name="model">gc.request</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="sender_id" />
-                        <field name="receiver_id" />
-                        <field name="state" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="sender_id" />
+                            <field name="receiver_id" />
+                            <field name="state" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>

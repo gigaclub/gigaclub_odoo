@@ -19,11 +19,13 @@
             <field name="model">gc.user</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="name" />
-                        <field name="mc_uuid" />
-                        <field name="state" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="mc_uuid" />
+                            <field name="state" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>

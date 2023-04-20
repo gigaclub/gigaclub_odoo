@@ -21,13 +21,15 @@
             <field name="model">gc.discord.channel</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="name" />
-                        <field name="discord_channel_uuid" />
-                        <field name="category_id" />
-                        <field name="type" />
-                        <field name="permission_profile_id" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="discord_channel_uuid" />
+                            <field name="category_id" />
+                            <field name="type" />
+                            <field name="permission_profile_id" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>

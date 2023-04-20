@@ -18,10 +18,12 @@
             <field name="model">gc.builder.world.type</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="name" />
-                        <field name="default" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="default" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>

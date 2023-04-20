@@ -21,13 +21,15 @@
             <field name="model">gc.team</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="name" />
-                        <field name="description" />
-                        <field name="owner_id" />
-                        <field name="permission_connector_ids" />
-                        <field name="possible_permission_group_ids" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="description" />
+                            <field name="owner_id" />
+                            <field name="permission_connector_ids" />
+                            <field name="possible_permission_group_ids" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>

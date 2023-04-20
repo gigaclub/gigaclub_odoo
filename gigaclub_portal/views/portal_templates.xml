@@ -48,7 +48,7 @@
                     role="alert"
                   >
                                         <t t-foreach="error_message" t-as="err">
-                                            <t t-esc="err" />
+                                            <t t-out="err" />
                                             <br />
                                         </t>
                                     </div>

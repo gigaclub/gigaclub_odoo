@@ -18,10 +18,12 @@
             <field name="model">gc.discord.action.worker</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="action_id" />
-                        <field name="event_worker_ids" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="action_id" />
+                            <field name="event_worker_ids" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>

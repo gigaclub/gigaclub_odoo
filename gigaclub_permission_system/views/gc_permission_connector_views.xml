@@ -19,11 +19,13 @@
             <field name="model">gc.permission.connector</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="user_id" />
-                        <field name="permission_group_ids" />
-                        <field name="permission_profile_ids" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="user_id" />
+                            <field name="permission_group_ids" />
+                            <field name="permission_profile_ids" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
