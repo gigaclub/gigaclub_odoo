@@ -24,10 +24,10 @@
                 </li>
                 <li t-elif="team" class="breadcrumb-item active">
                     <t t-if="isinstance(team, dict)">
-                        <t t-esc="team.get('name', '')" />
+                        <t t-out="team.get('name', '')" />
                     </t>
                     <t t-else="">
-                        <t t-esc="team.name" />
+                        <t t-out="team.name" />
                     </t>
                 </li>
                 <li
@@ -42,8 +42,9 @@
         <template
       id="portal_my_home_inherit_gigaclub_portal_team"
       inherit_id="gigaclub_portal.portal_my_home_inherit_gigaclub_portal"
+      customize_show="True"
     >
-            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <xpath expr="//div[hasclass('o_gigaclub_portal_docs')]" position="inside">
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="title">Teams</t>
                     <t t-set="url" t-value="'/my/teams'" />
@@ -78,6 +79,7 @@
                             <th class="text-left">Name</th>
                             <th>Owner</th>
                             <th>User Count</th>
+                            <th />
                         </tr>
                     </thead>
                     <tbody>
@@ -92,13 +94,60 @@
                             </td>
                             <td>
                                 <span
-                  t-esc="len(team.permission_connector_ids.mapped('user_id'))"
+                  t-out="len(team.permission_connector_ids.mapped('user_id'))"
                 />
                             </td>
+                            <td><a
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteTeamConfirmModal"
+                  class="deleteLink"
+                ><i class="fa fa-trash" /></a></td>
                         </tr>
                     </tbody>
+                    <t
+            t-call="gigaclub_portal_team.portal_my_teams_delete_team_modal"
+          />
                 </t>
             </t>
+        </template>
+
+        <template id="portal_my_teams_delete_team_modal">
+            <div
+        class="modal fade"
+        id="deleteTeamConfirmModal"
+        tabindex="-1"
+        aria-labelledby="deleteTeamConfirmModalLabel"
+        aria-hidden="true"
+      >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5
+                class="modal-title"
+                id="deleteTeamConfirmModalLabel"
+              >Are you sure you want to delete this Team?</h5>
+                    <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Discard</button>
+                    <button
+                type="button"
+                class="btn btn-danger"
+                t-attf-onclick="window.location.href='/my/team/#{team.id}/delete?{{ keep_query() }}'"
+              >Confirm</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </template>
 
         <template id="portal_my_team_form">
@@ -124,7 +173,7 @@
           >Discard</a>
                     <div t-if="error_message" class="alert alert-danger" role="alert">
                         <t t-foreach="error_message" t-as="err">
-                            <t t-esc="err" /><br />
+                            <t t-out="err" /><br />
                         </t>
                     </div>
                     <t t-call="portal.portal_record_layout">
@@ -153,7 +202,7 @@
                       class="form-control"
                       name="description"
                       id="input-description"
-                      t-esc="team.get('description', '')"
+                      t-out="team.get('description', '')"
                     />
                                     </div>
                                 </div>
@@ -182,20 +231,33 @@
                                                     <th
                             scope="col"
                           >Permission Count</th>
+                                                    <th />
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <p t-out="team.get('users', [])" />
                                                 <tr
                           t-foreach="team.get('users', [])"
                           t-as="user"
                         >
-                                                    <td t-esc="user.get('name', '')" />
+                                                    <td><a
+                              href="#"
+                              class="user-link"
+                              t-att-data-dict="user"
+                              data-bs-toggle="modal"
+                              data-bs-target=".user-modal-lg"
+                            ><t t-out="user.get('name', '')" /></a></td>
                                                     <td
-                            t-esc="user.get('group_count', 0)"
+                            t-out="user.get('group_count', 0)"
                           />
                                                     <td
-                            t-esc="user.get('permission_count', 0)"
+                            t-out="user.get('permission_count', 0)"
                           />
+                                                    <td><a
+                              data-bs-toggle="modal"
+                              data-bs-target="#deleteTeamConfirmModal"
+                              class="deleteLink"
+                            ><i class="fa fa-trash" /></a></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -204,8 +266,8 @@
                     t-if="mode == 'edit'"
                     class="btn btn-sm btn-primary"
                     type="button"
-                    data-toggle="modal"
-                    data-target=".user-modal-lg"
+                    data-bs-toggle="modal"
+                    data-bs-target=".user-modal-lg"
                   >Add User</button>
                                 </div>
                             </div>
@@ -220,17 +282,30 @@
                                                     <th
                             scope="col"
                           >Permission Count</th>
+                                                    <th />
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <p t-out="team.get('groups', [])" />
                                                 <tr
                           t-foreach="team.get('groups', [])"
                           t-as="group"
                         >
-                                                    <td t-esc="group.get('name', '')" />
+                                                    <td><a
+                              href="#"
+                              class="group-link"
+                              t-att-data-dict="group"
+                              data-bs-toggle="modal"
+                              data-bs-target=".group-modal-lg"
+                            ><t t-out="group.get('name', '')" /></a></td>
                                                     <td
-                            t-esc="group.get('permission_count', 0)"
+                            t-out="group.get('permission_count', 0)"
                           />
+                                                    <td><a
+                              data-bs-toggle="modal"
+                              data-bs-target="#deleteTeamConfirmModal"
+                              class="deleteLink"
+                            ><i class="fa fa-trash" /></a></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -239,8 +314,8 @@
                     t-if="mode == 'edit'"
                     class="btn btn-sm btn-primary"
                     type="button"
-                    data-toggle="modal"
-                    data-target=".group-modal-lg"
+                    data-bs-toggle="modal"
+                    data-bs-target=".group-modal-lg"
                   >Add Group</button>
                                 </div>
                             </div>
@@ -278,7 +353,7 @@
                                 <button
                   type="button"
                   class="close"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                   aria-label="Close"
                 >
                                     <span>&amp;times;</span>
@@ -288,20 +363,20 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="select-user">User</label>
-                                            <br />
+                                            <label for="select-user">
+                                                User
+                                            </label>
                                             <select
                         id="select-user"
                         name="user"
-                        class="selectpicker"
-                        data-live-search="true"
+                        class="js-select-user-single js-states form-control"
                       >
                                                 <option data-tokens="" />
                                                 <option
                           t-foreach="users"
                           t-as="user"
-                          t-esc="user.get('id', '')"
-                          t-att-data-content="user.get('name', '')"
+                          t-out="user.get('name', '')"
+                          t-att-value="user.get('id', '')"
                         />
                                             </select>
                                         </div>
@@ -310,19 +385,20 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="select-groups">Groups</label>
-                                            <br />
+                                            <label for="select-groups">
+                                                Groups
+                                            </label>
                                             <select
                         id="select-groups"
                         name="groups"
-                        class="selectpicker"
+                        class="js-select-groups-multiple js-states form-control"
                         multiple="multiple"
                       >
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-esc="group.get('id', '')"
-                          t-att-data-content="group.get('name', '')"
+                          t-out="group.get('name', '')"
+                          t-att-value="group.get('id', '')"
                         />
                                             </select>
                                         </div>
@@ -337,7 +413,7 @@
                                 <button
                   type="button"
                   class="btn btn-secondary"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                 >Discard</button>
                                 <button
                   type="submit"
@@ -371,7 +447,7 @@
                                 <button
                   type="button"
                   class="close"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                   aria-label="Close"
                 >
                                     <span>&amp;times;</span>
@@ -425,14 +501,14 @@
                                             <select
                         id="select-parentgroup"
                         name="parentgroup"
-                        class="selectpicker"
+                        class="js-select-user-single js-states form-control"
                       >
                                                 <option data-tokens="" />
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-esc="group.get('id', '')"
-                          t-att-data-content="group.get('name', '')"
+                          t-out="group.get('name', '')"
+                          t-att-value="group.get('id', '')"
                         />
                                             </select>
                                         </div>
@@ -448,14 +524,14 @@
                                             <select
                         id="select-childgroups"
                         name="childgroups"
-                        class="selectpicker"
+                        class="js-select-groups-multiple js-states form-control"
                         multiple="multiple"
                       >
                                                 <option
                           t-foreach="team.get('groups', [])"
                           t-as="group"
-                          t-esc="group.get('id', '')"
-                          t-att-data-content="group.get('name', '')"
+                          t-out="group.get('name', '')"
+                          t-att-value="group.get('id', '')"
                         />
                                             </select>
                                         </div>
@@ -466,7 +542,7 @@
                                 <button
                   type="button"
                   class="btn btn-secondary"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                 >Discard</button>
                                 <button
                   type="submit"

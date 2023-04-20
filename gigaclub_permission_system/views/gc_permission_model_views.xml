@@ -19,11 +19,13 @@
             <field name="model">gc.permission.model</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="name" />
-                        <field name="model_id" />
-                        <field name="permission_model_entry_ids" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="model_id" />
+                            <field name="permission_model_entry_ids" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>

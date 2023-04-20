@@ -21,13 +21,15 @@
             <field name="model">gc.permission.profile</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field
-              name="permission_profile_entry_ids"
-              widget="many2many_tags"
-            />
-                        <field name="permission_profile_template_id" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field
+                name="permission_profile_entry_ids"
+                widget="many2many_tags"
+              />
+                            <field name="permission_profile_template_id" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>

@@ -6,7 +6,7 @@ class GCPermissionModelEntry(models.Model):
     _description = "GigaClub Permission Model Entry"
 
     permission_model_id = fields.Many2one(
-        comodel_name="gc.permission.model", index=True
+        comodel_name="gc.permission.model", index=True, ondelete="cascade"
     )
     name = fields.Char(required=True, index=True)
     permission_type = fields.Selection(

@@ -15,28 +15,20 @@ class GCTranslation(models.Model):
     # end grepper
 
     @api.model
-    def get_translation_by_player_uuid(
-        self, name, player_uuid, values=False, category=False
-    ):
-        if not values:
-            values = {}
+    def get_translation_by_player_uuid(self, name, player_uuid, category=False):
         translation = self.search([("name", "=ilike", name)], limit=1)
-        if translation:
-            translation.values = values
-        else:
+        if not translation:
             translation = self.create(
                 {
                     "name": name,
-                    "values": values,
                     "category": category,
                 }
             )
         language = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)]).lang
-        entry = (
-            self.env["gc.translation.entry"]
-            .search([("lang", "=", language)])
-            .filtered(lambda x: translation in x.translation_ids)
+        entry = self.env["gc.translation.entry"].search(
+            [("lang", "=", language), ("translation_ids", "in", translation.ids)],
+            limit=1,
         )
         if entry:
-            return entry[0].content
+            return entry.content
         return translation.name

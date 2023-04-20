@@ -6,8 +6,14 @@ class GCPermissionProfileEntryTemplate(models.Model):
     _description = "GigaClub Permission Profile Entry Template"
 
     permission_model_entry_id = fields.Many2one(
-        comodel_name="gc.permission.model.entry"
+        comodel_name="gc.permission.model.entry", ondelete="cascade"
     )
     permission_profile_template_id = fields.Many2one(
-        comodel_name="gc.permission.profile.template", index=True
+        comodel_name="gc.permission.profile.template", index=True, ondelete="cascade"
     )
+
+    def name_get(self):
+        result = []
+        for rec in self:
+            result.append((rec.id, rec.permission_model_entry_id.name))
+        return result

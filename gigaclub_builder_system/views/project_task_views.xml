@@ -10,7 +10,7 @@
         ref="gigaclub_project.view_task_form2_inherit_gigaclub_project"
       />
             <field name="arch" type="xml">
-                <field name="team_ids" position="after">
+                <field name="gc_team_ids" position="after">
                     <field name="build_width" />
                     <field name="build_length" />
                     <field name="world_ids" />

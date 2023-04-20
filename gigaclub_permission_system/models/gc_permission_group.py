@@ -5,7 +5,11 @@ class GCPermissionGroup(models.Model):
     _name = "gc.permission.group"
     _description = "GigaClub Permission Group"
 
+    prefix = fields.Char()
     name = fields.Char()
+    suffix = fields.Char()
+    display = fields.Char()
+    color = fields.Char()
     description = fields.Text()
     permission_profile_ids = fields.One2many(
         comodel_name="gc.permission.profile", inverse_name="permission_group_id"
@@ -18,7 +22,9 @@ class GCPermissionGroup(models.Model):
     )
 
     computed_permission_profile_ids = fields.Many2many(
-        comodel_name="gc.permission.profile", compute="_compute_permissions", recursive=True
+        comodel_name="gc.permission.profile",
+        compute="_compute_permissions",
+        recursive=True,
     )
 
     @api.depends(
@@ -27,7 +33,7 @@ class GCPermissionGroup(models.Model):
     def _compute_permissions(self):
         for rec in self:
             rec.computed_permission_profile_ids = (
-                rec.child_group_ids.mapped("computed_permission_profile_ids")
+                rec.parent_group_id.computed_permission_profile_ids
                 | rec.permission_profile_ids
             )
 
@@ -58,8 +64,12 @@ class GCPermissionGroup(models.Model):
         return [
             {
                 "id": x.id,
-                "name": x.name,
-                "description": x.description,
+                "prefix": x.prefix or "",
+                "name": x.name or "",
+                "suffix": x.suffix or "",
+                "display": x.display or "",
+                "color": x.color or "",
+                "description": x.description or "",
                 "permissions": x.computed_permission_profile_ids.mapped(
                     "permission_profile_entry_ids.permission_model_entry_id.name"
                 ),

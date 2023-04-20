@@ -18,10 +18,12 @@
             <field name="model">gc.permission.profile.entry</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
-                        <field name="permission_profile_id" />
-                        <field name="permission_profile_entry_template_id" />
-                    </group>
+                    <sheet>
+                        <group>
+                            <field name="permission_profile_id" />
+                            <field name="permission_profile_entry_template_id" />
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
