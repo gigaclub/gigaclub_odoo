@@ -100,7 +100,7 @@
                             <td><a
                   data-bs-toggle="modal"
                   data-bs-target="#deleteTeamConfirmModal"
-                  id="deleteTeamConfirmModalLink"
+                  class="deleteLink"
                 ><i class="fa fa-trash" /></a></td>
                         </tr>
                     </tbody>
@@ -231,6 +231,7 @@
                                                     <th
                             scope="col"
                           >Permission Count</th>
+                                                    <th />
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -252,6 +253,11 @@
                                                     <td
                             t-out="user.get('permission_count', 0)"
                           />
+                                                    <td><a
+                              data-bs-toggle="modal"
+                              data-bs-target="#deleteTeamConfirmModal"
+                              class="deleteLink"
+                            ><i class="fa fa-trash" /></a></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -276,6 +282,7 @@
                                                     <th
                             scope="col"
                           >Permission Count</th>
+                                                    <th />
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -294,6 +301,11 @@
                                                     <td
                             t-out="group.get('permission_count', 0)"
                           />
+                                                    <td><a
+                              data-bs-toggle="modal"
+                              data-bs-target="#deleteTeamConfirmModal"
+                              class="deleteLink"
+                            ><i class="fa fa-trash" /></a></td>
                                                 </tr>
                                             </tbody>
                                         </table>
