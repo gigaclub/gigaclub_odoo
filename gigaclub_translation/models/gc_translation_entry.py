@@ -10,10 +10,8 @@ class GCTranslationEntry(models.Model):
     def _get_languages(self):
         return self.env["res.lang"].get_installed()
 
-    minecraft_tellraw_line_ids = fields.One2many(
-        comodel_name="minecraft.tellraw.line", inverse_name="translation_entry_id"
-    )
-    widgets = fields.Serialized(compute="_compute_widgets", store=True)
+    content = fields.Text()
+    widgets = fields.Text(compute="_compute_widgets")
     translation_ids = fields.Many2many(comodel_name="gc.translation")
     lang = fields.Selection(selection=_get_languages, required=True)
 
@@ -24,14 +22,12 @@ class GCTranslationEntry(models.Model):
     def _compute_widgets(self):
         for rec in self:
             values = rec.translation_ids.mapped("values")
-            widgets = {"params": [], "list": []}
+            widgets = ""
             for value in values:
                 try:
                     value = safe_eval(value)
                 except Exception:
                     value = {}
-                if "params" in value and value["params"]:
-                    widgets["params"].extend(list(value["params"].keys()))
-                if "list" in value and value["list"]:
-                    widgets["list"].extend(list(value["list"].keys()))
+                for key, val in value.items():
+                    widgets += f"<{key}>: {val}\n"
             rec.widgets = widgets
