@@ -79,6 +79,7 @@
                             <th class="text-left">Name</th>
                             <th>Owner</th>
                             <th>User Count</th>
+                            <th />
                         </tr>
                     </thead>
                     <tbody>
@@ -96,10 +97,57 @@
                   t-out="len(team.permission_connector_ids.mapped('user_id'))"
                 />
                             </td>
+                            <td><a
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteTeamConfirmModal"
+                  id="deleteTeamConfirmModalLink"
+                ><i class="fa fa-trash" /></a></td>
                         </tr>
                     </tbody>
+                    <t
+            t-call="gigaclub_portal_team.portal_my_teams_delete_team_modal"
+          />
                 </t>
             </t>
+        </template>
+
+        <template id="portal_my_teams_delete_team_modal">
+            <div
+        class="modal fade"
+        id="deleteTeamConfirmModal"
+        tabindex="-1"
+        aria-labelledby="deleteTeamConfirmModalLabel"
+        aria-hidden="true"
+      >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5
+                class="modal-title"
+                id="deleteTeamConfirmModalLabel"
+              >Are you sure you want to delete this Team?</h5>
+                    <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Discard</button>
+                    <button
+                type="button"
+                class="btn btn-danger"
+                t-attf-onclick="window.location.href='/my/team/#{team.id}/delete?{{ keep_query() }}'"
+              >Confirm</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </template>
 
         <template id="portal_my_team_form">

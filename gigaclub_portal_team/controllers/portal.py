@@ -240,6 +240,15 @@ class GigaClubPortalTeam(GigaClubPortal):
                 return request.redirect("/my/team/{}/view".format(team.id))
         return request.render("gigaclub_portal_team.portal_my_team_form", values)
 
+    @route("/my/team/<int:team_id>/delete", type="http", auth="user", website=True)
+    def portal_my_team_delete(self, team_id, **kw):
+        try:
+            team_sudo = self._document_check_access("gc.team", team_id)
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+        team_sudo.unlink()
+        return request.redirect("/my/teams")
+
     def team_form_validate(self, values, team=False):
         error = dict()
         error_message = []

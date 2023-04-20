@@ -11,6 +11,7 @@
     "assets": {
         "web.assets_frontend": [
             "/gigaclub_portal_team/static/src/js/gigaclub_portal_team.js",
+            "/gigaclub_portal_team/static/src/scss/gigaclub_portal_team.scss",
         ]
     },
     "installable": True,
