@@ -33,7 +33,7 @@ class GCPermissionGroup(models.Model):
     def _compute_permissions(self):
         for rec in self:
             rec.computed_permission_profile_ids = (
-                rec.child_group_ids.mapped("computed_permission_profile_ids")
+                rec.parent_group_id.computed_permission_profile_ids
                 | rec.permission_profile_ids
             )
 

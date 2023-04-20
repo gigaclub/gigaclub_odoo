@@ -127,7 +127,7 @@ class GigaClubPortalTeam(GigaClubPortal):
                 }
                 if not form_values.get("user", "").isnumeric():
                     return return_redirect
-                user = request.env["gc.user"].browse(int(form_values.get("user", "")))
+                user = team_sudo.env["gc.user"].browse(int(form_values.get("user", "")))
                 if not user:
                     return return_redirect
                 self._team_user_set_groups(team_sudo, user, form.getlist("groups"))
@@ -141,6 +141,9 @@ class GigaClubPortalTeam(GigaClubPortal):
                 )
                 return return_redirect
             elif form.get("group-name", False):
+                return_redirect = request.redirect(
+                    "/my/team/{}/edit".format(team_sudo.id)
+                )
                 form_values = {
                     "name": form.get("group-name", False),
                     "description": form.get("group-description", False),
@@ -151,6 +154,31 @@ class GigaClubPortalTeam(GigaClubPortal):
                     "parent_group": form.get("parentgroup", False),
                     "child_groups": form.getlist("childgroups"),
                 }
+                new_permission_group = team_sudo.env["gc.permission.group"].create(
+                    {
+                        "name": form_values.get("name"),
+                        "description": form_values.get("description"),
+                        "parent_group_id": int(form_values.get("parent_group")),
+                        "child_group_ids": [
+                            (6, 0, [int(x) for x in form_values.get("child_groups")])
+                        ],
+                    }
+                )
+                existing_permissions = new_permission_group.permission_profile_ids.mapped(
+                    "permission_profile_entry_template_ids.permission_model_entry_id"  # noqa: B950
+                )
+                new_permission_profile = self._team_get_permission_profile(
+                    form_values.get("edit_team"),
+                    form_values.get("invite_user"),
+                    form_values.get("kick_user"),
+                    form_values.get("create_world_as_team"),
+                    existing_permissions,
+                )
+                new_permission_group.permission_profile_ids = [
+                    (6, 0, new_permission_profile.ids)
+                ]
+                team_sudo.possible_permission_group_ids |= new_permission_group
+                return return_redirect
             elif form.get("name", False):
                 form_values = {
                     "name": form.get("name", ""),
@@ -251,10 +279,29 @@ class GigaClubPortalTeam(GigaClubPortal):
             existing_permission_connector = request.env[
                 "gc.permission.connector"
             ].create({"team_id": team.id, "user_id": user.id})
-        permissions = request.env["gc.permission.model.entry"]
         existing_permissions = existing_permission_connector.permission_group_ids.mapped(
             "permission_profile_ids.permission_profile_entry_template_ids.permission_model_entry_id"  # noqa: B950
         )
+        new_permission_profile = self._team_get_permission_profile(
+            edit_team,
+            invite_user,
+            kick_user,
+            create_world_as_team,
+            existing_permissions,
+        )
+        existing_permission_connector.permission_profile_ids = [
+            (6, 0, new_permission_profile.ids)
+        ]
+
+    def _team_get_permission_profile(
+        self,
+        edit_team,
+        invite_user,
+        kick_user,
+        create_world_as_team,
+        existing_permissions,
+    ):
+        permissions = request.env["gc.permission.model.entry"]
         edit_team_permission = request.env.ref(
             "gigaclub_team.gc_permission_model_entry_gc_team_edit_team"
         )
@@ -286,9 +333,7 @@ class GigaClubPortalTeam(GigaClubPortal):
                 ]
             }
         )
-        existing_permission_connector.permission_profile_ids = [
-            (6, 0, new_permission_profile.ids)
-        ]
+        return new_permission_profile
 
     def _team_get_page_view_values(self, team, access_token=None, **kwargs):
         values = {

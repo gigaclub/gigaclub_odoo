@@ -441,7 +441,7 @@
                                             <select
                         id="select-parentgroup"
                         name="parentgroup"
-                        class="selectpicker"
+                        class="js-select-user-single js-states form-control"
                       >
                                                 <option data-tokens="" />
                                                 <option
@@ -464,7 +464,7 @@
                                             <select
                         id="select-childgroups"
                         name="childgroups"
-                        class="selectpicker"
+                        class="js-select-groups-multiple js-states form-control"
                         multiple="multiple"
                       >
                                                 <option
