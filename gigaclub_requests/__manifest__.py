@@ -3,8 +3,8 @@
     "version": "16.0.1.0.0",
     "summary": "GigaClub Requests Module",
     "category": "GigaClub",
-    "author": "GigaClub.net",
-    "website": "https://GigaClub.net",
+    "author": "GigaClub",
+    "website": "https://github.com/GigaClub/gigaclub_odoo",
     "license": "AGPL-3",
     "depends": ["gigaclub_base"],
     "data": [
