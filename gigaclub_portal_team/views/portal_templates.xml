@@ -41,10 +41,10 @@
 
         <template
       id="portal_my_home_inherit_gigaclub_portal_team"
-      inherit_id="gigaclub_portal.portal_my_home_inherit_gigaclub_portal"
+      inherit_id="project.portal_my_home"
       customize_show="True"
     >
-            <xpath expr="//div[hasclass('o_gigaclub_portal_docs')]" position="inside">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="title">Teams</t>
                     <t t-set="url" t-value="'/my/teams'" />
