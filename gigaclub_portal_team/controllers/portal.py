@@ -145,6 +145,7 @@ class GigaClubPortalTeam(GigaClubPortal):
                     "/my/team/{}/edit".format(team_sudo.id)
                 )
                 form_values = {
+                    "id": form.get("id", False),
                     "name": form.get("group-name", False),
                     "description": form.get("group-description", False),
                     "edit_team": form.get("editteam", False),
@@ -154,16 +155,41 @@ class GigaClubPortalTeam(GigaClubPortal):
                     "parent_group": form.get("parentgroup", False),
                     "child_groups": form.getlist("childgroups"),
                 }
-                new_permission_group = team_sudo.env["gc.permission.group"].create(
-                    {
-                        "name": form_values.get("name"),
-                        "description": form_values.get("description"),
-                        "parent_group_id": int(form_values.get("parent_group")),
-                        "child_group_ids": [
-                            (6, 0, [int(x) for x in form_values.get("child_groups")])
-                        ],
-                    }
-                )
+                if form_values.get("id"):
+                    new_permission_group = team_sudo.env["gc.permission.group"].browse(
+                        int(form_values.get("id"))
+                    )
+                    new_permission_group.write(
+                        {
+                            "name": form_values.get("name"),
+                            "description": form_values.get("description"),
+                            "parent_group_id": form_values.get("parent_group")
+                            and int(form_values.get("parent_group")),
+                            "child_group_ids": [
+                                (
+                                    6,
+                                    0,
+                                    [int(x) for x in form_values.get("child_groups")],
+                                )
+                            ],
+                        }
+                    )
+                else:
+                    new_permission_group = team_sudo.env["gc.permission.group"].create(
+                        {
+                            "name": form_values.get("name"),
+                            "description": form_values.get("description"),
+                            "parent_group_id": form_values.get("parent_group")
+                            and int(form_values.get("parent_group")),
+                            "child_group_ids": [
+                                (
+                                    6,
+                                    0,
+                                    [int(x) for x in form_values.get("child_groups")],
+                                )
+                            ],
+                        }
+                    )
                 existing_permissions = new_permission_group.permission_profile_ids.mapped(
                     "permission_profile_entry_template_ids.permission_model_entry_id"  # noqa: B950
                 )
@@ -569,9 +595,9 @@ class GigaClubPortalTeam(GigaClubPortal):
             },
             "users": [
                 {"id": user.id, "name": user.display_name}
-                for user in request.env["gc.user"]
-                .search([])
-                .filtered(lambda x: x not in team_users and x != team.owner_id)
+                for user in request.env["gc.user"].search(
+                    [("id", "not in", (team_users | team.owner_id).ids)]
+                )
             ],
         }
         return self._get_page_view_values(

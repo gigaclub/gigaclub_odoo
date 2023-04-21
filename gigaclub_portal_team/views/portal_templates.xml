@@ -236,7 +236,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <p t-out="team.get('users', [])" />
                                                 <tr
                           t-foreach="team.get('users', [])"
                           t-as="user"
@@ -245,6 +244,8 @@
                               href="#"
                               class="user-link"
                               t-att-data-bs-dict="json.dumps(user)"
+                              t-att-data-bs-users="json.dumps(users)"
+                              t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                               data-bs-toggle="modal"
                               data-bs-target="#user-modal"
                             ><t t-out="user.get('name', '')" /></a></td>
@@ -270,6 +271,8 @@
                     type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#user-modal"
+                    t-att-data-bs-users="json.dumps(users)"
+                    t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                   >Add User</button>
                                 </div>
                             </div>
@@ -288,7 +291,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <p t-out="team.get('groups', [])" />
                                                 <tr
                           t-foreach="team.get('groups', [])"
                           t-as="group"
@@ -297,6 +299,7 @@
                               href="#"
                               class="group-link"
                               t-att-data-bs-dict="json.dumps(group)"
+                              t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                               data-bs-toggle="modal"
                               data-bs-target="#group-modal"
                             ><t t-out="group.get('name', '')" /></a></td>
@@ -319,6 +322,7 @@
                     type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#group-modal"
+                    t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                   >Add Group</button>
                                 </div>
                             </div>
@@ -532,6 +536,7 @@
                 name="csrf_token"
                 t-att-value="request.csrf_token()"
               />
+                            <input type="hidden" name="id" id="input-id" value="" />
                             <div class="modal-header">
                                 <h5 class="modal-title">Create Permission Group</h5>
                                 <button
