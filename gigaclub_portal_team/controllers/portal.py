@@ -249,6 +249,43 @@ class GigaClubPortalTeam(GigaClubPortal):
         team_sudo.unlink()
         return request.redirect("/my/teams")
 
+    @route(
+        "/my/team/<int:team_id>/permission_connector/<int:permission_connector_id>/delete",
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_team_permission_connector_delete(
+        self, team_id, permission_connector_id, **kw
+    ):
+        try:
+            user_sudo = self._document_check_access("gc.user", permission_connector_id)
+            team_sudo = self._document_check_access("gc.team", team_id)
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+        user_sudo.permission_connector_ids.filtered(
+            lambda x: x.team_id == team_sudo
+        ).unlink()
+        return request.redirect(f"/my/team/{team_id}/edit")
+
+    @route(
+        "/my/team/<int:team_id>/permission_group/<int:permission_group_id>/delete",
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_team_permission_group_delete(
+        self, team_id, permission_group_id, **kw
+    ):
+        try:
+            permission_group_sudo = self._document_check_access(
+                "gc.permission.group", permission_group_id
+            )
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+        permission_group_sudo.unlink()
+        return request.redirect(f"/my/team/{team_id}/edit")
+
     def team_form_validate(self, values, team=False):
         error = dict()
         error_message = []
@@ -371,6 +408,7 @@ class GigaClubPortalTeam(GigaClubPortal):
         values = {
             "page_name": "team",
             "team": {
+                "id": team.id,
                 "owner": team.owner_id.display_name,
                 "name": team.name,
                 "description": team.description,
