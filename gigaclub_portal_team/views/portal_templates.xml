@@ -100,6 +100,7 @@
                             <td><a
                   data-bs-toggle="modal"
                   data-bs-target="#deleteTeamConfirmModal"
+                  t-att-data-bs-team_id="team.id"
                   class="deleteLink"
                 ><i class="fa fa-trash" /></a></td>
                         </tr>
@@ -142,7 +143,7 @@
                     <button
                 type="button"
                 class="btn btn-danger"
-                t-attf-onclick="window.location.href='/my/team/#{team.id}/delete?{{ keep_query() }}'"
+                t-attf-onclick="window.location.href=`/my/team/${window.currentTeamId}/delete?{{ keep_query() }}`"
               >Confirm</button>
                   </div>
                 </div>
@@ -235,7 +236,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <p t-out="team.get('users', [])" />
                                                 <tr
                           t-foreach="team.get('users', [])"
                           t-as="user"
@@ -243,9 +243,11 @@
                                                     <td><a
                               href="#"
                               class="user-link"
-                              t-att-data-dict="user"
+                              t-att-data-bs-dict="json.dumps(user)"
+                              t-att-data-bs-users="json.dumps(users)"
+                              t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                               data-bs-toggle="modal"
-                              data-bs-target=".user-modal-lg"
+                              data-bs-target="#user-modal"
                             ><t t-out="user.get('name', '')" /></a></td>
                                                     <td
                             t-out="user.get('group_count', 0)"
@@ -255,7 +257,8 @@
                           />
                                                     <td><a
                               data-bs-toggle="modal"
-                              data-bs-target="#deleteTeamConfirmModal"
+                              data-bs-target="#deletePermissionConnectorConfirmModal"
+                              t-att-data-bs-permission_connector_id="user.get('id')"
                               class="deleteLink"
                             ><i class="fa fa-trash" /></a></td>
                                                 </tr>
@@ -267,7 +270,9 @@
                     class="btn btn-sm btn-primary"
                     type="button"
                     data-bs-toggle="modal"
-                    data-bs-target=".user-modal-lg"
+                    data-bs-target="#user-modal"
+                    t-att-data-bs-users="json.dumps(users)"
+                    t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                   >Add User</button>
                                 </div>
                             </div>
@@ -286,7 +291,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <p t-out="team.get('groups', [])" />
                                                 <tr
                           t-foreach="team.get('groups', [])"
                           t-as="group"
@@ -294,16 +298,18 @@
                                                     <td><a
                               href="#"
                               class="group-link"
-                              t-att-data-dict="group"
+                              t-att-data-bs-dict="json.dumps(group)"
+                              t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                               data-bs-toggle="modal"
-                              data-bs-target=".group-modal-lg"
+                              data-bs-target="#group-modal"
                             ><t t-out="group.get('name', '')" /></a></td>
                                                     <td
                             t-out="group.get('permission_count', 0)"
                           />
                                                     <td><a
                               data-bs-toggle="modal"
-                              data-bs-target="#deleteTeamConfirmModal"
+                              data-bs-target="#deletePermissionGroupConfirmModal"
+                              t-att-data-bs-permission_group_id="group.get('id')"
                               class="deleteLink"
                             ><i class="fa fa-trash" /></a></td>
                                                 </tr>
@@ -315,7 +321,8 @@
                     class="btn btn-sm btn-primary"
                     type="button"
                     data-bs-toggle="modal"
-                    data-bs-target=".group-modal-lg"
+                    data-bs-target="#group-modal"
+                    t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                   >Add Group</button>
                                 </div>
                             </div>
@@ -330,12 +337,97 @@
         >
                     <t t-set="type" t-value="'group'" />
                 </t>
+                <t
+          t-call="gigaclub_portal_team.portal_my_teams_delete_permission_connector_modal"
+        />
+                <t
+          t-call="gigaclub_portal_team.portal_my_teams_delete_permission_group_modal"
+        />
             </t>
+        </template>
+
+        <template id="portal_my_teams_delete_permission_connector_modal">
+            <div
+        class="modal fade"
+        id="deletePermissionConnectorConfirmModal"
+        tabindex="-1"
+        aria-labelledby="deletePermissionConnectorConfirmModalLabel"
+        aria-hidden="true"
+      >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5
+                class="modal-title"
+                id="deletePermissionConnectorConfirmModalLabel"
+              >Are you sure you want to remove this User from this Team?</h5>
+                            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Discard</button>
+                            <button
+                type="button"
+                class="btn btn-danger"
+                t-attf-onclick="window.location.href=`/my/team/#{team.get('id')}/permission_connector/${window.currentPermissionConnectorId}/delete?{{ keep_query() }}`"
+              >Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="portal_my_teams_delete_permission_group_modal">
+            <div
+        class="modal fade"
+        id="deletePermissionGroupConfirmModal"
+        tabindex="-1"
+        aria-labelledby="deletePermissionGroupConfirmModalLabel"
+        aria-hidden="true"
+      >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5
+                class="modal-title"
+                id="deletePermissionGroupConfirmModalLabel"
+              >Are you sure you want to remove this Group from this Team?</h5>
+                            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Discard</button>
+                            <button
+                type="button"
+                class="btn btn-danger"
+                t-attf-onclick="window.location.href=`/my/team/#{team.get('id')}/permission_group/${window.currentPermissionGroupId}/delete?{{ keep_query() }}`"
+              >Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </template>
 
         <template id="portal_my_team_form_user_modal">
             <div
         class="modal fade user-modal-lg"
+        id="user-modal"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
@@ -348,6 +440,7 @@
                 name="csrf_token"
                 t-att-value="request.csrf_token()"
               />
+                            <input type="hidden" name="id" value="" />
                             <div class="modal-header">
                                 <h5 class="modal-title">Add User</h5>
                                 <button
@@ -430,6 +523,7 @@
         <template id="portal_my_team_form_permission_group_modal">
             <div
         class="modal fade group-modal-lg"
+        id="group-modal"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
@@ -442,6 +536,7 @@
                 name="csrf_token"
                 t-att-value="request.csrf_token()"
               />
+                            <input type="hidden" name="id" id="input-id" value="" />
                             <div class="modal-header">
                                 <h5 class="modal-title">Create Permission Group</h5>
                                 <button
