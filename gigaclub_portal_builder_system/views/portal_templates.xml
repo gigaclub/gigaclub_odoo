@@ -348,4 +348,84 @@
         </t>
     </template>
 
+    <template id="portal_my_world_view">
+        <t t-call="portal.portal_layout">
+            <a
+        class="btn btn-primary"
+        t-attf-href="/my/world/{{ world.id }}/edit?{{ keep_query() }}"
+        role="button"
+        style="margin: 0.5rem 0;"
+      >Edit</a>
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <h5 class="mb-0">
+                        <span t-field="world.name" class="text-truncate" />
+                    </h5>
+                </t>
+                <t t-set="card_body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <h6><strong>World Type</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <span t-field="world.world_type_id" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <h6><strong>Owner</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <span t-field="world.owner_id" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <h6><strong>Task</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <span t-field="world.task_id" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <t
+              t-set="users"
+              t-value="world.permission_connector_ids.mapped('user_id')"
+            />
+                        <div t-if="users" class="col-12 mb-2 mb-md-0">
+                            <h6><strong>Users</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <t t-foreach="users" t-as="user">
+                                        <p t-field="user.display_name" />
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <t
+              t-set="teams"
+              t-value="world.permission_connector_ids.mapped('team_id')"
+            />
+                        <div t-if="teams" class="col-12 mb-2 mb-md-0">
+                            <h6><strong>Teams</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <t t-foreach="teams" t-as="team">
+                                        <p t-field="team.display_name" />
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
 </odoo>

@@ -150,6 +150,23 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
             "gigaclub_portal_builder_system.portal_my_world_form", values
         )
 
+    @route(
+        "/my/world/<int:world_id>/view",
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_world_view(self, world_id, **kw):
+        try:
+            world_sudo = self._document_check_access("gc.builder.world", world_id)
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+
+        values = self._world_get_page_view_values(world_sudo, **kw)
+        return request.render(
+            "gigaclub_portal_builder_system.portal_my_world_view", values
+        )
+
     def world_form_validate(self, values, world=False):
         error = dict()
         error_message = []
@@ -195,4 +212,13 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
             "my_worlds_history",
             False,
             **kwargs
+        )
+
+    def _world_get_page_view_values(self, world, access_token=None, **kwargs):
+        values = {
+            "page_name": "world",
+            "world": world,
+        }
+        return self._get_page_view_values(
+            world, access_token, values, "my_worlds_history", False, **kwargs
         )
