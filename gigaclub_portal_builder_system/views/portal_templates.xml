@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+    id="portal_my_home_inherit_gigaclub_portal_team"
+    inherit_id="project.portal_my_home"
+    customize_show="True"
+  >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Worlds</t>
+                <t t-set="url" t-value="'/my/worlds'" />
+                <t t-set="placeholder_count" t-value="'world_count'" />
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
