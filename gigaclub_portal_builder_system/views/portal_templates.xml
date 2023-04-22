@@ -148,6 +148,204 @@
         </div>
     </template>
 
-
+    <template id="portal_my_world_form">
+        <t t-call="portal.portal_layout">
+            <form method="post">
+                <input
+          type="hidden"
+          name="csrf_token"
+          t-att-value="request.csrf_token()"
+        />
+                <input
+          type="submit"
+          class="btn btn-primary"
+          role="button"
+          style="margin: 0.5rem 0;"
+          value="Save"
+        />
+                <a
+          class="btn btn-secondary"
+          t-attf-href="/my/worlds?{{ keep_query() }}"
+          role="button"
+          style="margin: 0.5rem 0;"
+        >Discard</a>
+                <div t-if="error_message" class="alert alert-danger" role="alert">
+                    <t t-foreach="error_message" t-as="err">
+                        <t t-out="err" /><br />
+                    </t>
+                </div>
+                <t t-call="portal.portal_record_layout">
+                    <t t-set="card_header">
+                        <div
+              t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''}"
+            >
+                            <input
+                type="text"
+                name="name"
+                t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}"
+                placeholder="Enter Name"
+                t-att-value="world.get('name', '')"
+                required="required"
+              />
+                        </div>
+                    </t>
+                    <t t-set="card_body">
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                <div class="form-group">
+                                    <label for="select-worldtype">World Type</label>
+                                    <select
+                    id="select-worldtype"
+                    name="world_type_id"
+                    class="js-select-worldtype-single js-states form-control"
+                    required="required"
+                  >
+                                        <option data-tokens="" />
+                                        <option
+                      t-foreach="world.get('worldtypes', [])"
+                      t-as="worldtype"
+                      t-out="worldtype.get('name', '')"
+                      t-att-value="worldtype.get('id', '')"
+                    />
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                <div class="form-group">
+                                    <label for="input-owner">Owner</label>
+                                    <input
+                    type="text"
+                    class="form-control readonly"
+                    id="input-owner"
+                    t-att-value="world.get('owner', '')"
+                    readonly="1"
+                  />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                <div class="form-group">
+                                    <label for="select-task">Task</label>
+                                    <select
+                    id="select-task"
+                    name="task_id"
+                    class="js-select-task-single js-states form-control"
+                    required="required"
+                  >
+                                        <option data-tokens="" />
+                                        <option
+                      t-foreach="world.get('tasks', [])"
+                      t-as="task"
+                      t-out="task.get('name', '')"
+                      t-att-value="task.get('id', '')"
+                    />
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label>Users</label>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Permission Count</th>
+                                                <th />
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                        t-foreach="world.get('users', [])"
+                        t-as="user"
+                      >
+                                                <td><a
+                            href="#"
+                            class="user-link"
+                            t-att-data-bs-dict="json.dumps(user)"
+                            t-att-data-bs-users="json.dumps(users)"
+                            data-bs-toggle="modal"
+                            data-bs-target="#user-modal"
+                          ><t t-out="user.get('name', '')" /></a></td>
+                                                <td
+                          t-out="user.get('permission_count', 0)"
+                        />
+                                                <td><a
+                            data-bs-toggle="modal"
+                            data-bs-target="#deletePermissionConnectorConfirmModal"
+                            t-att-data-bs-permission_connector_id="user.get('id')"
+                            class="deleteLink"
+                          ><i class="fa fa-trash" /></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button
+                  t-if="mode == 'edit'"
+                  class="btn btn-sm btn-primary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#user-modal"
+                  t-att-data-bs-users="json.dumps(users)"
+                  t-att-data-bs-groups="json.dumps(team.get('groups', []))"
+                >Add User</button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col">
+                                <label>Teams</label>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Permission Count</th>
+                                                <th />
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                        t-foreach="world.get('teams', [])"
+                        t-as="team"
+                      >
+                                                <td><a
+                            href="#"
+                            class="team-link"
+                            t-att-data-bs-dict="json.dumps(team)"
+                            t-att-data-bs-teams="json.dumps(teams)"
+                            data-bs-toggle="modal"
+                            data-bs-target="#team-modal"
+                          ><t t-out="team.get('name', '')" /></a></td>
+                                                <td
+                          t-out="team.get('permission_count', 0)"
+                        />
+                                                <td><a
+                            data-bs-toggle="modal"
+                            data-bs-target="#deletePermissionConnectorConfirmModal"
+                            t-att-data-bs-permission_connector_id="team.get('id')"
+                            class="deleteLink"
+                          ><i class="fa fa-trash" /></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button
+                  t-if="mode == 'edit'"
+                  class="btn btn-sm btn-primary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#team-modal"
+                  t-att-data-bs-users="json.dumps(users)"
+                  t-att-data-bs-groups="json.dumps(team.get('groups', []))"
+                >Add Team</button>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </form>
+        </t>
+    </template>
 
 </odoo>
