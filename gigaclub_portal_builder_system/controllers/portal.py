@@ -1,4 +1,5 @@
 from odoo import _
+from odoo.exceptions import AccessError, MissingError
 from odoo.http import request, route
 
 from odoo.addons.gigaclub_portal.controllers.portal import GigaClubPortal
@@ -102,3 +103,12 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
             }
         )
         return request.render("gigaclub_portal_builder_system.portal_my_worlds", values)
+
+    @route("/my/world/<int:world_id>/delete", type="http", auth="user", website=True)
+    def portal_my_world_delete(self, world_id, **kw):
+        try:
+            world_sudo = self._document_check_access("gc.builder.world", world_id)
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+        world_sudo.unlink()
+        return request.redirect("/my/worlds")
