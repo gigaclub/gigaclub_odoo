@@ -12,12 +12,19 @@ class GCPermissionConnector(models.Model):
 
     def get_permissions(self):
         self.ensure_one()
+        # TODO: check if this can be simplified
         permission_model_entries = (
             self.permission_group_ids.mapped(
                 "permission_profile_ids.permission_profile_entry_template_ids.permission_model_entry_id"  # noqa: B950
             )
+            | self.permission_group_ids.mapped(
+                "permission_profile_ids.permission_profile_entry_ids.permission_model_entry_id"  # noqa: B950
+            )
             | self.permission_profile_ids.mapped(
                 "permission_profile_entry_template_ids.permission_model_entry_id"
+            )
+            | self.permission_profile_ids.mapped(
+                "permission_profile_entry_ids.permission_model_entry_id"
             )
         ).filtered(lambda x: x.permission_type == "connector")
         return permission_model_entries

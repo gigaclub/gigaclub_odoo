@@ -349,6 +349,7 @@ class GCBuilderWorld(models.Model):
                 {"name": u.name, "mc_uuid": u.mc_uuid}
                 for u in world.permission_connector_ids.mapped("user_id")
             ],
+            "owner_id": world.owner_id.mc_uuid,
         }
 
     @api.model

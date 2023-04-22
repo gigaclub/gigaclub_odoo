@@ -91,6 +91,7 @@ $("#group-modal").on("show.bs.modal", (event) => {
   const button = event.relatedTarget;
   let data = button.getAttribute("data-bs-dict");
 
+  $("#input-id").val("");
   $("#input-name").val("");
   $("#textarea-description").val("");
 
