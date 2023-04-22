@@ -206,6 +206,7 @@
                       t-as="worldtype"
                       t-out="worldtype.get('name', '')"
                       t-att-value="worldtype.get('id', '')"
+                      t-att-selected="worldtype.get('id', '') == world.get('world_type_id', '')"
                     />
                                     </select>
                                 </div>
@@ -239,6 +240,7 @@
                       t-as="task"
                       t-out="task.get('name', '')"
                       t-att-value="task.get('id', '')"
+                      t-att-selected="task.get('id', '') == world.get('task_id', '')"
                     />
                                     </select>
                                 </div>
@@ -289,7 +291,6 @@
                   data-bs-toggle="modal"
                   data-bs-target="#user-modal"
                   t-att-data-bs-users="json.dumps(users)"
-                  t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                 >Add User</button>
                             </div>
                         </div>
@@ -338,7 +339,6 @@
                   data-bs-toggle="modal"
                   data-bs-target="#team-modal"
                   t-att-data-bs-users="json.dumps(users)"
-                  t-att-data-bs-groups="json.dumps(team.get('groups', []))"
                 >Add Team</button>
                             </div>
                         </div>
