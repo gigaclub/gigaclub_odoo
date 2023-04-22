@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+    id="portal_breadcrumbs_inherit_gigaclub_portal_builder_system"
+    inherit_id="portal.portal_breadcrumbs"
+    priority="40"
+  >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+        t-if="page_name == 'world' or world"
+        class="col-lg-2"
+        t-attf-class="breadcrumb-item #{'active ' if not world else ''}"
+      >
+                <a t-if="world" t-attf-href="/my/worlds?{{ keep_query() }}">Worlds</a>
+                <t t-else="">Worlds</t>
+            </li>
+            <li
+        t-if="mode == 'create' and world and isinstance(world, dict)"
+        class="breadcrumb-item active"
+      >
+                Create
+            </li>
+            <li t-elif="world" class="breadcrumb-item active">
+                <t t-if="isinstance(world, dict)">
+                    <t t-out="world.get('name', '')" />
+                </t>
+                <t t-else="">
+                    <t t-out="world.name" />
+                </t>
+            </li>
+            <li
+        t-if="mode == 'edit' and world and isinstance(world, dict)"
+        class="breadcrumb-item active"
+      >
+                Edit
+            </li>
+        </xpath>
+    </template>
+
+    <template
+    id="portal_my_home_inherit_gigaclub_portal_builder_system"
+    inherit_id="project.portal_my_home"
+    customize_show="True"
+  >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Worlds</t>
+                <t t-set="url" t-value="'/my/worlds'" />
+                <t t-set="placeholder_count" t-value="'world_count'" />
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_worlds">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Worlds</t>
+            </t>
+
+            <a
+        class="btn btn-primary"
+        t-attf-href="/my/world/create?{{ keep_query() }}"
+        role="button"
+        style="margin-bottom: 0.5rem;"
+      >Create</a>
+
+            <t t-if="not worlds">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no worlds.
+                </div>
+            </t>
+            <t t-if="worlds" t-call="portal.portal_table">
+                <thead>
+                    <tr>
+                        <th class="text-left">Name</th>
+                        <th>World Type</th>
+                        <th>Task</th>
+                        <th>Owner</th>
+                        <th />
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="worlds" t-as="world">
+                        <td>
+                            <a
+                t-attf-href="/my/world/#{world.id}/view?{{ keep_query() }}"
+              ><span t-field="world.name" /></a>
+                        </td>
+                        <td><span t-field="world.world_type_id" /></td>
+                        <td><span t-field="world.task_id" /></td>
+                        <td>
+                            <span t-field="world.owner_id" />
+                        </td>
+                        <td><a
+                data-bs-toggle="modal"
+                data-bs-target="#deleteWorldConfirmModal"
+                t-att-data-bs-world_id="world.id"
+                class="deleteLink"
+              ><i class="fa fa-trash" /></a></td>
+                    </tr>
+                </tbody>
+                <t
+          t-call="gigaclub_portal_builder_system.portal_my_worlds_delete_world_modal"
+        />
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_my_worlds_delete_world_modal">
+        <div
+      class="modal fade"
+      id="deleteWorldConfirmModal"
+      tabindex="-1"
+      aria-labelledby="deleteWorldConfirmModalLabel"
+      aria-hidden="true"
+    >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5
+              class="modal-title"
+              id="deleteWorldConfirmModalLabel"
+            >Are you sure you want to delete this World?</h5>
+                        <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            />
+                    </div>
+                    <div class="modal-footer">
+                        <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Discard</button>
+                        <button
+              type="button"
+              class="btn btn-danger"
+              t-attf-onclick="window.location.href=`/my/world/${window.currentWorldId}/delete?{{ keep_query() }}`"
+            >Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_my_world_form">
+        <t t-call="portal.portal_layout">
+            <form method="post">
+                <input
+          type="hidden"
+          name="csrf_token"
+          t-att-value="request.csrf_token()"
+        />
+                <input
+          type="submit"
+          class="btn btn-primary"
+          role="button"
+          style="margin: 0.5rem 0;"
+          value="Save"
+        />
+                <a
+          class="btn btn-secondary"
+          t-attf-href="/my/worlds?{{ keep_query() }}"
+          role="button"
+          style="margin: 0.5rem 0;"
+        >Discard</a>
+                <div t-if="error_message" class="alert alert-danger" role="alert">
+                    <t t-foreach="error_message" t-as="err">
+                        <t t-out="err" /><br />
+                    </t>
+                </div>
+                <t t-call="portal.portal_record_layout">
+                    <t t-set="card_header">
+                        <div
+              t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''}"
+            >
+                            <input
+                type="text"
+                name="name"
+                t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}"
+                placeholder="Enter Name"
+                t-att-value="world.get('name', '')"
+                required="required"
+              />
+                        </div>
+                    </t>
+                    <t t-set="card_body">
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                <div class="form-group">
+                                    <label for="select-worldtype">World Type</label>
+                                    <select
+                    id="select-worldtype"
+                    name="world_type_id"
+                    class="js-select-worldtype-single js-states form-control"
+                    required="required"
+                  >
+                                        <option data-tokens="" />
+                                        <option
+                      t-foreach="world.get('worldtypes', [])"
+                      t-as="worldtype"
+                      t-out="worldtype.get('name', '')"
+                      t-att-value="worldtype.get('id', '')"
+                      t-att-selected="worldtype.get('id', '') == world.get('world_type_id', '')"
+                    />
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                <div class="form-group">
+                                    <label for="input-owner">Owner</label>
+                                    <input
+                    type="text"
+                    class="form-control readonly"
+                    id="input-owner"
+                    t-att-value="world.get('owner', '')"
+                    readonly="1"
+                  />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                <div class="form-group">
+                                    <label for="select-task">Task</label>
+                                    <select
+                    id="select-task"
+                    name="task_id"
+                    class="js-select-task-single js-states form-control"
+                    required="required"
+                  >
+                                        <option data-tokens="" />
+                                        <option
+                      t-foreach="world.get('tasks', [])"
+                      t-as="task"
+                      t-out="task.get('name', '')"
+                      t-att-value="task.get('id', '')"
+                      t-att-selected="task.get('id', '') == world.get('task_id', '')"
+                    />
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label>Users</label>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Permission Count</th>
+                                                <th />
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                        t-foreach="world.get('users', [])"
+                        t-as="user"
+                      >
+                                                <td><a
+                            href="#"
+                            class="user-link"
+                            t-att-data-bs-dict="json.dumps(user)"
+                            t-att-data-bs-users="json.dumps(users)"
+                            data-bs-toggle="modal"
+                            data-bs-target="#world-user-modal"
+                          ><t t-out="user.get('name', '')" /></a></td>
+                                                <td
+                          t-out="user.get('permission_count', 0)"
+                        />
+                                                <td><a
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteUserPermissionConnectorConfirmModal"
+                            t-att-data-bs-permission_connector_id="user.get('id')"
+                            class="deleteLink"
+                          ><i class="fa fa-trash" /></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button
+                  t-if="mode == 'edit'"
+                  class="btn btn-sm btn-primary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#world-user-modal"
+                  t-att-data-bs-users="json.dumps(users)"
+                >Add User</button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col">
+                                <label>Teams</label>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Permission Count</th>
+                                                <th />
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                        t-foreach="world.get('teams', [])"
+                        t-as="team"
+                      >
+                                                <td><a
+                            href="#"
+                            class="team-link"
+                            t-att-data-bs-dict="json.dumps(team)"
+                            t-att-data-bs-teams="json.dumps(teams)"
+                            data-bs-toggle="modal"
+                            data-bs-target="#world-team-modal"
+                          ><t t-out="team.get('name', '')" /></a></td>
+                                                <td
+                          t-out="team.get('permission_count', 0)"
+                        />
+                                                <td><a
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteTeamPermissionConnectorConfirmModal"
+                            t-att-data-bs-permission_connector_id="team.get('id')"
+                            class="deleteLink"
+                          ><i class="fa fa-trash" /></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button
+                  t-if="mode == 'edit'"
+                  class="btn btn-sm btn-primary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#world-team-modal"
+                  t-att-data-bs-teams="json.dumps(teams)"
+                >Add Team</button>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </form>
+            <t t-call="gigaclub_portal_builder_system.portal_my_world_form_user_modal">
+                <t t-set="type" t-value="'user'" />
+            </t>
+            <t t-call="gigaclub_portal_builder_system.portal_my_world_form_team_modal">
+                <t t-set="type" t-value="'team'" />
+            </t>
+            <t
+        t-call="gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_user_modal"
+      />
+            <t
+        t-call="gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_team_modal"
+      />
+        </t>
+    </template>
+
+    <template id="portal_my_world_delete_permission_connector_user_modal">
+        <div
+      class="modal fade"
+      id="deleteUserPermissionConnectorConfirmModal"
+      tabindex="-1"
+      aria-labelledby="deleteUserPermissionConnectorConfirmModalLabel"
+      aria-hidden="true"
+    >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5
+              class="modal-title"
+              id="deleteUserPermissionConnectorConfirmModalLabel"
+            >Are you sure you want to remove this User from this World?</h5>
+                        <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            />
+                    </div>
+                    <div class="modal-footer">
+                        <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Discard</button>
+                        <button
+              type="button"
+              class="btn btn-danger"
+              t-attf-onclick="window.location.href=`/my/world/#{world.get('id')}/permission_connector/${window.currentUserPermissionConnectorId}/delete/user?{{ keep_query() }}`"
+            >Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_my_world_delete_permission_connector_team_modal">
+        <div
+      class="modal fade"
+      id="deleteTeamPermissionConnectorConfirmModal"
+      tabindex="-1"
+      aria-labelledby="deleteTeamPermissionConnectorConfirmModalLabel"
+      aria-hidden="true"
+    >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5
+              class="modal-title"
+              id="deleteTeamPermissionConnectorConfirmModalLabel"
+            >Are you sure you want to remove this Team from this World?</h5>
+                        <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            />
+                    </div>
+                    <div class="modal-footer">
+                        <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Discard</button>
+                        <button
+              type="button"
+              class="btn btn-danger"
+              t-attf-onclick="window.location.href=`/my/world/#{world.get('id')}/permission_connector/${window.currentTeamPermissionConnectorId}/delete/team?{{ keep_query() }}`"
+            >Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_my_world_form_user_modal">
+        <div
+      class="modal fade world-user-modal-lg"
+      id="world-user-modal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="post">
+                        <input
+              type="hidden"
+              name="csrf_token"
+              t-att-value="request.csrf_token()"
+            />
+                        <input type="hidden" name="id" value="" />
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add User</h5>
+                            <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                                <span>&amp;times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="select-user">
+                                            User
+                                        </label>
+                                        <select
+                      id="select-user"
+                      name="user"
+                      class="js-select-user-single js-states form-control"
+                    >
+                                            <option data-tokens="" />
+                                            <option
+                        t-foreach="users"
+                        t-as="user"
+                        t-out="user.get('name', '')"
+                        t-att-value="user.get('id', '')"
+                      />
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <label>Permissions</label>
+                            <t
+                t-call="gigaclub_portal_builder_system.portal_my_world_form_permissions"
+              />
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Discard</button>
+                            <button
+                type="submit"
+                role="button"
+                class="btn btn-primary"
+              >Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_my_world_form_team_modal">
+        <div
+      class="modal fade world-team-modal-lg"
+      id="world-team-modal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="post">
+                        <input
+              type="hidden"
+              name="csrf_token"
+              t-att-value="request.csrf_token()"
+            />
+                        <input type="hidden" name="id" value="" />
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Team</h5>
+                            <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                                <span>&amp;times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="select-team">
+                                            Team
+                                        </label>
+                                        <select
+                      id="select-team"
+                      name="team"
+                      class="js-select-user-single js-states form-control"
+                    >
+                                            <option data-tokens="" />
+                                            <option
+                        t-foreach="teams"
+                        t-as="team"
+                        t-out="team.get('name', '')"
+                        t-att-value="team.get('id', '')"
+                      />
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <label>Permissions</label>
+                            <t
+                t-call="gigaclub_portal_builder_system.portal_my_world_form_permissions"
+              />
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Discard</button>
+                            <button
+                type="submit"
+                role="button"
+                class="btn btn-primary"
+              >Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_my_world_form_permissions">
+        <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    <input
+            type="checkbox"
+            class="form-check-input"
+            name="adduser"
+            t-attf-id="input-#{type}-adduser"
+          />
+                    <label
+            class="form-check-label"
+            t-attf-for="input-#{type}-adduser"
+          >Add User</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input
+            type="checkbox"
+            class="form-check-input"
+            name="addteam"
+            t-attf-id="input-#{type}-addteam"
+          />
+                    <label
+            class="form-check-label"
+            t-attf-for="input-#{type}-addteam"
+          >Add Team</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input
+            type="checkbox"
+            class="form-check-input"
+            name="removeuser"
+            t-attf-id="input-#{type}-removeuser"
+          />
+                    <label
+            class="form-check-label"
+            t-attf-for="input-#{type}-removeuser"
+          >Remove User</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    <input
+            type="checkbox"
+            class="form-check-input"
+            name="removeteam"
+            t-attf-id="input-#{type}-removeteam"
+          />
+                    <label
+            class="form-check-label"
+            t-attf-for="input-#{type}-removeteam"
+          >Remove Team</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input
+            type="checkbox"
+            class="form-check-input"
+            name="saveworld"
+            t-attf-id="input-#{type}-saveworld"
+          />
+                    <label
+            class="form-check-label"
+            t-attf-for="input-#{type}-saveworld"
+          >Save World</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input
+            type="checkbox"
+            class="form-check-input"
+            name="editworldtype"
+            t-attf-id="input-#{type}-editworldtype"
+          />
+                    <label
+            class="form-check-label"
+            t-attf-for="input-#{type}-editworldtype"
+          >Edit World Type</label>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_my_world_view">
+        <t t-call="portal.portal_layout">
+            <a
+        class="btn btn-primary"
+        t-attf-href="/my/world/{{ world.id }}/edit?{{ keep_query() }}"
+        role="button"
+        style="margin: 0.5rem 0;"
+      >Edit</a>
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <h5 class="mb-0">
+                        <span t-field="world.name" class="text-truncate" />
+                    </h5>
+                </t>
+                <t t-set="card_body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <h6><strong>World Type</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <span t-field="world.world_type_id" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <h6><strong>Owner</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <span t-field="world.owner_id" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <h6><strong>Task</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <span t-field="world.task_id" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <t
+              t-set="users"
+              t-value="world.permission_connector_ids.mapped('user_id')"
+            />
+                        <div t-if="users" class="col-12 mb-2 mb-md-0">
+                            <h6><strong>Users</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <t t-foreach="users" t-as="user">
+                                        <p t-field="user.display_name" />
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <t
+              t-set="teams"
+              t-value="world.permission_connector_ids.mapped('team_id')"
+            />
+                        <div t-if="teams" class="col-12 mb-2 mb-md-0">
+                            <h6><strong>Teams</strong></h6>
+                            <div class="row">
+                                <div class="col">
+                                    <t t-foreach="teams" t-as="team">
+                                        <p t-field="team.display_name" />
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

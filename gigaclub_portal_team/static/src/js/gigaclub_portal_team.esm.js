@@ -11,11 +11,7 @@ publicWidget.registry.PortalHomeCounters.include({
   },
 });
 
-$(".js-select-user-single").select2({
-  allowClear: true,
-  minimumInputLength: 0,
-  dropdownCssClass: "oe_import_selector",
-});
+$(".js-select-user-single").select2({});
 $(".js-select-groups-multiple").select2({});
 
 $("#deleteTeamConfirmModal").on("show.bs.modal", (event) => {
