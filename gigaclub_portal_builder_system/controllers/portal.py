@@ -116,6 +116,29 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
         world_sudo.unlink()
         return request.redirect("/my/worlds")
 
+    @route(
+        "/my/world/<int:world_id>/permission_connector/<int:permission_connector_id>/delete/<string:delete_type>",  # noqa: B950
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_world_permission_connector_delete(
+        self, world_id, permission_connector_id, delete_type, **kw
+    ):
+        try:
+            world_sudo = self._document_check_access("gc.builder.world", world_id)
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+        if delete_type == "team":
+            world_sudo.permission_connector_ids.filtered(
+                lambda x: x.team_id.id == permission_connector_id
+            ).unlink()
+        else:
+            world_sudo.permission_connector_ids.filtered(
+                lambda x: x.user_id.id == permission_connector_id
+            ).unlink()
+        return request.redirect(f"/my/world/{world_id}/edit")
+
     @route("/my/world/create", type="http", auth="user", website=True)
     def portal_my_world_create(self, **kw):
         values = self._world_get_page_create_values(**kw)
@@ -244,8 +267,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
             elif form.get("name", False):
                 form_values = {
                     "name": form.get("name", ""),
-                    "world_type_id": form.get("world_type_id", ""),
-                    "task_id": form.get("task_id", ""),
+                    "world_type_id": int(form.get("world_type_id", "")),
+                    "task_id": int(form.get("task_id", "")),
                 }
                 if form_values.get("name", "") == world_sudo.name:
                     del form_values["name"]
@@ -272,7 +295,7 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                     }
                     values.update({"team": write_vals})
                     world_sudo.write(write_vals)
-                    return request.redirect("/my/team/{}/view".format(world_sudo.id))
+                    return request.redirect("/my/world/{}/view".format(world_sudo.id))
         return request.render(
             "gigaclub_portal_builder_system.portal_my_world_form", values
         )
@@ -321,7 +344,7 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
             values,
             "my_worlds_history",
             False,
-            **kwargs
+            **kwargs,
         )
 
     def _world_get_page_view_values(self, world, access_token=None, **kwargs):
@@ -601,9 +624,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
         user=False,
     ):
         existing_permission_connector = first(
-            team.permission_connector_ids.filtered(
-                lambda x: x.world_id == world
-                and (x.user_id == user or x.team_id == team)
+            world.permission_connector_ids.filtered(
+                lambda x: x.user_id == user or x.team_id == team
             )
         )
         if not existing_permission_connector:
