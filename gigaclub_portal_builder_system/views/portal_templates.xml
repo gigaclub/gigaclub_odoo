@@ -2,7 +2,44 @@
 <odoo>
 
     <template
-    id="portal_my_home_inherit_gigaclub_portal_team"
+    id="portal_breadcrumbs_inherit_gigaclub_portal_builder_system"
+    inherit_id="portal.portal_breadcrumbs"
+    priority="40"
+  >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+        t-if="page_name == 'world' or world"
+        class="col-lg-2"
+        t-attf-class="breadcrumb-item #{'active ' if not world else ''}"
+      >
+                <a t-if="world" t-attf-href="/my/worlds?{{ keep_query() }}">Worlds</a>
+                <t t-else="">Worlds</t>
+            </li>
+            <li
+        t-if="mode == 'create' and world and isinstance(world, dict)"
+        class="breadcrumb-item active"
+      >
+                Create
+            </li>
+            <li t-elif="world" class="breadcrumb-item active">
+                <t t-if="isinstance(world, dict)">
+                    <t t-out="world.get('name', '')" />
+                </t>
+                <t t-else="">
+                    <t t-out="world.name" />
+                </t>
+            </li>
+            <li
+        t-if="mode == 'edit' and world and isinstance(world, dict)"
+        class="breadcrumb-item active"
+      >
+                Edit
+            </li>
+        </xpath>
+    </template>
+
+    <template
+    id="portal_my_home_inherit_gigaclub_portal_builder_system"
     inherit_id="project.portal_my_home"
     customize_show="True"
   >
@@ -13,6 +50,102 @@
                 <t t-set="placeholder_count" t-value="'world_count'" />
             </t>
         </xpath>
+    </template>
+
+    <template id="portal_my_worlds">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Worlds</t>
+            </t>
+
+            <a
+        class="btn btn-primary"
+        t-attf-href="/my/world/create?{{ keep_query() }}"
+        role="button"
+        style="margin-bottom: 0.5rem;"
+      >Create</a>
+
+            <t t-if="not worlds">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no worlds.
+                </div>
+            </t>
+            <t t-if="worlds" t-call="portal.portal_table">
+                <thead>
+                    <tr>
+                        <th class="text-left">Name</th>
+                        <th>World Type</th>
+                        <th>Task</th>
+                        <th>Owner</th>
+                        <th />
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="worlds" t-as="world">
+                        <td>
+                            <a
+                t-attf-href="/my/world/#{world.id}/view?{{ keep_query() }}"
+              ><span t-field="world.name" /></a>
+                        </td>
+                        <td><span t-field="world.world_type_id" /></td>
+                        <td><span t-field="world.task_id" /></td>
+                        <td>
+                            <span t-field="world.owner_id" />
+                        </td>
+                        <td><a
+                data-bs-toggle="modal"
+                data-bs-target="#deleteWorldConfirmModal"
+                t-att-data-bs-world_id="world.id"
+                class="deleteLink"
+              ><i class="fa fa-trash" /></a></td>
+                    </tr>
+                </tbody>
+                <t
+          t-call="gigaclub_portal_builder_system.portal_my_worlds_delete_world_modal"
+        />
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_my_worlds_delete_world_modal">
+        <div
+      class="modal fade"
+      id="deleteWorldConfirmModal"
+      tabindex="-1"
+      aria-labelledby="deleteWorldConfirmModalLabel"
+      aria-hidden="true"
+    >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5
+              class="modal-title"
+              id="deleteWorldConfirmModalLabel"
+            >Are you sure you want to delete this World?</h5>
+                        <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            />
+                    </div>
+                    <div class="modal-footer">
+                        <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Discard</button>
+                        <button
+              type="button"
+              class="btn btn-danger"
+              t-attf-onclick="window.location.href=`/my/world/${window.currentWorldId}/delete?{{ keep_query() }}`"
+            >Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </template>
 
 </odoo>

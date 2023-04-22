@@ -11,7 +11,7 @@
                 <li
           t-if="page_name == 'team' or team"
           class="col-lg-2"
-          t-attf-class="breadcrumb-item #{'active ' if not project else ''}"
+          t-attf-class="breadcrumb-item #{'active ' if not team else ''}"
         >
                     <a t-if="team" t-attf-href="/my/teams?{{ keep_query() }}">Teams</a>
                     <t t-else="">Teams</t>
@@ -120,34 +120,34 @@
         aria-labelledby="deleteTeamConfirmModalLabel"
         aria-hidden="true"
       >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5
                 class="modal-title"
                 id="deleteTeamConfirmModalLabel"
               >Are you sure you want to delete this Team?</h5>
-                    <button
+                            <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               />
-                  </div>
-                  <div class="modal-footer">
-                    <button
+                        </div>
+                        <div class="modal-footer">
+                            <button
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
               >Discard</button>
-                    <button
+                            <button
                 type="button"
                 class="btn btn-danger"
                 t-attf-onclick="window.location.href=`/my/team/${window.currentTeamId}/delete?{{ keep_query() }}`"
               >Confirm</button>
-                  </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
         </template>
 
