@@ -187,7 +187,9 @@ class GCTeam(models.Model):
     @api.model
     def get_teams_by_member(self, player_uuid):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        teams = user.permission_connector_ids.mapped("team_id")
+        teams = user.permission_connector_ids.mapped("team_id") | self.env[
+            "gc.team"
+        ].search([("owner_id", "=", user.id)])
         if teams:
             return self.get_teams(teams)
         return self.env["gc.team"]
