@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+    id="portal_breadcrumbs_inherit_gigaclub_portal_translation"
+    inherit_id="portal.portal_breadcrumbs"
+    priority="40"
+  >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+        t-if="page_name == 'translation' or translation"
+        class="col-lg-2"
+        t-attf-class="breadcrumb-item #{'active ' if not translation else ''}"
+      >
+                <a
+          t-if="translation"
+          t-attf-href="/my/translations?{{ keep_query() }}"
+        >Translations</a>
+                <t t-else="">Translations</t>
+            </li>
+            <li
+        t-if="mode == 'create' and translation and isinstance(translation, dict)"
+        class="breadcrumb-item active"
+      >
+                Create
+            </li>
+            <li t-elif="translation" class="breadcrumb-item active">
+                <t t-if="isinstance(translation, dict)">
+                    <t t-out="translation.get('name', '')" />
+                </t>
+                <t t-else="">
+                    <t t-out="translation.name" />
+                </t>
+            </li>
+            <li
+        t-if="mode == 'edit' and translation and isinstance(translation, dict)"
+        class="breadcrumb-item active"
+      >
+                Edit
+            </li>
+        </xpath>
+    </template>
+
+    <template
+    id="portal_my_home_inherit_gigaclub_portal_translation"
+    inherit_id="project.portal_my_home"
+    customize_show="True"
+  >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Translations</t>
+                <t t-set="url" t-value="'/my/translations'" />
+                <t t-set="placeholder_count" t-value="'translation_count'" />
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
