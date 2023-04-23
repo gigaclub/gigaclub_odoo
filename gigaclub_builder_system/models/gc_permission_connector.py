@@ -21,6 +21,15 @@ class GCPermissionConnector(models.Model):
         if user:
             return [
                 self.env["gc.builder.world"].return_world(x)
-                for x in self.search([("user_id", "=", user.id)]).mapped("world_id")
+                for x in self.search(
+                    [
+                        ("user_id", "=", user.id),
+                        (
+                            "team_id",
+                            "in",
+                            user.permission_connector_ids.mapped("team_id").ids,
+                        ),
+                    ]
+                ).mapped("world_id")
             ]
         return []
