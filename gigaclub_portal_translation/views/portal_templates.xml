@@ -55,4 +55,46 @@
         </xpath>
     </template>
 
+    <template id="portal_my_translations">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Translations</t>
+            </t>
+
+            <t t-if="not translations">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no translations.
+                </div>
+            </t>
+            <t t-if="translations" t-call="portal.portal_table">
+                <thead>
+                    <tr>
+                        <th class="text-left">Name</th>
+                        <th>Translation</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="translations" t-as="translation">
+                        <td>
+                            <a
+                t-attf-href="/my/translation/#{translation.id}/view?{{ keep_query() }}"
+              ><span t-field="translation.name" /></a>
+                        </td>
+                        <td>
+                            <span
+                t-out="translation.translation_entry_ids.filtered(lambda x: x.env.user.lang == x.lang)[:1].content"
+              />
+                        </td>
+                        <td>
+                            <span t-field="translation.category" />
+                        </td>
+                    </tr>
+                </tbody>
+            </t>
+        </t>
+    </template>
+
 </odoo>
