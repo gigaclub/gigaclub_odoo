@@ -1,4 +1,5 @@
 from odoo import _
+from odoo.exceptions import AccessError, MissingError
 from odoo.http import request, route
 
 from odoo.addons.gigaclub_portal.controllers.portal import GigaClubPortal
@@ -71,4 +72,39 @@ class GigaClubTranslationPortal(GigaClubPortal):
         )
         return request.render(
             "gigaclub_portal_translation.portal_my_translations", values
+        )
+
+    @route(
+        "/my/translation/<int:translation_id>/view",
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_translation_view(self, translation_id, **kw):
+        try:
+            translation_sudo = self._document_check_access(
+                "gc.translation", translation_id
+            )
+        except (AccessError, MissingError):
+            return request.redirect("/my")
+
+        values = self._translation_get_page_view_values(translation_sudo, **kw)
+        return request.render(
+            "gigaclub_portal_translation.portal_my_translation_view", values
+        )
+
+    def _translation_get_page_view_values(
+        self, translation, access_token=None, **kwargs
+    ):
+        values = {
+            "page_name": "translation",
+            "translation": translation,
+        }
+        return self._get_page_view_values(
+            translation,
+            access_token,
+            values,
+            "my_translations_history",
+            False,
+            **kwargs
         )

@@ -1,0 +1,295 @@
+/* font shit */
+* {
+  font-size: 20px;
+}
+.mc-font {
+  font-family: "Minecraft", monospace;
+}
+.mono-font {
+  font-family: monospace, monospace;
+}
+@font-face {
+  font-family: "Minecraft";
+  src: url("../font/1_Minecraft-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Minecraft";
+  src: url("../font/2_Minecraft-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Minecraft";
+  src: url("../font/3_Minecraft-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Minecraft";
+  src: url("../font/4_Minecraft-BoldItalic.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+/* output pane */
+#output-pane {
+  background-image: url("../img/grass.jpg");
+  background-size: cover;
+}
+#output-pane #server-list-icon,
+#output-pane #server-list-header {
+  display: none;
+}
+#output-pane.mode-chat-open > #output-lines,
+#output-pane.mode-chat-closed > #output-lines {
+  background-position: bottom left;
+  display: flex;
+  align-items: flex-end;
+}
+#output-pane.mode-chat-open,
+#output-pane.mode-chat-open > #output-lines {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  width: 100%;
+}
+#output-pane:not(.mode-chat-open) > #chat-entry-box {
+  display: none;
+}
+#output-pane.mode-chat-open > #chat-entry-box {
+  background-color: rgba(0, 0, 0, 0.4);
+  margin: 5px;
+  height: 34px;
+  width: calc(100% - 10px);
+  color: white;
+  line-height: 32px;
+  font-size: 32px;
+  padding-left: 5px;
+}
+#output-pane.mode-hologram > #output-lines {
+  background-position: center center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+#output-pane.mode-lore > #output-lines {
+  background-position: center center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+#output-pane.mode-server-list {
+  background-image: url("../img/server_list_background.jpg");
+  background-size: auto;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+#output-pane.mode-server-list > #output-lines {
+  align-items: flex-start;
+  flex-direction: column;
+  display: inline-flex;
+  line-height: 25px;
+  padding-left: 10px;
+  max-width: 546px;
+}
+#output-pane.mode-server-list #server-list-icon {
+  display: block;
+}
+#output-pane.mode-server-list #server-list-header {
+  display: flex;
+  width: 100%;
+}
+/* output pre */
+#output-pre:empty {
+  display: none !important;
+}
+#output-pre,
+#hover-tooltip {
+  margin-bottom: 4px;
+  color: white;
+  background-color: rgba(1, 1, 1, 0.4);
+  text-shadow: 3px 3px hsl(0, 0%, 24%);
+}
+#output-pre span,
+#hover-tooltip span {
+  font-size: 28px;
+  line-height: 28px;
+}
+#output-pre.mode-chat-open,
+#output-pre.mode-chat-closed {
+  padding: 0 5px;
+  width: 55%;
+  left: 36px;
+  right: 36px;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  white-space: break-spaces;
+  line-height: 19px;
+  display: inline-flex;
+  flex-direction: column;
+}
+#output-pre.mode-chat-open {
+  max-height: 573px; /* 20 lines */
+  margin-bottom: 74px;
+}
+#output-pre.mode-chat-closed {
+  max-height: 282px; /* 10 lines */
+  overflow-y: hidden;
+  margin-bottom: 118px;
+}
+#output-pre.mode-chat-open > div:first-child,
+#output-pre.mode-chat-closed > div:first-child {
+  padding-top: 3px;
+}
+#output-pre.mode-hologram {
+  display: inline-flex;
+  padding: 5px 10px;
+  flex-direction: column;
+  align-items: center;
+  line-height: 25px;
+  text-align: center;
+  background-color: rgba(1, 1, 1, 0);
+}
+#output-pre.mode-hologram span {
+  text-shadow: none !important;
+}
+#output-pre.mode-hologram > div {
+  background-color: rgba(1, 1, 1, 0.4);
+  padding: 4px 7px 0;
+}
+#output-pre.mode-hologram > div.no-padding {
+  padding: 0;
+}
+#output-pre.mode-lore {
+  display: inline-flex;
+  flex-direction: column;
+  color: #aa00aa;
+  font-style: italic;
+}
+#output-pre.mode-lore,
+#hover-tooltip {
+  background-color: rgba(1, 1, 1, 0.8);
+  border: solid #1b0035;
+  padding: 5px;
+  line-height: 19px;
+  border-radius: 5px;
+}
+#output-pre.mode-lore > div:first-child:not(:only-child) {
+  padding-bottom: 7px;
+}
+#output-pre.mode-server-list {
+  display: inline-flex;
+  flex-direction: column;
+  background: none;
+  padding: 0;
+  margin-bottom: 0;
+  max-width: 100%;
+  overflow: hidden;
+  color: #555555;
+}
+#output-pre.mode-server-list span {
+  font-size: 20px;
+  line-height: 20px;
+  text-shadow: none !important;
+}
+#hover-tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+/* other shit */
+.is-horizontal {
+  align-items: center;
+}
+#main-container {
+  padding: 0 32px;
+  width: 100%;
+}
+.gone {
+  display: none;
+}
+html {
+  overflow-y: hidden;
+}
+.hero {
+  padding-bottom: 15px;
+}
+.share-dropdown {
+  margin-right: 0.5rem;
+}
+.notification,
+.notification > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.notification pre {
+  text-align: left;
+}
+#server-list-image {
+  width: 65px;
+}
+#server-list-ping {
+  height: 20px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+#named-swatch {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 6rem;
+  padding-right: 1rem;
+}
+#named-swatch > .swatch {
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+.swatch-l {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.swatch-r {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+#palette-dropdown-menu {
+  left: -4rem;
+  right: auto;
+}
+input.placeholder-key:invalid {
+  border: 2px red solid;
+}
+#placeholder-tip {
+  display: none;
+}
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #e6e6e6;
+  }
+  .navbar {
+    background-color: #f5f5f5;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  section.modal-card-body {
+    background-color: black;
+  }
+  div.modal-background {
+    background-color: rgba(10, 10, 10, 0.86);
+  }
+  table.table td,
+  table.table th {
+    border-width: 0 0 1px;
+  }
+}
