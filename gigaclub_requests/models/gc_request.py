@@ -8,6 +8,7 @@ class GCRequest(models.Model):
 
     receiver_id = fields.Reference(selection=[("gc.user", "gc.user")])
     sender_id = fields.Reference(selection=[("gc.user", "gc.user")])
+    request_type = fields.Selection(selection=[])
     state = fields.Selection(
         selection=[
             ("waiting", "Waiting"),
@@ -22,22 +23,6 @@ class GCRequest(models.Model):
             if self.search([("id", "!=", rec.id), ("state", "=", "waiting")]).filtered(
                 lambda x: x.receiver_id == rec.receiver_id
                 and x.sender_id == rec.sender_id
+                and x.request_type == rec.request_type
             ):
                 raise ValidationError(_("waiting requests should be unique!"))
-
-    @api.model
-    def get_invites(self, player_uuid):
-        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
-        return [
-            {
-                "receiver_type": x.receiver_id._name,
-                "receiver_id": x.receiver_id.id,
-                "receiver_name": x.receiver_id.name,
-                "sender_type": x.sender_id._name,
-                "sender_id": x.sender_id.id,
-                "sender_name": x.sender_id.name,
-            }
-            for x in self.search(
-                [("receiver_id", "=", user.id), ("state", "=", "waiting")]
-            )
-        ]

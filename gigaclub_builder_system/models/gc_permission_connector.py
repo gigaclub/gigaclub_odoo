@@ -19,10 +19,12 @@ class GCPermissionConnector(models.Model):
     def get_user_worlds(self, player_uuid):
         user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
         if user:
+            GCBuilderWorld = self.env["gc.builder.world"]
             return [
-                self.env["gc.builder.world"].return_world(x)
+                GCBuilderWorld.return_world(x)
                 for x in self.search(
                     [
+                        "|",
                         ("user_id", "=", user.id),
                         (
                             "team_id",
@@ -31,5 +33,6 @@ class GCPermissionConnector(models.Model):
                         ),
                     ]
                 ).mapped("world_id")
+                | GCBuilderWorld.search([("owner_id", "=", user.id)])
             ]
         return []

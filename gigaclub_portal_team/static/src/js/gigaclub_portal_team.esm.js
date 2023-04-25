@@ -61,6 +61,8 @@ $("#user-modal").on("show.bs.modal", (event) => {
   $("#input-user-inviteuser").prop("checked", false);
   $("#input-user-kickuser").prop("checked", false);
   $("#input-user-createworldasteam").prop("checked", false);
+  $("#input-user-acceptworldrequestasteam").prop("checked", false);
+  $("#input-user-denyworldrequestasteam").prop("checked", false);
 
   if (data) {
     data = JSON.parse(data);
@@ -80,6 +82,14 @@ $("#user-modal").on("show.bs.modal", (event) => {
     $("#input-user-inviteuser").prop("checked", data.invite_user);
     $("#input-user-kickuser").prop("checked", data.kick_user);
     $("#input-user-createworldasteam").prop("checked", data.create_world_as_team);
+    $("#input-user-acceptworldrequestasteam").prop(
+      "checked",
+      data.accept_world_request_as_team
+    );
+    $("#input-user-denyworldrequestasteam").prop(
+      "checked",
+      data.deny_world_request_as_team
+    );
   }
 });
 
@@ -95,6 +105,8 @@ $("#group-modal").on("show.bs.modal", (event) => {
   $("#input-group-inviteuser").prop("checked", false);
   $("#input-group-kickuser").prop("checked", false);
   $("#input-group-createworldasteam").prop("checked", false);
+  $("#input-group-acceptworldrequestasteam").prop("checked", false);
+  $("#input-group-denyworldrequestasteam").prop("checked", false);
 
   let groups = button.getAttribute("data-bs-groups");
   groups = JSON.parse(groups);
@@ -142,5 +154,13 @@ $("#group-modal").on("show.bs.modal", (event) => {
     $("#input-group-inviteuser").prop("checked", data.invite_user);
     $("#input-group-kickuser").prop("checked", data.kick_user);
     $("#input-group-createworldasteam").prop("checked", data.create_world_as_team);
+    $("#input-group-acceptworldrequestasteam").prop(
+      "checked",
+      data.accept_world_request_as_team
+    );
+    $("#input-group-denyworldrequestasteam").prop(
+      "checked",
+      data.deny_world_request_as_team
+    );
   }
 });

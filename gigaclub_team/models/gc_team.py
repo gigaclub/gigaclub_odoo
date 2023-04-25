@@ -232,7 +232,7 @@ class GCTeam(models.Model):
         user_to_invite = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_invite)]
         )
-        if not user_to_invite:
+        if not user_to_invite.exists():
             return 3
         if user_to_invite.permission_connector_ids.filtered(
             lambda x: x.team_id == team
@@ -243,6 +243,7 @@ class GCTeam(models.Model):
                 {
                     "sender_id": f"{team._name},{team.id}",
                     "receiver_id": f"{user_to_invite._name},{user_to_invite.id}",
+                    "request_type": "member_to_team_invitation",
                     "state": "waiting",
                 }
             )
@@ -269,6 +270,7 @@ class GCTeam(models.Model):
             [
                 ("sender_id", "=", f"{team._name},{team.id}"),
                 ("receiver_id", "=", f"{user._name},{user.id}"),
+                ("request_type", "=", "member_to_team_invitation"),
                 ("state", "=", "waiting"),
             ],
             limit=1,
@@ -302,6 +304,7 @@ class GCTeam(models.Model):
             [
                 ("sender_id", "=", f"{team._name},{team.id}"),
                 ("receiver_id", "=", f"{user._name},{user.id}"),
+                ("request_type", "=", "member_to_team_invitation"),
                 ("state", "=", "waiting"),
             ],
             limit=1,

@@ -208,8 +208,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                 )
                 form_values = {
                     "user": form.get("user", ""),
-                    "add_user": form.get("adduser", False),
-                    "add_team": form.get("addteam", False),
+                    "invite_user": form.get("inviteuser", False),
+                    "invite_team": form.get("inviteteam", False),
                     "remove_user": form.get("removeuser", False),
                     "remove_team": form.get("removeteam", False),
                     "save_world": form.get("saveworld", False),
@@ -224,8 +224,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                     return return_redirect
                 self._world_set_permissions(
                     world_sudo,
-                    form_values.get("add_user", False),
-                    form_values.get("add_team", False),
+                    form_values.get("invite_user", False),
+                    form_values.get("invite_team", False),
                     form_values.get("remove_user", False),
                     form_values.get("remove_team", False),
                     form_values.get("save_world", False),
@@ -239,8 +239,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                 )
                 form_values = {
                     "team": form.get("team", ""),
-                    "add_user": form.get("adduser", False),
-                    "add_team": form.get("addteam", False),
+                    "invite_user": form.get("inviteuser", False),
+                    "invite_team": form.get("inviteteam", False),
                     "remove_user": form.get("removeuser", False),
                     "remove_team": form.get("removeteam", False),
                     "save_world": form.get("saveworld", False),
@@ -255,8 +255,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                     return return_redirect
                 self._world_set_permissions(
                     world_sudo,
-                    form_values.get("add_user", False),
-                    form_values.get("add_team", False),
+                    form_values.get("invite_user", False),
+                    form_values.get("invite_team", False),
                     form_values.get("remove_user", False),
                     form_values.get("remove_team", False),
                     form_values.get("save_world", False),
@@ -379,7 +379,7 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                                 "permission_profile_entry_ids.permission_model_entry_id"
                             )
                         ),
-                        "add_user": bool(
+                        "invite_user": bool(
                             user.permission_connector_ids.filtered(
                                 lambda x: x.world_id == world
                             )
@@ -390,11 +390,11 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                             .filtered(
                                 lambda x: x
                                 == request.env.ref(
-                                    "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_add_user"  # noqa: B950
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_invite_user"  # noqa: B950
                                 )
                             )
                         ),
-                        "add_team": bool(
+                        "invite_team": bool(
                             user.permission_connector_ids.filtered(
                                 lambda x: x.world_id == world
                             )
@@ -405,7 +405,7 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                             .filtered(
                                 lambda x: x
                                 == request.env.ref(
-                                    "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_add_team"  # noqa: B950
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_invite_team"  # noqa: B950
                                 )
                             )
                         ),
@@ -484,7 +484,7 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                                 "permission_profile_entry_ids.permission_model_entry_id"
                             )
                         ),
-                        "add_user": bool(
+                        "invite_user": bool(
                             team.permission_connector_ids.filtered(
                                 lambda x: x.world_id == world
                             )
@@ -495,11 +495,11 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                             .filtered(
                                 lambda x: x
                                 == request.env.ref(
-                                    "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_add_user"  # noqa: B950
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_invite_user"  # noqa: B950
                                 )
                             )
                         ),
-                        "add_team": bool(
+                        "invite_team": bool(
                             team.permission_connector_ids.filtered(
                                 lambda x: x.world_id == world
                             )
@@ -510,7 +510,7 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                             .filtered(
                                 lambda x: x
                                 == request.env.ref(
-                                    "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_add_team"  # noqa: B950
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_invite_team"  # noqa: B950
                                 )
                             )
                         ),
@@ -614,8 +614,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
     def _world_set_permissions(
         self,
         world,
-        add_user,
-        add_team,
+        invite_user,
+        invite_team,
         remove_user,
         remove_team,
         save_world,
@@ -642,8 +642,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
             "permission_profile_ids.permission_profile_entry_template_ids.permission_model_entry_id"  # noqa: B950
         )
         new_permission_profile = self._get_permission_profile(
-            add_user,
-            add_team,
+            invite_user,
+            invite_team,
             remove_user,
             remove_team,
             save_world,
@@ -656,8 +656,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
 
     def _get_permission_profile(
         self,
-        add_user,
-        add_team,
+        invite_user,
+        invite_team,
         remove_user,
         remove_team,
         save_world,
@@ -665,16 +665,16 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
         existing_permissions,
     ):
         permissions = request.env["gc.permission.model.entry"]
-        add_user_permission = request.env.ref(
-            "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_add_user"
+        invite_user_permission = request.env.ref(
+            "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_invite_user"
         )
-        if add_user and add_user_permission not in existing_permissions:
-            permissions |= add_user_permission
-        add_team_permission = request.env.ref(
-            "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_add_team"
+        if invite_user and invite_user_permission not in existing_permissions:
+            permissions |= invite_user_permission
+        invite_team_permission = request.env.ref(
+            "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_invite_team"
         )
-        if add_team and add_team_permission not in existing_permissions:
-            permissions |= add_team_permission
+        if invite_team and invite_team_permission not in existing_permissions:
+            permissions |= invite_team_permission
         remove_user_permission = request.env.ref(
             "gigaclub_builder_system.gc_permission_model_entry_gc_builder_system_remove_user"
         )
