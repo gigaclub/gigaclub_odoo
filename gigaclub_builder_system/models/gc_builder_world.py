@@ -342,11 +342,26 @@ class GCBuilderWorld(models.Model):
             "task_id": world.task_id.id,
             "world_type": world.world_type_id.name,
             "team_ids": [
-                {"name": t.name}
+                {
+                    "id": t.id,
+                    "name": t.name,
+                    "permissions": t.permission_connector_ids.filtered(
+                        lambda x: x.world_id == world
+                    )
+                    .get_permissions()
+                    .mapped("name"),
+                }
                 for t in world.permission_connector_ids.mapped("team_id")
             ],
             "user_ids": [
-                {"name": u.name, "mc_uuid": u.mc_uuid}
+                {
+                    "mc_uuid": u.mc_uuid,
+                    "permissions": u.permission_connector_ids.filtered(
+                        lambda x: x.world_id == world
+                    )
+                    .get_permissions()
+                    .mapped("name"),
+                }
                 for u in world.permission_connector_ids.mapped("user_id")
             ],
             "owner_id": world.owner_id.mc_uuid,

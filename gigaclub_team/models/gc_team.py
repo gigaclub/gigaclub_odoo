@@ -179,7 +179,14 @@ class GCTeam(models.Model):
             "description": team.description or "",
             "owner_id": team.owner_id.mc_uuid,
             "user_ids": [
-                {"mc_uuid": u.mc_uuid}
+                {
+                    "mc_uuid": u.mc_uuid,
+                    "permissions": u.permission_connector_ids.filtered(
+                        lambda x: x.team_id == team
+                    )
+                    .get_permissions()
+                    .mapped("name"),
+                }
                 for u in team.permission_connector_ids.mapped("user_id")
             ],
         }
