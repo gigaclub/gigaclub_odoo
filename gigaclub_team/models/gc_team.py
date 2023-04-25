@@ -232,7 +232,7 @@ class GCTeam(models.Model):
         user_to_invite = self.env["gc.user"].search(
             [("mc_uuid", "=", player_uuid_to_invite)]
         )
-        if not user_to_invite:
+        if not user_to_invite.exists():
             return 3
         if user_to_invite.permission_connector_ids.filtered(
             lambda x: x.team_id == team

@@ -15,10 +15,34 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_builder_system_add_user"
+      id="gc_permission_model_entry_gc_builder_system_accept_request"
       model="gc.permission.model.entry"
     >
-            <field name="name">gigaclub_builder_system.add_user</field>
+            <field name="name">gigaclub_builder_system.accept_request</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">user</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_deny_request"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.deny_request</field>
+            <field
+        name="permission_model_id"
+        ref="gc_permission_model_gc_builder_world"
+      />
+            <field name="permission_type">user</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_builder_system_invite_user"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_builder_system.invite_user</field>
             <field
         name="permission_model_id"
         ref="gc_permission_model_gc_builder_world"
@@ -27,10 +51,10 @@
         </record>
 
         <record
-      id="gc_permission_model_entry_gc_builder_system_add_team"
+      id="gc_permission_model_entry_gc_builder_system_invite_team"
       model="gc.permission.model.entry"
     >
-            <field name="name">gigaclub_builder_system.add_team</field>
+            <field name="name">gigaclub_builder_system.invite_team</field>
             <field
         name="permission_model_id"
         ref="gc_permission_model_gc_builder_world"
@@ -103,6 +127,30 @@
       model="gc.permission.model.entry"
     >
             <field name="name">gigaclub_team.create_world_as_team</field>
+            <field
+        name="permission_model_id"
+        ref="gigaclub_team.gc_permission_model_gc_team"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_team_accept_world_request_as_team"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_team.accept_world_request_as_team</field>
+            <field
+        name="permission_model_id"
+        ref="gigaclub_team.gc_permission_model_gc_team"
+      />
+            <field name="permission_type">connector</field>
+        </record>
+
+        <record
+      id="gc_permission_model_entry_gc_team_deny_world_request_as_team"
+      model="gc.permission.model.entry"
+    >
+            <field name="name">gigaclub_team.deny_world_request_as_team</field>
             <field
         name="permission_model_id"
         ref="gigaclub_team.gc_permission_model_gc_team"

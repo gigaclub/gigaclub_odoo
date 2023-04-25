@@ -593,13 +593,13 @@
                     <input
             type="checkbox"
             class="form-check-input"
-            name="adduser"
-            t-attf-id="input-#{type}-adduser"
+            name="inviteuser"
+            t-attf-id="input-#{type}-inviteuser"
           />
                     <label
             class="form-check-label"
-            t-attf-for="input-#{type}-adduser"
-          >Add User</label>
+            t-attf-for="input-#{type}-inviteuser"
+          >Invite User</label>
                 </div>
             </div>
             <div class="col">
@@ -607,13 +607,13 @@
                     <input
             type="checkbox"
             class="form-check-input"
-            name="addteam"
-            t-attf-id="input-#{type}-addteam"
+            name="inviteteam"
+            t-attf-id="input-#{type}-inviteteam"
           />
                     <label
             class="form-check-label"
-            t-attf-for="input-#{type}-addteam"
-          >Add Team</label>
+            t-attf-for="input-#{type}-inviteteam"
+          >Invite Team</label>
                 </div>
             </div>
             <div class="col">

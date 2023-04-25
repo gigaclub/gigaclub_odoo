@@ -51,8 +51,8 @@ $("#world-user-modal").on("show.bs.modal", (event) => {
   }
   $selectUser.val(null).trigger("change");
 
-  $("#input-user-adduser").prop("checked", false);
-  $("#input-user-addteam").prop("checked", false);
+  $("#input-user-inviteuser").prop("checked", false);
+  $("#input-user-inviteteam").prop("checked", false);
   $("#input-user-removeuser").prop("checked", false);
   $("#input-user-removeteam").prop("checked", false);
   $("#input-user-saveworld").prop("checked", false);
@@ -66,8 +66,8 @@ $("#world-user-modal").on("show.bs.modal", (event) => {
     $selectUser.val(data.id).trigger("change");
 
     // Fill in the permission checkboxes with the selected user's permissions
-    $("#input-user-adduser").prop("checked", data.add_user);
-    $("#input-user-addteam").prop("checked", data.add_team);
+    $("#input-user-inviteuser").prop("checked", data.invite_user);
+    $("#input-user-inviteteam").prop("checked", data.invite_team);
     $("#input-user-removeuser").prop("checked", data.remove_user);
     $("#input-user-removeteam").prop("checked", data.remove_team);
     $("#input-user-saveworld").prop("checked", data.save_world);
@@ -90,8 +90,8 @@ $("#world-team-modal").on("show.bs.modal", (event) => {
   }
   $selectTeam.val(null).trigger("change");
 
-  $("#input-team-adduser").prop("checked", false);
-  $("#input-team-addteam").prop("checked", false);
+  $("#input-team-inviteuser").prop("checked", false);
+  $("#input-team-inviteteam").prop("checked", false);
   $("#input-team-removeuser").prop("checked", false);
   $("#input-team-removeteam").prop("checked", false);
   $("#input-team-saveworld").prop("checked", false);
@@ -105,8 +105,8 @@ $("#world-team-modal").on("show.bs.modal", (event) => {
     $selectTeam.val(data.id).trigger("change");
 
     // Fill in the permission checkboxes with the selected user's permissions
-    $("#input-team-adduser").prop("checked", data.add_user);
-    $("#input-team-addteam").prop("checked", data.add_team);
+    $("#input-team-inviteuser").prop("checked", data.invite_user);
+    $("#input-team-inviteteam").prop("checked", data.invite_team);
     $("#input-team-removeuser").prop("checked", data.remove_user);
     $("#input-team-removeteam").prop("checked", data.remove_team);
     $("#input-team-saveworld").prop("checked", data.save_world);
