@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class GCBuilderWorld(models.Model):
@@ -160,19 +161,70 @@ class GCBuilderWorld(models.Model):
         ).id
 
     # Status Codes:
-    # 1: World does not exist or user has no permission
+    # 4: No valid world found for this user
+    # 3: User to invite not found
+    # 2: User is already member of team
+    # 1: Request already sent
     # 0: Success
     @api.model
-    def add_user_to_world(self, player_uuid, player_uuid_to_add, world_id):
+    def invite_user_to_world(self, player_uuid, player_uuid_to_add, world_id):
         world = self._check_access_gigaclub_builder_system(
-            player_uuid, world_id, "gigaclub_builder_system.add_user"
+            player_uuid, world_id, "gigaclub_builder_system.invite_user"
         )
         if not world:
+            return 4
+        user_to_invite = self.env["gc.user"].search(
+            [("mc_uuid", "=", player_uuid_to_add)]
+        )
+        if not user_to_invite:
+            return 3
+        if user_to_invite.permission_connector_ids.filtered(
+            lambda x: x.world_id == world
+        ):
+            return 2
+        try:
+            self.env["gc.request"].create(
+                {
+                    "sender_id": f"{world._name},{world.id}",
+                    "receiver_id": f"{user_to_invite._name},{user_to_invite.id}",
+                    "request_type": "member_or_team_to_world_invitation",
+                    "state": "waiting",
+                }
+            )
+        except ValidationError:
             return 1
-        user_to_add = self.env["gc.user"].search([("mc_uuid", "=", player_uuid_to_add)])
+        return 0
+
+    # Status Codes:
+    # 3: User has no permission to accept requests
+    # 2: World does not exist
+    # 1: Request does not exist
+    # 0: Success
+    @api.model
+    def user_accept_request(self, player_uuid, world_id):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        if not user.has_one_of_permissions(
+            ["gigaclub_builder_system.accept_request", "gigaclub_builder_system.*", "*"]
+        ):
+            return 3
+        world = self.browse(world_id)
+        if not world.exists():
+            return 2
+        request = self.env["gc.request"].search(
+            [
+                ("sender_id", "=", f"{world._name},{world.id}"),
+                ("receiver_id", "=", f"{user._name},{user.id}"),
+                ("request_type", "=", "member_or_team_to_world_invitation"),
+                ("state", "=", "waiting"),
+            ],
+            limit=1,
+        )
+        if not request:
+            return 1
+        request.state = "accepted"
         world.permission_connector_ids |= self.env["gc.permission.connector"].create(
             {
-                "user_id": user_to_add.id,
+                "user_id": user.id,
                 "permission_profile_ids": [
                     (
                         0,
@@ -186,6 +238,35 @@ class GCBuilderWorld(models.Model):
                 ],
             }
         )
+        return 0
+
+    # Status Codes:
+    # 3: User has no permission to reject requests
+    # 2: World does not exist
+    # 1: Request does not exist
+    # 0: Success
+    @api.model
+    def user_deny_request(self, player_uuid, world_id):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        if not user.has_one_of_permissions(
+            ["gigaclub_builder_system.deny_request", "gigaclub_builder_system.*", "*"]
+        ):
+            return 3
+        world = self.browse(world_id)
+        if not world.exists():
+            return 2
+        request = self.env["gc.request"].search(
+            [
+                ("sender_id", "=", f"{world._name},{world.id}"),
+                ("receiver_id", "=", f"{user._name},{user.id}"),
+                ("request_type", "=", "member_or_team_to_world_invitation"),
+                ("state", "=", "waiting"),
+            ],
+            limit=1,
+        )
+        if not request:
+            return 1
+        request.state = "denied"
         return 0
 
     # Status Codes:

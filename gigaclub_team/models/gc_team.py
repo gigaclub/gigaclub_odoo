@@ -243,6 +243,7 @@ class GCTeam(models.Model):
                 {
                     "sender_id": f"{team._name},{team.id}",
                     "receiver_id": f"{user_to_invite._name},{user_to_invite.id}",
+                    "request_type": "member_to_team_invitation",
                     "state": "waiting",
                 }
             )
@@ -269,6 +270,7 @@ class GCTeam(models.Model):
             [
                 ("sender_id", "=", f"{team._name},{team.id}"),
                 ("receiver_id", "=", f"{user._name},{user.id}"),
+                ("request_type", "=", "member_to_team_invitation"),
                 ("state", "=", "waiting"),
             ],
             limit=1,
@@ -302,6 +304,7 @@ class GCTeam(models.Model):
             [
                 ("sender_id", "=", f"{team._name},{team.id}"),
                 ("receiver_id", "=", f"{user._name},{user.id}"),
+                ("request_type", "=", "member_to_team_invitation"),
                 ("state", "=", "waiting"),
             ],
             limit=1,
