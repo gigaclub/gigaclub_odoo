@@ -124,6 +124,12 @@ class GigaClubPortalTeam(GigaClubPortal):
                     "invite_user": form.get("inviteuser", False),
                     "kick_user": form.get("kickuser", False),
                     "create_world_as_team": form.get("createworldasteam", False),
+                    "accept_world_request_as_team": form.get(
+                        "acceptworldrequestasteam", False
+                    ),
+                    "deny_world_request_as_team": form.get(
+                        "denyworldrequestasteam", False
+                    ),
                 }
                 if not form_values.get("user", "").isnumeric():
                     return return_redirect
@@ -138,6 +144,8 @@ class GigaClubPortalTeam(GigaClubPortal):
                     form_values.get("invite_user", False),
                     form_values.get("kick_user", False),
                     form_values.get("create_world_as_team", False),
+                    form_values.get("accept_world_request_as_team", False),
+                    form_values.get("deny_world_request_as_team", False),
                 )
                 return return_redirect
             elif form.get("group-name", False):
@@ -152,6 +160,12 @@ class GigaClubPortalTeam(GigaClubPortal):
                     "invite_user": form.get("inviteuser", False),
                     "kick_user": form.get("kickuser", False),
                     "create_world_as_team": form.get("createworldasteam", False),
+                    "accept_world_request_as_team": form.get(
+                        "acceptworldrequestasteam", False
+                    ),
+                    "deny_world_request_as_team": form.get(
+                        "denyworldrequestasteam", False
+                    ),
                     "parent_group": form.get("parentgroup", False),
                     "child_groups": form.getlist("childgroups"),
                 }
@@ -198,6 +212,8 @@ class GigaClubPortalTeam(GigaClubPortal):
                     form_values.get("invite_user"),
                     form_values.get("kick_user"),
                     form_values.get("create_world_as_team"),
+                    form_values.get("accept_world_request_as_team", False),
+                    form_values.get("deny_world_request_as_team", False),
                     existing_permissions,
                 )
                 new_permission_group.permission_profile_ids = [
@@ -342,7 +358,15 @@ class GigaClubPortalTeam(GigaClubPortal):
         existing_permission_connector.permission_group_ids = [(6, 0, group_ids)]
 
     def _team_user_set_permissions(
-        self, team, user, edit_team, invite_user, kick_user, create_world_as_team
+        self,
+        team,
+        user,
+        edit_team,
+        invite_user,
+        kick_user,
+        create_world_as_team,
+        accept_world_request_as_team,
+        deny_world_request_as_team,
     ):
         existing_permission_connector = first(
             team.permission_connector_ids.filtered(lambda x: x.user_id == user)
@@ -359,6 +383,8 @@ class GigaClubPortalTeam(GigaClubPortal):
             invite_user,
             kick_user,
             create_world_as_team,
+            accept_world_request_as_team,
+            deny_world_request_as_team,
             existing_permissions,
         )
         existing_permission_connector.permission_profile_ids = [
@@ -371,6 +397,8 @@ class GigaClubPortalTeam(GigaClubPortal):
         invite_user,
         kick_user,
         create_world_as_team,
+        accept_world_request_as_team,
+        deny_world_request_as_team,
         existing_permissions,
     ):
         permissions = request.env["gc.permission.model.entry"]
@@ -397,6 +425,22 @@ class GigaClubPortalTeam(GigaClubPortal):
             and create_world_as_team_permission not in existing_permissions
         ):
             permissions |= create_world_as_team_permission
+        accept_world_request_as_team_permission = request.env.ref(
+            "gigaclub_builder_system.gc_permission_model_entry_gc_team_accept_world_request_as_team"  # noqa
+        )
+        if (
+            accept_world_request_as_team
+            and accept_world_request_as_team_permission not in existing_permissions
+        ):
+            permissions |= accept_world_request_as_team_permission
+        deny_world_request_as_team_permission = request.env.ref(
+            "gigaclub_builder_system.gc_permission_model_entry_gc_team_deny_world_request_as_team"  # noqa
+        )
+        if (
+            deny_world_request_as_team
+            and deny_world_request_as_team_permission not in existing_permissions
+        ):
+            permissions |= deny_world_request_as_team_permission
         new_permission_profile = request.env["gc.permission.profile"].create(
             {
                 "permission_profile_entry_ids": [
@@ -524,6 +568,36 @@ class GigaClubPortalTeam(GigaClubPortal):
                                 )
                             )
                         ),
+                        "accept_world_request_as_team": bool(
+                            user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            )
+                            .mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            )
+                            .filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_team_accept_world_request_as_team"  # noqa: B950
+                                )
+                            )
+                        ),
+                        "deny_world_request_as_team": bool(
+                            user.permission_connector_ids.filtered(
+                                lambda x: x.team_id == team
+                            )
+                            .mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            )
+                            .filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_team_deny_world_request_as_team"  # noqa: B950
+                                )
+                            )
+                        ),
                     }
                     for user in team_users
                 ],
@@ -578,6 +652,28 @@ class GigaClubPortalTeam(GigaClubPortal):
                                 lambda x: x
                                 == request.env.ref(
                                     "gigaclub_builder_system.gc_permission_model_entry_gc_team_create_world_as_team"  # noqa: B950
+                                )
+                            )
+                        ),
+                        "accept_world_request_as_team": bool(
+                            group.mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_team_accept_world_request_as_team"  # noqa: B950
+                                )
+                            )
+                        ),
+                        "deny_world_request_as_team": bool(
+                            group.mapped(
+                                "permission_profile_ids."
+                                "permission_profile_entry_ids.permission_model_entry_id"
+                            ).filtered(
+                                lambda x: x
+                                == request.env.ref(
+                                    "gigaclub_builder_system.gc_permission_model_entry_gc_team_deny_world_request_as_team"  # noqa: B950
                                 )
                             )
                         ),

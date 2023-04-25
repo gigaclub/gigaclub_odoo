@@ -711,6 +711,34 @@
             >Create World as Team</label>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              name="acceptworldrequestasteam"
+              t-attf-id="input-#{type}-acceptworldrequestasteam"
+            />
+                        <label
+              class="form-check-label"
+              t-attf-for="input-#{type}-acceptworldrequestasteam"
+            >Accept World Request as Team</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input
+              type="checkbox"
+              class="form-check-input"
+              name="denyworldrequestasteam"
+              t-attf-id="input-#{type}-denyworldrequestasteam"
+            />
+                        <label
+              class="form-check-label"
+              t-attf-for="input-#{type}-denyworldrequestasteam"
+            >Deny World Request as Team</label>
+                    </div>
+                </div>
             </div>
         </template>
 
