@@ -35,9 +35,10 @@ class GCDiscordEventWorker(models.Model):
         session.session_token = uid and security.compute_session_token(session, env)
         session.context = dict(env["res.users"].context_get() or {})
         session.context["uid"] = uid
-        session._fix_lang(session.context)
+        # session._fix_lang(session.context)
         http.root.session_store.save(session)
         opener = requests.Session()
         opener.cookies["session_id"] = session.sid
+        self.env.cr.commit()
         for rec in self.filtered(lambda x: x.event_id.server_action and x.current):
             opener.post(f"{url}/discordbot/event/{rec.id}")

@@ -9,11 +9,10 @@ class GCDiscordActionWorker(models.Model):
     event_worker_ids = fields.One2many(
         comodel_name="gc.discord.event.worker", inverse_name="action_worker_id"
     )
-    gc_user_id = fields.Many2one(comodel_name="gc.user")
+    user_id = fields.Many2one(comodel_name="gc.user")
     current_event_worker_id = fields.Many2one(
         comodel_name="gc.discord.event.worker",
         compute="_compute_current_event",
-        store=True,
     )
 
     @api.depends("event_worker_ids.current")
@@ -28,8 +27,8 @@ class GCDiscordActionWorker(models.Model):
     def create_worker(self, action, user):
         GCDiscordEventWorker = self.env["gc.discord.event.worker"]
         action_worker = self.search(
-            [("action_id", "=", action.id), ("gc_user_id", "=", user.id)], limit=1
-        )
+            [("action_id", "=", action.id), ("user_id", "=", user.id)]
+        ).filtered(lambda x: x.event_worker_ids.filtered(lambda x: not x.done))
         if action_worker:
             return action_worker
         event_worker_ids = GCDiscordEventWorker
@@ -48,7 +47,7 @@ class GCDiscordActionWorker(models.Model):
             {
                 "action_id": action.id,
                 "event_worker_ids": [[6, 0, event_worker_ids.ids]],
-                "gc_user_id": user.id,
+                "user_id": user.id,
             }
         )
         return res

@@ -38,5 +38,4 @@ class GCDiscordPermissionProfile(models.Model):
     manage_roles = fields.Boolean()
     manage_webhooks = fields.Boolean()
     manage_emojis = fields.Boolean()
-    use_slash_commands = fields.Boolean()
     request_to_speak = fields.Boolean()
