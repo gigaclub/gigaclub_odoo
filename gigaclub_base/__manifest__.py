@@ -6,7 +6,7 @@
     "author": "GigaClub",
     "website": "https://github.com/GigaClub/gigaclub_odoo",
     "license": "AGPL-3",
-    "depends": ["base_setup"],
+    "depends": ["queue_job"],
     "data": [
         "security/security.xml",
         "security/ir.model.access.csv",

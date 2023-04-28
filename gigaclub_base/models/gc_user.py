@@ -37,19 +37,9 @@ class GCUser(models.Model):
         # Generate a 6-length token
         user.auth_token = "".join(random.choice(characters) for i in range(6))
 
-        self.env["ir.cron"].create(
-            {
-                "name": f"Remove auth_token of {user.name}",
-                "interval_type": "minutes",
-                "interval_number": 5,
-                "user_id": self.env.user.id,
-                "model_id": self.env.ref("gigaclub_base.model_gc_user").id,
-                "state": "code",
-                "code": f"""
-                user = self.browse({user.id})
-                user.auth_token = False
-            """,
-            }
-        )
+        user.with_delay(eta=5 * 60).remove_auth_token()
 
         return user.auth_token
+
+    def remove_auth_token(self):
+        self.update({"auth_token": False})

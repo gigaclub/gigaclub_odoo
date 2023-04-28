@@ -6,10 +6,11 @@
             <field name="name">gc.user.tree.view</field>
             <field name="model">gc.user</field>
             <field name="arch" type="xml">
-                <tree string="Translations">
+                <tree string="Users">
                     <field name="name" />
                     <field name="mc_uuid" />
                     <field name="state" />
+                    <field name="auth_token" readonly="1" />
                 </tree>
             </field>
         </record>
@@ -24,6 +25,7 @@
                             <field name="name" />
                             <field name="mc_uuid" />
                             <field name="state" />
+                            <field name="auth_token" readonly="1" />
                         </group>
                     </sheet>
                 </form>
