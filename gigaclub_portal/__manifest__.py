@@ -5,7 +5,7 @@
     "author": "GigaClub",
     "website": "https://github.com/GigaClub/gigaclub_odoo",
     "license": "AGPL-3",
-    "depends": ["gigaclub_project", "portal"],
+    "depends": ["gigaclub_discord", "portal"],
     "data": [
         "views/portal_templates.xml",
     ],
