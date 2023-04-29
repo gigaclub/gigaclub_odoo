@@ -10,6 +10,7 @@
                     <field name="sender_id" />
                     <field name="receiver_id" />
                     <field name="state" />
+                    <field name="request_type" />
                 </tree>
             </field>
         </record>
@@ -24,6 +25,7 @@
                             <field name="sender_id" />
                             <field name="receiver_id" />
                             <field name="state" />
+                            <field name="request_type" />
                         </group>
                     </sheet>
                 </form>
