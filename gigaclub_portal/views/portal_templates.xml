@@ -99,9 +99,11 @@
                                         </t>
                                         <t t-else="">
                                             <a
-                        t-attf-href="https://login.live.com/oauth20_authorize.srf?client_id={{request.env['ir.config_parameter'].sudo().get_param('gigaclub.azure_client_id')}}&amp;response_type=code&amp;redirect_uri={{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}}/my/account/minecraft_auth&amp;scope=XboxLive.signin%20offline_access&amp;state=NOT_NEEDED"
+                        href="#"
                         class="btn btn-primary"
                         role="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#add-minecraft-account-modal"
                       >Add Account</a>
                                         </t>
                                     </div>
@@ -110,7 +112,7 @@
                             <div class="clearfix">
                                 <button
                   type="submit"
-                  class="btn btn-primary float-right mb32 "
+                  class="btn btn-primary float-end mb32 "
                 >
                                     Confirm
                                     <span class="fa fa-long-arrow-right" />
@@ -118,8 +120,97 @@
                             </div>
                         </div>
                     </div>
+                    <t
+            t-call="gigaclub_portal.portal_my_details_add_minecraft_account_modal"
+          />
                 </form>
             </xpath>
+        </template>
+
+        <template id="portal_my_details_add_minecraft_account_modal">
+            <div
+        class="modal fade add-minecraft-account-modal-lg"
+        id="add-minecraft-account-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post">
+                            <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+              />
+                            <input type="hidden" name="id" value="" />
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Minecraft Account</h5>
+                                <button
+                  type="button"
+                  class="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                                    <span>&amp;times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h2>Add with Microsoft Account</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a
+                      t-attf-href="https://login.live.com/oauth20_authorize.srf?client_id={{request.env['ir.config_parameter'].sudo().get_param('gigaclub.azure_client_id')}}&amp;response_type=code&amp;redirect_uri={{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}}/my/account/minecraft_auth&amp;scope=XboxLive.signin%20offline_access&amp;state=NOT_NEEDED"
+                      class="btn btn-primary"
+                      role="button"
+                    >Connect</a>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col">
+                                        <h2>Add via our Minecraft Server</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label
+                        for="input-auth-code"
+                        class="form-label"
+                      >
+                                                Join our Minecraft Server GigaClub.net and type /auth into the chat and enter the code you get here:
+                                            </label>
+                                            <input
+                        type="text"
+                        name="auth-code"
+                        class="form-control"
+                        id="input-auth-code"
+                      />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Discard</button>
+                                <button
+                  type="submit"
+                  role="button"
+                  class="btn btn-primary"
+                >Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </template>
 
         <template

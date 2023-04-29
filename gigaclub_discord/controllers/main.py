@@ -358,9 +358,6 @@ class MainController(http.Controller):
                     if current_event_worker:
                         current_event_worker.start_next_event()
 
-        async def shutdown(self):
-            await self.logout()
-
         async def send_message_request(self, user_id, message):
             user = self.get_user(int(user_id))
             if user:

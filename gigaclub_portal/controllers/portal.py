@@ -43,6 +43,13 @@ class GigaClubPortal(CustomerPortal):
         values.update({"error": error, "error_message": error_message})
         values.update(post_values)
         if not error:
+            if values.get("auth-code"):
+                gc_user = request.env["gc.user"].search(
+                    [("auth_token", "=", values.get("auth-code"))], limit=1
+                )
+                if gc_user:
+                    request.env.user.partner_id.gc_user_id = gc_user
+                return request.redirect("/my/account")
             form_values = {}
             for field in ["name", "email"]:
                 try:
