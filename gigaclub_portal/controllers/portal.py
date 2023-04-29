@@ -70,7 +70,12 @@ class GigaClubPortal(CustomerPortal):
 
     @route(["/my/account/minecraft_remove"], type="http", auth="user", website=True)
     def my_account_minecraft_remove(self, **values):
-        request.env.user.partner_id.gc_user_id = False
+        request.env.user.partner_id.gc_user_id.mc_uuid = False
+        return request.redirect("/my/account")
+
+    @route(["/my/account/discord_remove"], type="http", auth="user", website=True)
+    def my_account_discord_remove(self, **values):
+        request.env.user.partner_id.gc_user_id.discord_uuid = False
         return request.redirect("/my/account")
 
     @route(["/my/account/minecraft_auth"], type="http", auth="user", website=True)
@@ -140,13 +145,55 @@ class GigaClubPortal(CustomerPortal):
         mc_username = values.get("name", "")
         GCUser = request.env["gc.user"]
         gc_user = GCUser.search([("mc_uuid", "=", mc_uuid)], limit=1)
-        if gc_user:
+        if request.env.user.partner_id.gc_user_id:
+            request.env.user.partner_id.gc_user_id.mc_uuid = mc_uuid
+        elif gc_user:
             request.env.user.partner_id.gc_user_id = gc_user
         else:
             request.env.user.partner_id.gc_user_id = GCUser.create(
                 {
                     "mc_uuid": mc_uuid,
                     "name": mc_username,
+                }
+            )
+        return request.redirect("/my/account")
+
+    @route(["/my/account/discord_auth"], type="http", auth="user", website=True)
+    def my_account_discord_auth(self, **values):
+        url = f"{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}/my/account/discord_auth"  # noqa: B950
+        data = {
+            "client_id": request.env["ir.config_parameter"]
+            .sudo()
+            .get_param("gigaclub.discord_client_id"),
+            "client_secret": request.env["ir.config_parameter"]
+            .sudo()
+            .get_param("gigaclub.discord_client_secret"),
+            "grant_type": "authorization_code",
+            "code": values.get("code"),
+            "redirect_uri": url,
+        }
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        response = requests.post(
+            "https://discord.com/api/v10/oauth2/token", data=data, headers=headers
+        )
+        response.raise_for_status()
+        values = response.json()
+        access_token = values.get("access_token")
+        headers = {"Authorization": f"Bearer {access_token}"}
+        response = requests.get(
+            "https://discord.com/api/v10/users/@me", headers=headers
+        )
+        discord_uuid = response.json().get("id")
+        GCUser = request.env["gc.user"]
+        gc_user = GCUser.search([("discord_uuid", "=", discord_uuid)], limit=1)
+        if request.env.user.partner_id.gc_user_id:
+            request.env.user.partner_id.gc_user_id.discord_uuid = discord_uuid
+        elif gc_user:
+            request.env.user.partner_id.gc_user_id = gc_user
+        else:
+            request.env.user.partner_id.gc_user_id = GCUser.create(
+                {
+                    "discord_uuid": discord_uuid,
                 }
             )
         return request.redirect("/my/account")

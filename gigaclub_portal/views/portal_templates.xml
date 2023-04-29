@@ -86,10 +86,10 @@
                     >Minecraft Account</label>
                                         <br />
                                         <t
-                      t-if="request.env.user.partner_id.gc_user_id"
+                      t-if="request.env.user.partner_id.gc_user_id.mc_uuid"
                     >
                                             <p><span
-                          t-field="request.env.user.partner_id.gc_user_id"
+                          t-field="request.env.user.partner_id.gc_user_id.mc_uuid"
                           style="margin-right: 10px;"
                         /><a
                           t-attf-href="/my/account/minecraft_remove"
@@ -104,6 +104,31 @@
                         role="button"
                         data-bs-toggle="modal"
                         data-bs-target="#add-minecraft-account-modal"
+                      >Add Account</a>
+                                        </t>
+                                    </div>
+                                    <div class="form-group">
+                                        <label
+                      class="col-form-label"
+                    >Discord Account</label>
+                                        <br />
+                                        <t
+                      t-if="request.env.user.partner_id.gc_user_id.discord_uuid"
+                    >
+                                            <p><span
+                          t-field="request.env.user.partner_id.gc_user_id.discord_uuid"
+                          style="margin-right: 10px;"
+                        /><a
+                          t-attf-href="/my/account/discord_remove"
+                          class="btn btn-danger btn-sm"
+                          role="button"
+                        >X</a></p>
+                                        </t>
+                                        <t t-else="">
+                                            <a
+                        t-attf-href="https://discord.com/oauth2/authorize?response_type=code&amp;client_id={{request.env['ir.config_parameter'].sudo().get_param('gigaclub.discord_client_id')}}&amp;scope=identify%20guilds.join&amp;redirect_uri={{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}}/my/account/discord_auth&amp;prompt=consent"
+                        class="btn btn-primary"
+                        role="button"
                       >Add Account</a>
                                         </t>
                                     </div>
