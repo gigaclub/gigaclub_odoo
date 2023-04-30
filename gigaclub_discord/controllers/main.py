@@ -2,7 +2,7 @@ import asyncio
 import logging
 import threading
 
-import discord
+import discord  # noqa: W7936
 
 from odoo import _, api, http, registry
 from odoo.http import request
@@ -47,17 +47,23 @@ class MainController(http.Controller):
                             if channel.id not in saved_channel_ids
                         ]
                         for channel_to_remove in channels_to_remove:
-                            await channel_to_remove.delete()
+                            try:
+                                await channel_to_remove.delete()
+                            except Exception:
+                                _logger.error(channel_to_remove)
                         await self.create_and_update_not_created_roles(guild)
                         for member in guild.members:
-                            if member == self.user:
+                            if member.bot:
                                 continue
                             user = new_env["gc.user"].search(
                                 [("discord_uuid", "=", str(member.id))], limit=1
                             )
                             if not user:
                                 user = new_env["gc.user"].create(
-                                    {"discord_uuid": str(member.id)}
+                                    {
+                                        "discord_uuid": str(member.id),
+                                        "name": member.name,
+                                    }
                                 )
                             for role in user.role_ids:
                                 await self.add_roles(user.discord_uuid, role.role_id)
@@ -276,7 +282,10 @@ class MainController(http.Controller):
                     role for role in guild.roles if role.id not in role_ids
                 ]
                 for role_to_remove in roles_to_remove:
-                    await role_to_remove.delete()
+                    try:
+                        await role_to_remove.delete()
+                    except Exception:
+                        _logger.error(role_to_remove)
 
         async def on_message(self, message):
             if message.author == self.user:
@@ -374,7 +383,7 @@ class MainController(http.Controller):
                 asyncio.run(self.client.close())
                 del self.client
             except Exception as e:
-                _logger.error(_("Error occured on Discord Bot stop: %s" % e))
+                _logger.error(_("Error occured on Discord Bot stop: %s") % e)
             company_id.discord_server_status = "stopped"
         else:
             raise Exception(
