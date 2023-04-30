@@ -219,6 +219,20 @@ class MainController(http.Controller):
                         manage_emojis=permission_profile.manage_emojis,
                         request_to_speak=permission_profile.request_to_speak,
                     )
+                    color = discord.Color.from_str(role_record.color)
+                    role = discord.utils.get(guild.roles, name=role_record.name)
+                    if role:
+                        await role.edit(
+                            name=role_record.name,
+                            hoist=role_record.hoist,
+                            mentionable=role_record.mentionable,
+                            position=role_record.position
+                            if role_record.position > 0
+                            else None,
+                            permissions=permissions,
+                            color=color,
+                        )
+                        continue
                     await guild.create_role(
                         name=role_record.name,
                         hoist=role_record.hoist,
@@ -227,6 +241,7 @@ class MainController(http.Controller):
                         if role_record.position > 0
                         else None,
                         permissions=permissions,
+                        color=color,
                     )
                 created_roles = new_env["gc.discord.role"].search(
                     [("role_id", "!=", False)]
@@ -267,6 +282,7 @@ class MainController(http.Controller):
                         manage_emojis=permission_profile.manage_emojis,
                         request_to_speak=permission_profile.request_to_speak,
                     )
+                    color = discord.Color.from_str(role_record.color)
                     role = discord.utils.get(guild.roles, id=role_record.role_id)
                     await role.edit(
                         name=role_record.name,
@@ -276,6 +292,7 @@ class MainController(http.Controller):
                         if role_record.position > 0
                         else None,
                         permissions=permissions,
+                        color=color,
                     )
                 role_ids = created_roles.mapped("role_id")
                 roles_to_remove = [

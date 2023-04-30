@@ -9,6 +9,7 @@
     "depends": ["gigaclub_builder_system"],
     "external_dependencies": {"python": ["discord.py"]},
     "data": [
+        "data/gc_discord_role_data.xml",
         "views/gc_discord_action_views.xml",
         "views/gc_discord_action_worker_views.xml",
         "views/gc_discord_category_views.xml",
