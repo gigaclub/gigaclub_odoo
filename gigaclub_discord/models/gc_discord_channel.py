@@ -13,7 +13,8 @@ class GCDiscordChannel(models.Model):
             ("voice", "Voice"),
             ("stage", "Stage"),
             ("announcement", "Announcement"),
-        ]
+        ],
+        required=True,
     )
     category_id = fields.Many2one(comodel_name="gc.discord.category")
     permission_profile_id = fields.Many2one(

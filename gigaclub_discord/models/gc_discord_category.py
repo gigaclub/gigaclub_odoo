@@ -1,4 +1,5 @@
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class GCDiscordCategory(models.Model):
@@ -13,3 +14,11 @@ class GCDiscordCategory(models.Model):
     permission_profile_id = fields.Many2one(
         comodel_name="gc.discord.permission.profile"
     )
+
+    @api.constrains("channel_ids")
+    def _check_channel_ids(self):
+        for rec in self:
+            if len(rec.channel_ids) > 50:
+                raise ValidationError(
+                    _("A category can just have a maximum of 50 channels!")
+                )
