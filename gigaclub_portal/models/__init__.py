@@ -1,1 +1,1 @@
-from . import res_partner
+from . import gc_user, res_partner
