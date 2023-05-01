@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+    id="portal_breadcrumbs_inherit_gigaclub_portal_requests"
+    inherit_id="portal.portal_breadcrumbs"
+    priority="40"
+  >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+        t-if="page_name == 'request' or gcrequest"
+        class="col-lg-2"
+        t-attf-class="breadcrumb-item #{'active ' if not gcrequest else ''}"
+      >
+                <a
+          t-if="gcrequest"
+          t-attf-href="/my/requests?{{ keep_query() }}"
+        >Requests</a>
+                <t t-else="">Requests</t>
+            </li>
+            <li
+        t-if="mode == 'create' and gcrequest and isinstance(gcrequest, dict)"
+        class="breadcrumb-item active"
+      >
+                Create
+            </li>
+            <li t-elif="gcrequest" class="breadcrumb-item active">
+                <t t-if="isinstance(gcrequest, dict)">
+                    <t t-out="gcrequest.get('name', '')" />
+                </t>
+                <t t-else="">
+                    <t t-out="gcrequest.name" />
+                </t>
+            </li>
+            <li
+        t-if="mode == 'edit' and gcrequest and isinstance(gcrequest, dict)"
+        class="breadcrumb-item active"
+      >
+                Edit
+            </li>
+        </xpath>
+    </template>
+
+    <template
+    id="portal_my_home_inherit_gigaclub_portal_requests"
+    inherit_id="project.portal_my_home"
+    customize_show="True"
+  >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Requests</t>
+                <t t-set="url" t-value="'/my/requests'" />
+                <t t-set="placeholder_count" t-value="'request_count'" />
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_requests">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Requests</t>
+            </t>
+
+            <t t-if="not gcrequests">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no requests.
+                </div>
+            </t>
+            <t t-if="gcrequests" t-call="portal.portal_table">
+                <thead>
+                    <tr>
+                        <th class="text-left">Sender</th>
+                        <th />
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="gcrequests" t-as="request">
+                        <td>
+                            <span t-field="request.sender_id.display_name" />
+                        </td>
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <a
+                  class="btn btn-success"
+                  t-attf-href="/my/request/#{request.id}/accept"
+                >Accept</a>
+                                <a
+                  class="btn btn-danger"
+                  t-attf-href="/my/request/#{request.id}/deny"
+                >Deny</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </t>
+        </t>
+    </template>
+
+</odoo>
