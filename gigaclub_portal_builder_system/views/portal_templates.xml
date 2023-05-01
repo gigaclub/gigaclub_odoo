@@ -289,9 +289,8 @@
                   class="btn btn-sm btn-primary"
                   type="button"
                   data-bs-toggle="modal"
-                  data-bs-target="#world-user-modal"
-                  t-att-data-bs-users="json.dumps(users)"
-                >Add User</button>
+                  data-bs-target="#world-invite-user-modal"
+                >Invite User</button>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 10px;">
@@ -337,9 +336,8 @@
                   class="btn btn-sm btn-primary"
                   type="button"
                   data-bs-toggle="modal"
-                  data-bs-target="#world-team-modal"
-                  t-att-data-bs-teams="json.dumps(teams)"
-                >Add Team</button>
+                  data-bs-target="#world-invite-team-modal"
+                >Invite Team</button>
                             </div>
                         </div>
                     </t>
@@ -356,6 +354,12 @@
       />
             <t
         t-call="gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_team_modal"
+      />
+            <t
+        t-call="gigaclub_portal_builder_system.portal_my_world_form_invite_user_modal"
+      />
+            <t
+        t-call="gigaclub_portal_builder_system.portal_my_world_form_invite_team_modal"
       />
         </t>
     </template>
@@ -438,6 +442,76 @@
         </div>
     </template>
 
+    <template id="portal_my_world_form_invite_user_modal">
+        <div
+      class="modal fade world-invite-user-modal-lg"
+      id="world-invite-user-modal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="post">
+                        <input
+              type="hidden"
+              name="csrf_token"
+              t-att-value="request.csrf_token()"
+            />
+                        <input type="hidden" name="id" value="" />
+                        <div class="modal-header">
+                            <h5 class="modal-title">Invite User</h5>
+                            <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                                <span>&amp;times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="select-user">
+                                            User
+                                        </label>
+                                        <select
+                      id="select-invite-user"
+                      name="invite-user"
+                      class="js-select-invite-user-single js-states form-control"
+                    >
+                                            <option data-tokens="" />
+                                            <option
+                        t-foreach="users"
+                        t-as="user"
+                        t-out="user.get('name', '')"
+                        t-att-value="user.get('id', '')"
+                      />
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Discard</button>
+                            <button
+                type="submit"
+                role="button"
+                class="btn btn-primary"
+              >Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
     <template id="portal_my_world_form_user_modal">
         <div
       class="modal fade world-user-modal-lg"
@@ -493,6 +567,76 @@
                             <t
                 t-call="gigaclub_portal_builder_system.portal_my_world_form_permissions"
               />
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Discard</button>
+                            <button
+                type="submit"
+                role="button"
+                class="btn btn-primary"
+              >Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_my_world_form_invite_team_modal">
+        <div
+      class="modal fade world-invite-team-modal-lg"
+      id="world-invite-team-modal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="post">
+                        <input
+              type="hidden"
+              name="csrf_token"
+              t-att-value="request.csrf_token()"
+            />
+                        <input type="hidden" name="id" value="" />
+                        <div class="modal-header">
+                            <h5 class="modal-title">Invite Team</h5>
+                            <button
+                type="button"
+                class="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                                <span>&amp;times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="select-team">
+                                            Team
+                                        </label>
+                                        <select
+                      id="select-invite-team"
+                      name="invite-team"
+                      class="js-select-invite-user-single js-states form-control"
+                    >
+                                            <option data-tokens="" />
+                                            <option
+                        t-foreach="teams"
+                        t-as="team"
+                        t-out="team.get('name', '')"
+                        t-att-value="team.get('id', '')"
+                      />
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button

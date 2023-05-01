@@ -233,6 +233,44 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
                     user=user,
                 )
                 return return_redirect
+            elif form.get("invite-user", False):
+                return_redirect = request.redirect(
+                    "/my/world/{}/edit".format(world_sudo.id)
+                )
+                invited_user_id = form.get("invite-user", False)
+                if not invited_user_id.isnumeric():
+                    return return_redirect
+                user = world_sudo.env["gc.user"].browse(int(invited_user_id))
+                if not user:
+                    return return_redirect
+                world_sudo.env["gc.request"].create(
+                    {
+                        "sender_id": f"{world_sudo._name},{world_sudo.id}",
+                        "receiver_id": f"{user._name},{user.id}",
+                        "request_type": "member_or_team_to_world_invitation",
+                        "state": "waiting",
+                    }
+                )
+                return return_redirect
+            elif form.get("invite-team", False):
+                return_redirect = request.redirect(
+                    "/my/world/{}/edit".format(world_sudo.id)
+                )
+                invited_team_id = form.get("invite-team", False)
+                if not invited_team_id.isnumeric():
+                    return return_redirect
+                team = world_sudo.env["gc.team"].browse(int(invited_team_id))
+                if not team:
+                    return return_redirect
+                world_sudo.env["gc.request"].create(
+                    {
+                        "sender_id": f"{world_sudo._name},{world_sudo.id}",
+                        "receiver_id": f"{team._name},{team.id}",
+                        "request_type": "member_or_team_to_world_invitation",
+                        "state": "waiting",
+                    }
+                )
+                return return_redirect
             elif form.get("team", False):
                 return_redirect = request.redirect(
                     "/my/world/{}/edit".format(world_sudo.id)
@@ -597,13 +635,76 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
             "users": [
                 {"id": user.id, "name": user.display_name}
                 for user in request.env["gc.user"].search(
-                    [("id", "not in", (world_users | world.owner_id).ids)]
+                    [
+                        (
+                            "id",
+                            "not in",
+                            (
+                                world_users
+                                | world.owner_id
+                                | request.env["gc.user"].concat(
+                                    *[
+                                        x
+                                        for x in request.env["gc.request"]
+                                        .search(
+                                            [
+                                                (
+                                                    "sender_id",
+                                                    "=",
+                                                    f"gc.builder.world,{world.id}",
+                                                ),
+                                                (
+                                                    "request_type",
+                                                    "=",
+                                                    "member_or_team_to_world_invitation",
+                                                ),
+                                                ("state", "=", "waiting"),
+                                            ]
+                                        )
+                                        .mapped("receiver_id")
+                                        if x._name == "gc.user"
+                                    ]
+                                )
+                            ).ids,
+                        )
+                    ]
                 )
             ],
             "teams": [
                 {"id": team.id, "name": team.name}
                 for team in request.env["gc.team"].search(
-                    [("id", "not in", world_teams.ids)]
+                    [
+                        (
+                            "id",
+                            "not in",
+                            (
+                                world_teams
+                                | request.env["gc.team"].concat(
+                                    *[
+                                        x
+                                        for x in request.env["gc.request"]
+                                        .search(
+                                            [
+                                                (
+                                                    "sender_id",
+                                                    "=",
+                                                    f"gc.builder.world,{world.id}",
+                                                ),
+                                                (
+                                                    "request_type",
+                                                    "=",
+                                                    "member_or_team_to_world_invitation",
+                                                ),
+                                                ("state", "=", "waiting"),
+                                            ]
+                                        )
+                                        .mapped("receiver_id")
+                                        if x._name == "gc.team"
+                                    ]
+                                )
+                            ).ids,
+                        )
+                    ]
                 )
             ],
         }
