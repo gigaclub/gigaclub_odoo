@@ -1,6 +1,6 @@
 import requests
 
-from odoo import api, fields, http, models, tools
+from odoo import api, fields, http, models, registry, tools
 from odoo.service import security
 
 
@@ -25,20 +25,24 @@ class GCDiscordEventWorker(models.Model):
         ).current = True
 
     def _inverse_current(self):
-        url = f"http://127.0.0.1:{tools.config['http_port']}"
-        session = http.root.session_store.new()
-        session.db = self.env.cr.dbname
-        uid = self.env.user.id
-        env = api.Environment(self.env.cr, self.env.user.id, {})
-        session.uid = uid
-        session.login = self.env.user.login
-        session.session_token = uid and security.compute_session_token(session, env)
-        session.context = dict(env["res.users"].context_get() or {})
-        session.context["uid"] = uid
-        # session._fix_lang(session.context)
-        http.root.session_store.save(session)
-        opener = requests.Session()
-        opener.cookies["session_id"] = session.sid
-        self.env.cr.commit()
-        for rec in self.filtered(lambda x: x.event_id.server_action and x.current):
-            opener.post(f"{url}/discordbot/event/{rec.id}")
+        self.with_delay().call_events()
+
+    def call_events(self):
+        with registry(self.env.cr.dbname).cursor() as new_cr:
+            new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+            url = f"http://127.0.0.1:{tools.config['http_port']}"
+            session = http.root.session_store.new()
+            session.db = new_env.cr.dbname
+            uid = new_env.user.id
+            session.uid = uid
+            session.login = new_env.user.login
+            session.session_token = uid and security.compute_session_token(
+                session, new_env
+            )
+            session.context = dict(new_env["res.users"].context_get() or {})
+            session.context["uid"] = uid
+            http.root.session_store.save(session)
+            opener = requests.Session()
+            opener.cookies["session_id"] = session.sid
+            for rec in self.filtered(lambda x: x.event_id.server_action and x.current):
+                opener.post(f"{url}/discordbot/event/{rec.id}")

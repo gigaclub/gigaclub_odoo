@@ -19,12 +19,6 @@ class GCUser(models.Model):
         ("mc_uuid_unique", "UNIQUE(mc_uuid)", "MC_UUID must be unique!")
     ]
 
-    def name_get(self):
-        res = []
-        for rec in self:
-            res.append((rec.id, f"({rec.name}) - {rec.mc_uuid}"))
-        return res
-
     @api.model
     def generate_auth_token(self, mc_uuid):
         user = self.search([("mc_uuid", "=", mc_uuid)], limit=1)

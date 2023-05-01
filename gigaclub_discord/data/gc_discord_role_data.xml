@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_role_everyone" model="gc.discord.role">
+        <field name="name">@everyone</field>
+    </record>
+
+</odoo>

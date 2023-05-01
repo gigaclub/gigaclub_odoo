@@ -8,6 +8,9 @@ class GCPermissionModelEntry(models.Model):
     permission_model_id = fields.Many2one(
         comodel_name="gc.permission.model", index=True, ondelete="cascade"
     )
+    nice_name = (
+        fields.Char()
+    )  # TODO: add nice name to all model entries and use them for Portal display
     name = fields.Char(required=True, index=True)
     permission_type = fields.Selection(
         selection=[("connector", "Connector"), ("user", "User")], required=True

@@ -47,7 +47,12 @@ class GigaClubPortal(CustomerPortal):
                 gc_user = request.env["gc.user"].search(
                     [("auth_token", "=", values.get("auth-code"))], limit=1
                 )
-                if gc_user:
+                if request.env.user.partner_id.gc_user_id and gc_user:
+                    request.env.user.partner_id.gc_user_id.mc_uuid = gc_user.mc_uuid
+                    request.env.user.partner_id.gc_user_id.with_delay().merge_users(
+                        gc_user
+                    )
+                elif gc_user:
                     request.env.user.partner_id.gc_user_id = gc_user
                 return request.redirect("/my/account")
             form_values = {}
@@ -92,7 +97,9 @@ class GigaClubPortal(CustomerPortal):
             "grant_type": "authorization_code",
             "redirect_uri": url,
         }
-        response = requests.post("https://login.live.com/oauth20_token.srf", data=data)
+        response = requests.post(
+            "https://login.live.com/oauth20_token.srf", data=data, timeout=5
+        )
         values = response.json()
         data = {
             "Properties": {
@@ -108,6 +115,7 @@ class GigaClubPortal(CustomerPortal):
             "https://user.auth.xboxlive.com/user/authenticate",
             data=json.dumps(data),
             headers=headers,
+            timeout=5,
         )
         values = response.json()
         data = {
@@ -124,6 +132,7 @@ class GigaClubPortal(CustomerPortal):
             "https://xsts.auth.xboxlive.com/xsts/authorize",
             data=json.dumps(data),
             headers=headers,
+            timeout=5,
         )
         values = response.json()
         data = {
@@ -134,11 +143,14 @@ class GigaClubPortal(CustomerPortal):
             "https://api.minecraftservices.com/authentication/login_with_xbox",
             data=json.dumps(data),
             headers=headers,
+            timeout=5,
         )
         values = response.json()
         headers["Authorization"] = f"Bearer {values.get('access_token', '')}"
         response = requests.get(
-            "https://api.minecraftservices.com/minecraft/profile", headers=headers
+            "https://api.minecraftservices.com/minecraft/profile",
+            headers=headers,
+            timeout=5,
         )
         values = response.json()
         mc_uuid = uuid.UUID(values.get("id", ""))
@@ -147,6 +159,8 @@ class GigaClubPortal(CustomerPortal):
         gc_user = GCUser.search([("mc_uuid", "=", mc_uuid)], limit=1)
         if request.env.user.partner_id.gc_user_id:
             request.env.user.partner_id.gc_user_id.mc_uuid = mc_uuid
+            if gc_user:
+                request.env.user.partner_id.gc_user_id.with_delay().merge_users(gc_user)
         elif gc_user:
             request.env.user.partner_id.gc_user_id = gc_user
         else:
@@ -174,25 +188,33 @@ class GigaClubPortal(CustomerPortal):
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         response = requests.post(
-            "https://discord.com/api/v10/oauth2/token", data=data, headers=headers
+            "https://discord.com/api/v10/oauth2/token",
+            data=data,
+            headers=headers,
+            timeout=5,
         )
         response.raise_for_status()
         values = response.json()
         access_token = values.get("access_token")
         headers = {"Authorization": f"Bearer {access_token}"}
         response = requests.get(
-            "https://discord.com/api/v10/users/@me", headers=headers
+            "https://discord.com/api/v10/users/@me", headers=headers, timeout=5
         )
-        discord_uuid = response.json().get("id")
+        result = response.json()
+        discord_uuid = result.get("id")
+        discord_name = result.get("name")
         GCUser = request.env["gc.user"]
         gc_user = GCUser.search([("discord_uuid", "=", discord_uuid)], limit=1)
         if request.env.user.partner_id.gc_user_id:
             request.env.user.partner_id.gc_user_id.discord_uuid = discord_uuid
+            if gc_user:
+                request.env.user.partner_id.gc_user_id.with_delay().merge_users(gc_user)
         elif gc_user:
             request.env.user.partner_id.gc_user_id = gc_user
         else:
             request.env.user.partner_id.gc_user_id = GCUser.create(
                 {
+                    "name": discord_name,
                     "discord_uuid": discord_uuid,
                 }
             )

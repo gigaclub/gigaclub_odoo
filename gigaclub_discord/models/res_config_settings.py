@@ -4,9 +4,6 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
-    discord_bot_token = fields.Char(
-        related="company_id.discord_bot_token", readonly=False
-    )
     discord_server_id = fields.Char(
         related="company_id.discord_server_id", readonly=False
     )

@@ -8,9 +8,9 @@ class GCDiscordRole(models.Model):
     name = fields.Char()
     role_id = fields.Char()
     hoist = fields.Boolean()
-    position = fields.Integer()
-    managed = fields.Boolean()
+    position = fields.Integer(default=1, required=True)
     mentionable = fields.Boolean()
+    color = fields.Char(default="#FFFFFF")
 
     user_ids = fields.Many2many(comodel_name="gc.user")
     permission_profile_id = fields.Many2one(

@@ -15,7 +15,7 @@ class GCRequest(models.Model):
         selection_add=[
             (
                 "member_or_team_to_world_invitation",
-                "Member or Team to World Invitatation",
+                "Member or Team to World Invitation",
             )
         ]
     )

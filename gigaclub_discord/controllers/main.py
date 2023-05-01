@@ -2,7 +2,7 @@ import asyncio
 import logging
 import threading
 
-import discord
+import discord  # noqa: W7936
 
 from odoo import _, api, http, registry
 from odoo.http import request
@@ -26,30 +26,47 @@ class MainController(http.Controller):
                 for guild in self.guilds:
                     if guild.id == int(company.discord_server_id):
                         self.guild = guild
-                        if not new_env["gc.user"].search_count(
-                            [("discord_uuid", "=", str(guild.owner_id))]
-                        ):
-                            new_env["gc.user"].create(
-                                {"discord_uuid": str(guild.owner_id)}
-                            )
+                        await self.create_and_update_not_created_categories(guild)
+                        await self.create_and_update_not_created_channels(guild)
+                        created_channels = new_env["gc.discord.channel"].search(
+                            [("discord_channel_uuid", "!=", False)]
+                        )
+                        saved_channel_ids = created_channels.mapped(
+                            lambda x: int(x.discord_channel_uuid)
+                        )
+                        created_categories = new_env["gc.discord.category"].search(
+                            [("discord_channel_uuid", "!=", False)]
+                        )
+                        saved_category_ids = created_categories.mapped(
+                            lambda x: int(x.discord_channel_uuid)
+                        )
+                        saved_channel_ids.extend(saved_category_ids)
+                        channels_to_remove = [
+                            channel
+                            for channel in guild.channels
+                            if channel.id not in saved_channel_ids
+                        ]
+                        for channel_to_remove in channels_to_remove:
+                            try:
+                                await channel_to_remove.delete()
+                            except Exception:
+                                _logger.error(channel_to_remove)
+                        await self.create_and_update_not_created_roles(guild)
                         for member in guild.members:
-                            if member == self.user:
+                            if member.bot:
                                 continue
-                            if not new_env["gc.user"].search_count(
-                                [("discord_uuid", "=", str(member.id))]
-                            ):
-                                new_env["gc.user"].create(
-                                    {"discord_uuid": str(member.id)}
+                            user = new_env["gc.user"].search(
+                                [("discord_uuid", "=", str(member.id))], limit=1
+                            )
+                            if not user:
+                                user = new_env["gc.user"].create(
+                                    {
+                                        "discord_uuid": str(member.id),
+                                        "name": member.name,
+                                    }
                                 )
-                        for channel in guild.channels:
-                            if isinstance(channel, discord.channel.CategoryChannel):
-                                await self.register_category(channel)
-                            else:
-                                await self.register_channel(channel)
-                        for role in guild.roles:
-                            await self.register_role(role)
-                        await self.create_not_created_channels(guild)
-                        await self.create_not_created_categories(guild)
+                            for role in user.role_ids:
+                                await self.add_roles(user.discord_uuid, role.role_id)
                         break
 
         async def on_member_join(self, member):
@@ -85,243 +102,206 @@ class MainController(http.Controller):
                     if current_event_worker:
                         current_event_worker.start_next_event()
 
-        async def register_role(self, role):
+        async def create_and_update_not_created_channels(self, guild):
             with registry(self.env.cr.dbname).cursor() as new_cr:
                 new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                if not new_env["gc.discord.role"].search_count(
-                    [("role_id", "=", str(role.id))]
-                ):
-                    role_id = new_env["gc.discord.role"].create(
-                        {
-                            "name": role.name,
-                            "role_id": str(role.id),
-                            "hoist": role.hoist,
-                            "position": role.position,
-                            "managed": role.managed,
-                            "mentionable": role.mentionable,
-                        }
-                    )
-                    member_ids = []
-                    for member in role.members:
-                        user_id = new_env["gc.user"].search(
-                            [("discord_uuid", "=", str(member.id))], limit=1
+                not_created_channels = new_env["gc.discord.channel"].search(
+                    [("discord_channel_uuid", "=", False)]
+                )
+                for channel_record in not_created_channels:
+                    category = False
+                    channel = False
+                    if (
+                        channel_record.category_id
+                        and not channel_record.category_id.discord_channel_uuid
+                    ):
+                        category = await guild.create_category(
+                            name=channel_record.category_id.name
                         )
-                        if user_id:
-                            member_ids.append(user_id.id)
-                    role_id.user_ids = [[6, 0, member_ids]]
-                    perm = role.permissions
-                    permission_profile_id = role_id.permission_profile_id.create(
-                        {
-                            "name": role.name,
-                            "administrator": perm.administrator,
-                            "create_instant_invite": perm.create_instant_invite,
-                            "kick_members": perm.kick_members,
-                            "ban_members": perm.ban_members,
-                            "manage_channels": perm.manage_channels,
-                            "manage_guild": perm.manage_guild,
-                            "add_reactions": perm.add_reactions,
-                            "view_audit_log": perm.view_audit_log,
-                            "priority_speaker": perm.priority_speaker,
-                            "stream": perm.stream,
-                            "read_messages": perm.read_messages,
-                            "send_messages": perm.send_messages,
-                            "send_tts_messages": perm.send_tts_messages,
-                            "manage_messages": perm.manage_messages,
-                            "embed_links": perm.embed_links,
-                            "attach_files": perm.attach_files,
-                            "read_message_history": perm.read_message_history,
-                            "mention_everyone": perm.mention_everyone,
-                            "external_emojis": perm.external_emojis,
-                            "view_guild_insights": perm.view_guild_insights,
-                            "connect": perm.connect,
-                            "speak": perm.speak,
-                            "mute_members": perm.mute_members,
-                            "deafen_members": perm.deafen_members,
-                            "move_members": perm.move_members,
-                            "use_voice_activation": perm.use_voice_activation,
-                            "change_nickname": perm.change_nickname,
-                            "manage_nicknames": perm.manage_nicknames,
-                            "manage_roles": perm.manage_roles,
-                            "manage_webhooks": perm.manage_webhooks,
-                            "manage_emojis": perm.manage_emojis,
-                            "request_to_speak": perm.request_to_speak,
-                        }
+                        channel_record.category_id.discord_channel_uuid = str(
+                            category.id
+                        )
+                    elif channel_record.category_id:
+                        category = guild.get_channel(
+                            int(channel_record.category_id.discord_channel_uuid)
+                        )
+                    if channel_record.type == "text":
+                        channel = await guild.create_text_channel(
+                            name=channel_record.name,
+                            category=category,
+                        )
+                    elif channel_record.type == "voice":
+                        channel = await guild.create_voice_channel(
+                            name=channel_record.name,
+                            category=category,
+                        )
+                    elif channel_record.type == "stage":
+                        channel = await guild.create_stage_channel(
+                            name=channel_record.name,
+                            category=category,
+                        )
+                    elif channel_record.type == "announcement":
+                        channel = await guild.create_text_channel(
+                            name=channel_record.name,
+                            category=category,
+                            type=discord.ChannelType.news,
+                        )
+                    channel_record.discord_channel_uuid = str(channel.id)
+                created_channels = new_env["gc.discord.channel"].search(
+                    [("discord_channel_uuid", "!=", False)]
+                )
+                for channel_record in created_channels:
+                    channel = self.get_channel(int(channel_record.discord_channel_uuid))
+                    await channel.edit(name=channel_record.name)
+                    if channel_record.category_id.discord_channel_uuid:
+                        category = self.get_channel(
+                            int(channel_record.category_id.discord_channel_uuid)
+                        )
+                        await channel.edit(category=category)
+
+        async def create_and_update_not_created_categories(self, guild):
+            with registry(self.env.cr.dbname).cursor() as new_cr:
+                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                not_created_categories = new_env["gc.discord.category"].search(
+                    [("discord_channel_uuid", "=", False)]
+                )
+                for category_record in not_created_categories:
+                    category = await guild.create_category(name=category_record.name)
+                    category_record.discord_channel_uuid = str(category.id)
+                created_categories = new_env["gc.discord.category"].search(
+                    [("discord_channel_uuid", "!=", False)]
+                )
+                for category_record in created_categories:
+                    category = self.get_channel(
+                        int(category_record.discord_channel_uuid)
                     )
-                    role_id.permission_profile_id = permission_profile_id
-                else:
-                    role_id = new_env["gc.discord.role"].search(
-                        [("role_id", "=", str(role.id))], limit=1
-                    )
-                    perm = role_id.permission_profile_id
+                    await category.edit(name=category_record.name)
+
+        async def create_and_update_not_created_roles(self, guild):
+            with registry(self.env.cr.dbname).cursor() as new_cr:
+                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                not_created_roles = new_env["gc.discord.role"].search(
+                    [("role_id", "=", False)]
+                )
+                for role_record in not_created_roles:
+                    permission_profile = role_record.permission_profile_id
                     permissions = discord.Permissions(
-                        administrator=perm.administrator,
-                        create_instant_invite=perm.create_instant_invite,
-                        kick_members=perm.kick_members,
-                        ban_members=perm.ban_members,
-                        manage_channels=perm.manage_channels,
-                        manage_guild=perm.manage_guild,
-                        add_reactions=perm.add_reactions,
-                        view_audit_log=perm.view_audit_log,
-                        priority_speaker=perm.priority_speaker,
-                        stream=perm.stream,
-                        read_messages=perm.read_messages,
-                        send_messages=perm.send_messages,
-                        send_tts_messages=perm.send_tts_messages,
-                        manage_messages=perm.manage_messages,
-                        embed_links=perm.embed_links,
-                        attach_files=perm.attach_files,
-                        read_message_history=perm.read_message_history,
-                        mention_everyone=perm.mention_everyone,
-                        external_emojis=perm.external_emojis,
-                        view_guild_insights=perm.view_guild_insights,
-                        connect=perm.connect,
-                        speak=perm.speak,
-                        mute_members=perm.mute_members,
-                        deafen_members=perm.deafen_members,
-                        move_members=perm.move_members,
-                        use_voice_activation=perm.use_voice_activation,
-                        change_nickname=perm.change_nickname,
-                        manage_nicknames=perm.manage_nicknames,
-                        manage_roles=perm.manage_roles,
-                        manage_webhooks=perm.manage_webhooks,
-                        manage_emojis=perm.manage_emojis,
-                        request_to_speak=perm.request_to_speak,
+                        administrator=permission_profile.administrator,
+                        create_instant_invite=permission_profile.create_instant_invite,
+                        kick_members=permission_profile.kick_members,
+                        ban_members=permission_profile.ban_members,
+                        manage_channels=permission_profile.manage_channels,
+                        manage_guild=permission_profile.manage_guild,
+                        add_reactions=permission_profile.add_reactions,
+                        view_audit_log=permission_profile.view_audit_log,
+                        priority_speaker=permission_profile.priority_speaker,
+                        stream=permission_profile.stream,
+                        read_messages=permission_profile.read_messages,
+                        send_messages=permission_profile.send_messages,
+                        send_tts_messages=permission_profile.send_tts_messages,
+                        manage_messages=permission_profile.manage_messages,
+                        embed_links=permission_profile.embed_links,
+                        attach_files=permission_profile.attach_files,
+                        read_message_history=permission_profile.read_message_history,
+                        mention_everyone=permission_profile.mention_everyone,
+                        external_emojis=permission_profile.external_emojis,
+                        view_guild_insights=permission_profile.view_guild_insights,
+                        connect=permission_profile.connect,
+                        speak=permission_profile.speak,
+                        mute_members=permission_profile.mute_members,
+                        deafen_members=permission_profile.deafen_members,
+                        move_members=permission_profile.move_members,
+                        use_voice_activation=permission_profile.use_voice_activation,
+                        change_nickname=permission_profile.change_nickname,
+                        manage_nicknames=permission_profile.manage_nicknames,
+                        manage_roles=permission_profile.manage_roles,
+                        manage_webhooks=permission_profile.manage_webhooks,
+                        manage_emojis=permission_profile.manage_emojis,
+                        request_to_speak=permission_profile.request_to_speak,
                     )
+                    color = discord.Color.from_str(role_record.color)
+                    role = discord.utils.get(guild.roles, name=role_record.name)
                     try:
-                        await role.edit(
-                            name=role_id.name,
-                            hoist=role_id.hoist,
-                            mentionable=role_id.mentionable,
-                            position=role_id.position if role_id.position > 0 else None,
+                        if role:
+                            role_record.role_id = role.id
+                            await role.edit(
+                                name=role_record.name,
+                                hoist=role_record.hoist,
+                                mentionable=role_record.mentionable,
+                                position=role_record.position,
+                                permissions=permissions,
+                                color=color,
+                            )
+                            continue
+                        await guild.create_role(
+                            name=role_record.name,
+                            hoist=role_record.hoist,
+                            mentionable=role_record.mentionable,
+                            position=role_record.position,
                             permissions=permissions,
+                            color=color,
                         )
                     except Exception:
-                        _logger.warning("No Permissions")
-
-        async def register_category(self, channel):
-            with registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                if not new_env["gc.discord.category"].search_count(
-                    [("discord_channel_uuid", "=", str(channel.id))]
-                ):
-                    new_env["gc.discord.category"].create(
-                        {
-                            "discord_channel_uuid": str(channel.id),
-                            "name": str(channel.name),
-                        }
-                    )
-                else:
-                    category_id = new_env["gc.discord.category"].search(
-                        [("discord_channel_uuid", "=", str(channel.id))]
-                    )
-                    await channel.edit(name=category_id.name)
-
-        async def register_channel(self, channel):
-            with registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                if not new_env["gc.discord.channel"].search_count(
-                    [("discord_channel_uuid", "=", str(channel.id))]
-                ):
-                    channel_type = False
-                    if isinstance(channel, discord.channel.TextChannel):
-                        channel_type = "text"
-                        if channel.is_news():
-                            channel_type = "announcement"
-                    elif isinstance(channel, discord.channel.VoiceChannel):
-                        channel_type = "voice"
-                    elif isinstance(channel, discord.channel.StageChannel):
-                        channel_type = "stage"
-                    if type:
-                        create_dict = {
-                            "discord_channel_uuid": str(channel.id),
-                            "name": str(channel.name),
-                            "type": channel_type,
-                        }
-                        if channel.category:
-                            await self.register_category(channel.category)
-                            category_id = new_env["gc.discord.category"].search(
-                                [
-                                    (
-                                        "discord_channel_uuid",
-                                        "=",
-                                        str(channel.category.id),
-                                    )
-                                ]
-                            )
-                            if category_id:
-                                create_dict["category_id"] = category_id.id
-                        new_env["gc.discord.channel"].create(create_dict)
-                else:
-                    channel_id = new_env["gc.discord.channel"].search(
-                        [("discord_channel_uuid", "=", str(channel.id))]
-                    )
-                    if channel_id:
-                        await channel.edit(name=channel_id.name)
-                        if channel_id.category_id:
-                            category = self.get_channel(
-                                int(channel_id.category_id.discord_channel_uuid)
-                            )
-                            await channel.edit(category=category)
-                        else:
-                            await channel.edit(category=None)
-
-        async def create_not_created_channels(self, guild):
-            with registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                not_created_channel_ids = new_env["gc.discord.channel"].search(
-                    [("discord_channel_uuid", "=", False)]
+                        _logger.error(role)
+                created_roles = new_env["gc.discord.role"].search(
+                    [("role_id", "!=", False)]
                 )
-                if not_created_channel_ids:
-                    for channel_id in not_created_channel_ids:
-                        category = False
-                        channel = False
-                        if (
-                            channel_id.category_id
-                            and not channel_id.category_id.discord_channel_uuid
-                        ):
-                            category = await guild.create_category(
-                                name=channel_id.category_id.name
-                            )
-                            channel_id.category_id.discord_channel_uuid = str(
-                                category.id
-                            )
-                        elif channel_id.category_id:
-                            category = guild.get_channel(
-                                int(channel_id.category_id.discord_channel_uuid)
-                            )
-                        if channel_id.type == "text":
-                            channel = await guild.create_text_channel(
-                                name=channel_id.name,
-                                category=category,
-                            )
-                        elif channel_id.type == "voice":
-                            channel = await guild.create_voice_channel(
-                                name=channel_id.name,
-                                category=category,
-                            )
-                        elif channel_id.type == "stage":
-                            channel = await guild.create_stage_channel(
-                                name=channel_id.name,
-                                category=category,
-                            )
-                        elif channel_id.type == "announcement":
-                            channel = await guild.create_text_channel(
-                                name=channel_id.name,
-                                category=category,
-                                type=discord.ChannelType.news,
-                            )
-                        channel_id.discord_channel_uuid = str(channel.id)
-
-        async def create_not_created_categories(self, guild):
-            with registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                not_created_category_ids = new_env["gc.discord.category"].search(
-                    [("discord_channel_uuid", "=", False)]
-                )
-                if not_created_category_ids:
-                    for category_id in not_created_category_ids:
-                        category = await guild.create_category(name=category_id.name)
-                        category_id.discord_channel_uuid = str(category.id)
+                for role_record in created_roles:
+                    permission_profile = role_record.permission_profile_id
+                    permissions = discord.Permissions(
+                        administrator=permission_profile.administrator,
+                        create_instant_invite=permission_profile.create_instant_invite,
+                        kick_members=permission_profile.kick_members,
+                        ban_members=permission_profile.ban_members,
+                        manage_channels=permission_profile.manage_channels,
+                        manage_guild=permission_profile.manage_guild,
+                        add_reactions=permission_profile.add_reactions,
+                        view_audit_log=permission_profile.view_audit_log,
+                        priority_speaker=permission_profile.priority_speaker,
+                        stream=permission_profile.stream,
+                        read_messages=permission_profile.read_messages,
+                        send_messages=permission_profile.send_messages,
+                        send_tts_messages=permission_profile.send_tts_messages,
+                        manage_messages=permission_profile.manage_messages,
+                        embed_links=permission_profile.embed_links,
+                        attach_files=permission_profile.attach_files,
+                        read_message_history=permission_profile.read_message_history,
+                        mention_everyone=permission_profile.mention_everyone,
+                        external_emojis=permission_profile.external_emojis,
+                        view_guild_insights=permission_profile.view_guild_insights,
+                        connect=permission_profile.connect,
+                        speak=permission_profile.speak,
+                        mute_members=permission_profile.mute_members,
+                        deafen_members=permission_profile.deafen_members,
+                        move_members=permission_profile.move_members,
+                        use_voice_activation=permission_profile.use_voice_activation,
+                        change_nickname=permission_profile.change_nickname,
+                        manage_nicknames=permission_profile.manage_nicknames,
+                        manage_roles=permission_profile.manage_roles,
+                        manage_webhooks=permission_profile.manage_webhooks,
+                        manage_emojis=permission_profile.manage_emojis,
+                        request_to_speak=permission_profile.request_to_speak,
+                    )
+                    color = discord.Color.from_str(role_record.color)
+                    role = discord.utils.get(guild.roles, id=role_record.role_id)
+                    if role:
+                        await role.edit(
+                            name=role_record.name,
+                            hoist=role_record.hoist,
+                            mentionable=role_record.mentionable,
+                            position=role_record.position,
+                            permissions=permissions,
+                            color=color,
+                        )
+                role_ids = created_roles.mapped("role_id")
+                roles_to_remove = [
+                    role for role in guild.roles if role.id not in role_ids
+                ]
+                for role_to_remove in roles_to_remove:
+                    try:
+                        await role_to_remove.delete()
+                    except Exception:
+                        _logger.error(role_to_remove)
 
         async def on_message(self, message):
             if message.author == self.user:
@@ -380,14 +360,22 @@ class MainController(http.Controller):
     def start_discord_bot(self):
         company_id = request.env.user.company_id or request.env["res.company"].browse(1)
         if (
-            company_id.discord_bot_token
+            request.env["ir.config_parameter"]
+            .sudo()
+            .get_param("gigaclub.discord_bot_token")
             and company_id.discord_server_status
             and company_id.discord_server_status == "stopped"
         ):
             self.loop = asyncio.new_event_loop()
             asyncio.set_event_loop(self.loop)
             self.client = self.MyBot(env=request.env)
-            self.loop.create_task(self.bot_async_start(company_id.discord_bot_token))
+            self.loop.create_task(
+                self.bot_async_start(
+                    request.env["ir.config_parameter"]
+                    .sudo()
+                    .get_param("gigaclub.discord_bot_token")
+                )
+            )
             bot_thread = threading.Thread(target=self.bot_loop_start, args=(self.loop,))
             bot_thread.start()
             company_id.discord_server_status = "started"
@@ -401,7 +389,9 @@ class MainController(http.Controller):
     def stop_discord_bot(self):
         company_id = request.env.user.company_id or request.env["res.company"].browse(1)
         if (
-            company_id.discord_bot_token
+            request.env["ir.config_parameter"]
+            .sudo()
+            .get_param("gigaclub.discord_bot_token")
             and company_id.discord_server_status
             and company_id.discord_server_status == "started"
         ):
@@ -409,7 +399,7 @@ class MainController(http.Controller):
                 asyncio.run(self.client.close())
                 del self.client
             except Exception as e:
-                _logger.error(_("Error occured on Discord Bot stop: %s" % e))
+                _logger.error(_("Error occured on Discord Bot stop: %s") % e)
             company_id.discord_server_status = "stopped"
         else:
             raise Exception(

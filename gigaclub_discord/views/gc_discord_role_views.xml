@@ -11,8 +11,8 @@
                     <field name="role_id" />
                     <field name="hoist" />
                     <field name="position" />
-                    <field name="managed" />
                     <field name="mentionable" />
+                    <field name="color" widget="color" />
                     <field name="user_ids" />
                     <field name="permission_profile_id" />
                 </tree>
@@ -30,8 +30,8 @@
                             <field name="role_id" />
                             <field name="hoist" />
                             <field name="position" />
-                            <field name="managed" />
                             <field name="mentionable" />
+                            <field name="color" widget="color" />
                             <field name="user_ids" />
                             <field name="permission_profile_id" />
                         </group>
