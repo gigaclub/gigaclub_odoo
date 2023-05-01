@@ -148,6 +148,25 @@ class GigaClubPortalTeam(GigaClubPortal):
                     form_values.get("deny_world_request_as_team", False),
                 )
                 return return_redirect
+            elif form.get("invite-user", False):
+                return_redirect = request.redirect(
+                    "/my/team/{}/edit".format(team_sudo.id)
+                )
+                invited_user_id = form.get("invite-user", False)
+                if not invited_user_id.isnumeric():
+                    return return_redirect
+                user = team_sudo.env["gc.user"].browse(int(invited_user_id))
+                if not user:
+                    return return_redirect
+                team_sudo.env["gc.request"].create(
+                    {
+                        "sender_id": f"{team_sudo._name},{team_sudo.id}",
+                        "receiver_id": f"{user._name},{user.id}",
+                        "request_type": "member_to_team_invitation",
+                        "state": "waiting",
+                    }
+                )
+                return return_redirect
             elif form.get("group-name", False):
                 return_redirect = request.redirect(
                     "/my/team/{}/edit".format(team_sudo.id)

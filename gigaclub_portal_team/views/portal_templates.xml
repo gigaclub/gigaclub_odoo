@@ -270,10 +270,8 @@
                     class="btn btn-sm btn-primary"
                     type="button"
                     data-bs-toggle="modal"
-                    data-bs-target="#user-modal"
-                    t-att-data-bs-users="json.dumps(users)"
-                    t-att-data-bs-groups="json.dumps(team.get('groups', []))"
-                  >Add User</button>
+                    data-bs-target="#invite-user-modal"
+                  >Invite User</button>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 10px;">
@@ -343,6 +341,7 @@
                 <t
           t-call="gigaclub_portal_team.portal_my_teams_delete_permission_group_modal"
         />
+                <t t-call="gigaclub_portal_team.portal_my_team_invite_user_model" />
             </t>
         </template>
 
@@ -419,6 +418,75 @@
                 t-attf-onclick="window.location.href=`/my/team/#{team.get('id')}/permission_group/${window.currentPermissionGroupId}/delete?{{ keep_query() }}`"
               >Confirm</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="portal_my_team_invite_user_model">
+            <div
+        class="modal fade invite-user-modal-lg"
+        id="invite-user-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post">
+                            <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+              />
+                            <div class="modal-header">
+                                <h5 class="modal-title">Invite User</h5>
+                                <button
+                  type="button"
+                  class="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                                    <span>&amp;times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="select-invite-user">
+                                                User
+                                            </label>
+                                            <select
+                        id="select-invite-user"
+                        name="invite-user"
+                        class="js-select-invite-user-single js-states form-control"
+                      >
+                                                <option data-tokens="" />
+                                                <option
+                          t-foreach="users"
+                          t-as="user"
+                          t-out="user.get('name', '')"
+                          t-att-value="user.get('id', '')"
+                        />
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Discard</button>
+                                <button
+                  type="submit"
+                  role="button"
+                  class="btn btn-primary"
+                >Invite</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

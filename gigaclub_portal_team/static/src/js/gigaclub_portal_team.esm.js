@@ -12,6 +12,7 @@ publicWidget.registry.PortalHomeCounters.include({
 });
 
 $(".js-select-user-single").select2({});
+$(".js-select-invite-user-single").select2({});
 $(".js-select-groups-multiple").select2({});
 
 $("#deleteTeamConfirmModal").on("show.bs.modal", (event) => {
