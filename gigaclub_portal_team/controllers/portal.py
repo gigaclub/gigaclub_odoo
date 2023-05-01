@@ -711,7 +711,31 @@ class GigaClubPortalTeam(GigaClubPortal):
             "users": [
                 {"id": user.id, "name": user.display_name}
                 for user in request.env["gc.user"].search(
-                    [("id", "not in", (team_users | team.owner_id).ids)]
+                    [
+                        (
+                            "id",
+                            "not in",
+                            (
+                                team_users
+                                | team.owner_id
+                                | request.env["gc.user"].concat(
+                                    *request.env["gc.request"]
+                                    .search(
+                                        [
+                                            ("sender_id", "=", f"gc.team,{team.id}"),
+                                            (
+                                                "request_type",
+                                                "=",
+                                                "member_to_team_invitation",
+                                            ),
+                                            ("state", "=", "waiting"),
+                                        ]
+                                    )
+                                    .mapped("receiver_id")
+                                )
+                            ).ids,
+                        )
+                    ]
                 )
             ],
         }
