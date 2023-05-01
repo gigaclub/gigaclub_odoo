@@ -30,21 +30,19 @@ class GCDiscordEventWorker(models.Model):
     def call_events(self):
         with registry(self.env.cr.dbname).cursor() as new_cr:
             new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-            self = self.with_env(new_env)
             url = f"http://127.0.0.1:{tools.config['http_port']}"
             session = http.root.session_store.new()
             session.db = new_env.cr.dbname
             uid = new_env.user.id
-            env = api.Environment(new_env.cr, new_env.user.id, {})
             session.uid = uid
             session.login = new_env.user.login
-            session.session_token = uid and security.compute_session_token(session, env)
-            session.context = dict(env["res.users"].context_get() or {})
+            session.session_token = uid and security.compute_session_token(
+                session, new_env
+            )
+            session.context = dict(new_env["res.users"].context_get() or {})
             session.context["uid"] = uid
             http.root.session_store.save(session)
             opener = requests.Session()
             opener.cookies["session_id"] = session.sid
-            # commit because the current records needs to be accessed in discord bot...
-            new_env.cr.commit()
             for rec in self.filtered(lambda x: x.event_id.server_action and x.current):
                 opener.post(f"{url}/discordbot/event/{rec.id}")
