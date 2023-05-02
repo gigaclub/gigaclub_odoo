@@ -228,19 +228,18 @@ class MainController(http.Controller):
                                 name=role_record.name,
                                 hoist=role_record.hoist,
                                 mentionable=role_record.mentionable,
-                                position=role_record.position,
                                 permissions=permissions,
                                 color=color,
                             )
                             continue
-                        await guild.create_role(
+                        role = await guild.create_role(
                             name=role_record.name,
                             hoist=role_record.hoist,
                             mentionable=role_record.mentionable,
-                            position=role_record.position,
                             permissions=permissions,
                             color=color,
                         )
+                        role_record.role_id = role.id
                     except Exception:
                         _logger.error(role)
                 created_roles = new_env["gc.discord.role"].search(
@@ -293,7 +292,7 @@ class MainController(http.Controller):
                             permissions=permissions,
                             color=color,
                         )
-                role_ids = created_roles.mapped("role_id")
+                role_ids = created_roles.mapped(lambda x: int(x.role_id))
                 roles_to_remove = [
                     role for role in guild.roles if role.id not in role_ids
                 ]

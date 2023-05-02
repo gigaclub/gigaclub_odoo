@@ -5,4 +5,19 @@
         <field name="name">@everyone</field>
     </record>
 
+    <record id="gc_discord_role_gigaclub" model="gc.discord.role">
+        <field name="name">GigaClub</field>
+        <field name="color">#E58308</field>
+        <field name="position">1</field>
+        <field name="hoist" eval="True" />
+        <field
+      name="permission_group_id"
+      ref="gigaclub_permission_system.gc_permission_group_gigaclub"
+    />
+        <field
+      name="permission_profile_id"
+      ref="gigaclub_discord.gc_discord_permission_profile_gigaclub"
+    />
+    </record>
+
 </odoo>

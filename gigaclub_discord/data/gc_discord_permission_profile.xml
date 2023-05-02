@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record
+    id="gc_discord_permission_profile_gigaclub"
+    model="gc.discord.permission.profile"
+  >
+        <field name="administrator" eval="True" />
+        <field name="name">GigaClub Permission Profile</field>
+    </record>
+
+</odoo>

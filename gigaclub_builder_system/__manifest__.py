@@ -9,8 +9,11 @@
     "depends": ["gigaclub_translation", "gigaclub_project"],
     "data": [
         "data/gc_builder_world_type_data.xml",
+        "data/gc_permission_group_data.xml",
         "data/gc_permission_model_data.xml",
         "data/gc_permission_model_entry_data.xml",
+        "data/gc_permission_profile_data.xml",
+        "data/gc_permission_profile_entry_data.xml",
         "data/gc_permission_profile_template_data.xml",
         "security/ir.model.access.csv",
         "views/project_task_views.xml",
