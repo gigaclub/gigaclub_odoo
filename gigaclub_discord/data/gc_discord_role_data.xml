@@ -8,7 +8,6 @@
     <record id="gc_discord_role_gigaclub" model="gc.discord.role">
         <field name="name">GigaClub</field>
         <field name="color">#E58308</field>
-        <field name="position">1</field>
         <field name="hoist" eval="True" />
         <field
       name="permission_group_id"

@@ -8,7 +8,6 @@ class GCDiscordRole(models.Model):
     name = fields.Char()
     role_id = fields.Char()
     hoist = fields.Boolean()
-    position = fields.Integer(default=1, required=True)
     mentionable = fields.Boolean()
     color = fields.Char(default="#FFFFFF")
 

@@ -3,12 +3,13 @@
     <data>
 
         <record model="ir.ui.view" id="gc_user_form_view_inherit_discord">
-            <field name="name">gc.user.from.view.inherit</field>
+            <field name="name">gc.user.form.view.inherit</field>
             <field name="model">gc.user</field>
             <field name="inherit_id" ref="gigaclub_base.gc_user_form_view" />
             <field name="arch" type="xml">
                 <field name="state" position="after">
                     <field name="discord_uuid" />
+                    <field name="role_ids" />
                 </field>
             </field>
         </record>
