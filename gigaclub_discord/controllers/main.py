@@ -65,8 +65,30 @@ class MainController(http.Controller):
                                         "name": member.name,
                                     }
                                 )
-                            for role in user.role_ids:
-                                await self.add_roles(user.discord_uuid, role.role_id)
+                            dc_user_roles = member.roles
+                            dc_existing_user_roles = []
+
+                            # Add new roles to the user
+                            for role_record in user.role_ids:
+                                role_id = int(role_record.role_id)
+                                dc_role = discord.utils.get(guild.roles, id=role_id)
+                                if dc_role is None:
+                                    continue
+                                dc_existing_user_roles.append(dc_role)
+                                if dc_role in dc_user_roles:
+                                    continue
+                                await member.add_roles(dc_role)
+
+                            # Remove roles that were added by the bot
+                            roles_to_remove = []
+                            for role in dc_user_roles:
+                                if (
+                                    role not in dc_existing_user_roles
+                                    and role.name != "@everyone"
+                                ):
+                                    roles_to_remove.append(role)
+                            if len(roles_to_remove) > 0:
+                                await member.remove_roles(*roles_to_remove)
                         break
 
         async def on_member_join(self, member):

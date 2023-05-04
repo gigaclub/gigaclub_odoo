@@ -19,4 +19,22 @@
     />
     </record>
 
+    <record id="gc_discord_role_team" model="gc.discord.role">
+        <field name="name">Team Member</field>
+        <field name="hoist" eval="True" />
+        <field
+      name="permission_group_id"
+      ref="gigaclub_team.gc_permission_group_team"
+    />
+    </record>
+
+    <record id="gc_discord_role_builder" model="gc.discord.role">
+        <field name="name">Builder</field>
+        <field name="hoist" eval="True" />
+        <field
+      name="permission_group_id"
+      ref="gigaclub_builder_system.gc_permission_group_builder"
+    />
+    </record>
+
 </odoo>
