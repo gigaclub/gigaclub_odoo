@@ -7,10 +7,10 @@ class ResConfigSettings(models.TransientModel):
     discord_server_id = fields.Char(
         related="company_id.discord_server_id", readonly=False
     )
-    discord_system_channel_id = fields.Many2one(
-        related="company_id.discord_system_channel_id", readonly=False
-    )
     discord_server_status = fields.Selection(related="company_id.discord_server_status")
+    discord_server_rules = fields.Text(
+        related="company_id.discord_server_rules", readonly=False
+    )
 
     def start_discord_bot(self):
         return {

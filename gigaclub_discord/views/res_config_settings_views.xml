@@ -26,10 +26,11 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 o_setting_box">
-                        <div class="o_setting_left_pane" />
+                        <div class="o_setting_left_pane">
+                            <label for="discord_server_rules" />
+                        </div>
                         <div class="o_setting_right_pane">
-                            <label for="discord_system_channel_id" />
-                            <field name="discord_system_channel_id" />
+                            <field name="discord_server_rules" />
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 o_setting_box">
