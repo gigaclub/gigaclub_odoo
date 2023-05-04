@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_category_rules" model="gc.discord.category">
+        <field name="name">Rules</field>
+    </record>
+
+    <record id="gc_discord_category_text_channels" model="gc.discord.category">
+        <field name="name">Text Channels</field>
+    </record>
+
+    <record id="gc_discord_category_talk_channels" model="gc.discord.category">
+        <field name="name">Talk Channels</field>
+    </record>
+
+</odoo>
