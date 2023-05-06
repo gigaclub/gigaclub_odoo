@@ -1,0 +1,622 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_discord
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_discord
+#. odoo-python
+#: code:addons/gigaclub_discord/models/gc_discord_category.py:0
+#, python-format
+msgid "A category can just have a maximum of 50 channels!"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_action_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__action_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__action_id
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_action
+msgid "Action"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__action_type
+msgid "Action Type"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_action_worker_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__action_worker_id
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_action_worker
+msgid "Action Worker"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__add_reactions
+msgid "Add Reactions"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__administrator
+msgid "Administrator"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_channel__type__announcement
+msgid "Announcement"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__attach_files
+msgid "Attach Files"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__ban_members
+msgid "Ban Members"
+msgstr ""
+
+#. module: gigaclub_discord
+#. odoo-python
+#: code:addons/gigaclub_discord/controllers/main.py:0
+#, python-format
+msgid "Bot is Started or Discord Bot Token or Discord Server ID not set!"
+msgstr ""
+
+#. module: gigaclub_discord
+#. odoo-python
+#: code:addons/gigaclub_discord/controllers/main.py:0
+#, python-format
+msgid "Bot is Stopped or Discord Bot Token or Discord Server ID not set!"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_category_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__category_id
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_category
+msgid "Category"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__change_nickname
+msgid "Change Nickname"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_channel_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__channel_ids
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_channel
+msgid "Channel"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__color
+msgid "Color"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__connect
+msgid "Connect"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_instant_invite
+msgid "Create Instant Invite"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__current
+msgid "Current"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__current_event_worker_id
+msgid "Current Event Worker"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.constraint,message:gigaclub_discord.constraint_gc_user_discord_uuid_unique
+msgid "DISCORD_UUID must be unique!"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__deafen_members
+msgid "Deafen Members"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.ui.menu,name:gigaclub_discord.gc_discord_menu_root
+#: model_terms:ir.ui.view,arch_db:gigaclub_discord.res_config_settings_view_form_inherit_gigaclub_discord
+msgid "Discord"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__discord_channel_uuid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__discord_channel_uuid
+msgid "Discord Channel Uuid"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_res_company__discord_server_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_res_config_settings__discord_server_id
+msgid "Discord Server ID"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_res_company__discord_server_rules
+#: model:ir.model.fields,field_description:gigaclub_discord.field_res_config_settings__discord_server_rules
+msgid "Discord Server Rules"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_res_company__discord_server_status
+#: model:ir.model.fields,field_description:gigaclub_discord.field_res_config_settings__discord_server_status
+msgid "Discord Server Status"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_user__discord_uuid
+msgid "Discord Uuid"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__done
+msgid "Done"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__embed_links
+msgid "Embed Links"
+msgstr ""
+
+#. module: gigaclub_discord
+#. odoo-python
+#: code:addons/gigaclub_discord/controllers/main.py:0
+#, python-format
+msgid "Error occured on Discord Bot stop: %s"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_event_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__event_ids
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__event_id
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_event
+msgid "Event"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__event_type
+msgid "Event Type"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_event_worker_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__event_worker_ids
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_event_worker
+msgid "Event Worker"
+msgstr ""
+
+#. module: gigaclub_discord
+#. odoo-python
+#: code:addons/gigaclub_discord/models/gc_discord_action.py:0
+#, python-format
+msgid "Events have to start with user events!"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__external_emojis
+msgid "External Emojis"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__get_private_message
+msgid "Get Private Message"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_action
+msgid "GigaClub Discord Action"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_action_worker
+msgid "GigaClub Discord Action Worker"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_category
+msgid "GigaClub Discord Category"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_channel
+msgid "GigaClub Discord Channel"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_event
+msgid "GigaClub Discord Event"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_event_worker
+msgid "GigaClub Discord Event Worker"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_permission_profile
+msgid "GigaClub Discord Permission Profile"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_role
+msgid "GigaClub Discord Role"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_permission_group
+msgid "GigaClub Permission Group"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_user
+msgid "GigaClub User"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__hoist
+msgid "Hoist"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__id
+msgid "ID"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__kick_members
+msgid "Kick Members"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_channels
+msgid "Manage Channels"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_emojis
+msgid "Manage Emojis"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_guild
+msgid "Manage Guild"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_messages
+msgid "Manage Messages"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_nicknames
+msgid "Manage Nicknames"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_roles
+msgid "Manage Roles"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_webhooks
+msgid "Manage Webhooks"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__mention_everyone
+msgid "Mention Everyone"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__mentionable
+msgid "Mentionable"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__message_content
+msgid "Message Content"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__move_members
+msgid "Move Members"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__mute_members
+msgid "Mute Members"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__name
+msgid "Name"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__next_event_id
+msgid "Next Event"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__guild_join
+msgid "On Guild Join"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__permission_group_id
+msgid "Permission Group"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__permission_profile_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__permission_profile_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__permission_profile_id
+msgid "Permission Profile"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_permission_profile_action
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_permission_profile
+msgid "Permission profile"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__priority_speaker
+msgid "Priority Speaker"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__read_message_history
+msgid "Read Message History"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__read_messages
+msgid "Read Messages"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model_terms:ir.ui.view,arch_db:gigaclub_discord.res_config_settings_view_form_inherit_gigaclub_discord
+msgid "Reload Bot"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__request_to_speak
+msgid "Request To Speak"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_role_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__role_ids
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__role_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_permission_group__role_ids
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_user__role_ids
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_role
+msgid "Role"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_messages
+msgid "Send Messages"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_tts_messages
+msgid "Send Tts Messages"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__send_private_message
+msgid "Send private Message"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__server_action
+msgid "Server Action"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__set_role
+msgid "Set Role"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__speak
+msgid "Speak"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_channel__type__stage
+msgid "Stage"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model_terms:ir.ui.view,arch_db:gigaclub_discord.res_config_settings_view_form_inherit_gigaclub_discord
+msgid "Start Bot"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__start_event_id
+msgid "Start Event"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__res_company__discord_server_status__started
+msgid "Started"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model_terms:ir.ui.view,arch_db:gigaclub_discord.res_config_settings_view_form_inherit_gigaclub_discord
+msgid "Stop Bot"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__res_company__discord_server_status__stopped
+msgid "Stopped"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__stream
+msgid "Stream"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_channel__type__text
+msgid "Text"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__type
+msgid "Type"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_voice_activation
+msgid "Use Voice Activation"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__user_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__user_ids
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_action__action_type__user
+msgid "User"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__user_action
+msgid "User Action"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__view_audit_log
+msgid "View Audit Log"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__view_guild_insights
+msgid "View Guild Insights"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_channel__type__voice
+msgid "Voice"
+msgstr ""
