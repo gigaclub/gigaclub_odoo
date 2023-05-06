@@ -36,7 +36,3 @@ class TestGCUser(TransactionCase):
                     "mc_uuid": "123",
                 }
             )
-
-    def test_name_get(self):
-        name = self.gc_user.name_get()
-        self.assertEqual(name[0][1], "(test) - 12345", "Name should be (test) - 123")

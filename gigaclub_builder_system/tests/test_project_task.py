@@ -49,7 +49,7 @@ class TestProjectTask(TransactionCase):
             }
         )
         self.project_task._compute_user_ids()
-        self.assertTrue(self.gc_user in self.project_task.user_ids)
+        self.assertTrue(self.gc_user in self.project_task.gc_user_ids)
 
     def test__compute_gc_team_ids(self):
         self.gc_builder_world.permission_connector_ids = self.env[
@@ -60,4 +60,4 @@ class TestProjectTask(TransactionCase):
             }
         )
         self.project_task._compute_team_ids()
-        self.assertTrue(self.gc_team in self.project_task.team_ids)
+        self.assertTrue(self.gc_team in self.project_task.gc_team_ids)
