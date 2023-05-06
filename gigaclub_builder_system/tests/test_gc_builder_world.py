@@ -1,7 +1,7 @@
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestGCBuilderWorld(SavepointCase):
+class TestGCBuilderWorld(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

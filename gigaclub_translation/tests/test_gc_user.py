@@ -1,8 +1,8 @@
-# grepper odoo test savepointcase
-from odoo.tests import SavepointCase
+# grepper odoo test TransactionCase
+from odoo.tests import TransactionCase
 
 
-class TestGCUser(SavepointCase):
+class TestGCUser(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

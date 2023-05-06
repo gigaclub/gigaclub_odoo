@@ -1,9 +1,9 @@
 from psycopg2.errors import UniqueViolation
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestGCUser(SavepointCase):
+class TestGCUser(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
