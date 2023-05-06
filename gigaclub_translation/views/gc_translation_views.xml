@@ -1,60 +1,58 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record model="ir.ui.view" id="gc_translation_tree_view">
-            <field name="name">gc.translation.tree.view</field>
-            <field name="model">gc.translation</field>
-            <field name="arch" type="xml">
-                <tree string="Translations">
-                    <field name="name" />
-                    <field name="values" />
-                    <field name="translation_entry_ids" />
-                    <field name="category" />
-                </tree>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_translation_tree_view">
+        <field name="name">gc.translation.tree.view</field>
+        <field name="model">gc.translation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="values" />
+                <field name="translation_entry_ids" />
+                <field name="category" />
+            </tree>
+        </field>
+    </record>
 
-        <record id="gc_translation_search_view" model="ir.ui.view">
-            <field name="name">gc.translation.search.view</field>
-            <field name="model">gc.translation</field>
-            <field name="arch" type="xml">
-                <search>
-                    <group expand="0" string="Group By">
-                        <field name="category" invisible="1" />
-                        <filter
-              name="group_category"
-              string="Category"
-              domain="[]"
-              context="{'group_by':'category'}"
-            />
+    <record id="gc_translation_search_view" model="ir.ui.view">
+        <field name="name">gc.translation.search.view</field>
+        <field name="model">gc.translation</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="0" string="Group By">
+                    <field name="category" invisible="1" />
+                    <filter
+            name="group_category"
+            string="Category"
+            domain="[]"
+            context="{'group_by':'category'}"
+          />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="gc_translation_form_view">
+        <field name="name">gc.translation.from.view</field>
+        <field name="model">gc.translation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="values" readonly="1" />
+                        <field name="translation_entry_ids" />
+                        <field name="category" />
                     </group>
-                </search>
-            </field>
-        </record>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record model="ir.ui.view" id="gc_translation_form_view">
-            <field name="name">gc.translation.from.view</field>
-            <field name="model">gc.translation</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="name" />
-                            <field name="values" readonly="1" />
-                            <field name="translation_entry_ids" />
-                            <field name="category" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record model="ir.actions.act_window" id="gc_translation_action">
+        <field name="name">Translation</field>
+        <field name="res_model">gc.translation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-        <record model="ir.actions.act_window" id="gc_translation_action">
-            <field name="name">Translation</field>
-            <field name="res_model">gc.translation</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-
-    </data>
 </odoo>

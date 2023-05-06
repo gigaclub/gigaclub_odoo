@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record
-      id="gc_permission_profile_entry_template_team_manager_edit_team"
-      model="gc.permission.profile.entry.template"
-    >
-            <field
-        name="permission_model_entry_id"
-        ref="gigaclub_team.gc_permission_model_entry_gc_team_edit_team"
-      />
-        </record>
+    <record
+    id="gc_permission_profile_entry_template_team_manager_edit_team"
+    model="gc.permission.profile.entry.template"
+  >
+        <field
+      name="permission_model_entry_id"
+      ref="gigaclub_team.gc_permission_model_entry_gc_team_edit_team"
+    />
+    </record>
 
-        <record
-      id="gc_permission_profile_entry_template_team_manager_invite_user"
-      model="gc.permission.profile.entry.template"
-    >
-            <field
-        name="permission_model_entry_id"
-        ref="gigaclub_team.gc_permission_model_entry_gc_team_invite_member"
-      />
-        </record>
+    <record
+    id="gc_permission_profile_entry_template_team_manager_invite_user"
+    model="gc.permission.profile.entry.template"
+  >
+        <field
+      name="permission_model_entry_id"
+      ref="gigaclub_team.gc_permission_model_entry_gc_team_invite_member"
+    />
+    </record>
 
-        <record
-      id="gc_permission_profile_entry_template_team_manager_kick_user"
-      model="gc.permission.profile.entry.template"
-    >
-            <field
-        name="permission_model_entry_id"
-        ref="gigaclub_team.gc_permission_model_entry_gc_team_kick_member"
-      />
-        </record>
+    <record
+    id="gc_permission_profile_entry_template_team_manager_kick_user"
+    model="gc.permission.profile.entry.template"
+  >
+        <field
+      name="permission_model_entry_id"
+      ref="gigaclub_team.gc_permission_model_entry_gc_team_kick_member"
+    />
+    </record>
 
-    </data>
 </odoo>

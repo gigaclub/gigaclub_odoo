@@ -1,45 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record model="ir.ui.view" id="gc_builder_world_tree_view">
-            <field name="name">gc.builder.world.tree.view</field>
-            <field name="model">gc.builder.world</field>
-            <field name="arch" type="xml">
-                <tree string="Worlds">
-                    <field name="name" />
-                    <field name="world_type_id" />
-                    <field name="task_id" />
-                    <field name="permission_connector_ids" />
-                    <field name="owner_id" />
-                </tree>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_builder_world_tree_view">
+        <field name="name">gc.builder.world.tree.view</field>
+        <field name="model">gc.builder.world</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="world_type_id" />
+                <field name="task_id" />
+                <field name="permission_connector_ids" />
+                <field name="owner_id" />
+            </tree>
+        </field>
+    </record>
 
-        <record model="ir.ui.view" id="gc_builder_world_form_view">
-            <field name="name">gc.builder.world.form.view</field>
-            <field name="model">gc.builder.world</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="name" />
-                            <field name="world_type_id" />
-                            <field name="task_id" />
-                            <field name="world_attachment_id" />
-                            <field name="permission_connector_ids" />
-                            <field name="owner_id" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_builder_world_form_view">
+        <field name="name">gc.builder.world.form.view</field>
+        <field name="model">gc.builder.world</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="world_type_id" />
+                        <field name="task_id" />
+                        <field name="world_attachment_id" />
+                        <field name="permission_connector_ids" />
+                        <field name="owner_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record model="ir.actions.act_window" id="gc_builder_world_action">
-            <field name="name">World</field>
-            <field name="res_model">gc.builder.world</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+    <record model="ir.actions.act_window" id="gc_builder_world_action">
+        <field name="name">World</field>
+        <field name="res_model">gc.builder.world</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-    </data>
 </odoo>

@@ -1,58 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record id="gc_permission_profile_template_tree_view" model="ir.ui.view">
-            <field name="name">gc.permission.profile.template.tree</field>
-            <field name="model">gc.permission.profile.template</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="permission_model_ids" widget="many2many_tags" />
-                    <field
-            name="permission_profile_entry_template_ids"
-            widget="many2many_tags"
-          />
-                </tree>
-            </field>
-        </record>
+    <record id="gc_permission_profile_template_tree_view" model="ir.ui.view">
+        <field name="name">gc.permission.profile.template.tree</field>
+        <field name="model">gc.permission.profile.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="permission_model_ids" widget="many2many_tags" />
+                <field
+          name="permission_profile_entry_template_ids"
+          widget="many2many_tags"
+        />
+            </tree>
+        </field>
+    </record>
 
-        <record id="gc_permission_profile_template_form_view" model="ir.ui.view">
-            <field name="name">gc.permission.profile.template.form</field>
-            <field name="model">gc.permission.profile.template</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field
-                name="permission_model_ids"
-                widget="many2many_tags"
-              />
-                            <field
-                name="permission_profile_entry_template_ids"
-                widget="many2many_tags"
-              />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record id="gc_permission_profile_template_form_view" model="ir.ui.view">
+        <field name="name">gc.permission.profile.template.form</field>
+        <field name="model">gc.permission.profile.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="permission_model_ids" widget="many2many_tags" />
+                        <field
+              name="permission_profile_entry_template_ids"
+              widget="many2many_tags"
+            />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record
-      id="gc_permission_profile_template_action"
-      model="ir.actions.act_window"
-    >
-            <field name="name">Permission Profile Templates</field>
-            <field name="res_model">gc.permission.profile.template</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+    <record id="gc_permission_profile_template_action" model="ir.actions.act_window">
+        <field name="name">Permission Profile Templates</field>
+        <field name="res_model">gc.permission.profile.template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-        <menuitem
-      id="gc_permission_profile_template_menu"
-      name="Permission Profile Templates"
-      action="gc_permission_profile_template_action"
-      parent="gc_menu_permission_system"
-    />
+    <menuitem
+    id="gc_permission_profile_template_menu"
+    name="Permission Profile Templates"
+    action="gc_permission_profile_template_action"
+    parent="gc_menu_permission_system"
+  />
 
 
-    </data>
 </odoo>

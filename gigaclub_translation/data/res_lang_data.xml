@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <function name="install_lang" model="res.lang" />
+    <function name="install_lang" model="res.lang" />
 
-    </data>
 </odoo>

@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record
-      id="gc_permission_profile_template_team_default"
-      model="gc.permission.profile.template"
-    >
-            <field
-        name="permission_model_ids"
-        eval="[(4, ref('gc_permission_model_gc_team'))]"
-      />
-        </record>
+    <record
+    id="gc_permission_profile_template_team_default"
+    model="gc.permission.profile.template"
+  >
+        <field
+      name="permission_model_ids"
+      eval="[(4, ref('gc_permission_model_gc_team'))]"
+    />
+    </record>
 
-        <record
-      id="gc_permission_profile_template_team_user"
-      model="gc.permission.profile.template"
-    >
-            <field
-        name="permission_model_ids"
-        eval="[(4, ref('gc_permission_model_gc_team'))]"
-      />
-        </record>
+    <record
+    id="gc_permission_profile_template_team_user"
+    model="gc.permission.profile.template"
+  >
+        <field
+      name="permission_model_ids"
+      eval="[(4, ref('gc_permission_model_gc_team'))]"
+    />
+    </record>
 
-        <record
-      id="gc_permission_profile_template_team_manager"
-      model="gc.permission.profile.template"
-    >
-            <field
-        name="permission_model_ids"
-        eval="[(4, ref('gc_permission_model_gc_team'))]"
-      />
-            <field
-        name="permission_profile_entry_template_ids"
-        eval="[
-                (4, ref('gc_permission_profile_entry_template_team_manager_edit_team')),
-                (4, ref('gc_permission_profile_entry_template_team_manager_invite_user')),
-                (4, ref('gc_permission_profile_entry_template_team_manager_kick_user'))
-            ]"
-      />
-        </record>
+    <record
+    id="gc_permission_profile_template_team_manager"
+    model="gc.permission.profile.template"
+  >
+        <field
+      name="permission_model_ids"
+      eval="[(4, ref('gc_permission_model_gc_team'))]"
+    />
+        <field
+      name="permission_profile_entry_template_ids"
+      eval="[
+            (4, ref('gc_permission_profile_entry_template_team_manager_edit_team')),
+            (4, ref('gc_permission_profile_entry_template_team_manager_invite_user')),
+            (4, ref('gc_permission_profile_entry_template_team_manager_kick_user'))
+        ]"
+    />
+    </record>
 
-    </data>
 </odoo>

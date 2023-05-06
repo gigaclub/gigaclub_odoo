@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <menuitem
-      id="gc_team_menu_root"
-      parent="gigaclub_base.gc_menu_root"
-      name="Teams"
-      action="gc_team_action"
-    />
+    <menuitem
+    id="gc_team_menu_root"
+    parent="gigaclub_base.gc_menu_root"
+    name="Teams"
+    action="gc_team_action"
+  />
 
-    </data>
 </odoo>

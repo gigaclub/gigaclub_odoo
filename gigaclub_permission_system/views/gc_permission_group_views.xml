@@ -1,63 +1,61 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record id="gc_permission_group_tree_view" model="ir.ui.view">
-            <field name="name">gc.permission.group.tree</field>
-            <field name="model">gc.permission.group</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="prefix" />
-                    <field name="name" />
-                    <field name="suffix" />
-                    <field name="display" />
-                    <field name="color" />
-                    <field name="description" />
-                    <field name="permission_profile_ids" widget="many2many_tags" />
-                    <field name="global_group" />
-                    <field name="parent_group_id" />
-                    <field name="child_group_ids" widget="many2many_tags" />
-                    <field name="computed_permission_profile_ids" />
-                </tree>
-            </field>
-        </record>
+    <record id="gc_permission_group_tree_view" model="ir.ui.view">
+        <field name="name">gc.permission.group.tree</field>
+        <field name="model">gc.permission.group</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="prefix" />
+                <field name="name" />
+                <field name="suffix" />
+                <field name="display" />
+                <field name="color" />
+                <field name="description" />
+                <field name="permission_profile_ids" widget="many2many_tags" />
+                <field name="global_group" />
+                <field name="parent_group_id" />
+                <field name="child_group_ids" widget="many2many_tags" />
+                <field name="computed_permission_profile_ids" />
+            </tree>
+        </field>
+    </record>
 
-        <record id="gc_permission_group_form_view" model="ir.ui.view">
-            <field name="name">gc.permission.group.form</field>
-            <field name="model">gc.permission.group</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="prefix" />
-                            <field name="name" />
-                            <field name="suffix" />
-                            <field name="display" />
-                            <field name="color" />
-                            <field name="description" />
-                            <field name="permission_profile_ids" />
-                            <field name="global_group" />
-                            <field name="parent_group_id" />
-                            <field name="child_group_ids" widget="many2many_tags" />
-                            <field name="computed_permission_profile_ids" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record id="gc_permission_group_form_view" model="ir.ui.view">
+        <field name="name">gc.permission.group.form</field>
+        <field name="model">gc.permission.group</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="prefix" />
+                        <field name="name" />
+                        <field name="suffix" />
+                        <field name="display" />
+                        <field name="color" />
+                        <field name="description" />
+                        <field name="permission_profile_ids" />
+                        <field name="global_group" />
+                        <field name="parent_group_id" />
+                        <field name="child_group_ids" widget="many2many_tags" />
+                        <field name="computed_permission_profile_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record id="gc_permission_group_action" model="ir.actions.act_window">
-            <field name="name">Permission Group</field>
-            <field name="res_model">gc.permission.group</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+    <record id="gc_permission_group_action" model="ir.actions.act_window">
+        <field name="name">Permission Group</field>
+        <field name="res_model">gc.permission.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-        <menuitem
-      id="gc_menu_permission_group"
-      name="Permission Groups"
-      parent="gc_menu_permission_system"
-      action="gc_permission_group_action"
-    />
+    <menuitem
+    id="gc_menu_permission_group"
+    name="Permission Groups"
+    parent="gc_menu_permission_system"
+    action="gc_permission_group_action"
+  />
 
-    </data>
 </odoo>

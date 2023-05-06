@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record model="ir.ui.view" id="gc_discord_action_worker_tree_view">
-            <field name="name">gc.discord.action.worker.tree.view</field>
-            <field name="model">gc.discord.action.worker</field>
-            <field name="arch" type="xml">
-                <tree string="Action Workers">
-                    <field name="action_id" />
-                    <field name="event_worker_ids" />
-                </tree>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_discord_action_worker_tree_view">
+        <field name="name">gc.discord.action.worker.tree.view</field>
+        <field name="model">gc.discord.action.worker</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="action_id" />
+                <field name="event_worker_ids" />
+            </tree>
+        </field>
+    </record>
 
-        <record model="ir.ui.view" id="gc_discord_action_worker_form_view">
-            <field name="name">gc.discord.action.worker.form.view</field>
-            <field name="model">gc.discord.action.worker</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="action_id" />
-                            <field name="event_worker_ids" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_discord_action_worker_form_view">
+        <field name="name">gc.discord.action.worker.form.view</field>
+        <field name="model">gc.discord.action.worker</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="action_id" />
+                        <field name="event_worker_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record model="ir.actions.act_window" id="gc_discord_action_worker_action">
-            <field name="name">Action Worker</field>
-            <field name="res_model">gc.discord.action.worker</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+    <record model="ir.actions.act_window" id="gc_discord_action_worker_action">
+        <field name="name">Action Worker</field>
+        <field name="res_model">gc.discord.action.worker</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-    </data>
 </odoo>

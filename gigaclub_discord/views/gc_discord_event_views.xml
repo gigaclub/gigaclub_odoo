@@ -1,51 +1,49 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record model="ir.ui.view" id="gc_discord_event_tree_view">
-            <field name="name">gc.discord.event.tree.view</field>
-            <field name="model">gc.discord.event</field>
-            <field name="arch" type="xml">
-                <tree string="Events">
-                    <field name="sequence" widget="handle" />
-                    <field name="name" />
-                    <field name="action_id" />
-                    <field name="event_type" />
-                    <field name="next_event_id" />
-                    <field name="user_action" />
-                    <field name="server_action" />
-                    <field name="message_content" />
-                    <field name="role_ids" />
-                </tree>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_discord_event_tree_view">
+        <field name="name">gc.discord.event.tree.view</field>
+        <field name="model">gc.discord.event</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="action_id" />
+                <field name="event_type" />
+                <field name="next_event_id" />
+                <field name="user_action" />
+                <field name="server_action" />
+                <field name="message_content" />
+                <field name="role_ids" />
+            </tree>
+        </field>
+    </record>
 
-        <record model="ir.ui.view" id="gc_discord_event_form_view">
-            <field name="name">gc.discord.event.form.view</field>
-            <field name="model">gc.discord.event</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="name" />
-                            <field name="action_id" />
-                            <field name="event_type" />
-                            <field name="next_event_id" />
-                            <field name="user_action" />
-                            <field name="server_action" />
-                            <field name="message_content" />
-                            <field name="role_ids" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_discord_event_form_view">
+        <field name="name">gc.discord.event.form.view</field>
+        <field name="model">gc.discord.event</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="action_id" />
+                        <field name="event_type" />
+                        <field name="next_event_id" />
+                        <field name="user_action" />
+                        <field name="server_action" />
+                        <field name="message_content" />
+                        <field name="role_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record model="ir.actions.act_window" id="gc_discord_event_action">
-            <field name="name">Event</field>
-            <field name="res_model">gc.discord.event</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+    <record model="ir.actions.act_window" id="gc_discord_event_action">
+        <field name="name">Event</field>
+        <field name="res_model">gc.discord.event</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-    </data>
 </odoo>
