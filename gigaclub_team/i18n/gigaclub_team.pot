@@ -1,0 +1,144 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_permission_connector__bound_to_team
+msgid "Bound To Team"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__description
+msgid "Description"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model,name:gigaclub_team.model_gc_permission_connector
+msgid "GigaClub Permission Connector"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model,name:gigaclub_team.model_gc_request
+msgid "GigaClub Request"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model,name:gigaclub_team.model_gc_team
+msgid "GigaClub Team"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__id
+msgid "ID"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields.selection,name:gigaclub_team.selection__gc_request__request_type__member_to_team_invitation
+msgid "Member to Team invitation"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__name
+msgid "Name"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__owner_id
+msgid "Owner"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__permission_connector_ids
+msgid "Permission Connector"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_team__possible_permission_group_ids
+msgid "Possible Permission Group"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_request__receiver_id
+msgid "Receiver"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_request__request_type
+msgid "Request Type"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_request__sender_id
+msgid "Sender"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.actions.act_window,name:gigaclub_team.gc_team_action
+#: model:ir.model.fields,field_description:gigaclub_team.field_gc_permission_connector__team_id
+msgid "Team"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.ui.menu,name:gigaclub_team.gc_team_menu_root
+msgid "Teams"
+msgstr ""
+
+#. module: gigaclub_team
+#. odoo-python
+#: code:addons/gigaclub_team/models/gc_request.py:0
+#, python-format
+msgid ""
+"The receiver needs to be type of 'gc.user' and the sender type of 'gc.team'!"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.fields.selection,name:gigaclub_team.selection__gc_request__receiver_id__gc_team
+#: model:ir.model.fields.selection,name:gigaclub_team.selection__gc_request__sender_id__gc_team
+msgid "gc.team"
+msgstr ""
+
+#. module: gigaclub_team
+#: model:ir.model.constraint,message:gigaclub_team.constraint_gc_team_name_unique
+msgid "name must be unique!"
+msgstr ""
