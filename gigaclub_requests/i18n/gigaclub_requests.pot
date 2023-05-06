@@ -1,0 +1,108 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_requests
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_requests
+#: model:ir.model.fields.selection,name:gigaclub_requests.selection__gc_request__state__accepted
+msgid "Accepted"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields.selection,name:gigaclub_requests.selection__gc_request__state__denied
+msgid "Denied"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model,name:gigaclub_requests.model_gc_request
+msgid "GigaClub Request"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__id
+msgid "ID"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__receiver_id
+msgid "Receiver"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.actions.act_window,name:gigaclub_requests.gc_request_action
+#: model:ir.ui.menu,name:gigaclub_requests.gc_request_menu_root
+msgid "Request"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__request_type
+msgid "Request Type"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__sender_id
+msgid "Sender"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields,field_description:gigaclub_requests.field_gc_request__state
+msgid "State"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields.selection,name:gigaclub_requests.selection__gc_request__state__waiting
+msgid "Waiting"
+msgstr ""
+
+#. module: gigaclub_requests
+#: model:ir.model.fields.selection,name:gigaclub_requests.selection__gc_request__receiver_id__gc_user
+#: model:ir.model.fields.selection,name:gigaclub_requests.selection__gc_request__sender_id__gc_user
+msgid "gc.user"
+msgstr ""
+
+#. module: gigaclub_requests
+#. odoo-python
+#: code:addons/gigaclub_requests/models/gc_request.py:0
+#, python-format
+msgid "waiting requests should be unique!"
+msgstr ""

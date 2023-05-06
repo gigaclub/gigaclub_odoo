@@ -192,7 +192,8 @@ class GigaClubPortalBuilderSystem(GigaClubPortal):
         )
 
     @route("/my/world/<int:world_id>/edit", type="http", auth="user", website=True)
-    def portal_my_world_edit(self, world_id, **kw):
+    def portal_my_world_edit(self, world_id, **kw):  # noqa: C901
+        # TODO: take care of this complexity...
         try:
             world_sudo = self._document_check_access("gc.builder.world", world_id)
         except (AccessError, MissingError):

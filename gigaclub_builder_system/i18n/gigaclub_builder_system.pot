@@ -1,0 +1,193 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_builder_system
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_project_task__build_length
+msgid "Build Length"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_project_task__build_width
+msgid "Build Width"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.ui.menu,name:gigaclub_builder_system.gc_builder_system_menu_root
+msgid "Builder System"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__create_uid
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__create_date
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type__default
+msgid "Default"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__display_name
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model,name:gigaclub_builder_system.model_gc_builder_world
+msgid "GigaClub Builder World"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model,name:gigaclub_builder_system.model_gc_builder_world_type
+msgid "GigaClub Builder World Type Model"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model,name:gigaclub_builder_system.model_gc_permission_connector
+msgid "GigaClub Permission Connector"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model,name:gigaclub_builder_system.model_gc_request
+msgid "GigaClub Request"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__id
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type__id
+msgid "ID"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world____last_update
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__write_uid
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__write_date
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields.selection,name:gigaclub_builder_system.selection__gc_request__request_type__member_or_team_to_world_invitation
+msgid "Member or Team to World Invitation"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.constraint,message:gigaclub_builder_system.constraint_gc_builder_world_type_name_unique
+msgid "NAME must be unique!"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__name
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world_type__name
+msgid "Name"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__owner_id
+msgid "Owner"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__permission_connector_ids
+msgid "Permission Connector"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_request__receiver_id
+msgid "Receiver"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_request__request_type
+msgid "Request Type"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_request__sender_id
+msgid "Sender"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model,name:gigaclub_builder_system.model_project_task
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__task_id
+msgid "Task"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#. odoo-python
+#: code:addons/gigaclub_builder_system/models/gc_request.py:0
+#, python-format
+msgid ""
+"The receiver needs to be type of 'gc.user' or 'gc.team' and the sender type "
+"of 'gc.builder.world'!"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.actions.act_window,name:gigaclub_builder_system.gc_builder_world_action
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_permission_connector__world_id
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_project_task__world_ids
+msgid "World"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__world_attachment_id
+msgid "World Attachment"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.actions.act_window,name:gigaclub_builder_system.gc_builder_world_type_action
+#: model:ir.model.fields,field_description:gigaclub_builder_system.field_gc_builder_world__world_type_id
+msgid "World Type"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.ui.menu,name:gigaclub_builder_system.gc_menu_world_type
+msgid "World Types"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.ui.menu,name:gigaclub_builder_system.gc_menu_world
+msgid "Worlds"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#. odoo-python
+#: code:addons/gigaclub_builder_system/models/gc_builder_world_type.py:0
+#, python-format
+msgid "default must be unique!"
+msgstr ""
+
+#. module: gigaclub_builder_system
+#: model:ir.model.fields.selection,name:gigaclub_builder_system.selection__gc_request__receiver_id__gc_builder_world
+#: model:ir.model.fields.selection,name:gigaclub_builder_system.selection__gc_request__sender_id__gc_builder_world
+msgid "gc.builder.world"
+msgstr ""

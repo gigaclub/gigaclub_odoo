@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record id="view_task_form2_inherit_gigaclub_builder_system" model="ir.ui.view">
-            <field name="name">project.task.form.inherit.gigaclub.builder.system</field>
-            <field name="model">project.task</field>
-            <field
-        name="inherit_id"
-        ref="gigaclub_project.view_task_form2_inherit_gigaclub_project"
-      />
-            <field name="arch" type="xml">
-                <field name="gc_team_ids" position="after">
-                    <field name="build_width" />
-                    <field name="build_length" />
-                    <field name="world_ids" />
-                </field>
+    <record id="view_task_form2_inherit_gigaclub_builder_system" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.gigaclub.builder.system</field>
+        <field name="model">project.task</field>
+        <field
+      name="inherit_id"
+      ref="gigaclub_project.view_task_form2_inherit_gigaclub_project"
+    />
+        <field name="arch" type="xml">
+            <field name="gc_team_ids" position="after">
+                <field name="build_width" />
+                <field name="build_length" />
+                <field name="world_ids" />
             </field>
-        </record>
+        </field>
+    </record>
 
-    </data>
 </odoo>

@@ -1,49 +1,47 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record model="ir.ui.view" id="gc_user_tree_view">
-            <field name="name">gc.user.tree.view</field>
-            <field name="model">gc.user</field>
-            <field name="arch" type="xml">
-                <tree string="Users">
-                    <field name="name" />
-                    <field name="mc_uuid" />
-                    <field name="state" />
-                    <field name="auth_token" readonly="1" />
-                </tree>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_user_tree_view">
+        <field name="name">gc.user.tree.view</field>
+        <field name="model">gc.user</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="mc_uuid" />
+                <field name="state" />
+                <field name="auth_token" readonly="1" />
+            </tree>
+        </field>
+    </record>
 
-        <record model="ir.ui.view" id="gc_user_form_view">
-            <field name="name">gc.user.form.view</field>
-            <field name="model">gc.user</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="name" />
-                            <field name="mc_uuid" />
-                            <field name="state" />
-                            <field name="auth_token" readonly="1" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_user_form_view">
+        <field name="name">gc.user.form.view</field>
+        <field name="model">gc.user</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="mc_uuid" />
+                        <field name="state" />
+                        <field name="auth_token" readonly="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record model="ir.actions.act_window" id="gc_user_action">
-            <field name="name">User</field>
-            <field name="res_model">gc.user</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+    <record model="ir.actions.act_window" id="gc_user_action">
+        <field name="name">User</field>
+        <field name="res_model">gc.user</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-        <menuitem
-      id="gc_menu_user"
-      parent="gc_menu_root"
-      action="gc_user_action"
-      name="Users"
-    />
+    <menuitem
+    id="gc_menu_user"
+    parent="gc_menu_root"
+    action="gc_user_action"
+    name="Users"
+  />
 
-    </data>
 </odoo>

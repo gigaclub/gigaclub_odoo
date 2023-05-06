@@ -1,0 +1,135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_layout_inherit_gigaclub_portal
+msgid "<i class=\"fa fa-pencil\"/> Edit"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid "<span>&amp;times;</span>"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_inherit_gigaclub_portal
+msgid "Add Account"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid "Add Minecraft Account"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid "Add via our Minecraft Server"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid "Add with Microsoft Account"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid "Close"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_inherit_gigaclub_portal
+msgid ""
+"Confirm\n"
+"                                <span class=\"fa fa-long-arrow-right\"/>"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid "Connect"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model:ir.model,name:gigaclub_portal.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_layout_inherit_gigaclub_portal
+msgid "Details"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid "Discard"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_inherit_gigaclub_portal
+msgid "Discord Account"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_inherit_gigaclub_portal
+msgid "Email"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model:ir.model.fields,field_description:gigaclub_portal.field_res_partner__gc_user_id
+#: model:ir.model.fields,field_description:gigaclub_portal.field_res_users__gc_user_id
+msgid "Gc User"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model:ir.model,name:gigaclub_portal.model_gc_user
+msgid "GigaClub User"
+msgstr ""
+
+#. module: gigaclub_portal
+#. odoo-python
+#: code:addons/gigaclub_portal/controllers/portal.py:0
+#, python-format
+msgid "Invalid Email! Please enter a valid email address."
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid ""
+"Join our Minecraft Server GigaClub.net and type /auth into the chat and "
+"enter the code you get here:"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_inherit_gigaclub_portal
+msgid "Minecraft Account"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model:ir.model.fields,field_description:gigaclub_portal.field_res_partner__name
+#: model:ir.model.fields,field_description:gigaclub_portal.field_res_users__name
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_inherit_gigaclub_portal
+msgid "Name"
+msgstr ""
+
+#. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_add_minecraft_account_modal
+msgid "Save"
+msgstr ""
+
+#. module: gigaclub_portal
+#. odoo-python
+#: code:addons/gigaclub_portal/controllers/portal.py:0
+#, python-format
+msgid "Some required fields are empty."
+msgstr ""

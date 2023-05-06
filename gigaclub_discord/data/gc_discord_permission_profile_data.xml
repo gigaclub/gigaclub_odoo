@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record
+    id="gc_discord_permission_profile_gigaclub"
+    model="gc.discord.permission.profile"
+  >
+        <field name="administrator" eval="True" />
+        <field name="name">GigaClub Permission Profile</field>
+    </record>
+
+    <record
+    id="gc_discord_permission_profile_everyone"
+    model="gc.discord.permission.profile"
+  >
+        <field name="name">@everyone</field>
+        <field name="read_messages" eval="True" />
+        <field name="send_messages" eval="True" />
+        <field name="create_instant_invite" eval="True" />
+        <field name="add_reactions" eval="True" />
+        <field name="view_audit_log" eval="True" />
+        <field name="stream" eval="True" />
+        <field name="send_tts_messages" eval="True" />
+        <field name="read_message_history" eval="True" />
+        <field name="view_guild_insights" eval="True" />
+        <field name="connect" eval="True" />
+        <field name="speak" eval="True" />
+        <field name="use_voice_activation" eval="True" />
+        <field name="change_nickname" eval="True" />
+        <field name="request_to_speak" eval="True" />
+    </record>
+
+</odoo>

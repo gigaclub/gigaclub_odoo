@@ -7,6 +7,7 @@ from . import (
     gc_discord_event_worker,
     gc_discord_permission_profile,
     gc_discord_role,
+    gc_permission_group,
     gc_user,
     res_company,
     res_config_settings,

@@ -43,7 +43,7 @@ class GigaClubPortalTeam(GigaClubPortal):
         auth="user",
         website=True,
     )
-    def portal_my_teams(
+    def portal_my_requests(
         self, page=1, date_begin=None, date_end=None, sortby=None, **kw
     ):
         values = self._prepare_portal_layout_values()

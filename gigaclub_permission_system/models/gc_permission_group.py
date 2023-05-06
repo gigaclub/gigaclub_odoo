@@ -26,6 +26,7 @@ class GCPermissionGroup(models.Model):
         compute="_compute_permissions",
         recursive=True,
     )
+    user_ids = fields.Many2many(comodel_name="gc.user")
 
     @api.depends(
         "child_group_ids.computed_permission_profile_ids", "permission_profile_ids"

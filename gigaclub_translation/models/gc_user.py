@@ -1,4 +1,8 @@
+import logging
+
 from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class GCUser(models.Model):
@@ -21,7 +25,7 @@ class GCUser(models.Model):
                 user.lang = lang_code
                 return True
             except Exception:
-                pass
+                _logger.exception("Error when setting lang:")
         return False
 
     @api.model

@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record model="ir.ui.view" id="gc_translation_entry_tree_view">
-            <field name="name">gc.translation.entry.tree.view</field>
-            <field name="model">gc.translation.entry</field>
-            <field name="arch" type="xml">
-                <tree string="Translations">
-                    <field name="content" />
-                    <field name="widgets" />
-                    <field name="lang" />
-                    <field name="translation_ids" />
-                </tree>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_translation_entry_tree_view">
+        <field name="name">gc.translation.entry.tree.view</field>
+        <field name="model">gc.translation.entry</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="content" />
+                <field name="widgets" />
+                <field name="lang" />
+                <field name="translation_ids" />
+            </tree>
+        </field>
+    </record>
 
-        <record model="ir.ui.view" id="gc_translation_entry_form_view">
-            <field name="name">gc.translation.entry.from.view</field>
-            <field name="model">gc.translation.entry</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="content" />
-                            <field name="widgets" />
-                            <field name="lang" />
-                            <field name="translation_ids" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="gc_translation_entry_form_view">
+        <field name="name">gc.translation.entry.from.view</field>
+        <field name="model">gc.translation.entry</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="content" />
+                        <field name="widgets" />
+                        <field name="lang" />
+                        <field name="translation_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record model="ir.actions.act_window" id="gc_translation_entry_action">
-            <field name="name">Translation Entry</field>
-            <field name="res_model">gc.translation.entry</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+    <record model="ir.actions.act_window" id="gc_translation_entry_action">
+        <field name="name">Translation Entry</field>
+        <field name="res_model">gc.translation.entry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-    </data>
 </odoo>

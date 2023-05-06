@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <menuitem
-      id="gc_translation_menu_root"
-      parent="gigaclub_base.gc_menu_root"
-      name="Translation"
-    />
-        <menuitem
-      id="gc_menu_translation"
-      parent="gc_translation_menu_root"
-      action="gc_translation_action"
-      name="Translations"
-    />
-        <menuitem
-      id="gc_menu_translation_entry"
-      parent="gc_translation_menu_root"
-      action="gc_translation_entry_action"
-      name="Translation Entries"
-    />
+    <menuitem
+    id="gc_translation_menu_root"
+    parent="gigaclub_base.gc_menu_root"
+    name="Translation"
+  />
+    <menuitem
+    id="gc_menu_translation"
+    parent="gc_translation_menu_root"
+    action="gc_translation_action"
+    name="Translations"
+  />
+    <menuitem
+    id="gc_menu_translation_entry"
+    parent="gc_translation_menu_root"
+    action="gc_translation_entry_action"
+    name="Translation Entries"
+  />
 
-    </data>
 </odoo>

@@ -1,8 +1,8 @@
 from odoo.exceptions import ValidationError
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestGCRequest(SavepointCase):
+class TestGCRequest(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

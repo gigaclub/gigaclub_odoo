@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record
+    id="gc_permission_profile_entry_builder_*"
+    model="gc.permission.profile.entry"
+  >
+        <field name="permission_profile_id" ref="gc_permission_profile_builder" />
+        <field
+      name="permission_model_entry_id"
+      ref="gc_permission_model_entry_gc_builder_system_*"
+    />
+        <field
+      name="permission_profile_entry_template_id"
+      ref="gigaclub_permission_system.gc_permission_profile_entry_template"
+    />
+    </record>
+
+</odoo>

@@ -158,9 +158,9 @@ class GigaClubPortal(CustomerPortal):
         GCUser = request.env["gc.user"]
         gc_user = GCUser.search([("mc_uuid", "=", mc_uuid)], limit=1)
         if request.env.user.partner_id.gc_user_id:
-            request.env.user.partner_id.gc_user_id.mc_uuid = mc_uuid
             if gc_user:
-                request.env.user.partner_id.gc_user_id.with_delay().merge_users(gc_user)
+                request.env.user.partner_id.gc_user_id.merge_users(gc_user)
+            request.env.user.partner_id.gc_user_id.mc_uuid = mc_uuid
         elif gc_user:
             request.env.user.partner_id.gc_user_id = gc_user
         else:
@@ -206,9 +206,9 @@ class GigaClubPortal(CustomerPortal):
         GCUser = request.env["gc.user"]
         gc_user = GCUser.search([("discord_uuid", "=", discord_uuid)], limit=1)
         if request.env.user.partner_id.gc_user_id:
-            request.env.user.partner_id.gc_user_id.discord_uuid = discord_uuid
             if gc_user:
-                request.env.user.partner_id.gc_user_id.with_delay().merge_users(gc_user)
+                request.env.user.partner_id.gc_user_id.merge_users(gc_user)
+            request.env.user.partner_id.gc_user_id.discord_uuid = discord_uuid
         elif gc_user:
             request.env.user.partner_id.gc_user_id = gc_user
         else:

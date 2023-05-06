@@ -1,46 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
-        <record
-      id="gc_permission_connector_tree_view_inherit_gigaclub_team"
-      model="ir.ui.view"
-    >
-            <field
-        name="name"
-      >gc.permission.connector.tree.inherit.gigaclub_team</field>
-            <field name="model">gc.permission.connector</field>
-            <field
-        name="inherit_id"
-        ref="gigaclub_permission_system.gc_permission_connector_tree_view"
-      />
-            <field name="arch" type="xml">
-                <field name="user_id" position="after">
-                    <field name="team_id" />
-                    <field name="bound_to_team" />
-                </field>
+    <record
+    id="gc_permission_connector_tree_view_inherit_gigaclub_team"
+    model="ir.ui.view"
+  >
+        <field name="name">gc.permission.connector.tree.inherit.gigaclub_team</field>
+        <field name="model">gc.permission.connector</field>
+        <field
+      name="inherit_id"
+      ref="gigaclub_permission_system.gc_permission_connector_tree_view"
+    />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="team_id" />
+                <field name="bound_to_team" />
             </field>
-        </record>
+        </field>
+    </record>
 
-        <record
-      id="gc_permission_connector_form_view_inherit_gigaclub_team"
-      model="ir.ui.view"
-    >
-            <field
-        name="name"
-      >gc.permission.connector.form.inherit.gigaclub_team</field>
-            <field name="model">gc.permission.connector</field>
-            <field
-        name="inherit_id"
-        ref="gigaclub_permission_system.gc_permission_connector_form_view"
-      />
-            <field name="arch" type="xml">
-                <field name="user_id" position="after">
-                    <field name="team_id" />
-                    <field name="bound_to_team" />
-                </field>
+    <record
+    id="gc_permission_connector_form_view_inherit_gigaclub_team"
+    model="ir.ui.view"
+  >
+        <field name="name">gc.permission.connector.form.inherit.gigaclub_team</field>
+        <field name="model">gc.permission.connector</field>
+        <field
+      name="inherit_id"
+      ref="gigaclub_permission_system.gc_permission_connector_form_view"
+    />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="team_id" />
+                <field name="bound_to_team" />
             </field>
-        </record>
+        </field>
+    </record>
 
-    </data>
 </odoo>

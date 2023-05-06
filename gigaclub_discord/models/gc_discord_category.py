@@ -6,7 +6,7 @@ class GCDiscordCategory(models.Model):
     _name = "gc.discord.category"
     _description = "GigaClub Discord Category"
 
-    name = fields.Char()
+    name = fields.Char(translate=True, required=True)
     discord_channel_uuid = fields.Char(readonly=True)
     channel_ids = fields.One2many(
         comodel_name="gc.discord.channel", inverse_name="category_id"

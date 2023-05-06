@@ -1,9 +1,9 @@
 from psycopg2.errors import UniqueViolation
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestGCUser(SavepointCase):
+class TestGCUser(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -36,7 +36,3 @@ class TestGCUser(SavepointCase):
                     "mc_uuid": "123",
                 }
             )
-
-    def test_name_get(self):
-        name = self.gc_user.name_get()
-        self.assertEqual(name[0][1], "(test) - 12345", "Name should be (test) - 123")

@@ -1,0 +1,247 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_portal_builder_system
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_user_modal
+msgid "<span>&amp;times;</span>"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_view
+msgid "<strong>Owner</strong>"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_view
+msgid "<strong>Task</strong>"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_view
+msgid "<strong>Teams</strong>"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_view
+msgid "<strong>Users</strong>"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_view
+msgid "<strong>World Type</strong>"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_team_modal
+msgid "Add Team"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_user_modal
+msgid "Add User"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds_delete_world_modal
+msgid "Are you sure you want to delete this World?"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_team_modal
+msgid "Are you sure you want to remove this Team from this World?"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_user_modal
+msgid "Are you sure you want to remove this User from this World?"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds_delete_world_modal
+msgid "Close"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds_delete_world_modal
+msgid "Confirm"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_breadcrumbs_inherit_gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds
+msgid "Create"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_delete_permission_connector_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds_delete_world_modal
+msgid "Discard"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_breadcrumbs_inherit_gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_view
+msgid "Edit"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_permissions
+msgid "Edit World Type"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+msgid "Enter Name"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_permissions
+msgid "Invite Team"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_permissions
+msgid "Invite User"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#. odoo-python
+#: code:addons/gigaclub_portal_builder_system/controllers/portal.py:0
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds
+#, python-format
+msgid "Name"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#. odoo-python
+#: code:addons/gigaclub_portal_builder_system/controllers/portal.py:0
+#, python-format
+msgid "Newest"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds
+msgid "Owner"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+msgid "Permission Count"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_user_modal
+msgid "Permissions"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_permissions
+msgid "Remove Team"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_permissions
+msgid "Remove User"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_user_modal
+msgid "Save"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_permissions
+msgid "Save World"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#. odoo-python
+#: code:addons/gigaclub_portal_builder_system/controllers/portal.py:0
+#, python-format
+msgid "Some required fields are empty."
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds
+msgid "Task"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_team_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_team_modal
+msgid "Team"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+msgid "Teams"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds
+msgid "There are no worlds."
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_invite_user_modal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form_user_modal
+msgid "User"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+msgid "Users"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_world_form
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds
+msgid "World Type"
+msgstr ""
+
+#. module: gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_breadcrumbs_inherit_gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_home_inherit_gigaclub_portal_builder_system
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_builder_system.portal_my_worlds
+msgid "Worlds"
+msgstr ""
