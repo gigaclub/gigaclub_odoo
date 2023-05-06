@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_portal_requests
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_my_requests
+msgid "Accept"
+msgstr ""
+
+#. module: gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_breadcrumbs_inherit_gigaclub_portal_requests
+msgid "Create"
+msgstr ""
+
+#. module: gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_my_requests
+msgid "Deny"
+msgstr ""
+
+#. module: gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_breadcrumbs_inherit_gigaclub_portal_requests
+msgid "Edit"
+msgstr ""
+
+#. module: gigaclub_portal_requests
+#. odoo-python
+#: code:addons/gigaclub_portal_requests/controllers/portal.py:0
+#, python-format
+msgid "Newest"
+msgstr ""
+
+#. module: gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_breadcrumbs_inherit_gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_my_home_inherit_gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_my_requests
+msgid "Requests"
+msgstr ""
+
+#. module: gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_my_requests
+msgid "Sender"
+msgstr ""
+
+#. module: gigaclub_portal_requests
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal_requests.portal_my_requests
+msgid "There are no requests."
+msgstr ""
