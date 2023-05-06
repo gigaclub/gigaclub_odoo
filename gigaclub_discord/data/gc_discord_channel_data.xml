@@ -2,25 +2,25 @@
 <odoo>
 
     <record id="gc_discord_channel_rules" model="gc.discord.channel">
-        <field name="name">Rules</field>
+        <field name="name">rules</field>
         <field name="type">text</field>
         <field name="category_id" ref="gc_discord_category_rules" />
     </record>
 
     <record id="gc_discord_channel_text_channel_1" model="gc.discord.channel">
-        <field name="name">Text Channel 1</field>
+        <field name="name">text-channel-1</field>
         <field name="type">text</field>
         <field name="category_id" ref="gc_discord_category_text_channels" />
     </record>
 
     <record id="gc_discord_channel_text_channel_2" model="gc.discord.channel">
-        <field name="name">Text Channel 2</field>
+        <field name="name">text-channel-2</field>
         <field name="type">text</field>
         <field name="category_id" ref="gc_discord_category_text_channels" />
     </record>
 
     <record id="gc_discord_channel_text_channel_3" model="gc.discord.channel">
-        <field name="name">Text Channel 3</field>
+        <field name="name">text-channel-3</field>
         <field name="type">text</field>
         <field name="category_id" ref="gc_discord_category_text_channels" />
     </record>

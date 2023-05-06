@@ -26,8 +26,8 @@ class MainController(http.Controller):
                 for guild in self.guilds:
                     if guild.id == int(company.discord_server_id):
                         self.guild = guild
-                        await self.create_and_update_not_created_categories(guild)
                         await self.create_and_update_not_created_channels(guild)
+                        await self.create_and_update_not_created_categories(guild)
                         created_channels = self.env["gc.discord.channel"].search(
                             [("discord_channel_uuid", "!=", False)]
                         )
@@ -125,7 +125,8 @@ class MainController(http.Controller):
                 if current_event_worker:
                     current_event_worker.start_next_event()
 
-        async def create_and_update_not_created_channels(self, guild):
+        async def create_and_update_not_created_channels(self, guild):  # noqa: C901
+            # TODO: fix complexity...
             not_created_channels = self.env["gc.discord.channel"].search(
                 [("discord_channel_uuid", "=", False)]
             )
@@ -136,47 +137,72 @@ class MainController(http.Controller):
                     channel_record.category_id
                     and not channel_record.category_id.discord_channel_uuid
                 ):
-                    category = await guild.create_category(
-                        name=channel_record.category_id.name
-                    )
-                    channel_record.category_id.discord_channel_uuid = str(category.id)
+                    try:
+                        category = await guild.create_category(
+                            name=channel_record.category_id.name
+                        )
+                        channel_record.category_id.discord_channel_uuid = str(
+                            category.id
+                        )
+                    except discord.Forbidden:
+                        _logger.exception("Error editing category:")
+                        continue
+                    except discord.HTTPException:
+                        _logger.exception("Error editing category:")
+                        continue
                 elif channel_record.category_id:
                     category = guild.get_channel(
                         int(channel_record.category_id.discord_channel_uuid)
                     )
-                if channel_record.type == "text":
-                    channel = await guild.create_text_channel(
-                        name=channel_record.name,
-                        category=category,
-                    )
-                elif channel_record.type == "voice":
-                    channel = await guild.create_voice_channel(
-                        name=channel_record.name,
-                        category=category,
-                    )
-                elif channel_record.type == "stage":
-                    channel = await guild.create_stage_channel(
-                        name=channel_record.name,
-                        category=category,
-                    )
-                elif channel_record.type == "announcement":
-                    channel = await guild.create_text_channel(
-                        name=channel_record.name,
-                        category=category,
-                        type=discord.ChannelType.news,
-                    )
-                channel_record.discord_channel_uuid = str(channel.id)
+                try:
+                    if channel_record.type == "text":
+                        channel = await guild.create_text_channel(
+                            name=channel_record.name,
+                            category=category,
+                        )
+                    elif channel_record.type == "voice":
+                        channel = await guild.create_voice_channel(
+                            name=channel_record.name,
+                            category=category,
+                        )
+                    elif channel_record.type == "stage":
+                        channel = await guild.create_stage_channel(
+                            name=channel_record.name,
+                            category=category,
+                        )
+                    elif channel_record.type == "announcement":
+                        channel = await guild.create_text_channel(
+                            name=channel_record.name,
+                            category=category,
+                            type=discord.ChannelType.news,
+                        )
+                    channel_record.discord_channel_uuid = str(channel.id)
+                except discord.Forbidden:
+                    _logger.exception("Error editing channel:")
+                    continue
+                except discord.HTTPException:
+                    _logger.exception("Error editing channel:")
+                    continue
             created_channels = self.env["gc.discord.channel"].search(
                 [("discord_channel_uuid", "!=", False)]
             )
             for channel_record in created_channels:
-                channel = self.get_channel(int(channel_record.discord_channel_uuid))
-                await channel.edit(name=channel_record.name)
-                if channel_record.category_id.discord_channel_uuid:
-                    category = self.get_channel(
-                        int(channel_record.category_id.discord_channel_uuid)
+                try:
+                    channel = guild.get_channel(
+                        int(channel_record.discord_channel_uuid)
                     )
-                    await channel.edit(category=category)
+                    await channel.edit(name=channel_record.name)
+                    if channel_record.category_id.discord_channel_uuid:
+                        category = guild.get_channel(
+                            int(channel_record.category_id.discord_channel_uuid)
+                        )
+                        await channel.edit(category=category)
+                except discord.Forbidden:
+                    _logger.exception("Error editing channel:")
+                    continue
+                except discord.HTTPException:
+                    _logger.exception("Error editing channel:")
+                    continue
 
         async def create_and_update_not_created_categories(self, guild):
             not_created_categories = self.env["gc.discord.category"].search(
