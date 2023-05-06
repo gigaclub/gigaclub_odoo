@@ -510,6 +510,12 @@ msgid "Role"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:gc.discord.category,name:gigaclub_discord.gc_discord_category_rules
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_rules
+msgid "Rules"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_messages
 msgid "Send Messages"
 msgstr ""
@@ -585,6 +591,26 @@ msgid "Text"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_1
+msgid "Text Channel 1"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_2
+msgid "Text Channel 2"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_3
+msgid "Text Channel 3"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.category,name:gigaclub_discord.gc_discord_category_text_channels
+msgid "Text Channels"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__type
 msgid "Type"
 msgstr ""
@@ -619,4 +645,24 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_channel__type__voice
 msgid "Voice"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_voice_channel_1
+msgid "Voice Channel 1"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_voice_channel_2
+msgid "Voice Channel 2"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_voice_channel_3
+msgid "Voice Channel 3"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.category,name:gigaclub_discord.gc_discord_category_voice_channels
+msgid "Voice Channels"
 msgstr ""
