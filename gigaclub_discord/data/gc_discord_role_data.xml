@@ -3,6 +3,10 @@
 
     <record id="gc_discord_role_everyone" model="gc.discord.role">
         <field name="name">@everyone</field>
+        <field
+      name="permission_profile_id"
+      ref="gc_discord_permission_profile_everyone"
+    />
     </record>
 
     <record id="gc_discord_role_gigaclub" model="gc.discord.role">

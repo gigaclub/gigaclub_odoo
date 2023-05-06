@@ -9,8 +9,8 @@
         <field name="name">Text Channels</field>
     </record>
 
-    <record id="gc_discord_category_talk_channels" model="gc.discord.category">
-        <field name="name">Talk Channels</field>
+    <record id="gc_discord_category_voice_channels" model="gc.discord.category">
+        <field name="name">Voice Channels</field>
     </record>
 
 </odoo>

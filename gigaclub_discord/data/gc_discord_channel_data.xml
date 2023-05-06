@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_channel_rules" model="gc.discord.channel">
+        <field name="name">Rules</field>
+        <field name="type">text</field>
+        <field name="category_id" ref="gc_discord_category_rules" />
+    </record>
+
+    <record id="gc_discord_channel_text_channel_1" model="gc.discord.channel">
+        <field name="name">Text Channel 1</field>
+        <field name="type">text</field>
+        <field name="category_id" ref="gc_discord_category_text_channels" />
+    </record>
+
+    <record id="gc_discord_channel_text_channel_2" model="gc.discord.channel">
+        <field name="name">Text Channel 2</field>
+        <field name="type">text</field>
+        <field name="category_id" ref="gc_discord_category_text_channels" />
+    </record>
+
+    <record id="gc_discord_channel_text_channel_3" model="gc.discord.channel">
+        <field name="name">Text Channel 3</field>
+        <field name="type">text</field>
+        <field name="category_id" ref="gc_discord_category_text_channels" />
+    </record>
+
+    <record id="gc_discord_channel_voice_channel_1" model="gc.discord.channel">
+        <field name="name">Voice Channel 1</field>
+        <field name="type">voice</field>
+        <field name="category_id" ref="gc_discord_category_voice_channels" />
+    </record>
+
+    <record id="gc_discord_channel_voice_channel_2" model="gc.discord.channel">
+        <field name="name">Voice Channel 2</field>
+        <field name="type">voice</field>
+        <field name="category_id" ref="gc_discord_category_voice_channels" />
+    </record>
+
+    <record id="gc_discord_channel_voice_channel_3" model="gc.discord.channel">
+        <field name="name">Voice Channel 3</field>
+        <field name="type">voice</field>
+        <field name="category_id" ref="gc_discord_category_voice_channels" />
+    </record>
+
+</odoo>
