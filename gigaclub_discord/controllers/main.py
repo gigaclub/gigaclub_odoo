@@ -50,7 +50,9 @@ class MainController(http.Controller):
                             try:
                                 await channel_to_remove.delete()
                             except Exception:
-                                _logger.error(channel_to_remove)
+                                _logger.exception(
+                                    f"Error occured on remove the channel {channel_to_remove}:"
+                                )
                         await self.create_and_update_not_created_roles(guild)
                         for member in guild.members:
                             if member.bot:
@@ -252,7 +254,7 @@ class MainController(http.Controller):
                     )
                     role_record.role_id = role.id
                 except Exception:
-                    _logger.error(role)
+                    _logger.exception(f"Error occurred at editing role {role}:")
             created_roles = self.env["gc.discord.role"].search(
                 [("role_id", "!=", False)]
             )
@@ -309,7 +311,9 @@ class MainController(http.Controller):
                 try:
                     await role_to_remove.delete()
                 except Exception:
-                    _logger.error(role_to_remove)
+                    _logger.exception(
+                        f"Error occured on remove of role {role_to_remove}:"
+                    )
 
         async def on_message(self, message):
             if message.author == self.user:
