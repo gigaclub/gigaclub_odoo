@@ -511,7 +511,6 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:gc.discord.category,name:gigaclub_discord.gc_discord_category_rules
-#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_rules
 msgid "Rules"
 msgstr ""
 
@@ -591,21 +590,6 @@ msgid "Text"
 msgstr ""
 
 #. module: gigaclub_discord
-#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_1
-msgid "Text Channel 1"
-msgstr ""
-
-#. module: gigaclub_discord
-#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_2
-msgid "Text Channel 2"
-msgstr ""
-
-#. module: gigaclub_discord
-#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_3
-msgid "Text Channel 3"
-msgstr ""
-
-#. module: gigaclub_discord
 #: model:gc.discord.category,name:gigaclub_discord.gc_discord_category_text_channels
 msgid "Text Channels"
 msgstr ""
@@ -665,4 +649,24 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:gc.discord.category,name:gigaclub_discord.gc_discord_category_voice_channels
 msgid "Voice Channels"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_rules
+msgid "rules"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_1
+msgid "text-channel-1"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_2
+msgid "text-channel-2"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:gc.discord.channel,name:gigaclub_discord.gc_discord_channel_text_channel_3
+msgid "text-channel-3"
 msgstr ""
