@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem
+    id="gc_exception_menu_root"
+    parent="gigaclub_base.gc_menu_root"
+    name="Exceptions"
+    action="gc_exception_action"
+  />
+
+</odoo>
