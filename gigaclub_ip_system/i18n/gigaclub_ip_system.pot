@@ -35,7 +35,7 @@ msgstr ""
 
 #. module: gigaclub_ip_system
 #: model:ir.model,name:gigaclub_ip_system.model_gc_ip
-msgid "GigaClub IP"
+msgid "GigaClub IP Address"
 msgstr ""
 
 #. module: gigaclub_ip_system
@@ -54,8 +54,13 @@ msgid "Ip"
 msgstr ""
 
 #. module: gigaclub_ip_system
-#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__ip_hash
-msgid "Ip Hash"
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__ipv4_hash
+msgid "Ipv4 Hash"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__ipv6_hash
+msgid "Ipv6 Hash"
 msgstr ""
 
 #. module: gigaclub_ip_system
