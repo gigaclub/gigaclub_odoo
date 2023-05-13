@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_ip_view_tree" model="ir.ui.view">
+        <field name="name">gc.ip.tree</field>
+        <field name="model">gc.ip</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ipv4_hash" />
+                <field name="ipv6_hash" />
+                <field name="blocked" />
+                <field name="user_ids" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="gc_ip_view_form" model="ir.ui.view">
+        <field name="name">gc.ip.form</field>
+        <field name="model">gc.ip</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="ipv4_hash" />
+                        <field name="ipv6_hash" />
+                        <field name="blocked" />
+                        <field name="user_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

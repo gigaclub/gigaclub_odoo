@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <field name="auth_token" position="after">
                 <field name="warning_ids" />
-                <field name="permanent_banned" />
+                <field name="warning_points" />
             </field>
         </field>
     </record>
@@ -20,7 +20,7 @@
         <field name="arch" type="xml">
             <field name="auth_token" position="after">
                 <field name="warning_ids" />
-                <field name="permanent_banned" />
+                <field name="warning_points" />
             </field>
         </field>
     </record>

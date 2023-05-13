@@ -6,7 +6,11 @@
     "website": "https://github.com/GigaClub/gigaclub_odoo",
     "license": "AGPL-3",
     "depends": ["gigaclub_base"],
-    "data": ["views/gc_user_views.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/gc_ip_views.xml",
+        "views/gc_user_views.xml",
+    ],
     "demo": [],
     "installable": True,
     "auto_install": False,

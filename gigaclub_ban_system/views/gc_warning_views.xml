@@ -7,9 +7,10 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="user_id" />
-                <field name="warning_type" />
+                <field name="warning_type_id" />
                 <field name="ban_expiration_datetime" />
                 <field name="expiration_datetime" />
+                <field name="points" />
             </tree>
         </field>
     </record>
@@ -22,9 +23,10 @@
                 <sheet>
                     <group>
                         <field name="user_id" />
-                        <field name="warning_type" />
+                        <field name="warning_type_id" />
                         <field name="ban_expiration_datetime" />
                         <field name="expiration_datetime" />
+                        <field name="points" />
                     </group>
                 </sheet>
             </form>

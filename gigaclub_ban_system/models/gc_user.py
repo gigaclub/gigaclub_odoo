@@ -7,12 +7,9 @@ class GCUser(models.Model):
     warning_ids = fields.One2many(
         comodel_name="gc.warning",
         inverse_name="user_id",
-        inverse="_inverse_warning_ids",
     )
-    permanent_banned = fields.Boolean()
+    warning_points = fields.Integer(compute="_compute_warning_points")
 
-    def _inverse_warning_ids(self):
+    def _compute_warning_points(self):
         for rec in self:
-            if len(rec.warning_ids) > 2:
-                rec.permanent_banned = True
-                continue
+            rec.warning_points = sum(rec.warning_ids.mapped("points"))

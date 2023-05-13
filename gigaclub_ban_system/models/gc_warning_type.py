@@ -9,3 +9,4 @@ class GCWarningType(models.Model):
     description = fields.Text()
     ban_time = fields.Float()
     expiration_time = fields.Float()
+    points = fields.Integer()
