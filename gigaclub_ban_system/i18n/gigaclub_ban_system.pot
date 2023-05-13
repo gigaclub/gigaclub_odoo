@@ -106,8 +106,9 @@ msgid "Name"
 msgstr ""
 
 #. module: gigaclub_ban_system
-#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_user__permanent_banned
-msgid "Permanent Banned"
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning__points
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning_type__points
+msgid "Points"
 msgstr ""
 
 #. module: gigaclub_ban_system
@@ -122,8 +123,13 @@ msgid "Warning"
 msgstr ""
 
 #. module: gigaclub_ban_system
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_user__warning_points
+msgid "Warning Points"
+msgstr ""
+
+#. module: gigaclub_ban_system
 #: model:ir.actions.act_window,name:gigaclub_ban_system.gc_warning_type_action
-#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning__warning_type
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning__warning_type_id
 msgid "Warning Type"
 msgstr ""
 
