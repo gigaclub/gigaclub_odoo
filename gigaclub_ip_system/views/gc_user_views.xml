@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="gigaclub_base.gc_user_tree_view" />
         <field name="arch" type="xml">
             <field name="auth_token" position="after">
-                <field name="ip_ids" />
+                <field name="ip_timestamp_ids" />
             </field>
         </field>
     </record>
@@ -18,7 +18,7 @@
         <field name="inherit_id" ref="gigaclub_base.gc_user_form_view" />
         <field name="arch" type="xml">
             <field name="auth_token" position="after">
-                <field name="ip_ids" />
+                <field name="ip_timestamp_ids" />
             </field>
         </field>
     </record>

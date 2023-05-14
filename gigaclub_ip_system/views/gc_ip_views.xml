@@ -9,7 +9,6 @@
                 <field name="ipv4_hash" />
                 <field name="ipv6_hash" />
                 <field name="blocked" />
-                <field name="user_ids" />
             </tree>
         </field>
     </record>
@@ -24,7 +23,6 @@
                         <field name="ipv4_hash" />
                         <field name="ipv6_hash" />
                         <field name="blocked" />
-                        <field name="user_ids" />
                     </group>
                 </sheet>
             </form>
