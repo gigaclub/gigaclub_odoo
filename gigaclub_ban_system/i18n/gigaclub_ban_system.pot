@@ -14,7 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: gigaclub_ban_system
-#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning__ban_expiration_datetime
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning__active
+msgid "Active"
+msgstr ""
+
+#. module: gigaclub_ban_system
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_user__ban_expiration_datetime
 msgid "Ban Expiration Datetime"
 msgstr ""
 
@@ -24,6 +29,7 @@ msgid "Ban System"
 msgstr ""
 
 #. module: gigaclub_ban_system
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning__ban_time
 #: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning_type__ban_time
 msgid "Ban Time"
 msgstr ""
@@ -38,6 +44,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning__create_date
 #: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning_type__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: gigaclub_ban_system
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_user__current_warning_id
+msgid "Current Warning"
 msgstr ""
 
 #. module: gigaclub_ban_system
