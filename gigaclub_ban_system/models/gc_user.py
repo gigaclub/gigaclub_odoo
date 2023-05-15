@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from odoo import api, fields, models
 from odoo.fields import first
@@ -41,3 +41,12 @@ class GCUser(models.Model):
     def get_player_warning_points(self, mc_uuid):
         user = self.search([("mc_uuid", "=", mc_uuid)], limit=1)
         return user.warning_points
+
+    @api.model
+    def get_banned_players(self) -> list:
+        return [
+            {"ban_expiration_datetime": x.ban_expiration_datetime, "mc_uuid": x.mc_uuid}
+            for x in self.env["gc.user"].search(
+                [("ban_expiration_datetime", "<=", datetime.now())]
+            )
+        ]
