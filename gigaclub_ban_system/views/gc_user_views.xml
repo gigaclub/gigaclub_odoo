@@ -9,6 +9,8 @@
             <field name="auth_token" position="after">
                 <field name="warning_ids" />
                 <field name="warning_points" />
+                <field name="current_warning_id" />
+                <field name="ban_expiration_datetime" />
             </field>
         </field>
     </record>
@@ -21,6 +23,8 @@
             <field name="auth_token" position="after">
                 <field name="warning_ids" />
                 <field name="warning_points" />
+                <field name="current_warning_id" />
+                <field name="ban_expiration_datetime" />
             </field>
         </field>
     </record>

@@ -8,7 +8,7 @@
             <tree>
                 <field name="user_id" />
                 <field name="warning_type_id" />
-                <field name="ban_expiration_datetime" />
+                <field name="ban_time" widget="float_time" />
                 <field name="expiration_datetime" />
                 <field name="points" />
             </tree>
@@ -24,7 +24,7 @@
                     <group>
                         <field name="user_id" />
                         <field name="warning_type_id" />
-                        <field name="ban_expiration_datetime" />
+                        <field name="ban_time" widget="float_time" />
                         <field name="expiration_datetime" />
                         <field name="points" />
                     </group>

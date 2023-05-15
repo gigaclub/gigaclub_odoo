@@ -9,28 +9,20 @@ class GCWarning(models.Model):
 
     user_id = fields.Many2one(comodel_name="gc.user", index=True)
     warning_type_id = fields.Many2one(comodel_name="gc.warning.type")
-    ban_expiration_datetime = fields.Datetime(compute="_compute_ban_time", store=True)
-    expiration_datetime = fields.Datetime(
-        compute="_compute_expiration_time", store=True
-    )
+    ban_time = fields.Float()
+    expiration_datetime = fields.Datetime()
     points = fields.Integer(related="warning_type_id.points", readonly=True)
+    active = fields.Boolean(default=True)
 
-    @api.depends("warning_type_id.ban_time", "user_id.warning_ids")
-    def _compute_ban_time(self):
-        for rec in self:
-            ban_time = (
-                (rec.warning_type_id.ban_time ** len(rec.user_id.warning_ids)) * 60 * 60
-            )
-            expiration_datetime = datetime.now() + timedelta(seconds=ban_time)
-            rec.ban_expiration_datetime = expiration_datetime
+    @api.model
+    def create(self, vals):
+        rec = super().create(vals)
+        rec.ban_time = rec.warning_type_id.ban_time
+        expiration_time = int(rec.warning_type_id.expiration_time * 60 * 60)
+        rec.expiration_datetime = datetime.now() + timedelta(seconds=expiration_time)
+        rec.with_delay(eta=expiration_time).set_warning_active_false()
+        return rec
 
-    @api.depends("warning_type_id.expiration_time", "user_id.warning_ids")
-    def _compute_expiration_time(self):
-        for rec in self:
-            expiration_time = (
-                (rec.warning_type_id.expiration_time ** len(rec.user_id.warning_ids))
-                * 60
-                * 60
-            )
-            expiration_datetime = datetime.now() + timedelta(seconds=expiration_time)
-            rec.expiration_datetime = expiration_datetime
+    def set_warning_active_false(self):
+        self.ensure_one()
+        self.active = False
