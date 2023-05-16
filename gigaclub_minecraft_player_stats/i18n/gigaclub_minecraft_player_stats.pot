@@ -83,6 +83,27 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: gigaclub_minecraft_player_stats
+#: model:ir.ui.menu,name:gigaclub_minecraft_player_stats.gc_minecraft
+msgid "Minecraft"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.actions.act_window,name:gigaclub_minecraft_player_stats.gc_minecraft_server_action
+msgid "Minecraft Server"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.ui.menu,name:gigaclub_minecraft_player_stats.gc_menu_minecraft_server
+msgid "Minecraft Servers"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.actions.act_window,name:gigaclub_minecraft_player_stats.gc_minecraft_stats_action
+#: model:ir.ui.menu,name:gigaclub_minecraft_player_stats.gc_menu_minecraft_stats
+msgid "Minecraft Stats"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
 #: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__name
 #: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__name
 msgid "Name"
