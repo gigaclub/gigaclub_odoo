@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__active
+msgid "Active"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
 #: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__create_uid
 #: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__create_uid
 #: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__create_uid
@@ -122,6 +127,11 @@ msgstr ""
 #. module: gigaclub_minecraft_player_stats
 #: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__stats_id
 msgid "Stats"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields.selection,name:gigaclub_minecraft_player_stats.selection__gc_minecraft_stats__ttype__ticks
+msgid "Ticks"
 msgstr ""
 
 #. module: gigaclub_minecraft_player_stats
