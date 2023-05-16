@@ -6,4 +6,5 @@ class GCMinecraftStats(models.Model):
     _description = "GigaClub Minecraft Stats"
 
     name = fields.Char()
-    ttype = fields.Selection(...)
+    ttype = fields.Selection(selection=[("ticks", "Ticks")])
+    active = fields.Boolean(default=True)
