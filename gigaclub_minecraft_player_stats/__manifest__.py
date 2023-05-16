@@ -8,9 +8,11 @@
     "depends": ["gigaclub_base"],
     "data": [
         "security/ir.model.access.csv",
+        "views/menu_views.xml",
         "views/gc_minecraft_player_stats_views.xml",
         "views/gc_minecraft_server_views.xml",
         "views/gc_minecraft_stats_views.xml",
+        "views/gc_user_views.xml",
     ],
     "demo": [],
     "installable": True,
