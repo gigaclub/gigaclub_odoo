@@ -16,7 +16,7 @@ class GCWarningType(models.Model):
         return [
             {
                 "name": x.name,
-                "description": x.descriotion,
+                "description": x.description,
                 "ban_time": x.ban_time,
                 "expiration_time": x.expiration_time,
                 "points": x.points,
