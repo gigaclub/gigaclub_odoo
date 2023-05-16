@@ -148,3 +148,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__value
 msgid "Value"
 msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.constraint,message:gigaclub_minecraft_player_stats.constraint_gc_minecraft_server_name_unique
+#: model:ir.model.constraint,message:gigaclub_minecraft_player_stats.constraint_gc_minecraft_stats_name_unique
+msgid "name must be unique!"
+msgstr ""
