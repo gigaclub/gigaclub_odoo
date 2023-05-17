@@ -35,6 +35,11 @@ msgid "Ban Time"
 msgstr ""
 
 #. module: gigaclub_ban_system
+#: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_user__banned_ip_id
+msgid "Banned Ip"
+msgstr ""
+
+#. module: gigaclub_ban_system
 #: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning__create_uid
 #: model:ir.model.fields,field_description:gigaclub_ban_system.field_gc_warning_type__create_uid
 msgid "Created by"
