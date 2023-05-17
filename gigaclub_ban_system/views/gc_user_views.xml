@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_user_view_tree" model="ir.ui.view">
+        <field name="name">gc.user.tree</field>
+        <field name="model">gc.user</field>
+        <field name="inherit_id" ref="gigaclub_base.gc_user_tree_view" />
+        <field name="arch" type="xml">
+            <field name="auth_token" position="after">
+                <field name="warning_ids" />
+                <field name="warning_points" />
+                <field name="current_warning_id" />
+                <field name="ban_expiration_datetime" />
+            </field>
+        </field>
+    </record>
+
+    <record id="gc_user_view_form" model="ir.ui.view">
+        <field name="name">gc.user.form</field>
+        <field name="model">gc.user</field>
+        <field name="inherit_id" ref="gigaclub_base.gc_user_form_view" />
+        <field name="arch" type="xml">
+            <field name="auth_token" position="after">
+                <field name="warning_ids" />
+                <field name="warning_points" />
+                <field name="current_warning_id" />
+                <field name="ban_expiration_datetime" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

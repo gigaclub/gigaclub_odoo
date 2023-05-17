@@ -1,0 +1,121 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_ip_system
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__blocked
+msgid "Blocked"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__create_uid
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__create_date
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_user__current_ip_id
+msgid "Current Ip"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__display_name
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model,name:gigaclub_ip_system.model_gc_ip
+msgid "GigaClub IP Address"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model,name:gigaclub_ip_system.model_gc_ip_timestamp
+msgid "GigaClub IP Timestamp"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model,name:gigaclub_ip_system.model_gc_user
+msgid "GigaClub User"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__id
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__id
+msgid "ID"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__ip_id
+msgid "Ip"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_user__ip_cycle
+msgid "Ip Cycle"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_user__ip_timestamp_ids
+msgid "Ip Timestamp"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__ipv4_hash
+msgid "Ipv4 Hash"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__ipv6_hash
+msgid "Ipv6 Hash"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip____last_update
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__write_uid
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__write_date
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__user_id
+msgid "User"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.constraint,message:gigaclub_ip_system.constraint_gc_ip_ipv4_hash
+msgid "ipv4_hash must be unique!"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.constraint,message:gigaclub_ip_system.constraint_gc_ip_ipv6_hash
+msgid "ipv6_hash must be unique!"
+msgstr ""

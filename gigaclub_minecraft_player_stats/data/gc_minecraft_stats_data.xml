@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_minecraft_stats_total_world_time" model="gc.minecraft.stats">
+        <field name="name">TOTAL_WORLD_TIME</field>
+        <field name="ttype">ticks</field>
+    </record>
+
+</odoo>

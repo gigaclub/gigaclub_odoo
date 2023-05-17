@@ -1,0 +1,156 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_minecraft_player_stats
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__active
+msgid "Active"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__create_uid
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__create_uid
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__create_date
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__create_date
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__display_name
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__display_name
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model,name:gigaclub_minecraft_player_stats.model_gc_minecraft_player_stats
+msgid "GigaClub Minecraft Player Stats"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model,name:gigaclub_minecraft_player_stats.model_gc_minecraft_server
+msgid "GigaClub Minecraft Server"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model,name:gigaclub_minecraft_player_stats.model_gc_minecraft_stats
+msgid "GigaClub Minecraft Stats"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model,name:gigaclub_minecraft_player_stats.model_gc_user
+msgid "GigaClub User"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__id
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__id
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__id
+msgid "ID"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats____last_update
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server____last_update
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__write_uid
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__write_uid
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__write_date
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__write_date
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.ui.menu,name:gigaclub_minecraft_player_stats.gc_minecraft
+msgid "Minecraft"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.actions.act_window,name:gigaclub_minecraft_player_stats.gc_minecraft_server_action
+msgid "Minecraft Server"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.ui.menu,name:gigaclub_minecraft_player_stats.gc_menu_minecraft_server
+msgid "Minecraft Servers"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.actions.act_window,name:gigaclub_minecraft_player_stats.gc_minecraft_stats_action
+#: model:ir.ui.menu,name:gigaclub_minecraft_player_stats.gc_menu_minecraft_stats
+msgid "Minecraft Stats"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_server__name
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__name
+msgid "Name"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_user__player_stats_ids
+msgid "Player Stats"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__server_id
+msgid "Server"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__stats_id
+msgid "Stats"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields.selection,name:gigaclub_minecraft_player_stats.selection__gc_minecraft_stats__ttype__ticks
+msgid "Ticks"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_stats__ttype
+msgid "Ttype"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__user_id
+msgid "User"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.fields,field_description:gigaclub_minecraft_player_stats.field_gc_minecraft_player_stats__value
+msgid "Value"
+msgstr ""
+
+#. module: gigaclub_minecraft_player_stats
+#: model:ir.model.constraint,message:gigaclub_minecraft_player_stats.constraint_gc_minecraft_server_name_unique
+#: model:ir.model.constraint,message:gigaclub_minecraft_player_stats.constraint_gc_minecraft_stats_name_unique
+msgid "name must be unique!"
+msgstr ""

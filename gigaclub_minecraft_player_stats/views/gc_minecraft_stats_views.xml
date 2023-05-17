@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_minecraft_stats_view_tree" model="ir.ui.view">
+        <field name="name">gc.minecraft.stats.tree</field>
+        <field name="model">gc.minecraft.stats</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="ttype" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="gc_minecraft_stats_view_form" model="ir.ui.view">
+        <field name="name">gc.minecraft.stats.form</field>
+        <field name="model">gc.minecraft.stats</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="ttype" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gc_minecraft_stats_action">
+        <field name="name">Minecraft Stats</field>
+        <field name="res_model">gc.minecraft.stats</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+    id="gc_menu_minecraft_stats"
+    parent="gc_minecraft"
+    action="gc_minecraft_stats_action"
+    name="Minecraft Stats"
+  />
+
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_minecraft_player_stats_view_tree" model="ir.ui.view">
+        <field name="name">gc.minecraft.player.stats.tree</field>
+        <field name="model">gc.minecraft.player.stats</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="server_id" />
+                <field name="user_id" />
+                <field name="stats_id" />
+                <field name="value" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="gc_minecraft_player_stats_view_form" model="ir.ui.view">
+        <field name="name">gc.minecraft.player.stats.form</field>
+        <field name="model">gc.minecraft.player.stats</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="server_id" />
+                        <field name="user_id" />
+                        <field name="stats_id" />
+                        <field name="value" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

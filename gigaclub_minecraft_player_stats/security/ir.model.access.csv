@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gc_minecraft_player_stats_gigaclub,access_gc_minecraft_player_stats_gigaclub,model_gc_minecraft_player_stats,gigaclub_base.group_gigaclub,1,1,1,1
+access_gc_minecraft_server_gigaclub,access_gc_minecraft_server_gigaclub,model_gc_minecraft_server,gigaclub_base.group_gigaclub,1,1,1,1
+access_gc_minecraft_stats_gigaclub,access_gc_minecraft_stats_gigaclub,model_gc_minecraft_stats,gigaclub_base.group_gigaclub,1,1,1,1
