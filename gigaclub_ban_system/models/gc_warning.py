@@ -38,4 +38,5 @@ class GCWarning(models.Model):
 
     def unban_ip(self):
         self.ensure_one()
-        self.user_id.current_ip_id.blocked = False
+        self.user_id.banned_ip_id.blocked = False
+        self.user_id.banned_ip_id = False
