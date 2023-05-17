@@ -16,7 +16,9 @@ class GCDiscordChannel(models.Model):
         ],
         required=True,
     )
-    category_id = fields.Many2one(comodel_name="gc.discord.category")
+    category_id = fields.Many2one(
+        comodel_name="gc.discord.category", ondelete="cascade"
+    )
     permission_profile_id = fields.Many2one(
         comodel_name="gc.discord.permission.profile"
     )

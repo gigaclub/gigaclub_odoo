@@ -6,7 +6,7 @@
     "website": "https://github.com/GigaClub/gigaclub_odoo",
     "license": "AGPL-3",
     "depends": ["gigaclub_discord", "gigaclub_team"],
-    "data": [],
+    "data": ["data/base_automation_data.xml", "views/gc_team_views.xml"],
     "demo": [],
     "installable": True,
     "auto_install": False,

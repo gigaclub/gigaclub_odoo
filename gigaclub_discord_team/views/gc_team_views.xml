@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_team_view_tree_inherit_gigaclub_discord_team" model="ir.ui.view">
+        <field name="name">gc.team.tree.inherit.gigaclub_discord_team</field>
+        <field name="model">gc.team</field>
+        <field name="inherit_id" ref="gigaclub_team.gc_team_tree_view" />
+        <field name="arch" type="xml">
+            <field name="possible_permission_group_ids" position="after">
+                <field name="should_have_discord_channel" />
+                <field name="discord_category_id" />
+            </field>
+        </field>
+    </record>
+
+    <record id="gc_team_view_form_inherit_gigaclub_discord_team" model="ir.ui.view">
+        <field name="name">gc.team.form.inherit.gigaclub_discord_team</field>
+        <field name="model">gc.team</field>
+        <field name="inherit_id" ref="gigaclub_team.gc_team_form_view" />
+        <field name="arch" type="xml">
+            <field name="possible_permission_group_ids" position="after">
+                <field name="should_have_discord_channel" />
+                <field name="discord_category_id" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
