@@ -31,6 +31,11 @@ msgid "Created on"
 msgstr ""
 
 #. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_user__current_ip_id
+msgid "Current Ip"
+msgstr ""
+
+#. module: gigaclub_ip_system
 #: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip__display_name
 #: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__display_name
 msgid "Display Name"
@@ -60,6 +65,11 @@ msgstr ""
 #. module: gigaclub_ip_system
 #: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_ip_timestamp__ip_id
 msgid "Ip"
+msgstr ""
+
+#. module: gigaclub_ip_system
+#: model:ir.model.fields,field_description:gigaclub_ip_system.field_gc_user__ip_cycle
+msgid "Ip Cycle"
 msgstr ""
 
 #. module: gigaclub_ip_system
