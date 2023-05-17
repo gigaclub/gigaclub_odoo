@@ -23,9 +23,11 @@ class GCWarning(models.Model):
             rec.expiration_datetime = datetime.now() + timedelta(
                 seconds=expiration_time
             )
+            rec.user_id.current_ip_id.blocked = True
             rec.with_delay(eta=expiration_time).set_warning_active_false()
         return records
 
     def set_warning_active_false(self):
         self.ensure_one()
+        self.user_id.current_ip_id.blocked = False
         self.active = False

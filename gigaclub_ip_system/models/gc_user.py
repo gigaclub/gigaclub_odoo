@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.fields import first
 
 
 class GCUser(models.Model):
@@ -8,6 +9,13 @@ class GCUser(models.Model):
         comodel_name="gc.ip.timestamp", inverse_name="user_id"
     )
     ip_cycle = fields.Float(default=24.0)
+    current_ip_id = fields.Many2one(comodel_name="gc.ip", compute="_compute_current_ip")
+
+    def _compute_current_ip(self):
+        for rec in self:
+            rec.current_ip_id = first(
+                rec.ip_timestamp_ids.sorted("create_date", reverse=True)
+            ).ip_id
 
     @api.model
     def make_ip_entry(self, player_uuid, hashed_ipv4_address):
