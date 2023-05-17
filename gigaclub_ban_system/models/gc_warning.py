@@ -29,7 +29,7 @@ class GCWarning(models.Model):
             if rec.user_id.ip_cycle < rec.ban_time:
                 rec.with_delay(eta=int(rec.user_id.ip_cycle * 60 * 60)).unban_ip()
             else:
-                rec.with_delay(eta=rec.ban_time * 60 * 60).unban_ip()
+                rec.with_delay(eta=int(rec.ban_time * 60 * 60)).unban_ip()
             rec.with_delay(eta=expiration_time).set_warning_active_false()
         return records
 
