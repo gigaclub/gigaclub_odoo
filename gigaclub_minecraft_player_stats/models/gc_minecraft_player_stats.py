@@ -12,7 +12,6 @@ class GCMinecraftPlayerStats(models.Model):
 
     @api.model
     def register_player_stats(self, data):
-        # print(data)
         GCUser = self.env["gc.user"]
         GCMinecraftServer = self.env["gc.minecraft.server"]
         GCMinecraftStats = self.env["gc.minecraft.stats"]

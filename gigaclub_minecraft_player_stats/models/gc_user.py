@@ -11,11 +11,21 @@ class GCUser(models.Model):
     def update_player_stats(self, server, stat, value):
         self.ensure_one()
         player_stat = self.env["gc.minecraft.player.stats"].search(
-            [("server_id", "=", server.id), ("stats_id", "=", stat.id)], limit=1
+            [
+                ("user_id", "=", self.id),
+                ("server_id", "=", server.id),
+                ("stats_id", "=", stat.id),
+            ],
+            limit=1,
         )
         if not player_stat:
             self.env["gc.minecraft.player.stats"].create(
-                {"server_id": server.id, "stats_id": stat.id, "value": value}
+                {
+                    "server_id": server.id,
+                    "stats_id": stat.id,
+                    "value": value,
+                    "user_id": self.id,
+                }
             )
         else:
             player_stat.write({"value": value})
