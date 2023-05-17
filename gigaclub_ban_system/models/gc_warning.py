@@ -23,11 +23,19 @@ class GCWarning(models.Model):
             rec.expiration_datetime = datetime.now() + timedelta(
                 seconds=expiration_time
             )
-            rec.user_id.current_ip_id.blocked = True
+            rec.user_id.banned_ip_id = rec.user_id.current_ip_id
+            rec.user_id.banned_ip_id.blocked = True
+            if rec.user_id.ip_cycle < rec.warning_type_id.expiration_time:
+                rec.with_delay(eta=int(rec.user_id.ip_cycle * 60 * 60)).unban_ip()
+            else:
+                rec.with_delay(eta=expiration_time).unban_ip()
             rec.with_delay(eta=expiration_time).set_warning_active_false()
         return records
 
     def set_warning_active_false(self):
         self.ensure_one()
-        self.user_id.current_ip_id.blocked = False
         self.active = False
+
+    def unban_ip(self):
+        self.ensure_one()
+        self.user_id.current_ip_id.blocked = False

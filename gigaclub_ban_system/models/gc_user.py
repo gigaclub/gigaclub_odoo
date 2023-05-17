@@ -16,6 +16,7 @@ class GCUser(models.Model):
     )
     warning_points = fields.Integer(compute="_compute_warning_points")
     ban_expiration_datetime = fields.Datetime(compute="_compute_ban_time")
+    banned_ip_id = fields.Many2one(comodel_name="gc.ip")
 
     def _compute_current_warning(self):
         for rec in self:
