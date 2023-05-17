@@ -10,7 +10,7 @@
                 <field name="discord_channel_uuid" />
                 <field name="category_id" />
                 <field name="type" />
-                <field name="permission_profile_id" />
+                <field name="override_permission_profile_ids" />
             </tree>
         </field>
     </record>
@@ -29,7 +29,7 @@
               name="type"
               attrs="{'readonly': [('type', '!=', False)]}"
             />
-                        <field name="permission_profile_id" />
+                        <field name="override_permission_profile_ids" />
                     </group>
                 </sheet>
             </form>
