@@ -7,6 +7,7 @@ class GCUser(models.Model):
     ip_timestamp_ids = fields.One2many(
         comodel_name="gc.ip.timestamp", inverse_name="user_id"
     )
+    ip_cycle = fields.Float(default=24.0)
 
     @api.model
     def make_ip_entry(self, player_uuid, hashed_ipv4_address):

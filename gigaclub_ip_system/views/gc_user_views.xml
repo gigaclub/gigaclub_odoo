@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <field name="auth_token" position="after">
                 <field name="ip_timestamp_ids" />
+                <field name="ip_cycle" />
             </field>
         </field>
     </record>
@@ -19,6 +20,7 @@
         <field name="arch" type="xml">
             <field name="auth_token" position="after">
                 <field name="ip_timestamp_ids" />
+                <field name="ip_cycle" />
             </field>
         </field>
     </record>
