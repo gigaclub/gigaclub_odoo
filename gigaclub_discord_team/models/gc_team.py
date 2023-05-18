@@ -52,6 +52,7 @@ class GCTeam(models.Model):
                     },
                 ),
             ]
+
             return
         self.discord_category_id.name = self.name
         for channel in self.discord_category_id.channel_ids:

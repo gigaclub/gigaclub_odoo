@@ -16,4 +16,8 @@ class GCUser(models.Model):
     @api.depends("permission_group_ids.role_ids")
     def _compute_role_ids(self):
         for rec in self:
-            rec.role_ids = rec.permission_group_ids.role_ids
+            rec.role_ids = rec._get_roles()
+
+    def _get_roles(self):
+        self.ensure_one()
+        return self.permission_group_ids.role_ids

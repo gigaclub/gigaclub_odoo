@@ -9,6 +9,7 @@
             <field name="possible_permission_group_ids" position="after">
                 <field name="should_have_discord_channel" />
                 <field name="discord_category_id" />
+                <field name="discord_role_id" />
             </field>
         </field>
     </record>
@@ -21,6 +22,7 @@
             <field name="possible_permission_group_ids" position="after">
                 <field name="should_have_discord_channel" />
                 <field name="discord_category_id" />
+                <field name="discord_role_id" />
             </field>
         </field>
     </record>
