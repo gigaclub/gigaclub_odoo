@@ -53,3 +53,6 @@ class GCDiscordPermissionProfile(models.Model):
     use_external_stickers = fields.Boolean()
     use_embedded_activities = fields.Boolean()
     moderate_members = fields.Boolean()
+    use_soundboard = fields.Boolean()
+    use_external_sounds = fields.Boolean()
+    send_voice_messages = fields.Boolean()

@@ -437,6 +437,9 @@ class MainController(http.Controller):
                 external_stickers=permission_profile.external_stickers,
                 use_embedded_activities=permission_profile.use_embedded_activities,
                 moderate_members=permission_profile.moderate_members,
+                use_soundboard=permission_profile.use_soundboard,
+                use_external_sounds=permission_profile.use_external_sounds,
+                send_voice_messages=permission_profile.send_voice_messages,
             )
 
         def get_permission_overwrite(self, permission_profile):
@@ -486,6 +489,10 @@ class MainController(http.Controller):
                 external_stickers=permission_profile.external_stickers,
                 use_embedded_activities=permission_profile.use_embedded_activities,
                 moderate_members=permission_profile.moderate_members,
+                use_soundboard=permission_profile.use_soundboard,
+                use_external_sounds=permission_profile.use_external_sounds,
+                send_voice_messages=permission_profile.send_voice_messages,
+                create_events=True,
             )
 
     async def bot_async_start(self, discord_bot_token):

@@ -65,6 +65,9 @@
                         <field name="use_external_stickers" />
                         <field name="use_embedded_activities" />
                         <field name="moderate_members" />
+                        <field name="use_soundboard" />
+                        <field name="use_external_sounds" />
+                        <field name="send_voice_messages" />
                     </group>
                 </sheet>
             </form>
