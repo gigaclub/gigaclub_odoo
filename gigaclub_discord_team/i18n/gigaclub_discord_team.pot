@@ -29,6 +29,11 @@ msgid "GigaClub Team"
 msgstr ""
 
 #. module: gigaclub_discord_team
+#: model:ir.model,name:gigaclub_discord_team.model_gc_user
+msgid "GigaClub User"
+msgstr ""
+
+#. module: gigaclub_discord_team
 #: model:ir.model.fields,field_description:gigaclub_discord_team.field_gc_team__should_have_discord_channel
 msgid "Should Have Discord Channel"
 msgstr ""
