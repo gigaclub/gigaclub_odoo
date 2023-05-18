@@ -19,7 +19,8 @@ class MainController(http.Controller):
             discord.Client.__init__(self, intents=intents)
             self.env = env
 
-        async def on_ready(self):
+        async def on_ready(self):  # noqa: C901
+            # TODO fix complexity...
             with registry(self.env.cr.dbname).cursor() as new_cr:
                 self.env = api.Environment(new_cr, self.env.uid, self.env.context)
                 company = self.env.user.company_id or self.env["res.company"].browse(1)
@@ -91,6 +92,30 @@ class MainController(http.Controller):
                                 _logger.exception(
                                     f"Error occured on remove the channel {channel_to_remove}:"
                                 )
+                        # send messages logic
+                        messages_to_send_records = self.env[
+                            "gc.discord.message"
+                        ].search([("sent", "=", False)])
+                        for message_record in messages_to_send_records:
+                            channel_id = int(
+                                message_record.channel_id.discord_channel_uuid
+                            )
+                            channel = guild.get_channel(channel_id)
+                            sent_message = await channel.send(message_record.content)
+                            message_record.message_id = sent_message.id
+                            message_record.sent = True
+                        messages_to_edit = self.env["gc.discord.message"].search(
+                            [("sent", "=", True)]
+                        )
+                        for message_record in messages_to_edit:
+                            channel_id = int(
+                                message_record.channel_id.discord_channel_uuid
+                            )
+                            channel = guild.get_channel(channel_id)
+                            message = await channel.fetch_message(
+                                int(message_record.message_id)
+                            )
+                            await message.edit(content=message_record.content)
                         break
                 new_cr.commit()
 
