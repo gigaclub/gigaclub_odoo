@@ -4,6 +4,7 @@ from . import (
     gc_discord_category,
     gc_discord_channel,
     gc_discord_event,
+    gc_discord_message,
     gc_discord_event_worker,
     gc_discord_permission_profile,
     gc_discord_permission_profile_overwrite,

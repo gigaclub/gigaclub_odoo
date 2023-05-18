@@ -174,7 +174,7 @@ class MainController(http.Controller):
                         channel = await guild.create_text_channel(
                             name=channel_record.name,
                             category=category,
-                            type=discord.ChannelType.news,
+                            news=True,
                         )
                     channel_record.discord_channel_uuid = str(channel.id)
                     # overwrite permissions for category

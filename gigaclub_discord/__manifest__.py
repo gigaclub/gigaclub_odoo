@@ -19,6 +19,7 @@
         "views/gc_discord_channel_views.xml",
         "views/gc_discord_event_views.xml",
         "views/gc_discord_event_worker_views.xml",
+        "views/gc_discord_message.xml",
         "views/gc_discord_permission_profile_overwrite_views.xml",
         "views/gc_discord_permission_profile_views.xml",
         "views/gc_discord_role_views.xml",
