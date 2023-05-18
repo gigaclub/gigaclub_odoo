@@ -19,6 +19,11 @@ msgid "Discord Category"
 msgstr ""
 
 #. module: gigaclub_discord_team
+#: model:ir.model.fields,field_description:gigaclub_discord_team.field_gc_team__discord_role_id
+msgid "Discord Role"
+msgstr ""
+
+#. module: gigaclub_discord_team
 #: model:ir.model,name:gigaclub_discord_team.model_gc_team
 msgid "GigaClub Team"
 msgstr ""
