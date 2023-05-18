@@ -42,11 +42,13 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__add_reactions
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__add_reactions
 msgid "Add Reactions"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__administrator
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__administrator
 msgid "Administrator"
 msgstr ""
 
@@ -57,11 +59,13 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__attach_files
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__attach_files
 msgid "Attach Files"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__ban_members
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__ban_members
 msgid "Ban Members"
 msgstr ""
 
@@ -89,6 +93,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__change_nickname
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__change_nickname
 msgid "Change Nickname"
 msgstr ""
 
@@ -117,21 +122,25 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__connect
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__connect
 msgid "Connect"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_instant_invite
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__create_instant_invite
 msgid "Create Instant Invite"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_private_threads
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__create_private_threads
 msgid "Create Private Threads"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_public_threads
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__create_public_threads
 msgid "Create Public Threads"
 msgstr ""
 
@@ -178,6 +187,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__deafen_members
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__deafen_members
 msgid "Deafen Members"
 msgstr ""
 
@@ -236,6 +246,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__embed_links
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__embed_links
 msgid "Embed Links"
 msgstr ""
 
@@ -275,11 +286,13 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__external_emojis
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__external_emojis
 msgid "External Emojis"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__external_stickers
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__external_stickers
 msgid "External Stickers"
 msgstr ""
 
@@ -363,6 +376,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__kick_members
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__kick_members
 msgid "Kick Members"
 msgstr ""
 
@@ -407,61 +421,73 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_channels
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_channels
 msgid "Manage Channels"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_emojis
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_emojis
 msgid "Manage Emojis"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_emojis_and_stickers
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_emojis_and_stickers
 msgid "Manage Emojis And Stickers"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_events
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_events
 msgid "Manage Events"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_guild
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_guild
 msgid "Manage Guild"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_messages
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_messages
 msgid "Manage Messages"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_nicknames
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_nicknames
 msgid "Manage Nicknames"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_permissions
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_permissions
 msgid "Manage Permissions"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_roles
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_roles
 msgid "Manage Roles"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_threads
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_threads
 msgid "Manage Threads"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_webhooks
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__manage_webhooks
 msgid "Manage Webhooks"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__mention_everyone
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__mention_everyone
 msgid "Mention Everyone"
 msgstr ""
 
@@ -477,16 +503,19 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__moderate_members
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__moderate_members
 msgid "Moderate Members"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__move_members
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__move_members
 msgid "Move Members"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__mute_members
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__mute_members
 msgid "Mute Members"
 msgstr ""
 
@@ -527,7 +556,6 @@ msgid "Permission Group"
 msgstr ""
 
 #. module: gigaclub_discord
-#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__permission_profile_id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__permission_profile_id
 msgid "Permission Profile"
 msgstr ""
@@ -540,16 +568,19 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__priority_speaker
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__priority_speaker
 msgid "Priority Speaker"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__read_message_history
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__read_message_history
 msgid "Read Message History"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__read_messages
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__read_messages
 msgid "Read Messages"
 msgstr ""
 
@@ -560,6 +591,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__request_to_speak
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__request_to_speak
 msgid "Request To Speak"
 msgstr ""
 
@@ -580,21 +612,25 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_messages
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__send_messages
 msgid "Send Messages"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_messages_in_threads
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__send_messages_in_threads
 msgid "Send Messages In Threads"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_tts_messages
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__send_tts_messages
 msgid "Send Tts Messages"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_voice_messages
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__send_voice_messages
 msgid "Send Voice Messages"
 msgstr ""
 
@@ -620,6 +656,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__speak
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__speak
 msgid "Speak"
 msgstr ""
 
@@ -655,6 +692,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__stream
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__stream
 msgid "Stream"
 msgstr ""
 
@@ -675,36 +713,43 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_application_commands
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__use_application_commands
 msgid "Use Application Commands"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_embedded_activities
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__use_embedded_activities
 msgid "Use Embedded Activities"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_external_emojis
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__use_external_emojis
 msgid "Use External Emojis"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_external_sounds
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__use_external_sounds
 msgid "Use External Sounds"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_external_stickers
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__use_external_stickers
 msgid "Use External Stickers"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_soundboard
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__use_soundboard
 msgid "Use Soundboard"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_voice_activation
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__use_voice_activation
 msgid "Use Voice Activation"
 msgstr ""
 
@@ -722,16 +767,19 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__view_audit_log
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__view_audit_log
 msgid "View Audit Log"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__view_channel
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__view_channel
 msgid "View Channel"
 msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__view_guild_insights
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__view_guild_insights
 msgid "View Guild Insights"
 msgstr ""
 
