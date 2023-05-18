@@ -29,6 +29,43 @@ class GCTeam(models.Model):
                     "name": self.name,
                 }
             )
+            everyone_role = self.env.ref("gigaclub_discord.gc_discord_role_everyone")
+            self.discord_category_id.overwrite_permission_profile_ids = [
+                (
+                    0,
+                    0,
+                    {
+                        "category_id": self.discord_category_id.id,
+                        "overwrite_entity_id": f"gc.discord.role,{everyone_role.id}",
+                        "permission_profile_id": self.env[
+                            "gc.discord.permission.profile"
+                        ]
+                        .create(
+                            {
+                                "read_messages": False,
+                            }
+                        )
+                        .id,
+                    },
+                ),
+                (
+                    0,
+                    0,
+                    {
+                        "category_id": self.discord_category_id.id,
+                        "overwrite_entity_id": f"gc.discord.role,{self.discord_role_id.id}",
+                        "permission_profile_id": self.env[
+                            "gc.discord.permission.profile"
+                        ]
+                        .create(
+                            {
+                                "read_messages": True,
+                            }
+                        )
+                        .id,
+                    },
+                ),
+            ]
             return
         self.discord_category_id.name = self.name
         for channel in self.discord_category_id.channel_ids:

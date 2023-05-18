@@ -11,8 +11,8 @@ class GCDiscordCategory(models.Model):
     channel_ids = fields.One2many(
         comodel_name="gc.discord.channel", inverse_name="category_id"
     )
-    override_permission_profile_ids = fields.One2many(
-        comodel_name="gc.discord.permission.profile.override",
+    overwrite_permission_profile_ids = fields.One2many(
+        comodel_name="gc.discord.permission.profile.overwrite",
         inverse_name="category_id",
     )
 
