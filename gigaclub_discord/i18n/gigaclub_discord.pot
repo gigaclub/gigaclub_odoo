@@ -594,6 +594,11 @@ msgid "Send Tts Messages"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_voice_messages
+msgid "Send Voice Messages"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__send_private_message
 msgid "Send private Message"
 msgstr ""
@@ -684,8 +689,18 @@ msgid "Use External Emojis"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_external_sounds
+msgid "Use External Sounds"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_external_stickers
 msgid "Use External Stickers"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_soundboard
+msgid "Use Soundboard"
 msgstr ""
 
 #. module: gigaclub_discord
