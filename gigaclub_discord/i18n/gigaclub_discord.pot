@@ -126,6 +126,16 @@ msgid "Create Instant Invite"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_private_threads
+msgid "Create Private Threads"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_public_threads
+msgid "Create Public Threads"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__create_uid
@@ -269,6 +279,11 @@ msgid "External Emojis"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__external_stickers
+msgid "External Stickers"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__get_private_message
 msgid "Get Private Message"
 msgstr ""
@@ -401,6 +416,16 @@ msgid "Manage Emojis"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_emojis_and_stickers
+msgid "Manage Emojis And Stickers"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_events
+msgid "Manage Events"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_guild
 msgid "Manage Guild"
 msgstr ""
@@ -416,8 +441,18 @@ msgid "Manage Nicknames"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_permissions
+msgid "Manage Permissions"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_roles
 msgid "Manage Roles"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__manage_threads
+msgid "Manage Threads"
 msgstr ""
 
 #. module: gigaclub_discord
@@ -438,6 +473,11 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__message_content
 msgid "Message Content"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__moderate_members
+msgid "Moderate Members"
 msgstr ""
 
 #. module: gigaclub_discord
@@ -544,6 +584,11 @@ msgid "Send Messages"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_messages_in_threads
+msgid "Send Messages In Threads"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__send_tts_messages
 msgid "Send Tts Messages"
 msgstr ""
@@ -624,6 +669,26 @@ msgid "Type"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_application_commands
+msgid "Use Application Commands"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_embedded_activities
+msgid "Use Embedded Activities"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_external_emojis
+msgid "Use External Emojis"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_external_stickers
+msgid "Use External Stickers"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__use_voice_activation
 msgid "Use Voice Activation"
 msgstr ""
@@ -643,6 +708,11 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__view_audit_log
 msgid "View Audit Log"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__view_channel
+msgid "View Channel"
 msgstr ""
 
 #. module: gigaclub_discord
