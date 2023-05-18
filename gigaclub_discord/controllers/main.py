@@ -424,6 +424,19 @@ class MainController(http.Controller):
                 manage_webhooks=permission_profile.manage_webhooks,
                 manage_emojis=permission_profile.manage_emojis,
                 request_to_speak=permission_profile.request_to_speak,
+                view_channel=permission_profile.view_channel,
+                use_external_emojis=permission_profile.use_external_emojis,
+                manage_permissions=permission_profile.manage_permissions,
+                manage_emojis_and_stickers=permission_profile.manage_emojis_and_stickers,
+                use_application_commands=permission_profile.use_application_commands,
+                manage_events=permission_profile.manage_events,
+                manage_threads=permission_profile.manage_threads,
+                create_public_threads=permission_profile.create_public_threads,
+                create_private_threads=permission_profile.create_private_threads,
+                send_messages_in_threads=permission_profile.send_messages_in_threads,
+                external_stickers=permission_profile.external_stickers,
+                use_embedded_activities=permission_profile.use_embedded_activities,
+                moderate_members=permission_profile.moderate_members,
             )
 
         def get_permission_overwrite(self, permission_profile):
@@ -460,6 +473,19 @@ class MainController(http.Controller):
                 manage_webhooks=permission_profile.manage_webhooks,
                 manage_emojis=permission_profile.manage_emojis,
                 request_to_speak=permission_profile.request_to_speak,
+                view_channel=permission_profile.view_channel,
+                use_external_emojis=permission_profile.use_external_emojis,
+                manage_permissions=permission_profile.manage_permissions,
+                manage_emojis_and_stickers=permission_profile.manage_emojis_and_stickers,
+                use_application_commands=permission_profile.use_application_commands,
+                manage_events=permission_profile.manage_events,
+                manage_threads=permission_profile.manage_threads,
+                create_public_threads=permission_profile.create_public_threads,
+                create_private_threads=permission_profile.create_private_threads,
+                send_messages_in_threads=permission_profile.send_messages_in_threads,
+                external_stickers=permission_profile.external_stickers,
+                use_embedded_activities=permission_profile.use_embedded_activities,
+                moderate_members=permission_profile.moderate_members,
             )
 
     async def bot_async_start(self, discord_bot_token):
