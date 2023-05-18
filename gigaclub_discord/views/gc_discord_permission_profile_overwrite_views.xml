@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="gc_discord_permission_profile_overwrite_tree_view">
+        <field name="name">gc.discord.permission.profile.overwrite.tree.view</field>
+        <field name="model">gc.discord.permission.profile.overwrite</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="overwrite_entity_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="gc_discord_permission_overwrite_profile_form_view">
+        <field name="name">gc.discord.permission.profile.overwrite.form.view</field>
+        <field name="model">gc.discord.permission.profile.overwrite</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="overwrite_entity_id" />
+                        <field name="channel_id" />
+                        <field name="category_id" />
+                        <field name="administrator" />
+                        <field name="create_instant_invite" />
+                        <field name="kick_members" />
+                        <field name="ban_members" />
+                        <field name="manage_channels" />
+                        <field name="manage_guild" />
+                        <field name="add_reactions" />
+                        <field name="view_audit_log" />
+                        <field name="priority_speaker" />
+                        <field name="stream" />
+                        <field name="read_messages" />
+                        <field name="send_messages" />
+                        <field name="send_tts_messages" />
+                        <field name="manage_messages" />
+                        <field name="embed_links" />
+                        <field name="attach_files" />
+                        <field name="read_message_history" />
+                        <field name="mention_everyone" />
+                        <field name="external_emojis" />
+                        <field name="view_guild_insights" />
+                        <field name="connect" />
+                        <field name="speak" />
+                        <field name="mute_members" />
+                        <field name="deafen_members" />
+                        <field name="move_members" />
+                        <field name="use_voice_activation" />
+                        <field name="change_nickname" />
+                        <field name="manage_nicknames" />
+                        <field name="manage_roles" />
+                        <field name="manage_webhooks" />
+                        <field name="manage_emojis" />
+                        <field name="request_to_speak" />
+                        <field name="view_channel" />
+                        <field name="use_external_emojis" />
+                        <field name="manage_permissions" />
+                        <field name="manage_emojis_and_stickers" />
+                        <field name="use_application_commands" />
+                        <field name="manage_events" />
+                        <field name="manage_threads" />
+                        <field name="create_public_threads" />
+                        <field name="create_private_threads" />
+                        <field name="send_messages_in_threads" />
+                        <field name="external_stickers" />
+                        <field name="use_external_stickers" />
+                        <field name="use_embedded_activities" />
+                        <field name="moderate_members" />
+                        <field name="use_soundboard" />
+                        <field name="use_external_sounds" />
+                        <field name="send_voice_messages" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -37,15 +37,8 @@ class GCTeam(models.Model):
                     {
                         "category_id": self.discord_category_id.id,
                         "overwrite_entity_id": f"gc.discord.role,{everyone_role.id}",
-                        "permission_profile_id": self.env[
-                            "gc.discord.permission.profile"
-                        ]
-                        .create(
-                            {
-                                "read_messages": False,
-                            }
-                        )
-                        .id,
+                        "read_messages": "no",
+                        "send_messages": "no",
                     },
                 ),
                 (
@@ -54,15 +47,8 @@ class GCTeam(models.Model):
                     {
                         "category_id": self.discord_category_id.id,
                         "overwrite_entity_id": f"gc.discord.role,{self.discord_role_id.id}",
-                        "permission_profile_id": self.env[
-                            "gc.discord.permission.profile"
-                        ]
-                        .create(
-                            {
-                                "read_messages": True,
-                            }
-                        )
-                        .id,
+                        "read_messages": "yes",
+                        "send_messages": "yes",
                     },
                 ),
             ]
