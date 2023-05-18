@@ -26,33 +26,6 @@ class MainController(http.Controller):
                 for guild in self.guilds:
                     if guild.id == int(company.discord_server_id):
                         self.guild = guild
-                        await self.create_and_update_not_created_channels(guild)
-                        await self.create_and_update_not_created_categories(guild)
-                        created_channels = self.env["gc.discord.channel"].search(
-                            [("discord_channel_uuid", "!=", False)]
-                        )
-                        saved_channel_ids = created_channels.mapped(
-                            lambda x: int(x.discord_channel_uuid)
-                        )
-                        created_categories = self.env["gc.discord.category"].search(
-                            [("discord_channel_uuid", "!=", False)]
-                        )
-                        saved_category_ids = created_categories.mapped(
-                            lambda x: int(x.discord_channel_uuid)
-                        )
-                        saved_channel_ids.extend(saved_category_ids)
-                        channels_to_remove = [
-                            channel
-                            for channel in guild.channels
-                            if channel.id not in saved_channel_ids
-                        ]
-                        for channel_to_remove in channels_to_remove:
-                            try:
-                                await channel_to_remove.delete()
-                            except Exception:
-                                _logger.exception(
-                                    f"Error occured on remove the channel {channel_to_remove}:"
-                                )
                         await self.create_and_update_not_created_roles(guild)
                         for member in guild.members:
                             if member.bot:
@@ -91,6 +64,33 @@ class MainController(http.Controller):
                                     roles_to_remove.append(role)
                             if len(roles_to_remove) > 0:
                                 await member.remove_roles(*roles_to_remove)
+                        await self.create_and_update_not_created_channels(guild)
+                        await self.create_and_update_not_created_categories(guild)
+                        created_channels = self.env["gc.discord.channel"].search(
+                            [("discord_channel_uuid", "!=", False)]
+                        )
+                        saved_channel_ids = created_channels.mapped(
+                            lambda x: int(x.discord_channel_uuid)
+                        )
+                        created_categories = self.env["gc.discord.category"].search(
+                            [("discord_channel_uuid", "!=", False)]
+                        )
+                        saved_category_ids = created_categories.mapped(
+                            lambda x: int(x.discord_channel_uuid)
+                        )
+                        saved_channel_ids.extend(saved_category_ids)
+                        channels_to_remove = [
+                            channel
+                            for channel in guild.channels
+                            if channel.id not in saved_channel_ids
+                        ]
+                        for channel_to_remove in channels_to_remove:
+                            try:
+                                await channel_to_remove.delete()
+                            except Exception:
+                                _logger.exception(
+                                    f"Error occured on remove the channel {channel_to_remove}:"
+                                )
                         break
                 new_cr.commit()
 
@@ -177,6 +177,74 @@ class MainController(http.Controller):
                             type=discord.ChannelType.news,
                         )
                     channel_record.discord_channel_uuid = str(channel.id)
+                    # overwrite permissions for category
+                    category_overwrite_permission_profiles = (
+                        channel_record.category_id.overwrite_permission_profile_ids
+                    )
+                    for (
+                        overwrite_permission_profile
+                    ) in category_overwrite_permission_profiles:
+                        permission_profile = self.get_permission_overwrite(
+                            overwrite_permission_profile
+                        )
+                        if (
+                            overwrite_permission_profile.overwrite_entity_id._name
+                            == "gc.user"
+                        ):
+                            user_record = (
+                                overwrite_permission_profile.overwrite_entity_id
+                            )
+                            user = self.get_user(int(user_record.discord_uuid))
+                            await category.set_permissions(
+                                user, overwrite=permission_profile
+                            )
+                        elif (
+                            overwrite_permission_profile.overwrite_entity_id._name
+                            == "gc.discord.role"
+                        ):
+                            role_record = (
+                                overwrite_permission_profile.overwrite_entity_id
+                            )
+                            role = discord.utils.get(
+                                guild.roles, id=int(role_record.role_id)
+                            )
+                            await category.set_permissions(
+                                role, overwrite=permission_profile
+                            )
+                    # overwrite permissions for channel
+                    channel_overwrite_permission_profiles = (
+                        channel_record.overwrite_permission_profile_ids
+                    )
+                    for (
+                        overwrite_permission_profile
+                    ) in channel_overwrite_permission_profiles:
+                        permission_profile = self.get_permission_overwrite(
+                            overwrite_permission_profile.permission_profile_id
+                        )
+                        if (
+                            overwrite_permission_profile.overwrite_entity_id._name
+                            == "gc.user"
+                        ):
+                            user_record = (
+                                overwrite_permission_profile.overwrite_entity_id
+                            )
+                            user = self.get_user(int(user_record.discord_uuid))
+                            await channel.set_permissions(
+                                user, overwrite=permission_profile
+                            )
+                        elif (
+                            overwrite_permission_profile.overwrite_entity_id._name
+                            == "gc.discord.role"
+                        ):
+                            role_record = (
+                                overwrite_permission_profile.overwrite_entity_id
+                            )
+                            role = discord.utils.get(
+                                guild.roles, id=int(role_record.role_id)
+                            )
+                            await channel.set_permissions(
+                                role, overwrite=permission_profile
+                            )
                 except discord.Forbidden:
                     _logger.exception("Error editing channel:")
                     continue
@@ -224,40 +292,7 @@ class MainController(http.Controller):
             )
             for role_record in not_created_roles:
                 permission_profile = role_record.permission_profile_id
-                permissions = discord.Permissions(
-                    administrator=permission_profile.administrator,
-                    create_instant_invite=permission_profile.create_instant_invite,
-                    kick_members=permission_profile.kick_members,
-                    ban_members=permission_profile.ban_members,
-                    manage_channels=permission_profile.manage_channels,
-                    manage_guild=permission_profile.manage_guild,
-                    add_reactions=permission_profile.add_reactions,
-                    view_audit_log=permission_profile.view_audit_log,
-                    priority_speaker=permission_profile.priority_speaker,
-                    stream=permission_profile.stream,
-                    read_messages=permission_profile.read_messages,
-                    send_messages=permission_profile.send_messages,
-                    send_tts_messages=permission_profile.send_tts_messages,
-                    manage_messages=permission_profile.manage_messages,
-                    embed_links=permission_profile.embed_links,
-                    attach_files=permission_profile.attach_files,
-                    read_message_history=permission_profile.read_message_history,
-                    mention_everyone=permission_profile.mention_everyone,
-                    external_emojis=permission_profile.external_emojis,
-                    view_guild_insights=permission_profile.view_guild_insights,
-                    connect=permission_profile.connect,
-                    speak=permission_profile.speak,
-                    mute_members=permission_profile.mute_members,
-                    deafen_members=permission_profile.deafen_members,
-                    move_members=permission_profile.move_members,
-                    use_voice_activation=permission_profile.use_voice_activation,
-                    change_nickname=permission_profile.change_nickname,
-                    manage_nicknames=permission_profile.manage_nicknames,
-                    manage_roles=permission_profile.manage_roles,
-                    manage_webhooks=permission_profile.manage_webhooks,
-                    manage_emojis=permission_profile.manage_emojis,
-                    request_to_speak=permission_profile.request_to_speak,
-                )
+                permissions = self.get_permission_profile(permission_profile)
                 color = discord.Color.from_str(role_record.color)
                 role = discord.utils.get(guild.roles, name=role_record.name)
                 try:
@@ -286,48 +321,14 @@ class MainController(http.Controller):
             )
             for role_record in created_roles:
                 permission_profile = role_record.permission_profile_id
-                permissions = discord.Permissions(
-                    administrator=permission_profile.administrator,
-                    create_instant_invite=permission_profile.create_instant_invite,
-                    kick_members=permission_profile.kick_members,
-                    ban_members=permission_profile.ban_members,
-                    manage_channels=permission_profile.manage_channels,
-                    manage_guild=permission_profile.manage_guild,
-                    add_reactions=permission_profile.add_reactions,
-                    view_audit_log=permission_profile.view_audit_log,
-                    priority_speaker=permission_profile.priority_speaker,
-                    stream=permission_profile.stream,
-                    read_messages=permission_profile.read_messages,
-                    send_messages=permission_profile.send_messages,
-                    send_tts_messages=permission_profile.send_tts_messages,
-                    manage_messages=permission_profile.manage_messages,
-                    embed_links=permission_profile.embed_links,
-                    attach_files=permission_profile.attach_files,
-                    read_message_history=permission_profile.read_message_history,
-                    mention_everyone=permission_profile.mention_everyone,
-                    external_emojis=permission_profile.external_emojis,
-                    view_guild_insights=permission_profile.view_guild_insights,
-                    connect=permission_profile.connect,
-                    speak=permission_profile.speak,
-                    mute_members=permission_profile.mute_members,
-                    deafen_members=permission_profile.deafen_members,
-                    move_members=permission_profile.move_members,
-                    use_voice_activation=permission_profile.use_voice_activation,
-                    change_nickname=permission_profile.change_nickname,
-                    manage_nicknames=permission_profile.manage_nicknames,
-                    manage_roles=permission_profile.manage_roles,
-                    manage_webhooks=permission_profile.manage_webhooks,
-                    manage_emojis=permission_profile.manage_emojis,
-                    request_to_speak=permission_profile.request_to_speak,
-                )
+                permissions = self.get_permission_profile(permission_profile)
                 color = discord.Color.from_str(role_record.color)
-                role = discord.utils.get(guild.roles, id=role_record.role_id)
+                role = discord.utils.get(guild.roles, id=int(role_record.role_id))
                 if role:
                     await role.edit(
                         name=role_record.name,
                         hoist=role_record.hoist,
                         mentionable=role_record.mentionable,
-                        position=role_record.position,
                         permissions=permissions,
                         color=color,
                     )
@@ -387,6 +388,204 @@ class MainController(http.Controller):
                 member = self.guild.get_member(int(user_id))
                 role = discord.utils.get(self.guild.roles, id=int(role_id))
                 await member.add_roles(role)
+
+        def get_permission_profile(self, permission_profile):
+            return discord.Permissions(
+                administrator=permission_profile.administrator,
+                create_instant_invite=permission_profile.create_instant_invite,
+                kick_members=permission_profile.kick_members,
+                ban_members=permission_profile.ban_members,
+                manage_channels=permission_profile.manage_channels,
+                manage_guild=permission_profile.manage_guild,
+                add_reactions=permission_profile.add_reactions,
+                view_audit_log=permission_profile.view_audit_log,
+                priority_speaker=permission_profile.priority_speaker,
+                stream=permission_profile.stream,
+                read_messages=permission_profile.read_messages,
+                send_messages=permission_profile.send_messages,
+                send_tts_messages=permission_profile.send_tts_messages,
+                manage_messages=permission_profile.manage_messages,
+                embed_links=permission_profile.embed_links,
+                attach_files=permission_profile.attach_files,
+                read_message_history=permission_profile.read_message_history,
+                mention_everyone=permission_profile.mention_everyone,
+                external_emojis=permission_profile.external_emojis,
+                view_guild_insights=permission_profile.view_guild_insights,
+                connect=permission_profile.connect,
+                speak=permission_profile.speak,
+                mute_members=permission_profile.mute_members,
+                deafen_members=permission_profile.deafen_members,
+                move_members=permission_profile.move_members,
+                use_voice_activation=permission_profile.use_voice_activation,
+                change_nickname=permission_profile.change_nickname,
+                manage_nicknames=permission_profile.manage_nicknames,
+                manage_roles=permission_profile.manage_roles,
+                manage_webhooks=permission_profile.manage_webhooks,
+                manage_emojis=permission_profile.manage_emojis,
+                request_to_speak=permission_profile.request_to_speak,
+                view_channel=permission_profile.view_channel,
+                use_external_emojis=permission_profile.use_external_emojis,
+                manage_permissions=permission_profile.manage_permissions,
+                manage_emojis_and_stickers=permission_profile.manage_emojis_and_stickers,
+                use_application_commands=permission_profile.use_application_commands,
+                manage_events=permission_profile.manage_events,
+                manage_threads=permission_profile.manage_threads,
+                create_public_threads=permission_profile.create_public_threads,
+                create_private_threads=permission_profile.create_private_threads,
+                send_messages_in_threads=permission_profile.send_messages_in_threads,
+                external_stickers=permission_profile.external_stickers,
+                use_embedded_activities=permission_profile.use_embedded_activities,
+                moderate_members=permission_profile.moderate_members,
+                use_soundboard=permission_profile.use_soundboard,
+                use_external_sounds=permission_profile.use_external_sounds,
+                send_voice_messages=permission_profile.send_voice_messages,
+            )
+
+        def get_permission_overwrite(self, permission_profile):
+            return discord.PermissionOverwrite(
+                administrator=permission_profile.get_permission_value(
+                    permission_profile.administrator
+                ),
+                create_instant_invite=permission_profile.get_permission_value(
+                    permission_profile.create_instant_invite
+                ),
+                kick_members=permission_profile.get_permission_value(
+                    permission_profile.kick_members
+                ),
+                ban_members=permission_profile.get_permission_value(
+                    permission_profile.ban_members
+                ),
+                manage_channels=permission_profile.get_permission_value(
+                    permission_profile.manage_channels
+                ),
+                manage_guild=permission_profile.get_permission_value(
+                    permission_profile.manage_guild
+                ),
+                add_reactions=permission_profile.get_permission_value(
+                    permission_profile.add_reactions
+                ),
+                view_audit_log=permission_profile.get_permission_value(
+                    permission_profile.view_audit_log
+                ),
+                priority_speaker=permission_profile.get_permission_value(
+                    permission_profile.priority_speaker
+                ),
+                stream=permission_profile.get_permission_value(
+                    permission_profile.stream
+                ),
+                read_messages=permission_profile.get_permission_value(
+                    permission_profile.read_messages
+                ),
+                send_messages=permission_profile.get_permission_value(
+                    permission_profile.send_messages
+                ),
+                send_tts_messages=permission_profile.get_permission_value(
+                    permission_profile.send_tts_messages
+                ),
+                manage_messages=permission_profile.get_permission_value(
+                    permission_profile.manage_messages
+                ),
+                embed_links=permission_profile.get_permission_value(
+                    permission_profile.embed_links
+                ),
+                attach_files=permission_profile.get_permission_value(
+                    permission_profile.attach_files
+                ),
+                read_message_history=permission_profile.get_permission_value(
+                    permission_profile.read_message_history
+                ),
+                mention_everyone=permission_profile.get_permission_value(
+                    permission_profile.mention_everyone
+                ),
+                external_emojis=permission_profile.get_permission_value(
+                    permission_profile.external_emojis
+                ),
+                view_guild_insights=permission_profile.get_permission_value(
+                    permission_profile.view_guild_insights
+                ),
+                connect=permission_profile.get_permission_value(
+                    permission_profile.connect
+                ),
+                speak=permission_profile.get_permission_value(permission_profile.speak),
+                mute_members=permission_profile.get_permission_value(
+                    permission_profile.mute_members
+                ),
+                deafen_members=permission_profile.get_permission_value(
+                    permission_profile.deafen_members
+                ),
+                move_members=permission_profile.get_permission_value(
+                    permission_profile.move_members
+                ),
+                use_voice_activation=permission_profile.get_permission_value(
+                    permission_profile.use_voice_activation
+                ),
+                change_nickname=permission_profile.get_permission_value(
+                    permission_profile.change_nickname
+                ),
+                manage_nicknames=permission_profile.get_permission_value(
+                    permission_profile.manage_nicknames
+                ),
+                manage_roles=permission_profile.get_permission_value(
+                    permission_profile.manage_roles
+                ),
+                manage_webhooks=permission_profile.get_permission_value(
+                    permission_profile.manage_webhooks
+                ),
+                manage_emojis=permission_profile.get_permission_value(
+                    permission_profile.manage_emojis
+                ),
+                request_to_speak=permission_profile.get_permission_value(
+                    permission_profile.request_to_speak
+                ),
+                view_channel=permission_profile.get_permission_value(
+                    permission_profile.view_channel
+                ),
+                use_external_emojis=permission_profile.get_permission_value(
+                    permission_profile.use_external_emojis
+                ),
+                manage_permissions=permission_profile.get_permission_value(
+                    permission_profile.manage_permissions
+                ),
+                manage_emojis_and_stickers=permission_profile.get_permission_value(
+                    permission_profile.manage_emojis_and_stickers
+                ),
+                use_application_commands=permission_profile.get_permission_value(
+                    permission_profile.use_application_commands
+                ),
+                manage_events=permission_profile.get_permission_value(
+                    permission_profile.manage_events
+                ),
+                manage_threads=permission_profile.get_permission_value(
+                    permission_profile.manage_threads
+                ),
+                create_public_threads=permission_profile.get_permission_value(
+                    permission_profile.create_public_threads
+                ),
+                create_private_threads=permission_profile.get_permission_value(
+                    permission_profile.create_private_threads
+                ),
+                send_messages_in_threads=permission_profile.get_permission_value(
+                    permission_profile.send_messages_in_threads
+                ),
+                external_stickers=permission_profile.get_permission_value(
+                    permission_profile.external_stickers
+                ),
+                use_embedded_activities=permission_profile.get_permission_value(
+                    permission_profile.use_embedded_activities
+                ),
+                moderate_members=permission_profile.get_permission_value(
+                    permission_profile.moderate_members
+                ),
+                use_soundboard=permission_profile.get_permission_value(
+                    permission_profile.use_soundboard
+                ),
+                use_external_sounds=permission_profile.get_permission_value(
+                    permission_profile.use_external_sounds
+                ),
+                send_voice_messages=permission_profile.get_permission_value(
+                    permission_profile.send_voice_messages
+                ),
+            )
 
     async def bot_async_start(self, discord_bot_token):
         await self.client.start(discord_bot_token)

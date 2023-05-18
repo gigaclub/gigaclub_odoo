@@ -9,7 +9,7 @@
                 <field name="name" />
                 <field name="discord_channel_uuid" />
                 <field name="channel_ids" />
-                <field name="permission_profile_id" />
+                <field name="overwrite_permission_profile_ids" />
             </tree>
         </field>
     </record>
@@ -24,7 +24,7 @@
                         <field name="name" />
                         <field name="discord_channel_uuid" />
                         <field name="channel_ids" />
-                        <field name="permission_profile_id" />
+                        <field name="overwrite_permission_profile_ids" />
                     </group>
                 </sheet>
             </form>

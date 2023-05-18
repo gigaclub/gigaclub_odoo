@@ -16,7 +16,10 @@ class GCDiscordChannel(models.Model):
         ],
         required=True,
     )
-    category_id = fields.Many2one(comodel_name="gc.discord.category")
-    permission_profile_id = fields.Many2one(
-        comodel_name="gc.discord.permission.profile"
+    category_id = fields.Many2one(
+        comodel_name="gc.discord.category", ondelete="cascade"
+    )
+    overwrite_permission_profile_ids = fields.One2many(
+        comodel_name="gc.discord.permission.profile.overwrite",
+        inverse_name="channel_id",
     )
