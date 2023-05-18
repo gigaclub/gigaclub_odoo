@@ -4,7 +4,7 @@
     <record id="gc_discord_channel_tasks" model="gc.discord.channel">
         <field name="category_id" ref="gc_discord_category_tasks" />
         <field name="name">Tasks</field>
-        <field name="type">announcement</field>
+        <field name="type">text</field>
     </record>
 
 </odoo>
