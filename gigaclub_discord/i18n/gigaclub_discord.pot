@@ -128,6 +128,11 @@ msgid "Connect"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__content
+msgid "Content"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_instant_invite
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__create_instant_invite
 msgid "Create Instant Invite"
@@ -510,6 +515,11 @@ msgid "Mentionable"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__message_id
+msgid "Message"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__message_content
 msgid "Message Content"
 msgstr ""
@@ -537,7 +547,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__name
-#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__name
 msgid "Name"
@@ -651,6 +660,11 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__send_private_message
 msgid "Send private Message"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__sent
+msgid "Sent"
 msgstr ""
 
 #. module: gigaclub_discord
