@@ -14,8 +14,18 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: gigaclub_discord_project
+#: model:ir.actions.server,name:gigaclub_discord_project.base_automation_add_discord_task_message_ir_actions_server
+msgid "Add Discord Task Message"
+msgstr ""
+
+#. module: gigaclub_discord_project
 #: model:ir.model.fields,field_description:gigaclub_discord_project.field_project_task__discord_message_id
 msgid "Discord Message"
+msgstr ""
+
+#. module: gigaclub_discord_project
+#: model:ir.actions.server,name:gigaclub_discord_project.base_automation_remove_discord_task_message_ir_actions_server
+msgid "Remove Discord Task Message"
 msgstr ""
 
 #. module: gigaclub_discord_project
