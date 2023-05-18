@@ -323,13 +323,12 @@ class MainController(http.Controller):
                 permission_profile = role_record.permission_profile_id
                 permissions = self.get_permission_profile(permission_profile)
                 color = discord.Color.from_str(role_record.color)
-                role = discord.utils.get(guild.roles, id=role_record.role_id)
+                role = discord.utils.get(guild.roles, id=int(role_record.role_id))
                 if role:
                     await role.edit(
                         name=role_record.name,
                         hoist=role_record.hoist,
                         mentionable=role_record.mentionable,
-                        position=role_record.position,
                         permissions=permissions,
                         color=color,
                     )

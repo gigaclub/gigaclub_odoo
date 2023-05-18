@@ -13,4 +13,16 @@ for rec in records:
         </field>
     </record>
 
+    <record id="base_automation_unlink_team_channels" model="base.automation">
+        <field name="name">Unlink Team Channels</field>
+        <field name="trigger">on_unlink</field>
+        <field name="model_id" ref="gigaclub_discord_team.model_gc_team" />
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">
+for rec in records:
+    rec.on_unlink_team_channels()
+        </field>
+    </record>
+
 </odoo>

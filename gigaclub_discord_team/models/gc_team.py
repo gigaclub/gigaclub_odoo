@@ -52,8 +52,12 @@ class GCTeam(models.Model):
                     },
                 ),
             ]
-
             return
         self.discord_category_id.name = self.name
+        self.discord_role_id.name = self.name
         for channel in self.discord_category_id.channel_ids:
             channel.name = f"{self.name} {channel.type} channel"
+
+    def on_unlink_team_channels(self):
+        self.discord_category_id.unlink()
+        self.discord_role_id.unlink()
