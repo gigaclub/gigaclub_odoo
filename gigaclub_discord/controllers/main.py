@@ -3,12 +3,23 @@ import logging
 import threading
 
 import discord  # noqa: W7936
+from discord import ui
 from discord.ui import Button, View
 
 from odoo import _, api, http, registry
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
+
+
+class Questionnaire(ui.Modal, title="Questionnaire Response"):
+    name = ui.TextInput(label="Name", style=discord.TextStyle.paragraph)
+    answer = ui.TextInput(label="Answer", style=discord.TextStyle.paragraph)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(
+            f"Thanks for your response, {self.name}!", ephemeral=True
+        )
 
 
 class MainController(http.Controller):
@@ -134,20 +145,22 @@ class MainController(http.Controller):
         async def on_interaction(self, interaction):
             custom_id = interaction.data.get("custom_id", "")
             if custom_id == "open_modal":
-                # Create a button to close the modal
-                close_button = Button(
-                    style=discord.ButtonStyle.danger,
-                    label="Close",
-                    custom_id="close_modal",
-                )
-
-                # Create a view and add the close button
-                view = View()
-                view.add_item(close_button)
-
-                # Send a message with the modal view
-                await interaction.message.edit(content="Modal content", view=view)
-
+                t = Questionnaire()
+                await interaction.response.send_message("Press me!", view=t)
+                # # Create a button to close the modal
+                # close_button = Button(
+                #     style=discord.ButtonStyle.danger,
+                #     label="Close",
+                #     custom_id="close_modal",
+                # )
+                #
+                # # Create a view and add the close button
+                # view = View()
+                # view.add_item(close_button)
+                #
+                # # Send a message with the modal view
+                # await interaction.message.edit(content="Modal content", view=view)
+                #
             elif custom_id == "close_modal":
                 await interaction.message.delete()
 
