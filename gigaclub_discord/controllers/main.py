@@ -3,8 +3,7 @@ import logging
 import threading
 
 import discord  # noqa: W7936
-from discord.ext import commands
-from discord.ui import Button, View, Select, TextInput, MentionableSelect, RoleSelect, UserSelect, ChannelSelect, Modal
+from discord.ui import Button, View
 
 from odoo import _, api, http, registry
 from odoo.http import request
@@ -118,31 +117,39 @@ class MainController(http.Controller):
                                 int(message_record.message_id)
                             )
                             # Create a button that opens the modal
-                            open_button = Button(style=discord.ButtonStyle.primary, label="Open Modal",
-                                                 custom_id="open_modal")
+                            open_button = Button(
+                                style=discord.ButtonStyle.primary,
+                                label="Open Modal",
+                                custom_id="open_modal",
+                            )
                             # Create a view and add the button
                             view = View()
                             view.add_item(open_button)
-                            await message.edit(content=message_record.content, view=view)
+                            await message.edit(
+                                content=message_record.content, view=view
+                            )
                         break
                 new_cr.commit()
-                DiscordComponents(self)
 
-        async def on_button_click(self, interaction):
-            print("TEST")
-            # if interaction.component.custom_id == "open_modal":
-            #     # Create a button to close the modal
-            #     close_button = Button(style=discord.ButtonStyle.danger, label="Close", custom_id="close_modal")
-            #
-            #     # Create a view and add the close button
-            #     view = View()
-            #     view.add_item(close_button)
-            #
-            #     # Send a message with the modal view
-            #     await interaction.message.edit(content="Modal content", view=view)
-            #
-            # elif interaction.component.custom_id == "close_modal":
-            #     await interaction.message.delete()
+        async def on_interaction(self, interaction):
+            custom_id = interaction.data.get("custom_id", "")
+            if custom_id == "open_modal":
+                # Create a button to close the modal
+                close_button = Button(
+                    style=discord.ButtonStyle.danger,
+                    label="Close",
+                    custom_id="close_modal",
+                )
+
+                # Create a view and add the close button
+                view = View()
+                view.add_item(close_button)
+
+                # Send a message with the modal view
+                await interaction.message.edit(content="Modal content", view=view)
+
+            elif custom_id == "close_modal":
+                await interaction.message.delete()
 
         async def on_member_join(self, member):
             if not self.env["gc.user"].search_count(
@@ -393,7 +400,6 @@ class MainController(http.Controller):
                     )
 
         async def on_message(self, message):
-            print("TEEEEEEEEEEEEEEEEST")
             if message.author == self.user:
                 return
             with registry(self.env.cr.dbname).cursor() as new_cr:
