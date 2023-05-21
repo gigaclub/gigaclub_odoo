@@ -7,3 +7,4 @@ class GCCoinsTransaction(models.Model):
 
     sender_id = fields.Reference(selection=[("gc.user", "gc.user")])
     receiver_id = fields.Reference(selection=[("gc.user", "gc.user")])
+    amount = fields.Integer()

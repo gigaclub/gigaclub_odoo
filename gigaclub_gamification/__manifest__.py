@@ -9,6 +9,9 @@
     "data": [
         "security/ir.model.access.csv",
         "views/menu_views.xml",
+        "views/gc_advancement_connector_views.xml",
+        "views/gc_advancement_views.xml",
+        "views/gc_coins_transaction_views.xml",
         "views/gc_experience_connector_views.xml",
         "views/gc_experience_level_views.xml",
         "views/gc_experience_views.xml",
