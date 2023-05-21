@@ -8,3 +8,4 @@ class GCExperienceLevel(models.Model):
     level = fields.Integer()
     experience_id = fields.Many2one(comodel_name="gc.experience", index=True)
     experience_amount = fields.Integer()
+    reward_ids = fields.Many2many(comodel_name="gc.reward")

@@ -7,3 +7,4 @@ class GCAdvancement(models.Model):
 
     name = fields.Char()
     description = fields.Text()
+    reward_ids = fields.Many2many(comodel_name="gc.reward")

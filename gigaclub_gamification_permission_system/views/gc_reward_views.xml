@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_reward_view_form_inherit_permission_system" model="ir.ui.view">
+        <field
+      name="name"
+    >gc.reward.form.inherit.gigaclub_gamification_permission_system</field>
+        <field name="model">gc.reward</field>
+        <field name="inherit_id" ref="gigaclub_gamification.gc_reward_view_form" />
+        <field name="arch" type="xml">
+            <field name="coins" position="after">
+                <field name="permission_group_ids" />
+            </field>
+        </field>
+    </record>
+
+    <record id="gc_reward_view_tree_inherit_permission_system" model="ir.ui.view">
+        <field
+      name="name"
+    >gc.reward.tree.inherit.gigaclub_gamification_permission_system</field>
+        <field name="model">gc.reward</field>
+        <field name="inherit_id" ref="gigaclub_gamification.gc_reward_view_tree" />
+        <field name="arch" type="xml">
+            <field name="coins" position="after">
+                <field name="permission_group_ids" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
