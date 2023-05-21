@@ -14,11 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: gigaclub_gamification
+#: model:ir.actions.act_window,name:gigaclub_gamification.gc_advancement_action
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_advancement_connector__advancement_id
+#: model:ir.ui.menu,name:gigaclub_gamification.gc_gamification_menu_advancement
 msgid "Advancement"
 msgstr ""
 
 #. module: gigaclub_gamification
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_coins_transaction__amount
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__amount
 msgid "Amount"
 msgstr ""
