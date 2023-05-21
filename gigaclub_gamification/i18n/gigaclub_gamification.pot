@@ -27,6 +27,7 @@ msgid "Amount"
 msgstr ""
 
 #. module: gigaclub_gamification
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__coins
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_user__coins
 msgid "Coins"
 msgstr ""
@@ -38,6 +39,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience__create_uid
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__create_uid
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level__create_uid
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__create_uid
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -48,6 +51,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience__create_date
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__create_date
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level__create_date
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__create_date
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__create_date
 msgid "Created on"
 msgstr ""
 
@@ -63,6 +68,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience__display_name
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__display_name
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level__display_name
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__display_name
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -77,6 +84,11 @@ msgstr ""
 #. module: gigaclub_gamification
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level__experience_amount
 msgid "Experience Amount"
+msgstr ""
+
+#. module: gigaclub_gamification
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__experience_points
+msgid "Experience Points"
 msgstr ""
 
 #. module: gigaclub_gamification
@@ -115,6 +127,16 @@ msgid "GigaClub Experience Level"
 msgstr ""
 
 #. module: gigaclub_gamification
+#: model:ir.model,name:gigaclub_gamification.model_gc_reward
+msgid "GigaClub Reward"
+msgstr ""
+
+#. module: gigaclub_gamification
+#: model:ir.model,name:gigaclub_gamification.model_gc_reward_connector
+msgid "GigaClub Reward Connector"
+msgstr ""
+
+#. module: gigaclub_gamification
 #: model:ir.model,name:gigaclub_gamification.model_gc_user
 msgid "GigaClub User"
 msgstr ""
@@ -126,6 +148,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience__id
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__id
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level__id
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__id
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__id
 msgid "ID"
 msgstr ""
 
@@ -136,6 +160,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience____last_update
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector____last_update
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level____last_update
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward____last_update
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -146,6 +172,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience__write_uid
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__write_uid
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level__write_uid
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__write_uid
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -156,6 +184,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience__write_date
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__write_date
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level__write_date
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__write_date
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -169,12 +199,20 @@ msgstr ""
 #. module: gigaclub_gamification
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_advancement__name
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience__name
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward__name
 msgid "Name"
 msgstr ""
 
 #. module: gigaclub_gamification
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_coins_transaction__receiver_id
 msgid "Receiver"
+msgstr ""
+
+#. module: gigaclub_gamification
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_advancement__reward_ids
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_level__reward_ids
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__reward_id
+msgid "Reward"
 msgstr ""
 
 #. module: gigaclub_gamification
@@ -185,6 +223,7 @@ msgstr ""
 #. module: gigaclub_gamification
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_advancement_connector__user_id
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__user_id
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__user_id
 msgid "User"
 msgstr ""
 
