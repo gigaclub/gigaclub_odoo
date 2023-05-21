@@ -17,3 +17,13 @@ msgstr ""
 #: model:ir.model,name:gigaclub_gamification_permission_system.model_gc_permission_group
 msgid "GigaClub Permission Group"
 msgstr ""
+
+#. module: gigaclub_gamification_permission_system
+#: model:ir.model,name:gigaclub_gamification_permission_system.model_gc_reward
+msgid "GigaClub Reward"
+msgstr ""
+
+#. module: gigaclub_gamification_permission_system
+#: model:ir.model.fields,field_description:gigaclub_gamification_permission_system.field_gc_reward__permission_group_ids
+msgid "Permission Group"
+msgstr ""
