@@ -204,6 +204,11 @@ msgid "Name"
 msgstr ""
 
 #. module: gigaclub_gamification
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_user__received_coin_transaction_ids
+msgid "Received Coin Transaction"
+msgstr ""
+
+#. module: gigaclub_gamification
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_coins_transaction__receiver_id
 msgid "Receiver"
 msgstr ""
@@ -221,14 +226,13 @@ msgid "Sender"
 msgstr ""
 
 #. module: gigaclub_gamification
+#: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_user__sent_coin_transaction_ids
+msgid "Sent Coin Transaction"
+msgstr ""
+
+#. module: gigaclub_gamification
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_advancement_connector__user_id
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_experience_connector__user_id
 #: model:ir.model.fields,field_description:gigaclub_gamification.field_gc_reward_connector__user_id
 msgid "User"
-msgstr ""
-
-#. module: gigaclub_gamification
-#: model:ir.model.fields.selection,name:gigaclub_gamification.selection__gc_coins_transaction__receiver_id__gc_user
-#: model:ir.model.fields.selection,name:gigaclub_gamification.selection__gc_coins_transaction__sender_id__gc_user
-msgid "gc.user"
 msgstr ""
