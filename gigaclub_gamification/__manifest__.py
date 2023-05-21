@@ -7,6 +7,7 @@
     "license": "AGPL-3",
     "depends": ["gigaclub_base"],
     "data": [
+        "data/gc_experience_data.xml",
         "security/ir.model.access.csv",
         "views/menu_views.xml",
         "views/gc_advancement_connector_views.xml",
