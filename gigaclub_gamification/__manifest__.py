@@ -15,6 +15,7 @@
         "views/gc_experience_connector_views.xml",
         "views/gc_experience_level_views.xml",
         "views/gc_experience_views.xml",
+        "views/gc_reward_connector_views.xml",
         "views/gc_reward_views.xml",
     ],
     "demo": [],

@@ -7,3 +7,4 @@ class GCReward(models.Model):
 
     name = fields.Char()
     coins = fields.Integer()
+    experience_points = fields.Integer()
