@@ -6,3 +6,6 @@ class GCExperience(models.Model):
     _description = "GigaClub Experience"
 
     name = fields.Char()
+    level_ids = fields.One2many(
+        comodel_name="gc.experience.level", inverse_name="experience_id"
+    )
