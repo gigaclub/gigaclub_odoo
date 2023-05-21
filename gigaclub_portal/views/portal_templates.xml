@@ -19,8 +19,10 @@
                 <hr class="mt-1 mb-0" />
                 <div
           t-field="user_id.partner_id"
-          t-options='{"widget": "contact", "fields": ["email", "name"]}'
+          t-options='{"widget": "contact", "fields": ["name"]}'
         />
+                <label for="user_coins"><strong>Coins: </strong></label>
+                <span t-field="user_id.partner_id.gc_user_id.coins" id="user_coins" />
             </div>
         </xpath>
     </template>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="gc_permission_group_builder" model="gc.permission.group">
-        <field name="name">Builder</field>
+    <record id="gc_permission_group_translator" model="gc.permission.group">
+        <field name="name">Translator</field>
         <field name="global_group" eval="True" />
         <field
       name="parent_group_id"
