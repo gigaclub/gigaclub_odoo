@@ -11,6 +11,23 @@ from odoo.http import request
 _logger = logging.getLogger(__name__)
 
 
+class MyModal(discord.ui.Modal):
+    name = discord.ui.TextInput(label="Name")
+    answer = discord.ui.TextInput(label="Answer", style=discord.TextStyle.paragraph)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        # embed = discord.Embed(title="Modal Results")
+        # embed.add_field(name="Name", value=self.name)
+        # embed.add_field(name="Answer", value=self.answer)
+        # await interaction.channel.send(embeds=[embed])
+        # await interaction
+        view = View()
+        view.add_item()
+        await interaction.channel.send(
+            f"Thanks for your response, {self.name}!", view=view
+        )
+
+
 class MainController(http.Controller):
     class MyBot(discord.Client):
         def __init__(self, env):
@@ -122,9 +139,15 @@ class MainController(http.Controller):
                                 label="Open Modal",
                                 custom_id="open_modal",
                             )
+                            link_button = Button(
+                                style=discord.ButtonStyle.success,
+                                label="Open Link",
+                                url="https://gigaclub.net",
+                            )
                             # Create a view and add the button
                             view = View()
                             view.add_item(open_button)
+                            view.add_item(link_button)
                             await message.edit(
                                 content=message_record.content, view=view
                             )
@@ -134,19 +157,21 @@ class MainController(http.Controller):
         async def on_interaction(self, interaction):
             custom_id = interaction.data.get("custom_id", "")
             if custom_id == "open_modal":
-                # Create a button to close the modal
-                close_button = Button(
-                    style=discord.ButtonStyle.danger,
-                    label="Close",
-                    custom_id="close_modal",
-                )
-
-                # Create a view and add the close button
-                view = View()
-                view.add_item(close_button)
-
-                # Send a message with the modal view
-                await interaction.message.edit(content="Modal content", view=view)
+                modal = MyModal(title="Modal via Button Click")
+                await interaction.response.send_modal(modal)
+                # # Create a button to close the modal
+                # close_button = Button(
+                #     style=discord.ButtonStyle.danger,
+                #     label="Close",
+                #     custom_id="close_modal",
+                # )
+                #
+                # # Create a view and add the close button
+                # view = View()
+                # view.add_item(close_button)
+                #
+                # # Send a message with the modal view
+                # await interaction.message.edit(content="Modal content", view=view)
 
             elif custom_id == "close_modal":
                 await interaction.message.delete()
