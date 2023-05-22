@@ -158,6 +158,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__create_uid
@@ -172,6 +173,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__create_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__create_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__create_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__create_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__create_date
@@ -242,6 +244,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__display_name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__display_name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__display_name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__display_name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__display_name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__display_name
@@ -346,6 +349,11 @@ msgid "GigaClub Discord Message"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_modal
+msgid "GigaClub Discord Modal"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model,name:gigaclub_discord.model_gc_discord_permission_profile
 msgid "GigaClub Discord Permission Profile"
 msgstr ""
@@ -383,6 +391,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__id
@@ -403,6 +412,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role____last_update
@@ -417,6 +427,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__write_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__write_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__write_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__write_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__write_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__write_uid
@@ -431,6 +442,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__write_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event_worker__write_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__write_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__write_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__write_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__write_date
@@ -732,6 +744,11 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:gc.discord.category,name:gigaclub_discord.gc_discord_category_text_channels
 msgid "Text Channels"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__title
+msgid "Title"
 msgstr ""
 
 #. module: gigaclub_discord
