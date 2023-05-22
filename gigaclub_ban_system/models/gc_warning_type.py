@@ -15,6 +15,7 @@ class GCWarningType(models.Model):
     def get_warning_types(self) -> list:
         return [
             {
+                "id": x.id,
                 "name": x.name,
                 "description": x.description,
                 "ban_time": x.ban_time,
