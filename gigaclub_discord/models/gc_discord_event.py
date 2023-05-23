@@ -14,6 +14,7 @@ class GCDiscordEvent(models.Model):
             ("send_private_message", "Send private Message"),
             ("get_private_message", "Get Private Message"),
             ("set_role", "Set Role"),
+            ("interaction", "Interaction"),
         ]
     )
     next_event_id = fields.Many2one(

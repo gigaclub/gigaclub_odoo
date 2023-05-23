@@ -6,3 +6,4 @@ class GCDiscordModal(models.Model):
     _description = "GigaClub Discord Modal"
 
     title = fields.Char()
+    custom_id = fields.Char()

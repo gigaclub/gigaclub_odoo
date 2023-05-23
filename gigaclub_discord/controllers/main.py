@@ -139,15 +139,54 @@ class MainController(http.Controller):
                                 label="Open Modal",
                                 custom_id="open_modal",
                             )
-                            link_button = Button(
-                                style=discord.ButtonStyle.success,
-                                label="Open Link",
-                                url="https://gigaclub.net",
-                            )
+                            # link_button = Button(
+                            #     style=discord.ButtonStyle.success,
+                            #     label="Open Link",
+                            #     url="https://gigaclub.net",
+                            # )
+                            # test = discord.ui.Select(
+                            #     custom_id="test_select",
+                            #     options=[
+                            #         SelectOption(label="test", value="test1"),
+                            #         SelectOption(label="test", value="test2"),
+                            #         SelectOption(label="test", value="test3"),
+                            #         SelectOption(label="test", value="test4"),
+                            #         SelectOption(label="test", value="test5"),
+                            #         SelectOption(label="test", value="test6"),
+                            #         SelectOption(label="test", value="test7"),
+                            #         SelectOption(label="test", value="test8"),
+                            #         SelectOption(label="test", value="test9"),
+                            #         SelectOption(label="test", value="test10"),
+                            #         SelectOption(label="test", value="test11"),
+                            #         SelectOption(label="test", value="test12"),
+                            #         SelectOption(label="test", value="test13"),
+                            #         SelectOption(label="test", value="test14"),
+                            #         SelectOption(label="test", value="test15"),
+                            #         SelectOption(label="test", value="test16"),
+                            #         SelectOption(label="test", value="test17"),
+                            #         SelectOption(label="test", value="test18"),
+                            #         SelectOption(label="test", value="test19"),
+                            #         SelectOption(label="test", value="test20"),
+                            #         SelectOption(label="test", value="test21"),
+                            #         SelectOption(label="test", value="test22"),
+                            #         SelectOption(label="test", value="test23"),
+                            #         SelectOption(label="test", value="test24"),
+                            #         SelectOption(label="test", value="test25"),
+                            #     ],
+                            # )
+                            test1 = discord.ui.RoleSelect()
+                            test2 = discord.ui.MentionableSelect()
+                            test3 = discord.ui.UserSelect()
+                            test4 = discord.ui.ChannelSelect()
                             # Create a view and add the button
                             view = View()
                             view.add_item(open_button)
-                            view.add_item(link_button)
+                            # view.add_item(link_button)
+                            # view.add_item(test)
+                            view.add_item(test1)
+                            view.add_item(test2)
+                            view.add_item(test3)
+                            view.add_item(test4)
                             await message.edit(
                                 content=message_record.content, view=view
                             )
@@ -156,7 +195,7 @@ class MainController(http.Controller):
 
         async def on_interaction(self, interaction):
             custom_id = interaction.data.get("custom_id", "")
-            if custom_id == "open_modal":
+            if custom_id == "test_select":
                 modal = MyModal(title="Modal via Button Click")
                 await interaction.response.send_modal(modal)
                 # # Create a button to close the modal
