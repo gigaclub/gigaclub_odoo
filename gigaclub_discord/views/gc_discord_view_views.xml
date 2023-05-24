@@ -9,6 +9,8 @@
                 <sheet>
                     <group>
                         <field name="name" />
+                        <field name="button_ids" />
+                        <field name="select_ids" />
                     </group>
                 </sheet>
             </form>
@@ -21,6 +23,8 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
+                <field name="button_ids" />
+                <field name="select_ids" />
             </tree>
         </field>
     </record>

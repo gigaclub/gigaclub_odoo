@@ -10,6 +10,7 @@
                     <group>
                         <field name="title" />
                         <field name="custom_id" />
+                        <field name="text_input_ids" />
                     </group>
                 </sheet>
             </form>
@@ -23,6 +24,7 @@
             <tree>
                 <field name="title" />
                 <field name="custom_id" />
+                <field name="text_input_ids" />
             </tree>
         </field>
     </record>

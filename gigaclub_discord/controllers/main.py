@@ -3,7 +3,6 @@ import logging
 import threading
 
 import discord  # noqa: W7936
-from discord import Embed
 from discord.ui import View
 
 from odoo import _, api, http, registry
@@ -134,45 +133,9 @@ class MainController(http.Controller):
                             message = await channel.fetch_message(
                                 int(message_record.message_id)
                             )
-                            await message.edit(
-                                content=message_record.content,
-                                embeds=[self.get_embed() for x in range(10)],
-                            )
+                            await message.edit(content=message_record.content)
                         break
                 new_cr.commit()
-
-        def get_embed(self):
-            test = Embed(
-                color=1,
-                title="TEST",
-                description="Test Test Test",
-            )
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            test.add_field(name="TEST", value="teste tetsttst", inline=False)
-            return test
 
         async def on_interaction(self, interaction):
             custom_id = interaction.data.get("custom_id", "")

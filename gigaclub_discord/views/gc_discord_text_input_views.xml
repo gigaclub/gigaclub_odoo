@@ -9,7 +9,7 @@
                 <sheet>
                     <group>
                         <field name="name" />
-                        <field name="view_id" />
+                        <field name="modal_id" />
                         <field name="custom_id" />
                     </group>
                 </sheet>
@@ -23,7 +23,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
-                <field name="view_id" />
+                <field name="modal_id" />
                 <field name="custom_id" />
             </tree>
         </field>

@@ -7,3 +7,6 @@ class GCDiscordModal(models.Model):
 
     title = fields.Char()
     custom_id = fields.Char()
+    text_input_ids = fields.One2many(
+        comodel_name="gc.discord.text.input", inverse_name="modal_id"
+    )

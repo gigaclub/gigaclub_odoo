@@ -7,3 +7,4 @@ class GCDiscordTextInput(models.Model):
     _description = "GigaClub Discord Text Input"
 
     name = fields.Char()
+    modal_id = fields.Many2one(comodel_name="gc.discord.modal", index=True)
