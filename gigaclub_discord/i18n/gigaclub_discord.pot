@@ -85,6 +85,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_button_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__button_ids
 msgid "Button"
 msgstr ""
 
@@ -701,6 +702,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_modal_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input__modal_id
 msgid "Modal"
 msgstr ""
 
@@ -828,6 +830,7 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_select_action
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item__select_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__select_ids
 msgid "Select"
 msgstr ""
 
@@ -950,6 +953,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_text_input_action
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__text_input_ids
 msgid "Text Input"
 msgstr ""
 
