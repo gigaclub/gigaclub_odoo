@@ -13,6 +13,7 @@ class GCDiscordChannel(models.Model):
             ("voice", "Voice"),
             ("stage", "Stage"),
             ("announcement", "Announcement"),
+            ("forum", "Forum"),
         ],
         required=True,
     )

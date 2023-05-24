@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="gc_discord_message_template_tree_view">
+        <field name="name">gc.discord.message.template.tree.view</field>
+        <field name="model">gc.discord.message.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="embed_template_ids" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="gc_discord_message_template_form_view">
+        <field name="name">gc.discord.message.template.form.view</field>
+        <field name="model">gc.discord.message.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="embed_template_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gc_discord_message_template_action">
+        <field name="name">Message Template</field>
+        <field name="res_model">gc.discord.message.template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+    id="gc_menu_discord_message_template"
+    parent="gc_discord_menu_root"
+    action="gigaclub_discord.gc_discord_message_template_action"
+    name="Message Template"
+  />
+
+</odoo>

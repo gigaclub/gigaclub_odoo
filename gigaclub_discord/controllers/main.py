@@ -3,7 +3,8 @@ import logging
 import threading
 
 import discord  # noqa: W7936
-from discord.ui import Button, View
+from discord import Embed
+from discord.ui import View
 
 from odoo import _, api, http, registry
 from odoo.http import request
@@ -133,65 +134,45 @@ class MainController(http.Controller):
                             message = await channel.fetch_message(
                                 int(message_record.message_id)
                             )
-                            # Create a button that opens the modal
-                            open_button = Button(
-                                style=discord.ButtonStyle.primary,
-                                label="Open Modal",
-                                custom_id="open_modal",
-                            )
-                            # link_button = Button(
-                            #     style=discord.ButtonStyle.success,
-                            #     label="Open Link",
-                            #     url="https://gigaclub.net",
-                            # )
-                            # test = discord.ui.Select(
-                            #     custom_id="test_select",
-                            #     options=[
-                            #         SelectOption(label="test", value="test1"),
-                            #         SelectOption(label="test", value="test2"),
-                            #         SelectOption(label="test", value="test3"),
-                            #         SelectOption(label="test", value="test4"),
-                            #         SelectOption(label="test", value="test5"),
-                            #         SelectOption(label="test", value="test6"),
-                            #         SelectOption(label="test", value="test7"),
-                            #         SelectOption(label="test", value="test8"),
-                            #         SelectOption(label="test", value="test9"),
-                            #         SelectOption(label="test", value="test10"),
-                            #         SelectOption(label="test", value="test11"),
-                            #         SelectOption(label="test", value="test12"),
-                            #         SelectOption(label="test", value="test13"),
-                            #         SelectOption(label="test", value="test14"),
-                            #         SelectOption(label="test", value="test15"),
-                            #         SelectOption(label="test", value="test16"),
-                            #         SelectOption(label="test", value="test17"),
-                            #         SelectOption(label="test", value="test18"),
-                            #         SelectOption(label="test", value="test19"),
-                            #         SelectOption(label="test", value="test20"),
-                            #         SelectOption(label="test", value="test21"),
-                            #         SelectOption(label="test", value="test22"),
-                            #         SelectOption(label="test", value="test23"),
-                            #         SelectOption(label="test", value="test24"),
-                            #         SelectOption(label="test", value="test25"),
-                            #     ],
-                            # )
-                            test1 = discord.ui.RoleSelect()
-                            test2 = discord.ui.MentionableSelect()
-                            test3 = discord.ui.UserSelect()
-                            test4 = discord.ui.ChannelSelect()
-                            # Create a view and add the button
-                            view = View()
-                            view.add_item(open_button)
-                            # view.add_item(link_button)
-                            # view.add_item(test)
-                            view.add_item(test1)
-                            view.add_item(test2)
-                            view.add_item(test3)
-                            view.add_item(test4)
                             await message.edit(
-                                content=message_record.content, view=view
+                                content=message_record.content,
+                                embeds=[self.get_embed() for x in range(10)],
                             )
                         break
                 new_cr.commit()
+
+        def get_embed(self):
+            test = Embed(
+                color=1,
+                title="TEST",
+                description="Test Test Test",
+            )
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            test.add_field(name="TEST", value="teste tetsttst", inline=False)
+            return test
 
         async def on_interaction(self, interaction):
             custom_id = interaction.data.get("custom_id", "")
@@ -296,6 +277,10 @@ class MainController(http.Controller):
                             name=channel_record.name,
                             category=category,
                             news=True,
+                        )
+                    elif channel_record.type == "forum":
+                        channel = await guild.create_forum(
+                            name=channel_record.name, category=category
                         )
                     channel_record.discord_channel_uuid = str(channel.id)
                     # overwrite permissions for category

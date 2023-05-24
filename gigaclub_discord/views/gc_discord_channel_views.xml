@@ -27,7 +27,7 @@
                         <field name="category_id" />
                         <field
               name="type"
-              attrs="{'readonly': [('type', '!=', False)]}"
+              attrs="{'readonly': [('discord_channel_uuid', '!=', False)]}"
             />
                         <field name="overwrite_permission_profile_ids" />
                     </group>

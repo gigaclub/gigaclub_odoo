@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_embed_template_view_form" model="ir.ui.view">
+        <field name="name">gc.discord.embed.template.form</field>
+        <field name="model">gc.discord.embed.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="color" />
+                        <field name="description" />
+                        <field name="image" />
+                        <field name="url" />
+                        <field name="video" />
+                        <field name="embed_field_template_ids" />
+                        <field name="message_template_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gc_discord_embed_template_view_tree" model="ir.ui.view">
+        <field name="name">gc.discord.embed.template.tree</field>
+        <field name="model">gc.discord.embed.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="color" />
+                <field name="description" />
+                <field name="image" />
+                <field name="url" />
+                <field name="video" />
+                <field name="embed_field_template_ids" />
+                <field name="message_template_id" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

@@ -9,3 +9,4 @@ class GCDiscordMessage(models.Model):
     message_id = fields.Char()
     channel_id = fields.Many2one(comodel_name="gc.discord.channel")
     sent = fields.Boolean()
+    message_template_id = fields.Many2one(comodel_name="gc.discord.message.template")
