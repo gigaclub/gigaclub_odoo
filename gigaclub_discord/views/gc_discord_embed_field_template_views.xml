@@ -12,6 +12,7 @@
                         <field name="value" />
                         <field name="inline" />
                         <field name="embed_template_id" />
+                        <field name="body_html" />
                     </group>
                 </sheet>
             </form>

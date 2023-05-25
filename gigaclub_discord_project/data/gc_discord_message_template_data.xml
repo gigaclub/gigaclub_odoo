@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_message_template_task" model="gc.discord.message.template">
+        <field name="name">Task Template</field>
+    </record>
+
+</odoo>

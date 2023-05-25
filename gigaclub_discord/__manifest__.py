@@ -32,6 +32,7 @@
         "views/gc_discord_select_item_views.xml",
         "views/gc_discord_select_views.xml",
         "views/gc_discord_text_input_views.xml",
+        "views/gc_discord_thread_views.xml",
         "views/gc_discord_view_views.xml",
         "views/gc_user_views.xml",
         "views/res_config_settings_views.xml",

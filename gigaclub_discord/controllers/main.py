@@ -3,7 +3,7 @@ import logging
 import threading
 
 import discord  # noqa: W7936
-from discord.ui import View
+from discord.ui import Button, View
 
 from odoo import _, api, http, registry
 from odoo.http import request
@@ -133,15 +133,29 @@ class MainController(http.Controller):
                             message = await channel.fetch_message(
                                 int(message_record.message_id)
                             )
-                            await message.edit(content=message_record.content)
+                            open_button = Button(
+                                style=discord.ButtonStyle.primary,
+                                label="Open Thread",
+                                custom_id="open_modal",
+                            )
+                            view = View()
+                            view.add_item(open_button)
+                            await message.edit(
+                                content=message_record.content, view=view
+                            )
                         break
                 new_cr.commit()
 
         async def on_interaction(self, interaction):
             custom_id = interaction.data.get("custom_id", "")
-            if custom_id == "test_select":
-                modal = MyModal(title="Modal via Button Click")
-                await interaction.response.send_modal(modal)
+            if custom_id == "open_modal":
+                thread = await interaction.message.channel.create_thread(
+                    name="TEST",
+                    invitable=False,
+                )
+                await thread.add_user(interaction.user)
+                # modal = MyModal(title="Modal via Button Click")
+                # await interaction.response.send_modal(modal)
                 # # Create a button to close the modal
                 # close_button = Button(
                 #     style=discord.ButtonStyle.danger,

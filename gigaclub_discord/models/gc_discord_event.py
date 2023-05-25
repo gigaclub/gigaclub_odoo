@@ -7,7 +7,7 @@ class GCDiscordEvent(models.Model):
 
     name = fields.Char(required=True)
     sequence = fields.Integer()
-    action_id = fields.Many2one(comodel_name="gc.discord.action")
+    action_id = fields.Many2one(comodel_name="gc.discord.action", index=True)
     event_type = fields.Selection(
         selection=[
             ("guild_join", "On Guild Join"),
@@ -24,6 +24,7 @@ class GCDiscordEvent(models.Model):
     server_action = fields.Boolean(compute="_compute_action", store=True)
     message_content = fields.Text()
     role_ids = fields.Many2many(comodel_name="gc.discord.role")
+    message_template_id = fields.Many2one(comodel_name="gc.discord.message.template")
 
     @api.depends("event_type")
     def _compute_action(self):

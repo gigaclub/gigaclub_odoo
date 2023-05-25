@@ -12,13 +12,13 @@ class ProjectTask(models.Model):
         if self.discord_message_id:
             self.discord_message_id.content = (
                 f"New Task {self.name} was created with "
-                f"description: {html2plaintext(self.description)}"
+                f"description: {html2plaintext(self.description or '')}"
             )
             return
         self.discord_message_id = self.env["gc.discord.message"].create(
             {
                 "content": f"New Task {self.name} was created "
-                f"with description: {html2plaintext(self.description)}",
+                f"with description: {html2plaintext(self.description or '')}",
                 "channel_id": self.env.ref(
                     "gigaclub_discord_project.gc_discord_channel_tasks"
                 ).id,

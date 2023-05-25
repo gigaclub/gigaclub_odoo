@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_button_create_world" model="gc.discord.button">
+        <field name="name">Create World</field>
+        <field name="view_id" ref="gc_discord_view_world_task_buttons" />
+    </record>
+
+</odoo>

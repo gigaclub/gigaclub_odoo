@@ -5,8 +5,10 @@ class GCDiscordEmbedTemplate(models.Model):
     _name = "gc.discord.embed.template"
     _description = "GigaClub Discord Embed Template"
 
+    name = fields.Char()
     color = fields.Char()
     description = fields.Char()
+    content_template = fields.Html(render_engine="qweb", translate=True)
     image = fields.Char()
     url = fields.Char()
     video = fields.Char()

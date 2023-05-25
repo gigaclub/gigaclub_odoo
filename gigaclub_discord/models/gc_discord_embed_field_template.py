@@ -11,3 +11,4 @@ class GCDiscordEmbedFieldTemplate(models.Model):
     embed_template_id = fields.Many2one(
         comodel_name="gc.discord.embed.template", index=True
     )
+    content_template = fields.Html(render_engine="qweb", translate=True)

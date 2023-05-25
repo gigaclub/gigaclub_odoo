@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_embed_template_task" model="gc.discord.embed.template">
+        <field name="name">Task Embed</field>
+        <field name="message_template_id" ref="gc_discord_message_template_task" />
+    </record>
+
+</odoo>

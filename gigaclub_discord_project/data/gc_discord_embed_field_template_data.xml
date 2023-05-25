@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record
+    id="gc_discord_embed_field_template_task"
+    model="gc.discord.embed.field.template"
+  >
+        <field name="name">Task</field>
+        <field name="embed_template_id" ref="gc_discord_embed_template_task" />
+    </record>
+
+</odoo>

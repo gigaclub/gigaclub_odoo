@@ -18,6 +18,7 @@ from . import (
     gc_discord_select,
     gc_discord_select_item,
     gc_discord_text_input,
+    gc_discord_thread,
     gc_discord_view,
     gc_permission_group,
     gc_user,
