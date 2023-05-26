@@ -145,6 +145,13 @@ msgid "Content"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_field_template__content_template
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__content_template
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message_template__content_template
+msgid "Content Template"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__create_instant_invite
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__create_instant_invite
 msgid "Create Instant Invite"
@@ -181,6 +188,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input__create_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread__create_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__create_uid
 msgid "Created by"
 msgstr ""
@@ -204,6 +212,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select__create_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item__create_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input__create_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread__create_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__create_date
 msgid "Created on"
 msgstr ""
@@ -297,6 +306,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select__display_name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item__display_name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input__display_name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread__display_name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__display_name
 msgid "Display Name"
 msgstr ""
@@ -471,6 +481,11 @@ msgid "GigaClub Discord Text Input"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model,name:gigaclub_discord.model_gc_discord_thread
+msgid "GigaClub Discord Thread"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model,name:gigaclub_discord.model_gc_discord_view
 msgid "GigaClub Discord View"
 msgstr ""
@@ -509,6 +524,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select__id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item__id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input__id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread__id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__id
 msgid "ID"
 msgstr ""
@@ -553,6 +569,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input____last_update
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -576,6 +593,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select__write_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item__write_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input__write_uid
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread__write_uid
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -599,6 +617,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select__write_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item__write_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input__write_date
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread__write_date
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -695,6 +714,7 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_message_template_action
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__message_template_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__message_template_id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__message_template_id
 #: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_message_template
 msgid "Message Template"
@@ -735,6 +755,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_category__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_channel__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_field_template__name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_event__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message_template__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__name
@@ -742,6 +763,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_select_item__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_text_input__name
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread__name
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_view__name
 msgid "Name"
 msgstr ""
@@ -963,6 +985,16 @@ msgid "Text Inputs"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.actions.act_window,name:gigaclub_discord.gc_discord_thread_action
+msgid "Thread"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.ui.menu,name:gigaclub_discord.gc_menu_discord_thread
+msgid "Threads"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_modal__title
 msgid "Title"
 msgstr ""
@@ -1022,6 +1054,7 @@ msgstr ""
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker__user_id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_role__user_ids
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_thread__user_ids
 #: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_action__action_type__user
 msgid "User"
 msgstr ""
