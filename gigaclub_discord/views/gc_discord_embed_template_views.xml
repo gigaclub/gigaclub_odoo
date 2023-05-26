@@ -15,7 +15,7 @@
                         <field name="video" />
                         <field name="embed_field_template_ids" />
                         <field name="message_template_id" />
-                        <field name="body_html" />
+                        <field name="content_template" />
                     </group>
                 </sheet>
             </form>
