@@ -6,6 +6,7 @@ from . import (
     gc_discord_category,
     gc_discord_channel,
     gc_discord_embed_field_template,
+    gc_discord_embed_footer_template,
     gc_discord_embed_template,
     gc_discord_event,
     gc_discord_message,

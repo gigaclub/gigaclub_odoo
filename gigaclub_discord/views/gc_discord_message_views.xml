@@ -21,7 +21,6 @@
                 <sheet>
                     <group>
                         <field name="message_id" />
-                        <field name="content" />
                         <field name="channel_id" />
                         <field name="sent" />
                     </group>

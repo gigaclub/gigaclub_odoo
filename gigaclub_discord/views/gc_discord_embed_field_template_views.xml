@@ -12,7 +12,6 @@
                         <field name="value" />
                         <field name="inline" />
                         <field name="embed_template_id" />
-                        <field name="content_template" />
                     </group>
                 </sheet>
             </form>

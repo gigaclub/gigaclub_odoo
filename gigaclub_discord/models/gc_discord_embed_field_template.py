@@ -7,8 +7,7 @@ class GCDiscordEmbedFieldTemplate(models.Model):
 
     name = fields.Char()
     value = fields.Char()
-    inline = fields.Boolean()
+    inline = fields.Boolean(default=True)
     embed_template_id = fields.Many2one(
         comodel_name="gc.discord.embed.template", index=True
     )
-    content_template = fields.Html(render_engine="qweb", translate=True)

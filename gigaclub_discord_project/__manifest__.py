@@ -10,6 +10,7 @@
         "data/base_automation_data.xml",
         "data/gc_discord_category_data.xml",
         "data/gc_discord_channel_data.xml",
+        "data/gc_discord_embed_footer_template_data.xml",
         "data/gc_discord_message_template_data.xml",
         "data/gc_discord_embed_template_data.xml",
         "data/gc_discord_embed_field_template_data.xml",

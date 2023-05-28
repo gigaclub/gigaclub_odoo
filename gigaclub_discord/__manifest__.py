@@ -20,6 +20,7 @@
         "views/gc_discord_category_views.xml",
         "views/gc_discord_channel_views.xml",
         "views/gc_discord_embed_field_template_views.xml",
+        "views/gc_discord_embed_footer_template_views.xml",
         "views/gc_discord_embed_template_views.xml",
         "views/gc_discord_event_views.xml",
         "views/gc_discord_event_worker_views.xml",

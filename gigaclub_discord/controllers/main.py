@@ -3,7 +3,8 @@ import logging
 import threading
 
 import discord  # noqa: W7936
-from discord.ui import Button, View
+from discord import Embed
+from discord.ui import View
 
 from odoo import _, api, http, registry
 from odoo.http import request
@@ -119,32 +120,53 @@ class MainController(http.Controller):
                                 message_record.channel_id.discord_channel_uuid
                             )
                             channel = guild.get_channel(channel_id)
-                            sent_message = await channel.send(message_record.content)
+                            embeds, view = self._generate_message(
+                                message_record.content
+                            )
+                            sent_message = await channel.send(embeds=embeds, view=view)
                             message_record.message_id = sent_message.id
                             message_record.sent = True
-                        messages_to_edit = self.env["gc.discord.message"].search(
-                            [("sent", "=", True)]
-                        )
-                        for message_record in messages_to_edit:
-                            channel_id = int(
-                                message_record.channel_id.discord_channel_uuid
-                            )
-                            channel = guild.get_channel(channel_id)
-                            message = await channel.fetch_message(
-                                int(message_record.message_id)
-                            )
-                            open_button = Button(
-                                style=discord.ButtonStyle.primary,
-                                label="Open Thread",
-                                custom_id="open_modal",
-                            )
-                            view = View()
-                            view.add_item(open_button)
-                            await message.edit(
-                                content=message_record.content, view=view
-                            )
+                        # messages_to_edit = self.env["gc.discord.message"].search(
+                        #     [("sent", "=", True)]
+                        # )
+                        # for message_record in messages_to_edit:
+                        #     channel_id = int(
+                        #         message_record.channel_id.discord_channel_uuid
+                        #     )
+                        #     channel = guild.get_channel(channel_id)
+                        #     message = await channel.fetch_message(
+                        #         int(message_record.message_id)
+                        #     )
+                        #     open_button = Button(
+                        #         style=discord.ButtonStyle.primary,
+                        #         label="Open Thread",
+                        #         custom_id="open_modal",
+                        #     )
+                        #     view = View()
+                        #     view.add_item(open_button)
+                        #     await message.edit(
+                        #         content=message_record.content, view=view
+                        #     )
                         break
                 new_cr.commit()
+
+        def _generate_message(self, message_content):
+            view = View()
+
+            def _create_embed(embed_data):
+                embed = Embed(
+                    title=embed_data.get("title", ""),
+                    description=embed_data.get("description", ""),
+                    type=embed_data.get("type", "rich"),
+                )
+                footer_data = embed_data.get("footer", {})
+                embed.set_footer(text=footer_data.get("text", ""))
+                return embed
+
+            embeds = [
+                _create_embed(embed) for embed in message_content.get("embeds", [])
+            ]
+            return embeds, view
 
         async def on_interaction(self, interaction):
             custom_id = interaction.data.get("custom_id", "")

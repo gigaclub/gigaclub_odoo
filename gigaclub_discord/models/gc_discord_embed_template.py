@@ -6,9 +6,9 @@ class GCDiscordEmbedTemplate(models.Model):
     _description = "GigaClub Discord Embed Template"
 
     name = fields.Char()
+    title = fields.Char()
     color = fields.Char()
-    description = fields.Char()
-    content_template = fields.Html(render_engine="qweb", translate=True)
+    description = fields.Text()
     image = fields.Char()
     url = fields.Char()
     video = fields.Char()
@@ -18,3 +18,15 @@ class GCDiscordEmbedTemplate(models.Model):
     message_template_id = fields.Many2one(
         comodel_name="gc.discord.message.template", index=True
     )
+    type = fields.Selection(
+        selection=[
+            ("rich", "Rich"),
+            ("image", "Image"),
+            ("video", "Video"),
+            ("gifv", "Gifv"),
+            ("article", "Article"),
+            ("link", "Link"),
+        ],
+        default="rich",
+    )
+    embed_footer_id = fields.Many2one(comodel_name="gc.discord.embed.footer.template")
