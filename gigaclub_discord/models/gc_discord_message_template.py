@@ -10,6 +10,7 @@ class GCDiscordMessageTemplate(models.Model):
         comodel_name="gc.discord.embed.template", inverse_name="message_template_id"
     )
     view_id = fields.Many2one(comodel_name="gc.discord.view")
+    model_id = fields.Many2one(comodel_name="ir.model")
 
     def create_message(self, channel):
         self.ensure_one()
