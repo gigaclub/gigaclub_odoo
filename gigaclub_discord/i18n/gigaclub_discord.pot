@@ -763,6 +763,11 @@ msgid "Modals"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message_template__model_id
+msgid "Model"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile__moderate_members
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__moderate_members
 msgid "Moderate Members"
