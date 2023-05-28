@@ -3,9 +3,9 @@
 
     <record id="gc_discord_embed_template_task" model="gc.discord.embed.template">
         <field name="name">Task Embed</field>
-        <field name="title">Task Embed title...</field>
+        <field name="title"># Task Embed title...</field>
         <field name="message_template_id" ref="gc_discord_message_template_task" />
-        <field name="description">Task Embed description...</field>
+        <field name="description"># Task Embed description...</field>
         <field name="embed_footer_id" ref="gc_discord_embed_footer_template_task" />
     </record>
 

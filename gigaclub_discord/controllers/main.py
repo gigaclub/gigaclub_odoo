@@ -161,6 +161,13 @@ class MainController(http.Controller):
                 )
                 footer_data = embed_data.get("footer", {})
                 embed.set_footer(text=footer_data.get("text", ""))
+                fields = embed_data.get("fields", [])
+                for field in fields:
+                    embed.add_field(
+                        name=field.get("name", ""),
+                        value=field.get("value", ""),
+                        inline=field.get("inline", True),
+                    )
                 return embed
 
             embeds = [
