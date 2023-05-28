@@ -574,6 +574,13 @@ msgid "Kick Members"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_field_template__lang
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_footer_template__lang
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__lang
+msgid "Language"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_action_worker____last_update
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_button____last_update
@@ -763,6 +770,8 @@ msgid "Modals"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_field_template__model_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__model_id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message_template__model_id
 msgid "Model"
 msgstr ""
@@ -816,6 +825,17 @@ msgid "On Guild Join"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields,help:gigaclub_discord.field_gc_discord_embed_field_template__lang
+#: model:ir.model.fields,help:gigaclub_discord.field_gc_discord_embed_footer_template__lang
+#: model:ir.model.fields,help:gigaclub_discord.field_gc_discord_embed_template__lang
+msgid ""
+"Optional translation language (ISO code) to select when sending out an "
+"email. If not set, the english version will be used. This should usually be "
+"a placeholder expression that provides the appropriate language, e.g. {{ "
+"object.partner_id.lang }}."
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_permission_profile_overwrite__overwrite_entity_id
 msgid "Overwrite Entity"
 msgstr ""
@@ -863,6 +883,13 @@ msgstr ""
 #. module: gigaclub_discord
 #: model_terms:ir.ui.view,arch_db:gigaclub_discord.res_config_settings_view_form_inherit_gigaclub_discord
 msgid "Reload Bot"
+msgstr ""
+
+#. module: gigaclub_discord
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_field_template__render_model
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_footer_template__render_model
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__render_model
+msgid "Rendering Model"
 msgstr ""
 
 #. module: gigaclub_discord
