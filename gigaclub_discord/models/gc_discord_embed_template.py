@@ -7,9 +7,11 @@ class GCDiscordEmbedTemplate(models.Model):
     _description = "GigaClub Discord Embed Template"
 
     name = fields.Char()
-    title = fields.Html(render_engine="qweb")
+    title = fields.Html(render_engine="qweb", sanitize=False)
     color = fields.Char()
-    description = fields.Html(render_engine="qweb")
+    description = fields.Html(
+        render_engine="qweb", sanitize=False
+    )  # Discords Markdown light supported
     image = fields.Char()
     url = fields.Char()
     video = fields.Char()
@@ -32,3 +34,7 @@ class GCDiscordEmbedTemplate(models.Model):
         default="rich",
     )
     embed_footer_id = fields.Many2one(comodel_name="gc.discord.embed.footer.template")
+
+    def _compute_render_model(self):
+        for rec in self:
+            rec.render_model = rec.model_id.model

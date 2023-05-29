@@ -1,4 +1,5 @@
 from odoo import fields, models
+from odoo.tools import html2plaintext
 
 
 class GCDiscordMessageTemplate(models.Model):
@@ -12,28 +13,40 @@ class GCDiscordMessageTemplate(models.Model):
     view_id = fields.Many2one(comodel_name="gc.discord.view")
     model_id = fields.Many2one(comodel_name="ir.model")
 
-    def create_message(self, channel):
+    def create_message(self, channel, res_id):
         self.ensure_one()
         content = {
             "embeds": [
                 {
-                    "title": embed.title,
+                    "title": html2plaintext(
+                        embed._render_field("title", [res_id]).get(res_id, "")
+                    ),
                     "color": embed.color,
-                    "description": embed.description,
+                    "description": html2plaintext(
+                        embed._render_field("description", [res_id]).get(res_id, "")
+                    ),
                     "image": embed.image,
                     "url": embed.url,
                     "video": embed.video,
                     "type": embed.type,
                     "fields": [
                         {
-                            "name": field.name,
-                            "value": field.value,
+                            "name": html2plaintext(
+                                field._render_field("name", [res_id]).get(res_id, "")
+                            ),
+                            "value": html2plaintext(
+                                field._render_field("value", [res_id]).get(res_id, "")
+                            ),
                             "inline": field.inline,
                         }
                         for field in embed.embed_field_template_ids
                     ],
                     "footer": {
-                        "text": embed.embed_footer_id.text,
+                        "text": html2plaintext(
+                            embed.embed_footer_id._render_field("text", [res_id]).get(
+                                res_id, ""
+                            )
+                        ),
                         "icon_url": embed.embed_footer_id.icon_url,
                     },
                 }

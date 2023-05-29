@@ -27,7 +27,7 @@ class ProjectTask(models.Model):
             "gigaclub_discord_project.gc_discord_message_template_task"
         )
         self.discord_message_id = message_template.create_message(
-            self.env.ref("gigaclub_discord_project.gc_discord_channel_tasks")
+            self.env.ref("gigaclub_discord_project.gc_discord_channel_tasks"), self.id
         )
 
     def remove_discord_task_message(self):

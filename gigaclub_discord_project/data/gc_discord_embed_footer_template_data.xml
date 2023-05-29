@@ -6,7 +6,8 @@
     model="gc.discord.embed.footer.template"
   >
         <field name="name">Task Footer</field>
-        <field name="text"># Task Footer...</field>
+        <field name="text">Task Footer...</field>
+        <field name="model_id" ref="model_project_task" />
     </record>
 
 </odoo>
