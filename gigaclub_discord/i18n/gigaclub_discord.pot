@@ -771,6 +771,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_field_template__model_id
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_footer_template__model_id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__model_id
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message_template__model_id
 msgid "Model"
