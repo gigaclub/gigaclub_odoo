@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="project_type_builder" model="project.type">
+        <field name="name">Builder</field>
+        <field name="project_ok" eval="False" />
+        <field name="task_ok" eval="True" />
+    </record>
+
+</odoo>

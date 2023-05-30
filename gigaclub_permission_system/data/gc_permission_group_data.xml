@@ -6,4 +6,9 @@
         <field name="global_group" eval="True" />
     </record>
 
+    <record id="gc_permission_group_team" model="gc.permission.group">
+        <field name="name">Team Member</field>
+        <field name="global_group" eval="True" />
+    </record>
+
 </odoo>

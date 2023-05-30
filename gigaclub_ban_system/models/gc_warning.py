@@ -14,6 +14,11 @@ class GCWarning(models.Model):
     points = fields.Integer(related="warning_type_id.points", readonly=True)
     active = fields.Boolean(default=True)
 
+    @api.model
+    def create_warning(self, player_uuid, warning_type_id):
+        user = self.env["gc.user"].search([("mc_uuid", "=", player_uuid)])
+        return self.create([{"user_id": user.id, "warning_type_id": warning_type_id}])
+
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)

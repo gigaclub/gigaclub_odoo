@@ -3,11 +3,30 @@ import logging
 import threading
 
 import discord  # noqa: W7936
+from discord import Embed
+from discord.ui import Button, View
 
 from odoo import _, api, http, registry
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
+
+
+class MyModal(discord.ui.Modal):
+    name = discord.ui.TextInput(label="Name")
+    answer = discord.ui.TextInput(label="Answer", style=discord.TextStyle.paragraph)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        # embed = discord.Embed(title="Modal Results")
+        # embed.add_field(name="Name", value=self.name)
+        # embed.add_field(name="Answer", value=self.answer)
+        # await interaction.channel.send(embeds=[embed])
+        # await interaction
+        view = View()
+        view.add_item()
+        await interaction.channel.send(
+            f"Thanks for your response, {self.name}!", view=view
+        )
 
 
 class MainController(http.Controller):
@@ -19,7 +38,8 @@ class MainController(http.Controller):
             discord.Client.__init__(self, intents=intents)
             self.env = env
 
-        async def on_ready(self):
+        async def on_ready(self):  # noqa: C901
+            # TODO fix complexity...
             with registry(self.env.cr.dbname).cursor() as new_cr:
                 self.env = api.Environment(new_cr, self.env.uid, self.env.context)
                 company = self.env.user.company_id or self.env["res.company"].browse(1)
@@ -91,8 +111,105 @@ class MainController(http.Controller):
                                 _logger.exception(
                                     f"Error occured on remove the channel {channel_to_remove}:"
                                 )
+                        # send messages logic
+                        messages_to_send_records = self.env[
+                            "gc.discord.message"
+                        ].search([("sent", "=", False)])
+                        for message_record in messages_to_send_records:
+                            channel_id = int(
+                                message_record.channel_id.discord_channel_uuid
+                            )
+                            channel = guild.get_channel(channel_id)
+                            embeds, view = self._generate_message(
+                                message_record.content
+                            )
+                            sent_message = await channel.send(embeds=embeds, view=view)
+                            message_record.message_id = sent_message.id
+                            message_record.sent = True
+                        # messages_to_edit = self.env["gc.discord.message"].search(
+                        #     [("sent", "=", True)]
+                        # )
+                        # for message_record in messages_to_edit:
+                        #     channel_id = int(
+                        #         message_record.channel_id.discord_channel_uuid
+                        #     )
+                        #     channel = guild.get_channel(channel_id)
+                        #     message = await channel.fetch_message(
+                        #         int(message_record.message_id)
+                        #     )
+                        #     open_button = Button(
+                        #         style=discord.ButtonStyle.primary,
+                        #         label="Open Thread",
+                        #         custom_id="open_modal",
+                        #     )
+                        #     view = View()
+                        #     view.add_item(open_button)
+                        #     await message.edit(
+                        #         content=message_record.content, view=view
+                        #     )
                         break
                 new_cr.commit()
+
+        def _generate_message(self, message_content):
+            view = View()
+            view_content = message_content.get("view", {})
+            buttons = view_content.get("buttons", [])
+
+            for button_content in buttons:
+                button = Button(
+                    label=button_content.get("name", ""),
+                    custom_id=button_content.get("custom_id", ""),
+                )
+                view.add_item(button)
+
+            def _create_embed(embed_data):
+                embed = Embed(
+                    title=embed_data.get("title", ""),
+                    description=embed_data.get("description", ""),
+                    type=embed_data.get("type", "rich"),
+                )
+                footer_data = embed_data.get("footer", {})
+                embed.set_footer(text=footer_data.get("text", ""))
+                fields = embed_data.get("fields", [])
+                for field in fields:
+                    embed.add_field(
+                        name=field.get("name", ""),
+                        value=field.get("value", ""),
+                        inline=field.get("inline", True),
+                    )
+                return embed
+
+            embeds = [
+                _create_embed(embed) for embed in message_content.get("embeds", [])
+            ]
+            return embeds, view
+
+        async def on_interaction(self, interaction):
+            custom_id = interaction.data.get("custom_id", "")
+            if custom_id == "open_modal":
+                thread = await interaction.message.channel.create_thread(
+                    name="TEST",
+                    invitable=False,
+                )
+                await thread.add_user(interaction.user)
+                # modal = MyModal(title="Modal via Button Click")
+                # await interaction.response.send_modal(modal)
+                # # Create a button to close the modal
+                # close_button = Button(
+                #     style=discord.ButtonStyle.danger,
+                #     label="Close",
+                #     custom_id="close_modal",
+                # )
+                #
+                # # Create a view and add the close button
+                # view = View()
+                # view.add_item(close_button)
+                #
+                # # Send a message with the modal view
+                # await interaction.message.edit(content="Modal content", view=view)
+
+            elif custom_id == "close_modal":
+                await interaction.message.delete()
 
         async def on_member_join(self, member):
             if not self.env["gc.user"].search_count(
@@ -174,7 +291,11 @@ class MainController(http.Controller):
                         channel = await guild.create_text_channel(
                             name=channel_record.name,
                             category=category,
-                            type=discord.ChannelType.news,
+                            news=True,
+                        )
+                    elif channel_record.type == "forum":
+                        channel = await guild.create_forum(
+                            name=channel_record.name, category=category
                         )
                     channel_record.discord_channel_uuid = str(channel.id)
                     # overwrite permissions for category

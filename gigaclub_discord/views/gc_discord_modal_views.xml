@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_modal_view_form" model="ir.ui.view">
+        <field name="name">gc.discord.modal.form</field>
+        <field name="model">gc.discord.modal</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="title" />
+                        <field name="custom_id" />
+                        <field name="text_input_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gc_discord_modal_view_tree" model="ir.ui.view">
+        <field name="name">gc.discord.modal.tree</field>
+        <field name="model">gc.discord.modal</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title" />
+                <field name="custom_id" />
+                <field name="text_input_ids" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gc_discord_modal_action">
+        <field name="name">Modal</field>
+        <field name="res_model">gc.discord.modal</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+    id="gc_menu_discord_modal"
+    parent="gc_discord_menu_root"
+    action="gigaclub_discord.gc_discord_modal_action"
+    name="Modals"
+  />
+
+</odoo>

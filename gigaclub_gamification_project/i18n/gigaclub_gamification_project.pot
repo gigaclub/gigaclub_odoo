@@ -1,0 +1,24 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gigaclub_gamification_project
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gigaclub_gamification_project
+#: model:ir.model.fields,field_description:gigaclub_gamification_project.field_project_task__reward_id
+msgid "Reward"
+msgstr ""
+
+#. module: gigaclub_gamification_project
+#: model:ir.model,name:gigaclub_gamification_project.model_project_task
+msgid "Task"
+msgstr ""

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_advancement_view_form" model="ir.ui.view">
+        <field name="name">gc.advancement.form</field>
+        <field name="model">gc.advancement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="description" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gc_advancement_view_tree" model="ir.ui.view">
+        <field name="name">gc.advancement.tree</field>
+        <field name="model">gc.advancement</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gc_advancement_action">
+        <field name="name">Advancement</field>
+        <field name="res_model">gc.advancement</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+    id="gc_gamification_menu_advancement"
+    parent="gc_gamification_menu_root"
+    action="gc_advancement_action"
+    name="Advancement"
+  />
+
+</odoo>

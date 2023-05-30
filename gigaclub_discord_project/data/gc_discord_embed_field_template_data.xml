@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record
+    id="gc_discord_embed_field_template_task"
+    model="gc.discord.embed.field.template"
+  >
+        <field name="name">Task</field>
+        <field name="embed_template_id" ref="gc_discord_embed_template_task" />
+        <field name="value" type="html">
+            <div>
+                Task Name: <t t-out="object.name or ''">Test</t>
+                Description: <t t-out="object.description or ''">Test</t>
+            </div>
+        </field>
+    </record>
+
+</odoo>

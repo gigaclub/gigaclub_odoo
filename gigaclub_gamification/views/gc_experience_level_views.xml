@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_experience_level_view_form" model="ir.ui.view">
+        <field name="name">gc.experience.level.form</field>
+        <field name="model">gc.experience.level</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="level" />
+                        <field name="experience_id" />
+                        <field name="experience_amount" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gc_experience_level_view_tree" model="ir.ui.view">
+        <field name="name">gc.experience.level.tree</field>
+        <field name="model">gc.experience.level</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="level" />
+                <field name="experience_id" />
+                <field name="experience_amount" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

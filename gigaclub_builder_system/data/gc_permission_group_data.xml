@@ -4,7 +4,10 @@
     <record id="gc_permission_group_builder" model="gc.permission.group">
         <field name="name">Builder</field>
         <field name="global_group" eval="True" />
-        <field name="parent_group_id" ref="gigaclub_team.gc_permission_group_team" />
+        <field
+      name="parent_group_id"
+      ref="gigaclub_permission_system.gc_permission_group_team"
+    />
     </record>
 
 </odoo>

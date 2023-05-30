@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_experience_builder" model="gc.experience">
+        <field name="name">Builder</field>
+    </record>
+
+</odoo>

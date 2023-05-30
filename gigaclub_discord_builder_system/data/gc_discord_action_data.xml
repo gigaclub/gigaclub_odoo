@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_action_create_world_from_task" model="gc.discord.action">
+        <field name="name">Create World from Task</field>
+    </record>
+
+</odoo>

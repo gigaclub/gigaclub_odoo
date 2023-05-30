@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_discord_select_view_form" model="ir.ui.view">
+        <field name="name">gc.discord.select.form</field>
+        <field name="model">gc.discord.select</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="view_id" />
+                        <field name="select_item_ids" />
+                        <field name="custom_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gc_discord_select_view_tree" model="ir.ui.view">
+        <field name="name">gc.discord.select.tree</field>
+        <field name="model">gc.discord.select</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="view_id" />
+                <field name="select_item_ids" />
+                <field name="custom_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gc_discord_select_action">
+        <field name="name">Select</field>
+        <field name="res_model">gc.discord.select</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+    id="gc_menu_discord_select"
+    parent="gc_discord_menu_root"
+    action="gigaclub_discord.gc_discord_select_action"
+    name="Selects"
+  />
+
+</odoo>

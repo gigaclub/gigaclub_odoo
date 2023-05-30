@@ -9,7 +9,7 @@ class GCDiscordEventWorker(models.Model):
     _description = "GigaClub Discord Event Worker"
 
     action_worker_id = fields.Many2one(comodel_name="gc.discord.action.worker")
-    event_id = fields.Many2one(comodel_name="gc.discord.event")
+    event_id = fields.Many2one(comodel_name="gc.discord.event", index=True)
     current = fields.Boolean(inverse="_inverse_current")
     done = fields.Boolean()
 

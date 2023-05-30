@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="gc_permission_group_translator" model="gc.permission.group">
+        <field name="name">Translator</field>
+        <field name="global_group" eval="True" />
+        <field
+      name="parent_group_id"
+      ref="gigaclub_permission_system.gc_permission_group_team"
+    />
+    </record>
+
+</odoo>

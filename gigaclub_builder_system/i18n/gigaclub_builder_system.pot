@@ -24,6 +24,11 @@ msgid "Build Width"
 msgstr ""
 
 #. module: gigaclub_builder_system
+#: model:project.type,name:gigaclub_builder_system.project_type_builder
+msgid "Builder"
+msgstr ""
+
+#. module: gigaclub_builder_system
 #: model:ir.ui.menu,name:gigaclub_builder_system.gc_builder_system_menu_root
 msgid "Builder System"
 msgstr ""

@@ -6,8 +6,9 @@
     "author": "GigaClub",
     "website": "https://github.com/GigaClub/gigaclub_odoo",
     "license": "AGPL-3",
-    "depends": ["gigaclub_base"],
+    "depends": ["gigaclub_permission_system"],
     "data": [
+        "data/gc_permission_group_data.xml",
         "data/res_lang_data.xml",
         "security/ir.model.access.csv",
         "views/gc_translation_views.xml",

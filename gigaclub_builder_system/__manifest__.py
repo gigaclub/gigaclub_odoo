@@ -15,6 +15,7 @@
         "data/gc_permission_profile_data.xml",
         "data/gc_permission_profile_entry_data.xml",
         "data/gc_permission_profile_template_data.xml",
+        "data/project_type_data.xml",
         "security/ir.model.access.csv",
         "views/project_task_views.xml",
         "views/gc_builder_world_views.xml",

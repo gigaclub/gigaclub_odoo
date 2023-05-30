@@ -28,6 +28,7 @@
         <field name="use_voice_activation" eval="True" />
         <field name="change_nickname" eval="True" />
         <field name="request_to_speak" eval="True" />
+        <field name="view_channel" eval="True" />
     </record>
 
 </odoo>

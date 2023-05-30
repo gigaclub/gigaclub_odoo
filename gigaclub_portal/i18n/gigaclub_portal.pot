@@ -24,6 +24,11 @@ msgid "<span>&amp;times;</span>"
 msgstr ""
 
 #. module: gigaclub_portal
+#: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_layout_inherit_gigaclub_portal
+msgid "<strong>Coins: </strong>"
+msgstr ""
+
+#. module: gigaclub_portal
 #: model_terms:ir.ui.view,arch_db:gigaclub_portal.portal_my_details_inherit_gigaclub_portal
 msgid "Add Account"
 msgstr ""
