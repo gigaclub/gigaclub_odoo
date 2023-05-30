@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<odoo>
-
-    <record id="gc_discord_action_world_create" model="gc.discord.action">
-        <field name="name">World Create</field>
-    </record>
-
-</odoo>
