@@ -987,6 +987,11 @@ msgid "Server Action"
 msgstr ""
 
 #. module: gigaclub_discord
+#: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__server_message_creation
+msgid "Server Message Creation"
+msgstr ""
+
+#. module: gigaclub_discord
 #: model:ir.model.fields.selection,name:gigaclub_discord.selection__gc_discord_event__event_type__set_role
 msgid "Set Role"
 msgstr ""
