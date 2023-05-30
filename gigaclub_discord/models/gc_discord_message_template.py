@@ -52,26 +52,22 @@ class GCDiscordMessageTemplate(models.Model):
                 }
                 for embed in self.embed_template_ids
             ],
-            "view": [
-                {
-                    "buttons": [
-                        {"name": button.name, "custom_id": button.custom_id}
-                        for button in self.view_id.button_ids
-                    ]
-                },
-                {
-                    "selects": [
-                        {
-                            "name": select.name,
-                            "custom_id": select.custom_id,
-                            "select_items": [
-                                {"name": item.name} for item in select.select_item_ids
-                            ],
-                        }
-                        for select in self.view_id.select_ids
-                    ]
-                },
-            ],
+            "view": {
+                "buttons": [
+                    {"name": button.name, "custom_id": button.custom_id}
+                    for button in self.view_id.button_ids
+                ],
+                "selects": [
+                    {
+                        "name": select.name,
+                        "custom_id": select.custom_id,
+                        "select_items": [
+                            {"name": item.name} for item in select.select_item_ids
+                        ],
+                    }
+                    for select in self.view_id.select_ids
+                ],
+            },
         }
         return self.env["gc.discord.message"].create(
             [

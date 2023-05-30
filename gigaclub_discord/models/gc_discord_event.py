@@ -15,6 +15,7 @@ class GCDiscordEvent(models.Model):
             ("get_private_message", "Get Private Message"),
             ("set_role", "Set Role"),
             ("interaction", "Interaction"),
+            ("server_message_creation", "Server Message Creation"),
         ]
     )
     next_event_id = fields.Many2one(
@@ -29,8 +30,16 @@ class GCDiscordEvent(models.Model):
     @api.depends("event_type")
     def _compute_action(self):
         for rec in self:
-            rec.user_action = rec.event_type in ["guild_join", "get_private_message"]
-            rec.server_action = rec.event_type in ["send_private_message", "set_role"]
+            rec.user_action = rec.event_type in [
+                "guild_join",
+                "get_private_message",
+                "interaction",
+            ]
+            rec.server_action = rec.event_type in [
+                "send_private_message",
+                "set_role",
+                "server_message_creation",
+            ]
 
     @api.depends("sequence")
     def _compute_next_event(self):

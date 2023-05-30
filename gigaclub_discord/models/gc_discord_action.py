@@ -10,7 +10,9 @@ class GCDiscordAction(models.Model):
     event_ids = fields.One2many(
         comodel_name="gc.discord.event", inverse_name="action_id"
     )
-    action_type = fields.Selection(selection=[("user", "User")])
+    action_type = fields.Selection(
+        selection=[("user", "User")]
+    )  # TODO: this doesn't do anything???
     start_event_id = fields.Many2one(
         comodel_name="gc.discord.event", compute="_compute_start_event", store=True
     )

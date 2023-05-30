@@ -4,7 +4,7 @@ import threading
 
 import discord  # noqa: W7936
 from discord import Embed
-from discord.ui import View
+from discord.ui import Button, View
 
 from odoo import _, api, http, registry
 from odoo.http import request
@@ -152,6 +152,15 @@ class MainController(http.Controller):
 
         def _generate_message(self, message_content):
             view = View()
+            view_content = message_content.get("view", {})
+            buttons = view_content.get("buttons", [])
+
+            for button_content in buttons:
+                button = Button(
+                    label=button_content.get("name", ""),
+                    custom_id=button_content.get("custom_id", ""),
+                )
+                view.add_item(button)
 
             def _create_embed(embed_data):
                 embed = Embed(

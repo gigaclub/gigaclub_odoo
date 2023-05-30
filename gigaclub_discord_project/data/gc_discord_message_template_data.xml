@@ -4,6 +4,7 @@
     <record id="gc_discord_message_template_task" model="gc.discord.message.template">
         <field name="name">Task Template</field>
         <field name="model_id" ref="model_project_task" />
+        <field name="view_id" ref="gc_discord_view_task" />
     </record>
 
 </odoo>
