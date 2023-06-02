@@ -22,4 +22,7 @@ class GCUser(models.Model):
                 ],
             }
         )
+        mc_uuid = merge_user.mc_uuid
         merge_user.unlink()
+        if self.env.context.get("get_mc_uuid_back", False):
+            return mc_uuid
