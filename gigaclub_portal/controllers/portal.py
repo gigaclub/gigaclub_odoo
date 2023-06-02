@@ -48,10 +48,10 @@ class GigaClubPortal(CustomerPortal):
                     [("auth_token", "=", values.get("auth-code"))], limit=1
                 )
                 if request.env.user.partner_id.gc_user_id and gc_user:
-                    request.env.user.partner_id.gc_user_id.mc_uuid = gc_user.mc_uuid
-                    request.env.user.partner_id.gc_user_id.with_delay().merge_users(
-                        gc_user
-                    )
+                    mc_uuid = request.env.user.partner_id.gc_user_id.with_context(
+                        get_mc_uuid_back=True
+                    ).merge_users(gc_user)
+                    request.env.user.partner_id.gc_user_id.mc_uuid = mc_uuid
                 elif gc_user:
                     request.env.user.partner_id.gc_user_id = gc_user
                 return request.redirect("/my/account")

@@ -46,8 +46,12 @@ class GCUser(models.Model):
     @api.model
     def get_banned_players(self) -> list:
         return [
-            {"ban_expiration_datetime": x.ban_expiration_datetime, "mc_uuid": x.mc_uuid}
-            for x in self.env["gc.user"].search(
-                [("ban_expiration_datetime", "<=", datetime.now())]
-            )
+            {
+                "ban_expiration_datetime": x.ban_expiration_datetime,
+                "mc_uuid": x.mc_uuid,
+                "current_warning_id": x.current_warning_id.id,
+            }
+            for x in self.env["gc.user"]
+            .search([])
+            .filtered_domain([("ban_expiration_datetime", ">", datetime.now())])
         ]
