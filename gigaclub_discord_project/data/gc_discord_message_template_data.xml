@@ -5,6 +5,11 @@
         <field name="name">Task Template</field>
         <field name="model_id" ref="model_project_task" />
         <field name="view_id" ref="gc_discord_view_task" />
+        <field name="content" type="html">
+            <div>
+                @Builder
+            </div>
+        </field>
     </record>
 
 </odoo>

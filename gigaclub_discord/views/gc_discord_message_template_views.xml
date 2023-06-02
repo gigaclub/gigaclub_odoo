@@ -21,6 +21,7 @@
                 <sheet>
                     <group>
                         <field name="name" />
+                        <field name="content" />
                         <field name="embed_template_ids" />
                         <field name="view_id" />
                     </group>
