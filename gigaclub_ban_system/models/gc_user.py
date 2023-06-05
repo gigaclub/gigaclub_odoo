@@ -49,7 +49,7 @@ class GCUser(models.Model):
             {
                 "ban_expiration_datetime": x.ban_expiration_datetime,
                 "mc_uuid": x.mc_uuid,
-                "current_warning_id": x.current_warning_id.id,
+                "current_warning_id": x.current_warning_id.warning_type_id.id,
             }
             for x in self.env["gc.user"]
             .search([])
