@@ -199,7 +199,7 @@ class GCTeam(models.Model):
         ].search([("owner_id", "=", user.id)])
         if teams:
             return self.get_teams(teams)
-        return self.env["gc.team"]
+        return []
 
     @api.model
     def get_all_teams(self):
