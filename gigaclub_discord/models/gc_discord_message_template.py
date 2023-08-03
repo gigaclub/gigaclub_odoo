@@ -4,18 +4,27 @@ from odoo.tools import html2plaintext
 
 class GCDiscordMessageTemplate(models.Model):
     _name = "gc.discord.message.template"
+    _inherit = "mail.render.mixin"
     _description = "GigaClub Discord Message Template"
 
     name = fields.Char()
+    content = fields.Html(render_engine="qweb", sanitize=False)
     embed_template_ids = fields.One2many(
         comodel_name="gc.discord.embed.template", inverse_name="message_template_id"
     )
     view_id = fields.Many2one(comodel_name="gc.discord.view")
     model_id = fields.Many2one(comodel_name="ir.model")
 
+    def _compute_render_model(self):
+        for rec in self:
+            rec.render_model = rec.model_id.model
+
     def create_message(self, channel, res_id):
         self.ensure_one()
         content = {
+            "content": html2plaintext(
+                self._render_field("content", [res_id]).get(res_id, "")
+            ),
             "embeds": [
                 {
                     "title": html2plaintext(

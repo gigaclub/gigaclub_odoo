@@ -3,7 +3,7 @@ import logging
 import threading
 
 import discord  # noqa: W7936
-from discord import Embed
+from discord import AllowedMentions, Embed
 from discord.ui import Button, View
 
 from odoo import _, api, http, registry
@@ -123,7 +123,12 @@ class MainController(http.Controller):
                             embeds, view = self._generate_message(
                                 message_record.content
                             )
-                            sent_message = await channel.send(embeds=embeds, view=view)
+                            sent_message = await channel.send(
+                                embeds=embeds,
+                                view=view,
+                                content=message_record.content.get("content", ""),
+                                allowed_mentions=AllowedMentions.all(),
+                            )
                             message_record.message_id = sent_message.id
                             message_record.sent = True
                         # messages_to_edit = self.env["gc.discord.message"].search(
@@ -186,27 +191,27 @@ class MainController(http.Controller):
 
         async def on_interaction(self, interaction):
             custom_id = interaction.data.get("custom_id", "")
-            if custom_id == "open_modal":
+            if custom_id == "create_world":
                 thread = await interaction.message.channel.create_thread(
                     name="TEST",
                     invitable=False,
                 )
                 await thread.add_user(interaction.user)
-                # modal = MyModal(title="Modal via Button Click")
-                # await interaction.response.send_modal(modal)
-                # # Create a button to close the modal
-                # close_button = Button(
-                #     style=discord.ButtonStyle.danger,
-                #     label="Close",
-                #     custom_id="close_modal",
-                # )
-                #
-                # # Create a view and add the close button
-                # view = View()
-                # view.add_item(close_button)
-                #
-                # # Send a message with the modal view
-                # await interaction.message.edit(content="Modal content", view=view)
+                modal = MyModal(title="Modal via Button Click")
+                await interaction.response.send_modal(modal)
+                # Create a button to close the modal
+                close_button = Button(
+                    style=discord.ButtonStyle.danger,
+                    label="Close",
+                    custom_id="close_modal",
+                )
+
+                # Create a view and add the close button
+                view = View()
+                view.add_item(close_button)
+
+                # Send a message with the modal view
+                await interaction.message.edit(content="Modal content", view=view)
 
             elif custom_id == "close_modal":
                 await interaction.message.delete()

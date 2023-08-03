@@ -146,6 +146,7 @@ msgstr ""
 
 #. module: gigaclub_discord
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message__content
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message_template__content
 msgid "Content"
 msgstr ""
 
@@ -577,6 +578,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_field_template__lang
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_footer_template__lang
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__lang
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message_template__lang
 msgid "Language"
 msgstr ""
 
@@ -829,6 +831,7 @@ msgstr ""
 #: model:ir.model.fields,help:gigaclub_discord.field_gc_discord_embed_field_template__lang
 #: model:ir.model.fields,help:gigaclub_discord.field_gc_discord_embed_footer_template__lang
 #: model:ir.model.fields,help:gigaclub_discord.field_gc_discord_embed_template__lang
+#: model:ir.model.fields,help:gigaclub_discord.field_gc_discord_message_template__lang
 msgid ""
 "Optional translation language (ISO code) to select when sending out an "
 "email. If not set, the english version will be used. This should usually be "
@@ -890,6 +893,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_field_template__render_model
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_footer_template__render_model
 #: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_embed_template__render_model
+#: model:ir.model.fields,field_description:gigaclub_discord.field_gc_discord_message_template__render_model
 msgid "Rendering Model"
 msgstr ""
 
