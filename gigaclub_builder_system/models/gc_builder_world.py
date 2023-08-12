@@ -80,7 +80,8 @@ class GCBuilderWorld(models.Model):
                                     0,
                                     {
                                         "permission_profile_template_id": self.env.ref(
-                                            "gigaclub_builder_system.gc_permission_profile_template_builder_system_default"  # noqa: B950
+                                            "gigaclub_builder_system.gc_permission_profile_template_builder_system_default"
+                                            # noqa: B950
                                         ).id,
                                     },
                                 )
@@ -231,7 +232,8 @@ class GCBuilderWorld(models.Model):
                         0,
                         {
                             "permission_profile_template_id": self.env.ref(
-                                "gigaclub_builder_system.gc_permission_profile_template_builder_system_default"  # noqa: B950
+                                "gigaclub_builder_system.gc_permission_profile_template_builder_system_default"
+                                # noqa: B950
                             ).id,
                         },
                     )
@@ -539,3 +541,7 @@ class GCBuilderWorld(models.Model):
         if world:
             return self.return_world(world)
         return []
+
+    @api.model
+    def add_user_permissions(self, player_uuid: str, world_id: int, permissions: list[str]) -> int:
+        ...

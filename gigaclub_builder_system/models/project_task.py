@@ -4,6 +4,7 @@ from odoo import api, fields, models
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
+    # TODO set constraint that this parameter need to be same
     build_width = fields.Integer(default=0)
     build_length = fields.Integer(default=0)
 
